@@ -41,7 +41,12 @@ seconds). There's also a random late-game deficit mode.
   5:00, there's a two-minute warning, and spiking or kneeling costs a down.
 - **The field**: a vertical, behind-the-offense camera like Madden's. All 22
   players are numbered dots from that game's lineups, and every snap animates:
-  routes, throws, runs, sacks, kicks. Tap the field to skip a replay.
+  routes, throws, runs, sacks, kicks. Players ease to a stop, a callout marks
+  the result at the whistle, and the teams jog back to the line. Tap the field
+  to skip a replay.
+- **Play card**: above the call sheet, the last play (with clock used), where
+  you stand now (down, clock, timeouts, what score you need, field-goal odds)
+  and a scouting note on the defense you're facing.
 - **Defense**: you see the defensive front before you call the play (base,
   nickel, blitz, prevent, goal line), but they rotate at the snap about a
   quarter of the time. The front shifts the odds of each call.

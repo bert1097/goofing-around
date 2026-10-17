@@ -127,8 +127,14 @@
   .look b { color: var(--sheet-ink); text-transform: uppercase; letter-spacing: .06em; }
 
   /* banner */
-  .banner { background: rgba(0,0,0,.25); border-left: 4px solid var(--led); padding: 10px 14px; border-radius: 0 4px 4px 0; font-size: 16px; min-height: 48px; }
-  .banner b { font-family: var(--cond); letter-spacing: .04em; }
+  .banner { background: rgba(0,0,0,.28); border-left: 4px solid var(--led); padding: 12px 14px; border-radius: 0 6px 6px 0; font-size: 15px; display: grid; gap: 9px; }
+  .banner b { font-family: var(--cond); letter-spacing: .03em; }
+  .bn-kicker { display: block; font-family: var(--cond); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--chalk-dim); margin-bottom: 4px; }
+  .bn-kicker .clk { font-family: var(--mono); letter-spacing: 0; color: var(--led); }
+  .bn-head b { display: block; font-size: 20px; line-height: 1.2; text-wrap: balance; }
+  .bn-row { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 8px; border-top: 1px solid rgba(255,255,255,.08); padding-top: 9px; line-height: 1.4; }
+  .bn-label { font-family: var(--cond); font-weight: 600; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--led); padding-top: 2px; }
+  .bn-row b { font-weight: 700; }
   .banner.good { border-color: var(--good); }
   .banner.bad { border-color: var(--bad); }
   .banner .defnote { display: block; font-family: var(--cond); font-size: 14px; color: var(--chalk-dim); letter-spacing: .05em; text-transform: uppercase; margin-top: 2px; }
@@ -726,7 +732,8 @@
   }
 
   function say(text, tag, defNote, who) {
-    S.banner = { text, tag, defNote };
+    S.banner = { text, tag, defNote, from: S.snapFrom, to: S.clock, who: who ? team(who).abbr : null };
+    S.snapFrom = null;
     addLog(text, tag, who ? team(who).abbr : null);
   }
 
@@ -845,8 +852,9 @@
 
   // ---------- user actions ----------
   function userCall(type) {
-    if (S.phase !== 'call' || anim) return;
+    if (S.phase !== 'call' || busy()) return;
     S.curSit = situation();
+    S.snapFrom = S.clock;
     defenseTimeouts('them');
     if (type === 'timeout') { callTimeout('us'); render(); return; }
     const kind = type === 'spike' ? 'spike' : type === 'kneel' ? 'kneel' : 'play';
@@ -911,8 +919,9 @@
   }
 
   function oppStep() {
-    if (S.phase !== 'opp' || anim) return;
+    if (S.phase !== 'opp' || busy()) return;
     S.curSit = situation();
+    S.snapFrom = S.clock;
     // the user's own timeouts on defense, when the sim is driving
     if (S.autoTO && S.running && S.to.us > 0) {
       const l = lead('us');
@@ -1031,7 +1040,7 @@
   let pending = [];
   function later(fn, ms) { pending.push({ fn, at: performance.now() + ms }); }
   function runPending(now) {
-    if (anim) return;
+    if (busy()) return;
     const i = pending.findIndex(p => p.at <= now);
     if (i < 0) return;
     const [job] = pending.splice(i, 1);
@@ -1045,7 +1054,7 @@
     if (!('fd' in sp)) sp.fd = S.yl + S.toGo >= 100 ? null : S.yl + S.toGo;
     const A = makeAnim(sp);
     A.t0 = performance.now();
-    A.speed = (S.autoTO ? 1.8 : 1) * (reduceMotion ? 3 : 1);
+    A.speed = (S.autoTO ? 1.4 : .75) * (reduceMotion ? 3 : 1);
     anim = A;
     $('#fieldhint').hidden = false;
     $('#callbar').classList.add('busy');
@@ -1053,11 +1062,28 @@
   }
 
   function finishAnim() {
+    const prev = anim;
     anim = null;
     $('#fieldhint').hidden = true;
     $('#callbar').classList.remove('busy');
     if (needRender) { needRender = false; render(); }
+    if (prev && !prev.soft && !reduceMotion && S && prev.offK === S.off && (S.phase === 'call' || S.phase === 'opp')) {
+      const fin = {};
+      Object.values(prev.tracks).forEach(tr => { fin[tr.p.id] = tr.kf[tr.kf.length - 1]; });
+      const tracks = {};
+      let far = 0;
+      idleScene().forEach(p => {
+        const f = fin[p.id] || p;
+        far = Math.max(far, Math.hypot(p.x - f.x, p.y - f.y));
+        tracks[p.id] = { p, kf: [{ t: 0, x: f.x, y: f.y }, { t: 1, x: p.x, y: p.y }] };
+      });
+      const dur = clamp(far / 14, .7, 1.6);
+      Object.values(tracks).forEach(tr => { tr.kf[1].t = dur; });
+      anim = { soft: true, tracks, ball: [{ t: 0, hold: 'o:ol2' }], flags: [], offK: S.off, L: S.yl,
+        fd: S.yl + S.toGo >= 100 ? null : S.yl + S.toGo, dur, t0: performance.now(), speed: S.autoTO ? 1.6 : 1, who: {} };
+    }
   }
+  const busy = () => anim && !anim.soft;
 
   function makeAnim(sp) {
     const offR = team(sp.offK).roster, defR = team(other(sp.offK)).roster;
@@ -1117,7 +1143,7 @@
       const x1 = sp.made ? FW / 2 + randn() * .5 : FW / 2 + (rnd() < .5 ? -1 : 1) * (3.8 + rnd() * 2.5);
       fly(tK, t1, h.x, h.y, .3, x1, 110.3, sp.made ? 4.4 + rnd() : 2.5 + rnd() * 2, 5 + dist * .06);
       tE = t1;
-      A.msg = { t: t1, text: sp.made ? 'GOOD' : 'NO GOOD' };
+      A.msg = { t: t1, text: sp.made ? 'GOOD' : 'NO GOOD', tone: sp.made ? 'good' : 'bad' };
     } else if (sp.kind === 'punt') {
       const pp = st('o:p');
       fly(tS, tS + .5, bx, L, .3, pp.x, pp.y, 1, .4); hold(tS + .5, 'o:p');
@@ -1250,14 +1276,37 @@
     }
     Object.values(A.tracks).forEach(tr => tr.kf.sort((a, b) => a.t - b.t));
     A.ball.sort((a, b) => a.t - b.t);
-    A.dur = tE + .8;
+    // whistle callout once the play is dead
+    const rr = sp.r;
+    if (sp.kind === 'play' && rr && !A.msg) {
+      let text, tone = 'neutral';
+      if (rr.pen === 'hold') { text = 'FLAG \u00b7 HOLDING'; tone = 'bad'; }
+      else if (rr.pen === 'dpi') { text = 'FLAG \u00b7 INTERFERENCE'; tone = 'good'; }
+      else if (rr.turnover === 'int') { text = 'INTERCEPTED'; tone = 'bad'; }
+      else if (rr.turnover === 'fumble') { text = 'FUMBLE'; tone = 'bad'; }
+      else if (rr.sack) { text = `SACK \u00b7 ${rr.yards}`; tone = 'bad'; }
+      else if (rr.complete === false) { text = 'INCOMPLETE'; tone = 'bad'; }
+      else if (L + rr.yards >= 100) { text = 'TOUCHDOWN'; tone = 'good'; }
+      else if (L + rr.yards <= 0) { text = 'SAFETY'; tone = 'bad'; }
+      else if (sp.fd != null && L + rr.yards >= sp.fd) { text = 'FIRST DOWN'; tone = 'good'; }
+      else if (rr.yards === 0) { text = 'NO GAIN'; tone = 'bad'; }
+      else { text = `${rr.yards > 0 ? 'GAIN +' : 'LOSS '}${rr.yards}`; tone = rr.yards > 0 ? 'neutral' : 'bad'; }
+      A.msg = { t: tE, text, tone };
+    }
+    if (A.msg && sp.offK === 'them' && A.msg.tone !== 'neutral') A.msg.tone = A.msg.tone === 'good' ? 'bad' : 'good';
+    A.dur = tE + 1.5;
     return A;
   }
 
   function posAt(kf, t) {
     if (t <= kf[0].t) return kf[0];
     for (let i = 1; i < kf.length; i++) {
-      if (t <= kf[i].t) { const a = kf[i - 1], b = kf[i], u = (t - a.t) / Math.max(1e-6, b.t - a.t); return { x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u }; }
+      if (t <= kf[i].t) {
+        const a = kf[i - 1], b = kf[i];
+        let u = (t - a.t) / Math.max(1e-6, b.t - a.t);
+        if (i === kf.length - 1) u = 1 - (1 - u) * (1 - u);   // ease into the final spot instead of stopping dead
+        return { x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u };
+      }
     }
     return kf[kf.length - 1];
   }
@@ -1420,9 +1469,15 @@
     if (ball && !(holder && holder !== 'o:ol2')) drawBall(ball);
     for (const f of flags) { const q = pj(f.x, f.y); if (q) { ctx.fillStyle = '#f2d40c'; ctx.fillRect(q.x - 4, q.y - 10, 8, 8); } }
     if (msg) {
-      ctx.font = `400 ${Math.round(V.W / 11)}px "Graduate", Georgia, serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillStyle = 'rgba(0,0,0,.5)'; ctx.fillText(msg, V.W / 2 + 2, V.H * .22 + 2);
-      ctx.fillStyle = msg === 'GOOD' ? '#ffd23f' : '#ff7a66'; ctx.fillText(msg, V.W / 2, V.H * .22);
+      const a = clamp((t - anim.msg.t) / .25, 0, 1), y = V.hz + 34;
+      ctx.save(); ctx.globalAlpha = a;
+      const fs = Math.round(clamp(V.W / 16, 18, 32));
+      ctx.font = `400 ${fs}px "Graduate", Georgia, serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      const w = ctx.measureText(msg).width + fs * 1.2, hgt = fs * 1.6;
+      ctx.fillStyle = 'rgba(8,12,10,.82)'; ctx.beginPath(); ctx.roundRect(V.W / 2 - w / 2, y - hgt / 2, w, hgt, 6); ctx.fill();
+      ctx.fillStyle = { good: '#5fd28a', bad: '#ff7a66', neutral: '#ffd23f' }[anim.msg.tone || 'neutral'];
+      ctx.fillText(msg, V.W / 2, y);
+      ctx.restore();
     }
   }
 
@@ -1524,7 +1579,7 @@
     const tempo = S.phase === 'call' ? `<button class="cb-btn${S.tempo === 'hurry' ? ' on' : ''}" data-cycle-tempo title="Change tempo">${TEMPO_NAME[S.tempo]}</button>` : '';
     bar.innerHTML = `<div class="cb-top"><span class="cb-sit"><span class="clk">${fmt(S.clock)}</span>${esc(sit)}</span>${tempo}<button class="cb-btn" data-jump-sheet>Full sheet</button></div>
       <div class="cb-row">${chips}</div>`;
-    bar.classList.toggle('busy', !!anim);
+    bar.classList.toggle('busy', !!busy());
   }
 
   function renderLog() {
@@ -1532,14 +1587,49 @@
       || '<li class="info"><span class="t">' + fmt(S.clock) + '</span><span class="txt">Your ball. Make the first call.</span></li>';
   }
 
+  const SCOUT = {
+    base: 'Balanced front. No call gets a big edge.',
+    nickel: 'Extra defensive back. Runs gain about a yard more; intermediate and deep throws are tougher.',
+    blitz: 'Pressure is coming. Screens and outside runs can break big; longer throws risk a sack.',
+    prevent: 'Soft deep zones. Short throws and runs are open; deep shots rarely connect.',
+    goal: 'Stacked box. Inside runs and sneaks get stuffed; passes and outside runs have room.',
+  };
+  function needText(k) {
+    const l = lead(k);
+    if (l > 0) return `up ${l} \u2014 burn clock and protect the ball`;
+    if (l === 0) return 'tied \u2014 any score wins it';
+    const n = -l;
+    return n <= 2 ? `down ${n} \u2014 a field goal wins it` : n === 3 ? 'down 3 \u2014 a field goal ties, a touchdown wins'
+      : n <= 8 ? `down ${n} \u2014 you need a touchdown` : `down ${n} \u2014 you need two scores`;
+  }
   function renderBanner() {
     const b = $('#banner'), ban = S.banner;
     b.className = 'banner ' + (ban.tag === 'good' || ban.tag === 'score' ? 'good' : ban.tag === 'bad' ? 'bad' : '');
-    b.innerHTML = `<b>${esc(ban.text)}</b>${ban.defNote ? `<span class="defnote">${esc(ban.defNote)}</span>` : ''}`;
+    const first = !S.log.some(e => e.who);
+    const kicker = first ? 'The situation'
+      : `Last play${ban.who ? ' \u00b7 ' + esc(ban.who) : ''}${ban.from != null && ban.from !== ban.to ? ` \u00b7 <span class="clk">${fmt(ban.from)} \u2192 ${fmt(ban.to)}</span> (${ban.from - ban.to}s)` : ''}`;
+    let h = `<div class="bn-head"><span class="bn-kicker">${kicker}</span><b>${esc(ban.text)}</b>${ban.defNote ? `<span class="defnote">${esc(ban.defNote)}</span>` : ''}</div>`;
+    const goal = S.yl + S.toGo >= 100;
+    const dd = `${ord(S.down)} &amp; ${goal ? 'Goal' : S.toGo} at ${esc(spotText(S.yl, team(S.off), team(other(S.off))))}`;
+    const clockTxt = `${fmt(S.clock)}, clock ${S.running ? 'running' : 'stopped'}`;
+    if (S.phase === 'call') {
+      const dist = 100 - S.yl + 17, fgP = fgProb(dist);
+      const fg = dist <= 68 ? ` Field goal from here: ${dist} yds, ${pct(fgP)}.` : '';
+      h += `<div class="bn-row"><span class="bn-label">Now</span><span><b>${dd}</b> \u00b7 ${clockTxt} \u00b7 ${S.to.us} timeout${S.to.us === 1 ? '' : 's'}. You're ${needText('us')}.${fg}</span></div>`;
+      h += `<div class="bn-row"><span class="bn-label">Scouting</span><span>${esc(S.sc.them.abbr)} showing <b>${DEF_LABEL[S.nextDef]}</b>. ${SCOUT[S.nextDef]}</span></div>`;
+    } else if (S.phase === 'opp') {
+      h += `<div class="bn-row"><span class="bn-label">Now</span><span><b>${esc(S.sc.them.abbr)} ball, ${dd}</b> \u00b7 ${clockTxt}. You have ${S.to.us} timeout${S.to.us === 1 ? '' : 's'}; you're ${needText('us')}.</span></div>`;
+      h += `<div class="bn-row"><span class="bn-label">Your D</span><span><b>${DEF_LABEL[S.nextDef]}</b>. ${SCOUT[S.nextDef]}</span></div>`;
+    } else if (S.phase === 'pat' && S.scorer === 'us') {
+      h += `<div class="bn-row"><span class="bn-label">Decide</span><span>You're ${needText('us')} before the try, with ${fmt(S.clock)} left. Extra point 94%, two-point try 48%.</span></div>`;
+    } else if (S.phase === 'kick' && S.scorer === 'us') {
+      h += `<div class="bn-row"><span class="bn-label">Decide</span><span>You're ${needText('us')}, ${fmt(S.clock)} left, ${S.to.us} timeout${S.to.us === 1 ? '' : 's'}. Onside kicks work about 12% of the time; a deep kick usually gives them the 25.</span></div>`;
+    }
+    b.innerHTML = h;
   }
 
   function render() {
-    if (anim) { needRender = true; return; }
+    if (busy()) { needRender = true; return; }
     renderBoard(); renderPanel(); renderLog(); renderBanner();
   }
 
@@ -1580,7 +1670,7 @@
     }
     if (e.target.closest('[data-jump-sheet]')) { $('#panel').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }); return; }
     const b = e.target.closest('[data-call]');
-    if (!b || b.disabled || !S || anim) return;
+    if (!b || b.disabled || !S || busy()) return;
     const c = b.dataset.call;
     // a call from the floating bar or the sheet on a phone: bring the field into view to watch it
     if (window.matchMedia('(max-width: 860px)').matches && !['again', 'menu'].includes(c)) {
@@ -1601,7 +1691,7 @@
     }
   });
   $('#backBtn').addEventListener('click', showMenu);
-  cv.addEventListener('click', () => { if (anim) anim.t0 = -1e9; });
+  cv.addEventListener('click', () => { if (anim && !anim.soft) anim.t0 = -1e9; });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#finalWrap').hidden) $('#finalWrap').hidden = true; });
 
   showMenu();
