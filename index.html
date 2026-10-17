@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grain &amp; Ember</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Chivo+Mono:wght@400;600&display=swap">
+<style>
+  /* Layout: a cave viewport with a tool rail on the right that stacks under it on phones */
+  :root {
+    --bg: #1a1822;
+    --panel: #23202d;
+    --line: #3a3647;
+    --ink: #ece6d6;
+    --muted: #9d96ab;
+    --accent: #f2a33a;
+    --display: "Silkscreen", "Courier New", monospace;
+    --body: "Chivo Mono", ui-monospace, Menlo, Consolas, monospace;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 14px/1.5 var(--body);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 20px 32px;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 16px; }
+  header h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(28px, 5vw, 44px);
+    line-height: 1;
+    margin: 0;
+    text-wrap: balance;
+  }
+  header h1 span { color: var(--accent); }
+  header p { margin: 8px 0 0; color: var(--muted); max-width: 62ch; }
+  .stage {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 248px;
+    gap: 16px;
+    align-items: start;
+  }
+  @media (max-width: 760px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+  canvas {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 200 / 140;
+    image-rendering: pixelated;
+    border: 2px solid var(--line);
+    border-radius: 4px;
+    background: var(--bg);
+    touch-action: none;
+    cursor: crosshair;
+  }
+  .rail {
+    display: grid;
+    gap: 16px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 14px;
+  }
+  .group { display: grid; gap: 8px; }
+  .label {
+    font-family: var(--display);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .palette { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  @media (max-width: 760px) {
+    .palette { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+  }
+  .el, .btn {
+    font: inherit;
+    font-size: 12px;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .el {
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    text-align: left;
+  }
+  .el i { width: 14px; height: 14px; border-radius: 2px; background: var(--c); }
+  .el kbd { font-family: inherit; font-size: 10px; color: var(--muted); }
+  .el:hover, .btn:hover { border-color: var(--muted); }
+  .el[aria-pressed="true"], .btn[aria-pressed="true"] {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 16%, transparent);
+  }
+  .actions { display: flex; flex-wrap: wrap; gap: 6px; }
+  .btn { padding: 6px 10px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .stats, .hint { color: var(--muted); font-size: 12px; }
+  .stats { font-variant-numeric: tabular-nums; }
+  .hint { margin: 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Grain <span>&amp;</span> Ember</h1>
+    <p>A pocket cave of falling sand. Pour things in, set them on fire, see what happens. Hold to pour, right-click or pick Eraser to dig.</p>
+  </header>
+
+  <div class="stage">
+    <canvas id="cave" width="200" height="140" aria-label="Falling sand simulation"></canvas>
+
+    <aside class="rail">
+      <div class="group">
+        <div class="label">Element</div>
+        <div class="palette" id="palette"></div>
+      </div>
+
+      <div class="group">
+        <div class="row">
+          <label class="label" for="brush">Brush</label>
+          <span class="stats" id="brushVal">4 px</span>
+        </div>
+        <input id="brush" type="range" min="1" max="14" value="4">
+      </div>
+
+      <div class="group">
+        <div class="label">Mischief</div>
+        <div class="actions">
+          <button class="btn" id="pause" type="button" aria-pressed="false">Pause</button>
+          <button class="btn" id="rain" type="button" aria-pressed="false">Rain</button>
+          <button class="btn" id="meteor" type="button">Meteor</button>
+          <button class="btn" id="reset" type="button">Reset cave</button>
+          <button class="btn" id="clear" type="button">Empty</button>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="stats" id="stats">0 particles</div>
+        <p class="hint">Keys 1–0 pick elements, Space pauses. Lava turns water into stone. Plants drink water and grow. Oil floats, and it burns.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+(() => {
+  const W = 200, H = 140, N = W * H;
+  const EMPTY = 0, SAND = 1, WATER = 2, STONE = 3, PLANT = 4, FIRE = 5,
+        OIL = 6, LAVA = 7, STEAM = 8, SMOKE = 9, ERASE = 99;
+
+  const COLOR = [
+    null,
+    [226, 190, 120], // sand
+    [64, 128, 222],  // water
+    [118, 112, 132], // stone
+    [86, 176, 84],   // plant
+    [255, 150, 40],  // fire
+    [110, 72, 48],   // oil
+    [240, 92, 30],   // lava
+    [196, 206, 222], // steam
+    [96, 92, 104],   // smoke
+  ];
+  const DENS = [0, 8, 4, Infinity, Infinity, 0.3, 3, 6, 0.2, 0.2];
+  const SOLID = [false, false, false, true, true, false, false, false, false, false];
+
+  const PALETTE = [
+    { id: SAND, name: "Sand", key: "1" },
+    { id: WATER, name: "Water", key: "2" },
+    { id: STONE, name: "Stone", key: "3" },
+    { id: PLANT, name: "Plant", key: "4" },
+    { id: FIRE, name: "Fire", key: "5" },
+    { id: OIL, name: "Oil", key: "6" },
+    { id: LAVA, name: "Lava", key: "7" },
+    { id: STEAM, name: "Steam", key: "8" },
+    { id: SMOKE, name: "Smoke", key: "9" },
+    { id: ERASE, name: "Eraser", key: "0" },
+  ];
+
+  const t = new Uint8Array(N);
+  const life = new Uint8Array(N);
+  const shade = new Uint8Array(N);
+  const stamp = new Uint8Array(N);
+  const NX = [-1, 0, 1, -1, 1, -1, 0, 1];
+  const NY = [-1, -1, -1, 0, 0, 1, 1, 1];
+  const rnd = Math.random;
+
+  let frame = 1, tick = 0;
+  let current = SAND, brush = 4, paused = false, raining = false;
+
+  const at = (x, y) => (x < 0 || x >= W || y < 0 || y >= H) ? -1 : y * W + x;
+
+  function lifeFor(type) {
+    if (type === FIRE) return 40 + rnd() * 40;
+    if (type === STEAM) return 80 + rnd() * 80;
+    if (type === SMOKE) return 50 + rnd() * 50;
+    return 0;
+  }
+  function setCell(i, type) {
+    t[i] = type;
+    life[i] = lifeFor(type);
+    shade[i] = rnd() * 255;
+    stamp[i] = frame;
+  }
+  function swap(i, j) {
+    let a = t[i]; t[i] = t[j]; t[j] = a;
+    a = life[i]; life[i] = life[j]; life[j] = a;
+    a = shade[i]; shade[i] = shade[j]; shade[j] = a;
+    stamp[j] = frame;
+  }
+  const sinksInto = (type, j) => j >= 0 && !SOLID[t[j]] && DENS[t[j]] < DENS[type];
+
+  // ---- element rules ----
+  function fall(x, y, i, type) {
+    const d = at(x, y + 1);
+    if (sinksInto(type, d) && (t[d] === EMPTY || rnd() < 0.6)) { swap(i, d); return d; }
+    const s = rnd() < 0.5 ? -1 : 1;
+    const a = at(x + s, y + 1);
+    if (sinksInto(type, a)) { swap(i, a); return a; }
+    const b = at(x - s, y + 1);
+    if (sinksInto(type, b)) { swap(i, b); return b; }
+    return -1;
+  }
+
+  function flow(x, y, i, type, spread) {
+    if (fall(x, y, i, type) >= 0) return;
+    const s = rnd() < 0.5 ? -1 : 1;
+    let cur = i, cx = x;
+    for (let k = 0; k < spread; k++) {
+      const n = at(cx + s, y);
+      if (!sinksInto(type, n)) break;
+      swap(cur, n); cur = n; cx += s;
+    }
+  }
+
+  function rise(x, y, i) {
+    if (--life[i] === 0) {
+      setCell(i, t[i] === STEAM && rnd() < 0.35 ? WATER : EMPTY);
+      return;
+    }
+    const j = at(x + ((rnd() * 3) | 0) - 1, y - 1);
+    if (j >= 0) {
+      const b = t[j];
+      if (b === EMPTY || ((b === WATER || b === OIL) && rnd() < 0.3)) { swap(i, j); return; }
+    }
+    const n = at(x + (rnd() < 0.5 ? -1 : 1), y);
+    if (n >= 0 && t[n] === EMPTY) swap(i, n);
+  }
+
+  function burn(x, y, i) {
+    if (--life[i] === 0) { setCell(i, rnd() < 0.25 ? SMOKE : EMPTY); return; }
+    for (let k = 0; k < 8; k++) {
+      const j = at(x + NX[k], y + NY[k]);
+      if (j < 0) continue;
+      const b = t[j];
+      if (b === PLANT && rnd() < 0.05) setCell(j, FIRE);
+      else if (b === OIL && rnd() < 0.15) { setCell(j, FIRE); life[j] += 30; }
+      else if (b === WATER) {
+        setCell(i, STEAM);
+        if (rnd() < 0.5) setCell(j, STEAM);
+        return;
+      }
+    }
+    if (rnd() < 0.4) {
+      const j = at(x + ((rnd() * 3) | 0) - 1, y - 1);
+      if (j >= 0 && t[j] === EMPTY) swap(i, j);
+    }
+  }
+
+  function grow(x, y) {
+    if (rnd() > 0.1) return;
+    const k = (rnd() * 8) | 0;
+    const j = at(x + NX[k], y + NY[k]);
+    if (j >= 0 && t[j] === WATER && rnd() < 0.3) setCell(j, PLANT);
+  }
+
+  function melt(x, y, i) {
+    for (let k = 0; k < 8; k++) {
+      const j = at(x + NX[k], y + NY[k]);
+      if (j < 0) continue;
+      const b = t[j];
+      if (b === WATER) { setCell(i, STONE); setCell(j, STEAM); return; }
+      if ((b === PLANT || b === OIL) && rnd() < 0.1) setCell(j, FIRE);
+    }
+    const up = at(x, y - 1);
+    if (up >= 0 && t[up] === EMPTY && rnd() < 0.003) { setCell(up, FIRE); life[up] = 12; }
+    if (rnd() < 0.4) flow(x, y, i, LAVA, 1);
+  }
+
+  function step() {
+    frame = (frame % 255) + 1;
+    for (let y = H - 1; y >= 0; y--) {
+      const ltr = ((y + tick) & 1) === 0;
+      for (let xi = 0; xi < W; xi++) {
+        const x = ltr ? xi : W - 1 - xi;
+        const i = y * W + x;
+        const type = t[i];
+        if (type === EMPTY || stamp[i] === frame) continue;
+        switch (type) {
+          case SAND: fall(x, y, i, SAND); break;
+          case WATER: flow(x, y, i, WATER, 4); break;
+          case OIL: flow(x, y, i, OIL, 3); break;
+          case LAVA: melt(x, y, i); break;
+          case PLANT: grow(x, y); break;
+          case FIRE: burn(x, y, i); break;
+          case STEAM: case SMOKE: rise(x, y, i); break;
+        }
+      }
+    }
+    if (raining) {
+      for (let k = 0; k < 3; k++) {
+        const j = at((rnd() * W) | 0, 0);
+        if (t[j] === EMPTY) setCell(j, WATER);
+      }
+    }
+    tick++;
+  }
+
+  // ---- drawing ----
+  const canvas = document.getElementById("cave");
+  const ctx = canvas.getContext("2d");
+  const img = ctx.createImageData(W, H);
+  const buf = new Uint32Array(img.data.buffer);
+  const pack = (r, g, b) => ((255 << 24) | (b << 16) | (g << 8) | r) >>> 0;
+  const BG = [];
+  for (let y = 0; y < H; y++) {
+    const f = y / H;
+    BG.push([26 - 9 * f, 24 - 8 * f, 36 - 12 * f]);
+  }
+  const BGPACK = BG.map(c => pack(c[0], c[1], c[2]));
+  const LUT = COLOR.map(c => {
+    if (!c) return null;
+    const out = new Uint32Array(256);
+    for (let s = 0; s < 256; s++) {
+      const f = 0.82 + (s / 255) * 0.3;
+      out[s] = pack(Math.min(255, c[0] * f), Math.min(255, c[1] * f), Math.min(255, c[2] * f));
+    }
+    return out;
+  });
+
+  function render() {
+    for (let y = 0, i = 0; y < H; y++) {
+      const bg = BG[y];
+      for (let x = 0; x < W; x++, i++) {
+        const type = t[i];
+        if (type === EMPTY) { buf[i] = BGPACK[y]; continue; }
+        if (type === FIRE) {
+          const l = Math.min(1, life[i] / 60);
+          buf[i] = pack(255 - 50 * (1 - l), 50 + 170 * l, 20 + 70 * l * l);
+        } else if (type === LAVA) {
+          const f = 0.85 + 0.15 * Math.sin(tick * 0.08 + shade[i] * 0.1);
+          buf[i] = pack(240 * f, 92 * f, 30 * f);
+        } else if (type === STEAM || type === SMOKE) {
+          const c = COLOR[type], a = Math.min(1, life[i] / 40) * 0.8;
+          buf[i] = pack(bg[0] + (c[0] - bg[0]) * a, bg[1] + (c[1] - bg[1]) * a, bg[2] + (c[2] - bg[2]) * a);
+        } else {
+          buf[i] = LUT[type][shade[i]];
+        }
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+
+  // ---- scenes ----
+  function fillRect(x0, y0, x1, y1, type, density = 1) {
+    for (let y = y0; y <= y1; y++)
+      for (let x = x0; x <= x1; x++) {
+        const j = at(x, y);
+        if (j >= 0 && rnd() < density) setCell(j, type);
+      }
+  }
+  function clearAll() { t.fill(0); life.fill(0); }
+  function seed() {
+    clearAll();
+    for (let x = 18; x <= 92; x++) fillRect(x, 88 + ((x - 18) / 10 | 0), x, 90 + ((x - 18) / 10 | 0), STONE);
+    fillRect(118, 60, 188, 62, STONE);
+    fillRect(100, 100, 103, H - 1, STONE);
+    fillRect(104, 112, W - 1, H - 1, WATER);
+    fillRect(104, 106, W - 1, 111, OIL);
+    fillRect(36, 74, 40, 88, PLANT);
+    fillRect(60, 80, 63, 92, PLANT);
+    fillRect(2, 100, 70, H - 1, SAND, 0.92);
+    fillRect(30, 40, 70, 70, SAND, 0.5);
+    fillRect(146, 48, 168, 59, LAVA);
+  }
+
+  function paint(cx, cy, erase) {
+    const r = brush, type = erase ? ERASE : current;
+    for (let dy = -r; dy <= r; dy++)
+      for (let dx = -r; dx <= r; dx++) {
+        if (dx * dx + dy * dy > r * r) continue;
+        const j = at(cx + dx, cy + dy);
+        if (j < 0) continue;
+        if (type === ERASE) { t[j] = EMPTY; continue; }
+        if (type === STONE || type === PLANT) {
+          if (!SOLID[t[j]]) setCell(j, type);
+        } else if (t[j] === EMPTY && rnd() < 0.45) {
+          setCell(j, type);
+        }
+      }
+  }
+
+  // ---- pointer input ----
+  let pointer = null; // { x, y, erase }
+  function cellFrom(e) {
+    const r = canvas.getBoundingClientRect();
+    return {
+      x: Math.floor((e.clientX - r.left - canvas.clientLeft) / canvas.clientWidth * W),
+      y: Math.floor((e.clientY - r.top - canvas.clientTop) / canvas.clientHeight * H),
+    };
+  }
+  canvas.addEventListener("pointerdown", e => {
+    canvas.setPointerCapture(e.pointerId);
+    const c = cellFrom(e);
+    pointer = { ...c, erase: e.button === 2 };
+    paint(c.x, c.y, pointer.erase);
+  });
+  canvas.addEventListener("pointermove", e => {
+    if (!pointer) return;
+    const c = cellFrom(e);
+    const steps = Math.max(Math.abs(c.x - pointer.x), Math.abs(c.y - pointer.y), 1);
+    for (let s = 1; s <= steps; s++) {
+      paint(Math.round(pointer.x + (c.x - pointer.x) * s / steps),
+            Math.round(pointer.y + (c.y - pointer.y) * s / steps), pointer.erase);
+    }
+    pointer.x = c.x; pointer.y = c.y;
+  });
+  const lift = () => { pointer = null; };
+  canvas.addEventListener("pointerup", lift);
+  canvas.addEventListener("pointercancel", lift);
+  canvas.addEventListener("contextmenu", e => e.preventDefault());
+
+  // ---- controls ----
+  const paletteEl = document.getElementById("palette");
+  const buttons = new Map();
+  for (const p of PALETTE) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "el";
+    b.id = "el-" + p.name.toLowerCase();
+    const c = p.id === ERASE ? [26, 24, 36] : COLOR[p.id];
+    b.style.setProperty("--c", `rgb(${c})`);
+    if (p.id === ERASE) b.style.setProperty("--c", "repeating-linear-gradient(45deg, #ece6d6 0 2px, transparent 2px 4px)");
+    b.innerHTML = `<i></i><span>${p.name}</span><kbd>${p.key}</kbd>`;
+    b.addEventListener("click", () => choose(p.id));
+    paletteEl.appendChild(b);
+    buttons.set(p.id, b);
+  }
+  function choose(id) {
+    current = id;
+    for (const [k, b] of buttons) b.setAttribute("aria-pressed", String(k === id));
+  }
+  choose(SAND);
+
+  const brushEl = document.getElementById("brush");
+  const brushVal = document.getElementById("brushVal");
+  brushEl.addEventListener("input", () => {
+    brush = +brushEl.value;
+    brushVal.textContent = brush + " px";
+  });
+
+  const pauseBtn = document.getElementById("pause");
+  const rainBtn = document.getElementById("rain");
+  function setPaused(v) {
+    paused = v;
+    pauseBtn.setAttribute("aria-pressed", String(v));
+    pauseBtn.textContent = v ? "Resume" : "Pause";
+  }
+  pauseBtn.addEventListener("click", () => setPaused(!paused));
+  rainBtn.addEventListener("click", () => {
+    raining = !raining;
+    rainBtn.setAttribute("aria-pressed", String(raining));
+  });
+  document.getElementById("meteor").addEventListener("click", () => {
+    const cx = 20 + ((rnd() * (W - 40)) | 0);
+    for (let dy = -4; dy <= 4; dy++)
+      for (let dx = -4; dx <= 4; dx++)
+        if (dx * dx + dy * dy <= 16) {
+          const j = at(cx + dx, 6 + dy);
+          if (j >= 0) setCell(j, LAVA);
+        }
+  });
+  document.getElementById("reset").addEventListener("click", seed);
+  document.getElementById("clear").addEventListener("click", clearAll);
+
+  document.addEventListener("keydown", e => {
+    if (e.target instanceof HTMLInputElement) return;
+    const p = PALETTE.find(p => p.key === e.key);
+    if (p) { choose(p.id); return; }
+    if (e.key === " " && e.target === document.body) { e.preventDefault(); setPaused(!paused); }
+  });
+
+  // ---- loop ----
+  const statsEl = document.getElementById("stats");
+  let lastStat = performance.now(), frames = 0;
+  function loop(now) {
+    if (pointer) paint(pointer.x, pointer.y, pointer.erase);
+    if (!paused) step();
+    render();
+    frames++;
+    if (now - lastStat > 500) {
+      let n = 0;
+      for (let i = 0; i < N; i++) if (t[i]) n++;
+      const fps = Math.round(frames * 1000 / (now - lastStat));
+      statsEl.textContent = `${n.toLocaleString()} particles · ${paused ? "paused" : fps + " fps"}`;
+      lastStat = now; frames = 0;
+    }
+    requestAnimationFrame(loop);
+  }
+
+  function start(data) {
+    if (data && data.t && data.t.length === N) {
+      t.set(data.t); life.set(data.life); shade.set(data.shade);
+    } else {
+      seed();
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) setPaused(true);
+    requestAnimationFrame(loop);
+  }
+
+  const hot = window.claude?.hot;
+  if (typeof hot?.snapshot === "function") {
+    hot.snapshot(() => ({ t: Array.from(t), life: Array.from(life), shade: Array.from(shade) }));
+  }
+  if (hot?.ready) hot.ready(start); else start(hot?.data ?? {});
+})();
+</script>
+</body>
+</html>
