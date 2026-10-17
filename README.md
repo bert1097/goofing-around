@@ -39,9 +39,16 @@ seconds). There's also a random late-game deficit mode.
   before the next snap.
 - **Clock rules**: incompletions stop the clock, out of bounds stops it inside
   5:00, there's a two-minute warning, and spiking or kneeling costs a down.
-- **Defense**: the opponent picks a front each play (base, nickel, blitz,
-  prevent, goal line) that shifts the odds of each call.
+- **The field**: a vertical, behind-the-offense camera like Madden's. All 22
+  players are numbered dots from that game's lineups, and every snap animates:
+  routes, throws, runs, sacks, kicks. Tap the field to skip a replay.
+- **Defense**: you see the defensive front before you call the play (base,
+  nickel, blitz, prevent, goal line), but they rotate at the snap about a
+  quarter of the time. The front shifts the odds of each call.
+- **Play-by-play**: uses the real names ("Wilson pass to Lockette,
+  intercepted by Butler").
 - **After you score**: choose the extra point or two, kick deep or onside, then
   play defense with your remaining timeouts while the opponent drives.
 
-Situations are approximations from public game accounts.
+Situations and lineups are approximations from public game accounts; a few
+depth-chart spots and jersey numbers may be off.
