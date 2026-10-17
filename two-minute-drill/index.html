@@ -90,31 +90,30 @@
   .card.random .card-strip { background: repeating-linear-gradient(45deg, #24302a 0 10px, #1d2723 10px 20px); }
   .fineprint { font-size: 13px; color: var(--chalk-dim); opacity: .8; margin: 0; max-width: 80ch; }
 
-  /* score bug: the scoreboard sits on top of the field, broadcast style */
+  /* score bug: one slim row on top of the field, only as wide as its content */
   .board {
-    position: absolute; top: 8px; left: 8px; right: 8px; z-index: 2;
-    display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: stretch; overflow: hidden;
-    background: rgba(12, 16, 22, .88); border: 1px solid var(--board-line); border-radius: 6px;
-    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); box-shadow: 0 6px 18px rgba(0,0,0,.45);
-    pointer-events: none;
+    position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 2;
+    display: flex; align-items: stretch; max-width: calc(100% - 16px); white-space: nowrap; overflow: hidden;
+    background: rgba(12, 16, 22, .9); border: 1px solid var(--board-line); border-radius: 5px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.45); pointer-events: none;
+    font-family: var(--cond); font-size: 15px; line-height: 1;
   }
-  .tm { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 7px; padding: 6px 9px; position: relative; min-width: 0; }
-  .tm .stripe { width: 5px; align-self: stretch; border-radius: 2px; }
-  .tm .nm { font-family: var(--cond); font-weight: 700; font-size: 18px; letter-spacing: .04em; line-height: 1; }
-  .tm .full { display: none; }
-  .tm .sc { font-family: var(--mono); font-size: 28px; color: var(--led); line-height: 1; text-shadow: 0 0 10px rgba(255,178,30,.35); font-variant-numeric: tabular-nums; }
-  .tm.right .sc { text-align: right; }
-  .tos { display: flex; gap: 3px; margin-top: 4px; }
-  .tos i { width: 9px; height: 3px; background: var(--led); border-radius: 1px; }
+  .board > * { display: flex; align-items: center; gap: 5px; padding: 5px 8px; }
+  .board > * + * { border-left: 1px solid var(--board-line); }
+  .tm { position: relative; padding-left: 10px; }
+  .tm .stripe { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+  .tm .nm { font-weight: 700; letter-spacing: .04em; }
+  .tm .nm.has-ball::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 4px; vertical-align: 2px; border-radius: 50%; background: var(--led); box-shadow: 0 0 5px var(--led); }
+  .tm .sc { font-family: var(--mono); font-size: 19px; color: var(--led); font-variant-numeric: tabular-nums; }
+  .tos { display: flex; flex-direction: column; gap: 2px; }
+  .tos i { width: 7px; height: 2px; background: var(--led); }
   .tos i.used { background: var(--board-line); }
-  .poss { position: absolute; top: 5px; right: 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--led); box-shadow: 0 0 6px var(--led); }
-  .tm.right .poss { right: auto; left: 16px; }
-  .mid { border-inline: 1px solid var(--board-line); padding: 4px 12px; display: grid; justify-items: center; align-content: center; gap: 1px; background: rgba(8, 10, 14, .6); }
-  .clock { font-family: var(--mono); font-size: 26px; color: var(--led); line-height: 1; font-variant-numeric: tabular-nums; text-shadow: 0 0 10px rgba(255,178,30,.45); }
+  .clock { font-family: var(--mono); font-size: 19px; color: var(--led); font-variant-numeric: tabular-nums; }
   .clock.stop { color: #ff8e3c; }
-  .qtr { font-family: var(--cond); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--chalk-dim); white-space: nowrap; }
-  .dd { font-family: var(--cond); font-weight: 700; font-size: 14px; letter-spacing: .04em; white-space: nowrap; }
-  .spot { font-family: var(--cond); font-size: 11px; color: var(--chalk-dim); letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+  .qtr { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--chalk-dim); }
+  .dd { font-weight: 700; letter-spacing: .03em; }
+  .spot { font-size: 13px; color: var(--chalk-dim); letter-spacing: .04em; text-transform: uppercase; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .board .sitn { flex-shrink: 1; min-width: 0; }
 
   /* field: perspective canvas, camera behind the offense */
   .fieldwrap { position: relative; min-width: 0; }
@@ -234,11 +233,10 @@
   .btn.ghost { background: none; color: var(--chalk); border: 1px solid var(--chalk-dim); }
   @media (max-width: 520px) {
     .vs { grid-template-columns: 1fr; }
-    .tm { padding: 5px 6px; gap: 5px; }
-    .tm .sc { font-size: 24px; }
-    .tm .nm { font-size: 16px; }
-    .clock { font-size: 22px; }
-    .mid { padding: 3px 7px; }
+    .board { font-size: 14px; }
+    .board > * { padding: 4px 6px; gap: 4px; }
+    .tm { padding-left: 8px; }
+    .tm .sc, .clock { font-size: 17px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition: none !important; animation: none !important; }
@@ -1282,7 +1280,7 @@
     if (!W || !H || (W === V.W && H === V.H)) return;
     V.W = W; V.H = H; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     V.visW = W >= 520 ? 42 : 45;   // yards of field visible across the line of scrimmage
-    V.hz = Math.max(H * .06, $('#board').offsetHeight + 18);   // field starts below the score bug
+    V.hz = Math.max(H * .06, $('#board').offsetHeight + 14);   // field starts below the score bug
     V.f = W * (V.back + 2) / V.visW;
     V.camH = (H - V.hz) * V.dmin / V.f;
   }
@@ -1429,27 +1427,21 @@
   }
 
   function renderBoard() {
-    const sc = S.sc;
-    const side = (k, cls) => {
+    const side = k => {
       const t = team(k);
       const tos = [0, 1, 2].map(i => `<i class="${i < S.to[k] ? '' : 'used'}"></i>`).join('');
-      const poss = S.off === k && S.phase !== 'over' ? '<span class="poss" title="Possession"></span>' : '';
-      const nm = `<div><span class="nm">${t.abbr}</span><span class="full">${esc(t.name)}</span><div class="tos" title="${S.to[k]} timeouts">${tos}</div></div>`;
-      const stripe = `<span class="stripe" style="background:${t.ez}"></span>`;
-      const score = `<span class="sc">${S.score[k]}</span>`;
-      return `<div class="tm ${cls}">${poss}${cls === 'right' ? score + nm + stripe : stripe + nm + score}</div>`;
+      const ball = S.off === k && S.phase !== 'over' ? ' has-ball' : '';
+      return `<div class="tm"><span class="stripe" style="background:${t.ez}"></span><span class="nm${ball}">${t.abbr}</span><span class="sc">${S.score[k]}</span><span class="tos" title="${S.to[k]} timeouts left">${tos}</span></div>`;
     };
     const goal = S.yl + S.toGo >= 100;
-    let dd = '', spot = '';
-    if (S.phase === 'pat') { dd = 'Try'; spot = `${team(S.scorer).abbr} touchdown`; }
-    else if (S.phase === 'kick') { dd = 'Kickoff'; spot = `${team(S.scorer).abbr} kicking`; }
-    else if (S.phase === 'over') { dd = 'Final'; spot = S.ot ? 'Overtime' : ''; }
-    else { dd = `${ord(S.down)} & ${goal ? 'Goal' : S.toGo}`; spot = `Ball on ${spotText(S.yl, team(S.off), team(other(S.off)))}`; }
-    $('#board').innerHTML = `${side('us', 'left')}
-      <div class="mid"><span class="qtr">4th · ${S.running ? 'running' : 'stopped'}</span>
-      <span class="clock ${S.running ? 'run' : 'stop'}">${fmt(S.clock)}</span>
-      <span class="dd">${dd}</span><span class="spot">${spot}</span></div>
-      ${side('them', 'right')}`;
+    let dd, spot;
+    if (S.phase === 'pat') { dd = 'Try'; spot = `${team(S.scorer).abbr} TD`; }
+    else if (S.phase === 'kick') { dd = 'Kickoff'; spot = team(S.scorer).abbr; }
+    else if (S.phase === 'over') { dd = S.ot ? 'Final/OT' : 'Final'; spot = ''; }
+    else { dd = `${ord(S.down)} & ${goal ? 'Goal' : S.toGo}`; spot = spotText(S.yl, team(S.off), team(other(S.off))); }
+    $('#board').innerHTML = `${side('us')}${side('them')}
+      <div class="mid"><span class="clock ${S.running ? 'run' : 'stop'}" title="${S.running ? 'Clock running' : 'Clock stopped'}">${fmt(S.clock)}</span><span class="qtr">4th</span></div>
+      <div class="sitn"><span class="dd">${dd}</span>${spot ? `<span class="spot">${esc(spot)}</span>` : ''}</div>`;
   }
 
   function projSnap() {
