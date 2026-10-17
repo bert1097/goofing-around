@@ -45,6 +45,9 @@ seconds). There's also a random late-game deficit mode.
 - **Defense**: you see the defensive front before you call the play (base,
   nickel, blitz, prevent, goal line), but they rotate at the snap about a
   quarter of the time. The front shifts the odds of each call.
+- **On phones**: a floating play-call bar sits at the bottom of the screen
+  with the clock, down and distance, a tempo toggle and a swipeable row of
+  every call, so you can watch the field while you call plays.
 - **Play-by-play**: uses the real names ("Wilson pass to Lockette,
   intercepted by Butler").
 - **After you score**: choose the extra point or two, kick deep or onside, then

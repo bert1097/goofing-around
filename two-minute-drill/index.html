@@ -185,6 +185,37 @@
   .log li.score .txt { color: var(--led); font-weight: 600; }
   .log li.info .txt { color: var(--chalk-dim); font-style: italic; }
 
+  /* floating play-call bar (phones) */
+  .callbar { display: none; }
+  @media (max-width: 860px) {
+    .callbar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 15; display: grid; gap: 7px;
+      padding: 8px max(12px, env(safe-area-inset-right, 0px)) calc(9px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px));
+      background: rgba(14, 20, 17, .95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      border-top: 1px solid var(--board-line); box-shadow: 0 -10px 28px rgba(0,0,0,.45);
+    }
+    body.has-bar { padding-bottom: calc(132px + env(safe-area-inset-bottom, 0px)); }
+    #field { scroll-margin-top: 10px; }
+  }
+  .cb-top { display: flex; align-items: center; gap: 8px; font-family: var(--cond); min-width: 0; }
+  .cb-sit { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 700; font-size: 16px; letter-spacing: .03em; }
+  .cb-sit .clk { font-family: var(--mono); font-weight: 400; color: var(--led); margin-right: 6px; }
+  .cb-btn { flex: 0 0 auto; background: none; border: 1px solid var(--chalk-dim); border-radius: 4px; padding: 4px 9px; font-family: var(--cond); font-weight: 600; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+  .cb-btn.on { background: var(--led); border-color: var(--led); color: #1c1404; }
+  .cb-row { display: flex; gap: 6px; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .cb-row::-webkit-scrollbar { display: none; }
+  .chip {
+    flex: 0 0 auto; scroll-snap-align: start; display: grid; gap: 1px; text-align: left; max-width: 150px;
+    background: var(--sheet); color: var(--sheet-ink); border: 0; border-left: 5px solid var(--clock); border-radius: 4px;
+    padding: 8px 11px; font-family: var(--cond); font-weight: 700; font-size: 16px; line-height: 1.1;
+  }
+  .chip small { font-weight: 500; font-size: 11.5px; color: #6a6858; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .chip.run { border-left-color: var(--run); }
+  .chip.pass { border-left-color: var(--pass); }
+  .chip.st { border-left-color: var(--special); }
+  .chip:disabled { opacity: .35; }
+  .callbar.busy .chip { opacity: .45; }
+
   /* final */
   .final-wrap { position: fixed; inset: 0; background: rgba(5,12,8,.78); display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); z-index: 20; overflow-y: auto; }
   .final { background: var(--board); border: 1px solid var(--board-line); border-radius: 10px; max-width: 560px; width: 100%; padding: 22px; display: grid; gap: 14px; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
@@ -247,6 +278,8 @@
     </div>
   </section>
 </div>
+
+<nav class="callbar" id="callbar" aria-label="Quick play calls" hidden></nav>
 
 <div class="final-wrap" id="finalWrap" hidden>
   <div class="final" id="final" role="dialog" aria-modal="true" aria-labelledby="finalTitle"></div>
@@ -1018,12 +1051,14 @@
     A.speed = (S.autoTO ? 1.8 : 1) * (reduceMotion ? 3 : 1);
     anim = A;
     $('#fieldhint').hidden = false;
+    $('#callbar').classList.add('busy');
     return A;
   }
 
   function finishAnim() {
     anim = null;
     $('#fieldhint').hidden = true;
+    $('#callbar').classList.remove('busy');
     if (needRender) { needRender = false; render(); }
   }
 
@@ -1479,6 +1514,26 @@
     } else {
       p.innerHTML = `<div class="sheet-head"><h3>${esc(team(S.scorer || S.off).name)}</h3></div><p class="opp-note">…</p>`;
     }
+    renderBar();
+  }
+
+  // Phones: the same calls as the sheet, pinned to the bottom of the screen so the field stays in view
+  const TEMPO_NAME = { hurry: 'Hurry-up', normal: 'Huddle', milk: 'Milk clock' };
+  function renderBar() {
+    const bar = $('#callbar');
+    if (!S || $('#game').hidden) { bar.hidden = true; document.body.classList.remove('has-bar'); return; }
+    bar.hidden = false; document.body.classList.add('has-bar');
+    const goal = S.yl + S.toGo >= 100;
+    const sit = S.phase === 'pat' ? 'Touchdown \u2014 the try' : S.phase === 'kick' ? 'Kickoff' : S.phase === 'over' ? 'Final'
+      : `${team(S.off).abbr} ${ord(S.down)} & ${goal ? 'Goal' : S.toGo} \u00b7 ${spotText(S.yl, team(S.off), team(other(S.off)))}`;
+    const chips = [...$('#panel').querySelectorAll('[data-call]')].map(b => {
+      const cls = [...b.classList].filter(c => c !== 'play' && c !== 'big').join(' ');
+      return `<button class="chip ${cls}" data-call="${b.dataset.call}"${b.disabled ? ' disabled' : ''}>${esc(b.querySelector('b').textContent)}<small>${esc(b.querySelector('small').textContent)}</small></button>`;
+    }).join('');
+    const tempo = S.phase === 'call' ? `<button class="cb-btn${S.tempo === 'hurry' ? ' on' : ''}" data-cycle-tempo title="Change tempo">${TEMPO_NAME[S.tempo]}</button>` : '';
+    bar.innerHTML = `<div class="cb-top"><span class="cb-sit"><span class="clk">${fmt(S.clock)}</span>${esc(sit)}</span>${tempo}<button class="cb-btn" data-jump-sheet>Full sheet</button></div>
+      <div class="cb-row">${chips}</div>`;
+    bar.classList.toggle('busy', !!anim);
   }
 
   function renderLog() {
@@ -1501,6 +1556,7 @@
     pending = [];
     anim = null; needRender = false;
     $('#finalWrap').hidden = true; $('#game').hidden = true; $('#menu').hidden = false; $('#backBtn').hidden = true;
+    renderBar();
     $('#tagline').textContent = 'Real end-of-game drives. The coaches lost every one. Take the headset.';
     const wins = loadWins();
     $('#cards').innerHTML = SCENARIOS.map(sc => `
@@ -1527,9 +1583,19 @@
     if (card) { const id = card.dataset.sc; newGame(id === 'random' ? randomScenario() : SCENARIOS.find(s => s.id === id)); return; }
     const t = e.target.closest('[data-tempo]');
     if (t && S && S.phase === 'call') { S.tempo = t.dataset.tempo; renderPanel(); return; }
+    if (S && e.target.closest('[data-cycle-tempo]')) {
+      const order = ['hurry', 'normal', 'milk'];
+      S.tempo = order[(order.indexOf(S.tempo) + 1) % 3]; renderPanel(); return;
+    }
+    if (e.target.closest('[data-jump-sheet]')) { $('#panel').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }); return; }
     const b = e.target.closest('[data-call]');
     if (!b || b.disabled || !S || anim) return;
     const c = b.dataset.call;
+    // a call from the floating bar or the sheet on a phone: bring the field into view to watch it
+    if (window.matchMedia('(max-width: 860px)').matches && !['again', 'menu'].includes(c)) {
+      const top = $('#field').getBoundingClientRect().top;
+      if (top < 0 || top > innerHeight * .3) $('#field').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    }
     if (S.phase === 'call') return userCall(c);
     if (S.phase === 'pat' && S.scorer === 'us') return doPat(c);
     if (S.phase === 'kick' && S.scorer === 'us') return doKick(c);
