@@ -60,3 +60,11 @@ seconds). There's also a random late-game deficit mode.
 
 Situations and lineups are approximations from public game accounts; a few
 depth-chart spots and jersey numbers may be off.
+
+---
+
+# Bounty
+
+`bounty/` is a two-sided sales marketplace prototype: producers list a product
+and its commission, freelance salespeople pick products, register leads and
+track their pipeline. It has a small Node back end; see `bounty/README.md`.
