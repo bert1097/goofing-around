@@ -60,3 +60,18 @@ seconds). There's also a random late-game deficit mode.
 
 Situations and lineups are approximations from public game accounts; a few
 depth-chart spots and jersey numbers may be off.
+
+---
+
+# Sunday Edge Concepts
+
+`sunday-edge/index.html` is a concept sheet: five ideas for a fantasy football
+or betting tool, each with a small working demo on made-up numbers.
+
+- **Parlay X-Ray**: the true chance of a parlay and how much the book keeps.
+- **Floor or Ceiling**: start/sit based on how many points your matchup needs.
+- **Rooting Guide**: one list of what to cheer for across fantasy, bets and pools.
+- **Vig Check**: each book's cut and the best price on each side.
+- **Receipts**: a bet journal that compares results with closing-line value.
+
+Nothing here uses real odds or projections yet.

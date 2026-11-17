@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sunday Edge Concepts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one column of concepts; each is pitch text on the left and a working "ticket" demo on the right. */
+:root{
+  --bg:#EDF0F3; --panel:#FFFFFF; --ink:#15203A; --muted:#5A6680; --line:#CCD3DD;
+  --accent:#D9480F; --tint:#FBE4D8; --b:#1F6FB2; --good:#1E7F4F; --bad:#B3261E;
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"Barlow","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0D1524; --panel:#16213A; --ink:#E7ECF4; --muted:#94A1B8; --line:#2B3956;
+  --accent:#FF8A4C; --tint:#3A2418; --b:#6CB4F0; --good:#5DCB93; --bad:#FF7B72; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0D1524; --panel:#16213A; --ink:#E7ECF4; --muted:#94A1B8; --line:#2B3956;
+  --accent:#FF8A4C; --tint:#3A2418; --b:#6CB4F0; --good:#5DCB93; --bad:#FF7B72; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--body)}
+.wrap{max-width:1080px;margin:0 auto;padding-block:40px 56px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:48px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(2.4rem,6vw,3.6rem);font-weight:700;text-transform:uppercase;letter-spacing:.01em}
+h2{font-size:2rem;font-weight:700;text-transform:uppercase}
+h3{font-size:1.25rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+p{margin:0;max-width:62ch}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+
+header{display:flex;flex-direction:column;gap:14px}
+.kicker{font:600 .8rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.jump{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:6px 0 0;list-style:none}
+.jump a{display:block;padding:5px 12px;border:1px solid var(--line);border-radius:999px;
+  color:var(--ink);text-decoration:none;font-weight:500;font-size:.92rem}
+.jump a:hover{border-color:var(--accent);color:var(--accent)}
+
+.concept{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:32px;
+  padding-top:32px;border-top:2px solid var(--ink);align-items:start}
+@media (max-width:820px){ .concept{grid-template-columns:minmax(0,1fr);gap:20px} }
+.pitch{display:flex;flex-direction:column;gap:14px;min-width:0}
+.pitch .line{font-size:1.15rem;font-weight:500}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:4px 0 0;font-size:.95rem}
+.facts dt{font:600 .72rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:4px}
+.facts dd{margin:0}
+
+/* the demo "ticket" */
+.ticket{background:var(--panel);border:1px solid var(--line);border-radius:6px;min-width:0}
+.stub{display:flex;justify-content:space-between;gap:12px;padding:10px 16px;
+  border-bottom:2px dashed var(--line);font:600 .72rem var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.stub span:last-child{color:var(--muted)}
+.tbody{padding:16px;display:flex;flex-direction:column;gap:14px}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+label{cursor:pointer}
+input[type=number],input[type=text]{font:600 .95rem var(--mono);color:var(--ink);background:var(--bg);
+  border:1px solid var(--line);border-radius:4px;padding:5px 8px;width:5.6em}
+input[type=range]{flex:1 1 160px;min-width:0;accent-color:var(--accent)}
+input[type=checkbox]{accent-color:var(--accent);width:16px;height:16px}
+.verdict{background:var(--tint);border-radius:4px;padding:10px 12px;font-weight:500}
+.note{font-size:.85rem;color:var(--muted)}
+
+.legs{display:flex;flex-direction:column}
+.leg{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:10px;align-items:center;
+  padding:7px 0;border-bottom:1px solid var(--line)}
+.leg .fair{font-size:.8rem;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.stat .k{font:600 .7rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.stat .v{font:600 1.35rem var(--mono);font-variant-numeric:tabular-nums}
+.bars{display:flex;flex-direction:column;gap:6px;font-size:.85rem}
+.bar{height:14px;border-radius:2px;background:var(--b);min-width:2px}
+.bar.a{background:var(--accent)}
+.bad{color:var(--bad)} .good{color:var(--good)}
+
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 .72rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+input.best{border-color:var(--good);box-shadow:inset 0 0 0 1px var(--good)}
+input.invalid{border-color:var(--bad)}
+
+svg{display:block;width:100%;height:auto}
+svg text{font:12px var(--mono);fill:var(--muted)}
+svg .axis{stroke:var(--line);stroke-width:1;fill:none}
+svg .ink{fill:var(--ink)}
+.key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.88rem}
+.key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;background:var(--b)}
+.key i.a{background:var(--accent)}
+.key i.g{background:var(--muted)}
+
+.pick{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.pick .pb{grid-column:1/-1;display:flex;align-items:center;gap:8px}
+.pick .pb .bar{flex:0 0 auto}
+
+.toggles{display:flex;flex-direction:column;gap:6px}
+.game{padding:10px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.game .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;align-items:baseline}
+.game .root{font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:.8rem;padding:2px 8px;border:1px solid var(--line);border-radius:999px}
+.split{font:600 .7rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--bad);
+  border:1px solid var(--bad);border-radius:3px;padding:1px 6px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{font:500 .92rem var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);
+  border-radius:4px;padding:6px 12px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.wrapup{display:flex;flex-direction:column;gap:18px;padding-top:32px;border-top:2px solid var(--ink)}
+footer{font-size:.85rem;color:var(--muted)}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="kicker">Concept sheet · fantasy football and betting</div>
+  <h1>Five tools for a smarter Sunday</h1>
+  <p>Five ideas for a fantasy or betting tool, each with a small working demo. Play with the numbers, then pick the one worth building out. Every line, score and bet here is made up for the demo.</p>
+  <ul class="jump">
+    <li><a href="#parlay">Parlay X-Ray</a></li>
+    <li><a href="#floor">Floor or Ceiling</a></li>
+    <li><a href="#rooting">Rooting Guide</a></li>
+    <li><a href="#vig">Vig Check</a></li>
+    <li><a href="#receipts">Receipts</a></li>
+    <li><a href="#compare">Which to build</a></li>
+  </ul>
+</header>
+
+<!-- 1 -->
+<section class="concept" id="parlay">
+  <div class="pitch">
+    <h2>Parlay X-Ray</h2>
+    <p class="line">Shows what a parlay is really worth before you place it.</p>
+    <p>Every leg carries a small cut for the book. Stack legs and the cuts multiply. Build a ticket and see the true chance of hitting, what a fair book would pay, and how much of the payout you are giving up.</p>
+    <dl class="facts">
+      <dt>For</dt><dd>Anyone who loves a six-leg ticket</dd>
+      <dt>Needs</dt><dd>Just math to start. An odds feed later, to fill in real lines.</dd>
+      <dt>Effort</dt><dd>One weekend</dd>
+      <dt>Stretch</dt><dd>Same-game parlays, where legs move together and the book's pricing is hardest to check</dd>
+    </dl>
+  </div>
+  <div class="ticket">
+    <div class="stub"><span>Parlay X-Ray</span><span>Example lines</span></div>
+    <div class="tbody">
+      <div class="legs" id="pl-legs"></div>
+      <div class="row"><label for="pl-stake">Stake $</label><input type="number" id="pl-stake" min="1" step="1" value="10"></div>
+      <div class="stats" id="pl-stats"></div>
+      <div class="bars" id="pl-bars"></div>
+      <div class="verdict" id="pl-verdict"></div>
+      <div class="note">Treats the legs as independent. "Fair" is each line with the book's cut removed.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="concept" id="floor">
+  <div class="pitch">
+    <h2>Floor or Ceiling</h2>
+    <p class="line">Start/sit advice that knows what your matchup needs.</p>
+    <p>Projections give one number per player. But if you are a big underdog you want the boom-or-bust guy, and if you are ahead you want the safe one. This tool compares full ranges of outcomes and asks one question: how many points do you need from this spot?</p>
+    <dl class="facts">
+      <dt>For</dt><dd>Fantasy managers stuck on a flex decision</dd>
+      <dt>Needs</dt><dd>Weekly projections plus each player's game-to-game spread, which past box scores can supply</dd>
+      <dt>Effort</dt><dd>A few weekends</dd>
+      <dt>Stretch</dt><dd>Read your league (Sleeper has a free public API) and work out the number you need for you</dd>
+    </dl>
+  </div>
+  <div class="ticket">
+    <div class="stub"><span>Floor or Ceiling</span><span>Example players</span></div>
+    <div class="tbody">
+      <div class="row"><label for="fl-need">Points you need from this spot</label>
+        <input type="range" id="fl-need" min="4" max="30" step="0.5" value="18">
+        <span class="mono" id="fl-needv"></span></div>
+      <div id="fl-chart"></div>
+      <div class="key"><span><i></i>Steady possession receiver, 13.5 projected</span><span><i class="a"></i>Boom-or-bust deep threat, 12.0 projected</span></div>
+      <div id="fl-picks"></div>
+      <div class="verdict" id="fl-verdict"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="concept" id="rooting">
+  <div class="pitch">
+    <h2>Rooting Guide</h2>
+    <p class="line">One screen that tells you what to cheer for.</p>
+    <p>By Sunday afternoon you have a fantasy matchup, a few bets and a survivor pick, and they do not always agree. The Rooting Guide puts everything you have riding on the day into one list, ranks the games by how much they matter to you, and flags the ones where your own bets are fighting each other.</p>
+    <dl class="facts">
+      <dt>For</dt><dd>People who play fantasy and bet, which is most people who do either</dd>
+      <dt>Needs</dt><dd>Your league, your open bets (typed in or pasted), and live scores</dd>
+      <dt>Effort</dt><dd>The biggest build here, because of the live data</dd>
+      <dt>Stretch</dt><dd>A "you are accidentally hedged" alert before kickoff, while you can still change something</dd>
+    </dl>
+  </div>
+  <div class="ticket">
+    <div class="stub"><span>Rooting Guide</span><span>Example slate</span></div>
+    <div class="tbody">
+      <div class="toggles">
+        <label><input type="checkbox" id="rg-fantasy" checked> Fantasy matchup (you trail by 6.2)</label>
+        <label><input type="checkbox" id="rg-bets" checked> Open bets (3 tickets, $85 at risk)</label>
+        <label><input type="checkbox" id="rg-pool" checked> Survivor pool (you took the Ravens)</label>
+      </div>
+      <div id="rg-list"></div>
+      <div class="note">Bar length is how much the game matters to you. "Split" means your own stakes want opposite things.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="concept" id="vig">
+  <div class="pitch">
+    <h2>Vig Check</h2>
+    <p class="line">Finds the best price and shows what each book charges.</p>
+    <p>The same bet costs different amounts at different books. Type in the prices you see and the tool works out each book's cut, the fair price underneath, and where to place each side. Edit any number to see it update.</p>
+    <dl class="facts">
+      <dt>For</dt><dd>Bettors with accounts at more than one book</dd>
+      <dt>Needs</dt><dd>Manual entry to start. An odds feed makes it automatic.</dd>
+      <dt>Effort</dt><dd>One weekend by hand, a few with a feed</dd>
+      <dt>Stretch</dt><dd>A watchlist that pings you when a book drifts away from the rest</dd>
+    </dl>
+  </div>
+  <div class="ticket">
+    <div class="stub"><span>Vig Check</span><span>Example lines</span></div>
+    <div class="tbody">
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Book</th><th>Lions −3.5</th><th>Packers +3.5</th><th>Book's cut</th></tr></thead>
+          <tbody id="vg-rows"></tbody>
+        </table>
+      </div>
+      <div class="verdict" id="vg-verdict"></div>
+      <div class="note">American odds: −110 means risk $110 to win $100, +100 means risk $100 to win $100. Green marks the best price on each side.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="concept" id="receipts">
+  <div class="pitch">
+    <h2>Receipts</h2>
+    <p class="line">A bet journal that tells skill from luck.</p>
+    <p>A few weeks of wins and losses says little about whether you bet well. A better test is the closing line: did you get a better number than the one the market settled on at kickoff? Receipts logs each bet, compares it to the close, and plots what you won against what your prices say you should have won.</p>
+    <dl class="facts">
+      <dt>For</dt><dd>Anyone who wants an honest read on their own betting</dd>
+      <dt>Needs</dt><dd>A log of your bets and closing lines for each game</dd>
+      <dt>Effort</dt><dd>A few weekends</dd>
+      <dt>Stretch</dt><dd>Break it down by bet type, so you learn that you are fine at totals and terrible at player props</dd>
+    </dl>
+  </div>
+  <div class="ticket">
+    <div class="stub"><span>Receipts</span><span>Example bettors</span></div>
+    <div class="tbody">
+      <div class="seg" id="rc-seg">
+        <button type="button" id="rc-b0" aria-pressed="true">Bettor A</button>
+        <button type="button" id="rc-b1" aria-pressed="false">Bettor B</button>
+      </div>
+      <div id="rc-chart"></div>
+      <div class="key"><span><i class="a"></i>What they actually won</span><span><i class="g"></i>What their prices say they should have won</span></div>
+      <div class="verdict" id="rc-verdict"></div>
+      <div class="note">60 bets at $20 each.</div>
+    </div>
+  </div>
+</section>
+
+<section class="wrapup" id="compare">
+  <h2>Which to build</h2>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Concept</th><th>Side</th><th>Data it needs</th><th>Effort</th><th>Why bother</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Parlay X-Ray</strong></td><td>Betting</td><td>None to start</td><td>One weekend</td><td>Instantly understood, easy to share</td></tr>
+        <tr><td><strong>Floor or Ceiling</strong></td><td>Fantasy</td><td>Projections, past box scores</td><td>A few weekends</td><td>Answers a question every manager asks weekly</td></tr>
+        <tr><td><strong>Rooting Guide</strong></td><td>Both</td><td>League, bets, live scores</td><td>Largest</td><td>The most original idea here</td></tr>
+        <tr><td><strong>Vig Check</strong></td><td>Betting</td><td>Typed in, or an odds feed</td><td>One weekend</td><td>Saves real money on every bet</td></tr>
+        <tr><td><strong>Receipts</strong></td><td>Betting</td><td>Your bet log, closing lines</td><td>A few weekends</td><td>Useful all season, not just once</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>Suggested order.</strong> Start with Parlay X-Ray: it is pure math, fits in one HTML file like the other projects in this repo, and can be finished in a weekend. Floor or Ceiling is the best fantasy idea and the next step up. Rooting Guide is the one with no real equivalent out there, but it depends on live data, so it makes sense as the third build once the first two have proven the pieces.</p>
+  <footer>All numbers on this page are invented examples, not real odds or projections. None of these tools makes betting profitable; they show what it costs. If betting stops being fun, the US helpline is 1-800-GAMBLER.</footer>
+</section>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const dec=a=>a>0?1+a/100:1+100/-a;
+const fmtA=a=>(a>0?'+':'−')+Math.abs(a);
+const usd=n=>(n<0?'−':'')+'$'+Math.abs(n).toFixed(2);
+const usd0=n=>(n<0?'−':n>0?'+':'')+'$'+Math.abs(Math.round(n));
+const pct=(p,d)=>(p*100).toFixed(d==null?1:d)+'%';
+
+/* ---------- Parlay X-Ray ---------- */
+const LEGS=[
+  {n:'Lions −3.5',o:-110,p:.50,on:1},
+  {n:'Chiefs–Bills over 47.5',o:-110,p:.50,on:1},
+  {n:'Eagles to win',o:-180,p:.615,on:1},
+  {n:'Ravens QB over 49.5 rush yards',o:-115,p:.51,on:1},
+  {n:'49ers RB anytime touchdown',o:120,p:.42,on:0},
+  {n:'Packers TE first touchdown',o:250,p:.255,on:0}
+];
+$('pl-legs').innerHTML=LEGS.map((l,i)=>
+  `<label class="leg" for="pl-leg${i}"><input type="checkbox" id="pl-leg${i}" ${l.on?'checked':''}>
+   <span>${l.n}</span><span class="fair">fair ${pct(l.p,0)}</span><span class="mono">${fmtA(l.o)}</span></label>`).join('');
+function parlay(){
+  const stake=Math.max(0,parseFloat($('pl-stake').value)||0);
+  let d=1,p=1,n=0;
+  LEGS.forEach((l,i)=>{ if($('pl-leg'+i).checked){d*=dec(l.o);p*=l.p;n++;} });
+  if(!n||!stake){ $('pl-stats').innerHTML='';$('pl-bars').innerHTML='';
+    $('pl-verdict').textContent='Pick at least one leg and enter a stake.';return; }
+  const pays=stake*d, fair=stake/p, edge=1-p*d, ev=p*pays-stake;
+  $('pl-stats').innerHTML=
+    `<div class="stat"><div class="k">True chance</div><div class="v">${pct(p)}</div></div>
+     <div class="stat"><div class="k">Book's cut</div><div class="v bad">${pct(edge)}</div></div>`;
+  $('pl-bars').innerHTML=
+    `<div>Book pays <span class="mono">${usd(pays)}</span></div><div class="bar a" style="width:${Math.min(100,pays/fair*100)}%"></div>
+     <div>A fair book would pay <span class="mono">${usd(fair)}</span></div><div class="bar" style="width:100%"></div>`;
+  $('pl-verdict').textContent=`${n}-leg ticket: you lose about ${usd(-ev)} per ${usd(stake)} bet on average. `+
+    (n===1?'A single bet gives up about 4 to 5 cents on the dollar. Add legs and watch that grow.':
+     `A single bet gives up about 4 to 5 cents on the dollar; this one gives up ${Math.round(edge*100)}.`);
+}
+$('pl-legs').addEventListener('change',parlay); $('pl-stake').addEventListener('input',parlay); parlay();
+
+/* ---------- Floor or Ceiling ---------- */
+const cdf=z=>{const t=1/(1+.2316419*Math.abs(z)),d=.3989423*Math.exp(-z*z/2);
+  const p=d*t*(.3193815+t*(-.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return z>0?1-p:p;};
+const pdf=(x,m,s)=>Math.exp(-((x-m)**2)/(2*s*s))/(s*2.5066283);
+const PL=[{n:'Steady receiver',m:13.5,s:4,c:'var(--b)',cls:''},{n:'Boom-or-bust receiver',m:12,s:9,c:'var(--accent)',cls:'a'}];
+function floorCeil(){
+  const need=parseFloat($('fl-need').value);
+  $('fl-needv').textContent=need.toFixed(1);
+  const W=440,H=190,L=8,R=8,T=22,B=24, X=v=>L+v/40*(W-L-R), ymax=pdf(13.5,13.5,4), Y=v=>H-B-v/ymax*(H-T-B);
+  let s='';
+  PL.forEach(pl=>{ let d=`M${X(0)},${H-B}`;
+    for(let x=0;x<=40;x+=.5) d+=`L${X(x).toFixed(1)},${Y(pdf(x,pl.m,pl.s)).toFixed(1)}`;
+    d+=`L${X(40)},${H-B}Z`;
+    s+=`<path d="${d}" fill="${pl.c}" fill-opacity=".22" stroke="${pl.c}" stroke-width="2"/>`; });
+  s+=`<path class="axis" d="M${L},${H-B}H${W-R}"/>`;
+  [0,10,20,30,40].forEach(t=>{ s+=`<text x="${X(t)}" y="${H-6}" text-anchor="${t===0?'start':t===40?'end':'middle'}">${t}</text>`; });
+  const nx=X(need);
+  s+=`<path d="M${nx},${T-4}V${H-B}" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+      <text class="ink" x="${nx}" y="${T-9}" text-anchor="${need>32?'end':'middle'}">need ${need.toFixed(1)}</text>`;
+  $('fl-chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Range of fantasy points for each receiver, with the points you need marked">${s}</svg>`;
+  const pr=PL.map(pl=>1-cdf((need-pl.m)/pl.s));
+  $('fl-picks').innerHTML=PL.map((pl,i)=>
+    `<div class="pick"><span>${pl.n}</span><span class="mono">${pct(pr[i],0)}</span>
+     <div class="pb"><div class="bar ${pl.cls}" style="width:${Math.max(1,pr[i]*100)}%"></div></div></div>`).join('');
+  const w=pr[0]>=pr[1]?0:1, gap=Math.abs(pr[0]-pr[1]);
+  $('fl-verdict').textContent= gap<.02 ? 'Too close to call. Either one works.' :
+    w===0 ? `Start the steady receiver. He gets you ${need.toFixed(1)} or more ${pct(pr[0],0)} of the time, and you do not need a big game.` :
+            `Start the boom-or-bust receiver, even though he projects lower. You need a big game and he is likelier to have one.`;
+}
+$('fl-need').addEventListener('input',floorCeil); floorCeil();
+
+/* ---------- Rooting Guide ---------- */
+const NAMES={fantasy:'Fantasy',bets:'Bets',pool:'Pool'};
+const GAMES=[
+  {g:'Cowboys at Eagles · 4:25',pos:'Root for Eagles points',neg:'Root for a slow, low-scoring game',
+   s:{fantasy:[8,'you start an Eagles receiver'],bets:[-5,'you hold under 47.5']}},
+  {g:'Ravens at Browns · 1:00',pos:'Root for a Ravens win',neg:'Root for the Ravens QB to have a quiet day',
+   s:{pool:[10,'your survivor pick'],bets:[3,'Ravens −3 is on one ticket'],fantasy:[-4,'your opponent starts the Ravens QB']}},
+  {g:'Lions at Packers · 1:00',pos:'Root for a Lions blowout',neg:'Root for the Packers',
+   s:{bets:[9,'Lions −3.5 anchors two tickets'],fantasy:[3,'you start a Lions running back']}},
+  {g:'Chiefs at Bills · 4:25',pos:'Root for the Bills run game',neg:'Root for the Bills run game to get stuffed',
+   s:{fantasy:[-7,'your opponent starts a Bills running back']}},
+  {g:'49ers at Seahawks · 8:20',pos:'Root for the Seahawks kicker',neg:'Root against the Seahawks kicker',
+   s:{fantasy:[2,'you start him']}}
+];
+function rooting(){
+  const on={fantasy:$('rg-fantasy').checked,bets:$('rg-bets').checked,pool:$('rg-pool').checked};
+  const rows=GAMES.map(g=>{ let sum=0,mag=0,pos=0,neg=0,chips='';
+    for(const k in g.s){ if(!on[k]) continue; const v=g.s[k][0]; sum+=v; mag+=Math.abs(v); v>0?pos++:neg++;
+      chips+=`<span class="chip">${NAMES[k]}: ${g.s[k][1]}</span>`; }
+    return {g,sum,mag,split:pos&&neg,chips}; }).sort((a,b)=>b.mag-a.mag);
+  $('rg-list').innerHTML=rows.map(r=> r.mag===0 ?
+    `<div class="game"><div class="top"><span class="muted">${r.g.g}</span></div><div class="muted">Nothing riding on this one. Enjoy it.</div></div>` :
+    `<div class="game"><div class="top"><span class="root">${r.sum>=0?r.g.pos:r.g.neg}</span>${r.split?'<span class="split">Split</span>':''}</div>
+     <div class="muted">${r.g.g}</div>
+     <div class="bar a" style="width:${r.mag/17*100}%"></div>
+     <div class="chips">${r.chips}</div></div>`).join('');
+}
+['rg-fantasy','rg-bets','rg-pool'].forEach(id=>$(id).addEventListener('change',rooting)); rooting();
+
+/* ---------- Vig Check ---------- */
+const BOOKS=[['Book A',-110,-110],['Book B',-115,-105],['Book C',-108,-112],['Book D',-120,100]];
+$('vg-rows').innerHTML=BOOKS.map((b,i)=>
+  `<tr><td>${b[0]}</td><td><input type="text" inputmode="text" id="vg-a${i}" value="${b[1]>0?'+':''}${b[1]}" aria-label="${b[0]} Lions price"></td>
+   <td><input type="text" inputmode="text" id="vg-b${i}" value="${b[2]>0?'+':''}${b[2]}" aria-label="${b[0]} Packers price"></td>
+   <td class="num" id="vg-h${i}"></td></tr>`).join('');
+const parseA=el=>{const v=parseFloat(el.value.replace('−','-'));const ok=isFinite(v)&&Math.abs(v)>=100;
+  el.classList.toggle('invalid',!ok);el.classList.remove('best');return ok?v:null;};
+function vig(){
+  let best=[null,null],holds=[],fairs=[];
+  BOOKS.forEach((b,i)=>{ const ea=$('vg-a'+i),eb=$('vg-b'+i),a=parseA(ea),c=parseA(eb);
+    if(a!=null&&(!best[0]||dec(a)>dec(best[0].v))) best[0]={v:a,el:ea,n:b[0]};
+    if(c!=null&&(!best[1]||dec(c)>dec(best[1].v))) best[1]={v:c,el:eb,n:b[0]};
+    if(a==null||c==null){ $('vg-h'+i).textContent='–'; return; }
+    const ia=1/dec(a),ic=1/dec(c),h=1-1/(ia+ic); holds.push(h); fairs.push(ia/(ia+ic));
+    $('vg-h'+i).textContent=pct(h); });
+  if(!best[0]||!best[1]||!holds.length){ $('vg-verdict').textContent='Enter American odds of −100 or lower, or +100 or higher, for both sides of at least one book.'; return; }
+  best[0].el.classList.add('best'); best[1].el.classList.add('best');
+  const avg=holds.reduce((x,y)=>x+y,0)/holds.length, fair=fairs.reduce((x,y)=>x+y,0)/fairs.length;
+  const comb=1-1/(1/dec(best[0].v)+1/dec(best[1].v));
+  $('vg-verdict').textContent=`Fair price is about Lions ${pct(fair)}, Packers ${pct(1-fair)}. Best Lions number: ${best[0].n} at ${fmtA(best[0].v)}. Best Packers number: ${best[1].n} at ${fmtA(best[1].v)}. `+
+    (comb<0 ? 'Those two prices together pay more than they cost, which is a guaranteed profit if you bet both sides.' :
+     `Shopping cuts the book's take from ${pct(avg)} (average book) to ${pct(comb)}.`);
+}
+$('vg-rows').addEventListener('input',vig); vig();
+
+/* ---------- Receipts ---------- */
+function rng(s){return()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const BETTORS=[{seed:11,clv:-.02,wp:.58},{seed:8,clv:.03,wp:.47}];
+function receipts(k){
+  [0,1].forEach(i=>$('rc-b'+i).setAttribute('aria-pressed',i===k));
+  const b=BETTORS[k],r=rng(b.seed),act=[0],exp=[0];
+  for(let i=0;i<60;i++){ const clv=b.clv+(r()-.5)*.06, win=r()<b.wp;
+    act.push(act[i]+(win?20/1.1:-20)); exp.push(exp[i]+20*clv); }
+  const W=440,H=210,L=40,R=92,T=10,B=22, all=act.concat(exp);
+  let lo=Math.min(...all),hi=Math.max(...all); const pad=(hi-lo)*.08; lo-=pad; hi+=pad;
+  const X=i=>L+i/60*(W-L-R), Y=v=>T+(hi-v)/(hi-lo)*(H-T-B);
+  const path=a=>a.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join('');
+  const step=(hi-lo)>240?100:50; let s='';
+  for(let t=Math.ceil(lo/step)*step;t<=hi;t+=step)
+    s+=`<path class="axis" d="M${L},${Y(t)}H${W-R}" ${t===0?'style="stroke:var(--muted)"':''}/><text x="${L-6}" y="${Y(t)+4}" text-anchor="end">${t<0?'−':''}$${Math.abs(t)}</text>`;
+  s+=`<text x="${L}" y="${H-5}">bet 1</text><text x="${W-R}" y="${H-5}" text-anchor="end">bet 60</text>`;
+  s+=`<path d="${path(exp)}" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 3"/>
+      <path d="${path(act)}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+      <circle cx="${X(60)}" cy="${Y(act[60])}" r="3.5" fill="var(--accent)"/><circle cx="${X(60)}" cy="${Y(exp[60])}" r="3" fill="var(--muted)"/>`;
+  let ya=Y(act[60])+4,ye=Y(exp[60])+4; if(Math.abs(ya-ye)<14){ if(ya<ye){ya-=7;ye+=7;}else{ya+=7;ye-=7;} }
+  s+=`<text class="ink" x="${X(60)+8}" y="${ya}">won ${usd0(act[60])}</text><text x="${X(60)+8}" y="${ye}">fair ${usd0(exp[60])}</text>`;
+  $('rc-chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Running profit across 60 bets, actual against expected">${s}</svg>`;
+  const a=act[60],e=exp[60];
+  $('rc-verdict').textContent=
+    a>0&&e<0?`Running hot. Up ${usd0(a).slice(1)}, but they keep taking worse numbers than the close. Expect this to come back down.`:
+    a<0&&e>0?`Cold streak, good process. Down ${usd0(a).slice(1)} while beating the closing line. Keep betting the same way and the results should follow.`:
+    a>=0?'Good prices and good results. This is what a real edge looks like.':
+    'Bad prices and bad results. Time to shop for better lines or cut the stakes.';
+}
+$('rc-b0').addEventListener('click',()=>receipts(0)); $('rc-b1').addEventListener('click',()=>receipts(1)); receipts(0);
+})();
+</script>
+</html>
