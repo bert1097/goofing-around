@@ -75,3 +75,7 @@ or betting tool, each with a small working demo on made-up numbers.
 - **Receipts**: a bet journal that compares results with closing-line value.
 
 Nothing here uses real odds or projections yet.
+
+`sunday-edge/probe_apis.py` checks about 70 free NFL, fantasy and betting data
+endpoints (Sleeper, ESPN, Next Gen Stats, nflverse files, Bovada, Polymarket
+and more) and prints which ones respond. Run `python3 sunday-edge/probe_apis.py`.
