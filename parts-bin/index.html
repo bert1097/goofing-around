@@ -2763,6 +2763,117 @@ const SVGS = {
   `},
 };
 
+/* ================= Per-model silhouettes =================
+   Pistols are drawn from a few measurements per model (slide length, grip length, slide height,
+   nose shape, beavertail, serrations, comp); rifles and shotguns have a drawing per family.
+   Stylized for telling models apart, not exact outlines. */
+const PISTOL_PROFILES = {
+  "glock-17": { len: 360, grip: 140, nose: "square", front: true, ang: .2 },
+  "glock-19": { len: 326, grip: 122, nose: "square", front: true, ang: .2 },
+  "glock-26": { len: 292, grip: 94, nose: "square", front: true, ang: .2 },
+  "glock-43x-48": { len: 300, grip: 128, sh: 44, nose: "square", front: true, ang: .2, slim: true },
+  "sig-p365": { len: 262, grip: 98, sh: 46, nose: "taper", beaver: true, front: true, ang: .15, slim: true },
+  "sig-p365xl": { len: 298, grip: 116, sh: 46, nose: "taper", beaver: true, front: true, ang: .15, slim: true },
+  "sig-p365-macro": { len: 300, grip: 120, sh: 46, nose: "taper", beaver: true, front: true, comp: true, ang: .15, slim: true },
+  "sig-p320": { len: 360, grip: 138, nose: "taper", beaver: true, front: true, ang: .15 },
+  "sw-mp2": { len: 340, grip: 130, nose: "round", beaver: true, scallop: true, ang: .17 },
+  "sw-shield-plus": { len: 278, grip: 106, sh: 44, nose: "round", beaver: true, scallop: true, ang: .17, slim: true },
+  "spr-hellcat": { len: 266, grip: 98, sh: 46, nose: "square", beaver: true, front: true, ang: .17, slim: true },
+  "cz-p10c": { len: 330, grip: 124, nose: "round", beaver: true, front: true, ang: .16 },
+};
+const DEFAULT_PISTOL = { len: 330, grip: 124, nose: "square", ang: .18 };
+
+function pistolArt(o, iface) {
+  const len = o.len, sh = o.sh || 52, grip = o.grip, ang = o.ang ?? .18;
+  const x0 = 150, x1 = x0 + len, top = 96, bot = top + sh, fy = bot - 1;
+  const dx = Math.round((360 - len) / 2);
+  const rail = iface && iface.light_mount ? iface.light_mount !== "none" : true;
+  const dcBot = fy + (rail ? 27 : 21);
+  const gBot = fy + 28 + grip;
+  const s1 = Math.round((gBot - (fy + 60)) * ang);
+  const back = o.beaver ? `L${x0 + 18} ${fy + 45} Q${x0 - 26} ${fy + 26} ${x0 - 8} ${fy} Z` : `L${x0 + 18} ${fy + 45} Q${x0} ${fy + 25} ${x0 + 10} ${fy} Z`;
+  const frame = `M${o.beaver ? x0 - 8 : x0 + 10} ${fy} L${x1 - 10} ${fy} L${x1 - 10} ${dcBot} L${x0 + 202} ${dcBot} Q${x0 + 204} ${fy + 69} ${x0 + 168} ${fy + 71} L${x0 + 128} ${fy + 71} Q${x0 + 116} ${fy + 69} ${x0 + 112} ${fy + 60} L${x0 + 112 - s1} ${gBot - 12} Q${x0 + 110 - s1} ${gBot} ${x0 + 96 - s1} ${gBot} L${x0 + 28 - s1} ${gBot} Q${x0 + 12 - s1} ${gBot} ${x0 + 14 - s1} ${gBot - 14} ${back} M${x0 + 120} ${fy + 31} L${x0 + 188} ${fy + 31} Q${x0 + 190} ${fy + 59} ${x0 + 164} ${fy + 61} L${x0 + 134} ${fy + 61} Q${x0 + 124} ${fy + 59} ${x0 + 122} ${fy + 51} Z`;
+  let texture = "";
+  for (let i = 0; i < 6; i++) { const gx = x0 + 30 + i * 12; texture += `M${gx} ${fy + 62} L${gx - s1} ${gBot - 16} `; }
+  const slide = o.nose === "taper" ? `M${x0 + 6} ${top} H${x1 - 18} L${x1} ${top + 16} V${bot} H${x0} V${top + 6} Q${x0} ${top} ${x0 + 6} ${top} Z`
+    : o.nose === "round" ? `M${x0 + 6} ${top} H${x1 - 24} Q${x1} ${top} ${x1} ${top + 22} V${bot} H${x0} V${top + 6} Q${x0} ${top} ${x0 + 6} ${top} Z`
+    : `M${x0 + 6} ${top} H${x1 - 6} Q${x1} ${top} ${x1} ${top + 6} V${bot} H${x0} V${top + 6} Q${x0} ${top} ${x0 + 6} ${top} Z`;
+  const serr = (xa, n) => { let d = ""; for (let i = 0; i < n; i++) d += o.scallop ? `M${xa + i * 10} ${top + 14} V${bot - 12} ` : `M${xa + i * 10} ${top + 8} V${bot - 6} `; return d; };
+  const lw = Math.min(112, x1 - 16 - (x0 + 210)), lx = x1 - 14 - lw;
+  const comp = o.comp ? `<g fill="rgba(0,0,0,.45)"><rect x="${x1 - 44}" y="${top + 1}" width="8" height="7" rx="2"/><rect x="${x1 - 30}" y="${top + 1}" width="8" height="7" rx="2"/></g><path d="M${x1 - 52} ${top} V${bot}" stroke="rgba(0,0,0,.35)" stroke-width="2"/>` : "";
+  const art = `<g transform="translate(${dx} 0)">
+    <g class="acc slot" data-slot="holster"><path class="tint" d="M${x0 + 150} 78 L${x1 + 38} 78 L${x1 + 42} ${fy + 37} L${x0 + 222} ${fy + 89} L${x0 + 150} ${fy + 67} Z" fill="#3a3833" stroke-linejoin="round"/><path class="deco" d="M${x0 + 168} 92 L${x1 + 26} 92" stroke="#57534b" stroke-width="2" stroke-dasharray="3 5"/></g>
+    <g class="base"><rect class="steel2" x="${x1 - 10}" y="${top + 10}" width="16" height="18" rx="2"/></g>
+    <g class="base"><path class="fin-b" fill-rule="evenodd" d="${frame}"/><g opacity=".22" stroke="#000" stroke-width="1.5"><path d="${texture}"/></g>
+      ${rail ? `<g fill="rgba(0,0,0,.3)"><rect x="${x1 - 70}" y="${dcBot - 7}" width="9" height="4"/><rect x="${x1 - 54}" y="${dcBot - 7}" width="9" height="4"/><rect x="${x1 - 38}" y="${dcBot - 7}" width="9" height="4"/></g>` : ""}</g>
+    <g class="base"><path class="fin-a" d="${slide}"/><rect class="cut" x="${x0 + 150}" y="${top + 5}" width="${Math.min(62, len - 200)}" height="14" rx="2"/>
+      <g stroke="rgba(0,0,0,.35)" stroke-width="${o.scallop ? 4 : 3}" stroke-linecap="round"><path d="${serr(x0 + 16, 5)}${o.front ? serr(x1 - 66, 4) : ""}"/></g>${comp}</g>
+    <g data-if="optic:glock-mos"><rect x="${x0 + 62}" y="${top - 4}" width="58" height="5" rx="1" fill="rgba(0,0,0,.35)"/></g>
+    <g class="base slot" data-slot="controls"><rect class="steel2 tint" x="${x0 + 86}" y="${fy - 1}" width="44" height="8" rx="3"/></g>
+    <g class="base slot" data-slot="trigger"><path class="steel2 tint" d="M${x0 + 148} ${fy + 31} Q${x0 + 140} ${fy + 47} ${x0 + 147} ${fy + 59} L${x0 + 154} ${fy + 59} Q${x0 + 149} ${fy + 45} ${x0 + 157} ${fy + 31} Z"/></g>
+    <g class="base slot" data-slot="magazine"><rect class="steel2 tint" x="${x0 + 10 - s1}" y="${gBot - 8}" width="${86}" height="12" rx="3"/></g>
+    <g class="acc slot" data-slot="magazine"><rect class="tint" x="${x0 + 8 - s1}" y="${gBot - 8}" width="90" height="24" rx="5" fill="#1c1d1f"/><rect class="deco" x="${x0 + 18 - s1}" y="${gBot + 6}" width="70" height="4" rx="2" fill="var(--accent)"/></g>
+    <g class="base slot" data-slot="sights"><rect class="steel2 tint" x="${x1 - 22}" y="${top - 8}" width="9" height="9"/><rect class="steel2 tint" x="${x0 + 10}" y="${top - 10}" width="18" height="11"/></g>
+    <g class="acc slot" data-slot="sights">{{SIGHTS}}</g>
+    <g class="acc slot" data-slot="optic">{{OPTIC}}</g>
+    <g class="acc slot" data-slot="light"><rect class="tint" x="${lx}" y="${fy + 27}" width="${lw}" height="34" rx="7" fill="#1b1c1e"/><rect class="deco" x="${lx + lw - 4}" y="${fy + 29}" width="9" height="30" rx="2" fill="#fff6c8"/><path class="deco" d="M${lx + lw + 5} ${fy + 29} L${x1 + 150} ${fy + 3} L${x1 + 150} ${fy + 85} L${lx + lw + 5} ${fy + 59} Z" fill="url(#beam)"/></g>
+  </g>`;
+  const P = (x, y) => [x + dx, y];
+  return {
+    vb: "0 0 640 340", art, rx: x0 + 6, fx: x1 - 24,
+    pins: { optic: P(x0 + 90, 34), sights: P(x1 - 16, 58), trigger: P(x0 + 162, fy + 93), light: P(lx + lw / 2, fy + 79), magazine: P(x0 + 124 - s1, gBot - 4), controls: P(x0 + 108, 126), holster: P(Math.min(x1 + 70, 600 - dx), 120), finish: P(x0 + len * .62, 76) },
+  };
+}
+
+const LONG_ART = {
+  ak: { vb: "0 0 820 280", pins: { optic: [300, 40], sights: [436, 76], charging: [410, 96], handguard: [484, 86], light: [500, 192], muzzle: [764, 100], magazine: [452, 226], trigger: [314, 204], grip: [212, 248], stock: [110, 96], finish: [600, 64] }, art: `
+    <g class="base slot" data-slot="stock"><path class="fin-b tint" d="M40 128 L198 116 L202 152 L64 198 Q40 202 40 182 Z"/></g>
+    <g class="base slot" data-slot="handguard"><rect class="fin-b tint" x="424" y="126" width="122" height="26" rx="8"/><rect class="fin-b" x="424" y="108" width="140" height="15" rx="6"/></g>
+    <g class="base"><rect class="steel" x="546" y="128" width="198" height="10"/><rect class="steel2" x="560" y="102" width="26" height="30" rx="3"/><path class="steel2" d="M690 128 L698 94 H706 L714 128 Z"/></g>
+    <g class="base slot" data-slot="muzzle"><path class="steel2 tint" d="M744 124 L776 120 L778 146 L744 142 Z"/></g>
+    <g class="acc slot" data-slot="muzzle"><path class="tint" fill="#1c1d1f" d="M742 120 L784 116 L786 150 L742 146 Z"/></g>
+    <g class="base"><path class="fin-a" d="M198 152 V120 Q198 110 210 110 H406 Q420 110 424 122 V152 Z"/><rect class="cut" x="300" y="118" width="62" height="12" rx="2"/><path d="M236 136 L322 141" stroke="#111" stroke-width="5" stroke-linecap="round"/><circle cx="216" cy="142" r="3" fill="rgba(0,0,0,.4)"/><circle cx="410" cy="142" r="3" fill="rgba(0,0,0,.4)"/>
+      <path d="M284 152 L284 176 L338 176 L346 152" fill="none" stroke="var(--fin-a, #2a2b2e)" stroke-width="5"/></g>
+    <g class="base slot" data-slot="charging"><circle class="steel2 tint" cx="410" cy="124" r="6"/></g>
+    <g class="base slot" data-slot="trigger"><path class="steel2 tint" d="M306 152 Q300 166 306 176 L312 176 Q308 164 314 152 Z"/></g>
+    <g class="base slot" data-slot="grip"><path class="steel tint" d="M246 152 L228 224 Q226 234 238 234 L260 234 Q268 234 270 226 L278 152 Z"/></g>
+    <g class="base slot" data-slot="magazine"><path class="steel tint" d="M346 152 L394 152 Q400 198 436 240 L402 258 Q360 212 346 152 Z"/></g>
+    <g class="base"><path class="steel2" d="M424 110 L428 100 H444 L448 110 Z"/></g>
+    <g class="acc slot" data-slot="sights"><path class="tint" fill="#141516" d="M422 110 L426 94 H446 L450 110 Z"/></g>
+    <g class="acc slot" data-slot="optic">{{OPTIC}}</g>
+    <g class="acc slot" data-slot="light"><rect class="tint" x="470" y="152" width="58" height="18" rx="5" fill="#1b1c1e"/><rect class="deco" x="526" y="153" width="5" height="16" fill="#fff6c8"/></g>
+  `, optic: [300, 110] },
+  r1022: { vb: "0 0 820 280", pins: { optic: [292, 40], sights: [242, 64], charging: [330, 82], handguard: [470, 90], light: [624, 178], muzzle: [744, 90], magazine: [376, 220], trigger: [290, 214], grip: [232, 230], stock: [100, 92], finish: [470, 56] }, art: `
+    <g class="base slot" data-slot="stock"><path class="fin-b tint" d="M40 120 L212 114 Q220 128 232 142 H566 Q576 142 574 150 L566 158 H314 Q284 160 264 176 L216 196 Q196 202 176 200 L62 196 Q40 196 40 178 Z"/></g>
+    <g class="base"><rect class="steel" x="372" y="112" width="352" height="12" rx="2"/><rect class="steel2" x="548" y="108" width="12" height="48" rx="2"/><path class="steel2" d="M702 112 L706 100 H712 L716 112 Z"/><rect class="steel2" x="430" y="104" width="12" height="8"/></g>
+    <g class="base slot" data-slot="muzzle"><rect class="steel2 tint" x="716" y="110" width="10" height="16" rx="1"/></g>
+    <g class="acc slot" data-slot="muzzle"><rect class="tint" x="714" y="106" width="28" height="24" rx="3" fill="#1c1d1f"/></g>
+    <g class="base"><path class="fin-a" d="M214 142 V112 Q214 100 228 100 H360 Q372 100 374 112 V142 Z"/><rect class="cut" x="272" y="110" width="40" height="12" rx="2"/>
+      <path d="M262 158 L262 180 L312 180 L318 158" fill="none" stroke="var(--fin-a, #2a2b2e)" stroke-width="5"/></g>
+    <g class="base slot" data-slot="charging"><rect class="steel2 tint" x="314" y="122" width="18" height="6" rx="2"/></g>
+    <g class="base slot" data-slot="trigger"><path class="steel2 tint" d="M284 158 Q278 170 284 180 L290 180 Q286 168 292 158 Z"/></g>
+    <g class="base slot" data-slot="magazine"><rect class="steel2 tint" x="326" y="142" width="34" height="18" rx="3"/></g>
+    <g class="acc slot" data-slot="magazine"><path class="tint" fill="#1c1d1f" d="M326 142 H360 Q364 198 392 242 L364 256 Q334 206 326 142 Z"/></g>
+    <g class="acc slot" data-slot="sights"><path class="tint" fill="#141516" d="M232 100 V84 H252 V100 Z"/><circle class="deco" cx="242" cy="90" r="4" fill="none" stroke="#8a8d93" stroke-width="2"/></g>
+    <g class="acc slot" data-slot="optic">{{OPTIC}}</g>
+    <g class="acc slot" data-slot="light"><rect class="tint" x="596" y="126" width="56" height="16" rx="5" fill="#1b1c1e"/></g>
+  `, optic: [292, 100] },
+};
+
+function artFor(plat, iface) {
+  const key = plat.art || plat.id;
+  if (plat.type === "Pistol") return pistolArt(PISTOL_PROFILES[key] || DEFAULT_PISTOL, iface);
+  if (plat.type === "Rifle") {
+    if (key === "ak" || plat.base?.receiver || (plat.options || []).some(o => o.id === "receiver")) return LONG_ART.ak;
+    if (key === "ruger-1022" || (plat.options || []).some(o => o.choices.some(c => c.set.action))) return LONG_ART.r1022;
+    return { ...SVGS.Rifle, optic: [282, 102] };
+  }
+  if (key === "moss-500") return { ...SVGS.Shotgun, optic: [282, 98], art: SVGS.Shotgun.art
+    .replace('d="M40 122 L222 110 L222 152 Q172 158 142 178 L62 190 Q40 192 40 172 Z"', 'd="M40 128 L220 112 L220 152 Q182 158 154 172 L62 184 Q40 186 40 168 Z"')
+    .replace('<rect class="fin-a" x="214" y="98" width="162" height="52" rx="5"/>', '<path class="fin-a" d="M214 150 V100 H376 V150 Q300 160 214 150 Z"/><circle class="steel2" cx="232" cy="96" r="6"/>') };
+  return { ...SVGS.Shotgun, optic: [282, 98], art: SVGS.Shotgun.art.replace('<rect class="cut" x="262" y="108" width="58" height="16" rx="2"/>', '<rect class="cut" x="262" y="108" width="58" height="16" rx="2"/><path d="M226 140 Q296 150 368 140" stroke="rgba(0,0,0,.3)" stroke-width="2" fill="none"/>') };
+}
+
 /* ================= State ================= */
 const STORE_KEY = "partsbin.v1";
 const BANNER_KEY = "partsbin.banner";
@@ -3026,12 +3137,12 @@ function pistolOpticSide(look) {
     <rect class="deco" x="${x + 4}" y="${by - 9}" width="11" height="5" rx="1" fill="#44484e"/>
     <rect class="deco" x="${x + w * 0.34}" y="${by - h * 0.55}" width="8" height="5" rx="1.5" fill="#44484e"/>`;
 }
-function pistolSightsSide(tall, glow) {
+function pistolSightsSide(tall, glow, rx = 156, fx = 486) {
   const fy = tall ? 70 : 84, ry = tall ? 68 : 82;
   const dot = glow ? "#8cff6b" : "#f2f2f2";
-  return `<path class="tint" fill="#141516" d="M486 97 V${fy + 3} Q486 ${fy} 489 ${fy} H496 Q499 ${fy} 499 ${fy + 3} V97 Z"/>
-    <path class="tint" fill="#141516" d="M156 97 V${ry} H183 V97 Z"/><rect class="deco" x="166" y="${ry}" width="7" height="5" fill="var(--stage-b)"/>
-    <circle class="deco" cx="492.5" cy="${fy + 6}" r="3" fill="${dot}"/>`;
+  return `<path class="tint" fill="#141516" d="M${fx} 97 V${fy + 3} Q${fx} ${fy} ${fx + 3} ${fy} H${fx + 10} Q${fx + 13} ${fy} ${fx + 13} ${fy + 3} V97 Z"/>
+    <path class="tint" fill="#141516" d="M${rx} 97 V${ry} H${rx + 27} V97 Z"/><rect class="deco" x="${rx + 10}" y="${ry}" width="7" height="5" fill="var(--stage-b)"/>
+    <circle class="deco" cx="${fx + 6.5}" cy="${fy + 6}" r="3" fill="${dot}"/>`;
 }
 function longOpticSide(look, cx, by) {
   const L = cx - 44;
@@ -3059,12 +3170,12 @@ function longOpticSide(look, cx, by) {
 
 // Fill the per-part optic and sight drawings into a firearm's side art.
 function sideArt(plat, b, iface) {
-  const a = SVGS[plat.type] || SVGS.Pistol;
+  const a = artFor(plat, iface);
   const optic = partById(b?.picks?.optic);
   const look = opticLook(optic) || (plat.type === "Pistol" ? "open" : "reflex");
   const sightsPart = partById(b?.picks?.sights);
-  const opticArt = plat.type === "Pistol" ? pistolOpticSide(look) : longOpticSide(look, 282, plat.type === "Shotgun" ? 98 : 102);
-  return a.art.replace("{{OPTIC}}", opticArt).replace("{{SIGHTS}}", pistolSightsSide(iface?.sights_height === "cowitness", nightSights(sightsPart)));
+  const opticArt = plat.type === "Pistol" ? pistolOpticSide(look) : longOpticSide(look, a.optic[0], a.optic[1]);
+  return a.art.replace("{{OPTIC}}", opticArt).replace("{{SIGHTS}}", pistolSightsSide(iface?.sights_height === "cowitness", nightSights(sightsPart), a.rx, a.fx));
 }
 
 // ---- rear view ----
@@ -3082,14 +3193,16 @@ function rearPistol(plat, b, iface) {
   const glow = nightSights(partById(b.picks.sights)) ? "#8cff6b" : "#f2f2f2";
   const top = tall ? 70 : 88;
   const ext = !!b.picks.magazine;
-  let s = `
-    <path class="fin-b" d="M276 186 L366 186 L360 318 Q358 326 350 326 L290 326 Q282 326 280 318 Z"/>
-    <g opacity=".22" stroke="#000" stroke-width="1.5"><path d="M292 200 V316 M304 200 V318 M316 200 V318 M328 200 V318 M340 200 V318 M352 200 V316"/></g>
-    <rect class="steel2" x="${ext ? 282 : 288}" y="320" width="${ext ? 76 : 64}" height="${ext ? 18 : 10}" rx="3"/>
-    ${ext ? `<rect x="292" y="330" width="56" height="3" rx="1.5" fill="var(--accent)"/>` : ""}
+  const prof = PISTOL_PROFILES[plat.art || plat.id] || DEFAULT_PISTOL;
+  const k = prof.slim ? .84 : 1, gb = Math.min(186 + prof.grip, 326);
+  let s = `<g transform="translate(320 0) scale(${k} 1) translate(-320 0)">
+    <path class="fin-b" d="M276 186 L366 186 L360 ${gb - 8} Q358 ${gb} 350 ${gb} L290 ${gb} Q282 ${gb} 280 ${gb - 8} Z"/>
+    <g opacity=".22" stroke="#000" stroke-width="1.5"><path d="M292 200 V${gb - 10} M304 200 V${gb - 8} M316 200 V${gb - 8} M328 200 V${gb - 8} M340 200 V${gb - 8} M352 200 V${gb - 10}"/></g>
+    <rect class="steel2" x="${ext ? 282 : 288}" y="${gb - 6}" width="${ext ? 76 : 64}" height="${ext ? 18 : 10}" rx="3"/>
+    ${ext ? `<rect x="292" y="${gb + 4}" width="56" height="3" rx="1.5" fill="var(--accent)"/>` : ""}
     <path class="fin-b" d="M266 150 H374 V178 Q374 190 362 190 H278 Q266 190 266 178 Z"/>
     <path class="fin-a" d="M262 152 V112 Q262 96 278 94 H362 Q378 96 378 112 V152 Z"/>
-    <rect class="steel2" x="306" y="112" width="28" height="26" rx="3"/>
+    <rect class="steel2" x="306" y="112" width="28" height="26" rx="3"/></g>
     <rect class="steel2" x="${cx - 4}" y="${top}" width="8" height="${94 - top}"/>
     <circle cx="${cx}" cy="${top + 4}" r="3.2" fill="${glow}"/>`;
   if (optic) {
@@ -3111,6 +3224,22 @@ function rearPistol(plat, b, iface) {
 function rearLong(plat, b, iface) {
   const cx = 320, shot = plat.type === "Shotgun";
   const optic = partById(b.picks.optic), look = opticLook(optic);
+  const fam = artFor(plat, iface) === LONG_ART.ak ? "ak" : artFor(plat, iface) === LONG_ART.r1022 ? "r1022" : "";
+  if (fam) {
+    const ak = fam === "ak";
+    let s = ak
+      ? `<path class="fin-b" d="M290 240 H350 L366 340 H274 Z"/>
+         <path class="fin-a" d="M280 210 V150 Q280 128 302 126 H338 Q360 128 360 150 V210 Z"/>
+         <path class="steel2" d="M300 126 L304 110 H336 L340 126 Z"/><rect fill="var(--stage-b)" x="316" y="110" width="8" height="7"/>
+         <path class="steel2" d="M317 117 V96 H323 V117 Z"/>`
+      : `<path class="fin-b" d="M284 176 H356 L370 340 H270 Z"/>
+         <path class="fin-a" d="M290 180 V130 Q290 112 320 110 Q350 112 350 130 V180 Z"/>
+         <path class="steel2" d="M306 110 V100 H334 V110 Z"/><rect fill="var(--stage-b)" x="316" y="100" width="8" height="6"/>
+         <path class="steel2" d="M318 106 V92 H322 V106 Z"/>`;
+    if (b.picks.sights && !ak) s += `<path fill="#141516" fill-rule="evenodd" d="M296 96 V60 H344 V96 Z M${cx} 78 m-6 0 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0 Z"/>`;
+    const cap = b.picks.sights && !ak ? "Aperture sight: center the front blade in the rear ring." : "Iron sights: put the front post in the rear notch, tops even.";
+    return { svg: s, cap };
+  }
   let s = shot
     ? `<path class="fin-b" d="M284 236 H356 L362 340 H278 Z"/>
        <rect class="fin-a" x="276" y="118" width="88" height="120" rx="12"/>
@@ -3242,9 +3371,11 @@ function renderStepper(plat) {
 }
 
 // Small, static drawing of a firearm for cards and the setup stage.
-function gunSvg(plat, b, iface, cls = "") {
-  const art = SVGS[plat.type] || SVGS.Pistol;
-  const html = `<svg class="${cls}" viewBox="${art.vb}" style="--fin-a:${esc(b?.finish?.a || FINISHES[0][1])};--fin-b:${esc(b?.finish?.b || FINISHES[0][1])}" aria-hidden="true">${sideArt(plat, b, iface)}</svg>`;
+// Cards crop tighter, with one frame per type so smaller models still look smaller.
+const THUMB_VB = { Pistol: "104 74 432 264", Rifle: "24 44 776 230", Shotgun: "24 70 776 140" };
+function gunSvg(plat, b, iface, cls = "", thumb = false) {
+  const art = artFor(plat, iface);
+  const html = `<svg class="${cls}" viewBox="${thumb ? THUMB_VB[plat.type] || art.vb : art.vb}" style="--fin-a:${esc(b?.finish?.a || FINISHES[0][1])};--fin-b:${esc(b?.finish?.b || FINISHES[0][1])}" aria-hidden="true">${sideArt(plat, b, iface)}</svg>`;
   return html.replace(/<g data-if="(\w+):([^"]+)">/g, (m, k, v) => String(iface[k]) === v ? "<g>" : '<g style="display:none">');
 }
 
@@ -3255,7 +3386,7 @@ function renderPick() {
   const q = pState.q.trim().toLowerCase();
   const counts = {}; db.parts.forEach(p => p.fits.forEach(f => counts[f] = (counts[f] || 0) + 1));
   const card = p => `<button type="button" class="gun" data-gun="${esc(p.id)}" ${p.id === build.platform && (Object.keys(build.picks).length || build.extras.length) ? 'aria-current="true"' : ""}>
-      <div class="thumb">${gunSvg(p, null, resolveIface(p, {}))}</div>
+      <div class="thumb">${gunSvg(p, null, resolveIface(p, {}), "", true)}</div>
       <div class="nm">${esc(p.name)}</div>
       <div class="meta"><span>${esc(p.covers || p.type)}</span><span>${counts[p.id] || 0} parts fit</span>${p.id === build.platform && (Object.keys(build.picks).length || build.extras.length) ? `<span style="color:var(--accent);font-weight:600">Current build</span>` : ""}</div>
     </button>`;
@@ -3317,7 +3448,7 @@ function renderParts() {
   $("#stageName").textContent = build.name || plat.name;
 
   // stage art
-  const art = SVGS[plat.type] || SVGS.Pistol;
+  const art = artFor(plat, ev.final);
   const pins = slots.map((s, i) => {
     const [x, y] = art.pins[s.id] || [20 + i * 30, 20];
     const pid = build.picks[s.id];
@@ -3874,7 +4005,7 @@ $("#fAdd").addEventListener("click", () => {
   const name = $("#fName").value.trim(); if (!name) { $("#fName").focus(); return; }
   let id = slug(name); while (platformById(id)) id += "-" + uid().slice(0, 3);
   const src = platformById($("#fCopy").value);
-  const np = { id, name, type: src ? src.type : $("#fType").value, covers: $("#fCovers").value.trim(), base: src ? clone(src.base) : {}, options: src ? clone(src.options) : [], sources: [] };
+  const np = { id, name, type: src ? src.type : $("#fType").value, covers: $("#fCovers").value.trim(), base: src ? clone(src.base) : {}, options: src ? clone(src.options) : [], sources: [], ...(src ? { art: src.art || src.id } : {}) };
   db.platforms.push(np);
   if (src && $("#fCopyFits").checked) db.parts.forEach(p => { if (p.fits.includes(src.id)) p.fits.push(id); });
   $("#fName").value = ""; $("#fCovers").value = "";
