@@ -1,0 +1,1125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parts Bin</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Archivo+Narrow:wght@500;600;700&display=swap">
+<style>
+  /* Layout: a product-customizer studio (stage + option rail + slot strip) over a plain parts database */
+  :root {
+    --bg: #f3f2ef;
+    --panel: #ffffff;
+    --panel-2: #f8f7f4;
+    --ink: #17181a;
+    --ink-2: #55585e;
+    --ink-3: #8a8d93;
+    --line: #e2e0db;
+    --accent: #ff5a1f;
+    --accent-ink: #ffffff;
+    --accent-soft: #fff0e9;
+    --good: #1f8a4c;
+    --bad: #c23a2b;
+    --stage-a: #ffffff;
+    --stage-b: #e9e7e2;
+    --steel: #2b2c2f;
+    --steel-2: #1c1d1f;
+    --cut: #46484c;
+    --shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 24px rgba(0,0,0,.06);
+    --font: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --cond: "Archivo Narrow", "Arial Narrow", system-ui, sans-serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121315;
+      --panel: #1b1c1f;
+      --panel-2: #222326;
+      --ink: #f1f0ed;
+      --ink-2: #b4b6bb;
+      --ink-3: #7c7f85;
+      --line: #2e3034;
+      --accent-soft: #3a2217;
+      --good: #4cc483;
+      --bad: #ff7a66;
+      --stage-a: #2a2b2f;
+      --stage-b: #17181a;
+      --steel: #0e0f10;
+      --steel-2: #050506;
+      --cut: #3a3c40;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.3);
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 var(--font); }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  a { color: inherit; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 16px; }
+
+  header.top { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  header.top .wrap { display: flex; align-items: center; gap: 16px; height: 56px; }
+  .logo { font-weight: 800; letter-spacing: -.02em; font-size: 20px; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .logo b { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 7px; background: var(--accent); color: var(--accent-ink); font-size: 14px; }
+  nav.tabs { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; flex: 1; }
+  nav.tabs button { border: 0; background: none; padding: 8px 12px; border-radius: 999px; font-weight: 600; color: var(--ink-2); cursor: pointer; white-space: nowrap; }
+  nav.tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+  details.menu { position: relative; }
+  details.menu summary { list-style: none; cursor: pointer; padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; font-weight: 600; font-size: 14px; background: var(--panel); }
+  details.menu summary::-webkit-details-marker { display: none; }
+  details.menu .pop { position: absolute; right: 0; top: calc(100% + 6px); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 6px; min-width: 210px; display: grid; }
+  details.menu .pop button { text-align: left; border: 0; background: none; padding: 9px 10px; border-radius: 8px; cursor: pointer; }
+  details.menu .pop button:hover { background: var(--panel-2); }
+  details.menu .pop hr { border: 0; border-top: 1px solid var(--line); margin: 4px 0; }
+
+  .banner { margin: 14px 0 0; padding: 10px 14px; border-radius: 12px; background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); font-size: 14px; display: flex; gap: 12px; align-items: flex-start; }
+  .banner p { margin: 0; flex: 1; }
+  .x { border: 0; background: none; cursor: pointer; font-size: 18px; line-height: 1; color: var(--ink-2); padding: 2px 6px; }
+
+  .btn { border: 1px solid var(--line); background: var(--panel); padding: 8px 14px; border-radius: 999px; font-weight: 600; cursor: pointer; font-size: 14px; white-space: nowrap; }
+  .btn:hover { border-color: var(--ink-3); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .btn.dark { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .btn.small { padding: 5px 10px; font-size: 13px; }
+  .btn.danger { color: var(--bad); }
+  .muted { color: var(--ink-2); }
+  .faint { color: var(--ink-3); }
+  .badge { display: inline-block; font: 600 11px/1 var(--cond); letter-spacing: .04em; text-transform: uppercase; padding: 4px 6px; border-radius: 5px; background: var(--panel-2); border: 1px solid var(--line); color: var(--ink-2); vertical-align: 1px; }
+  .badge.ok { color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, transparent); }
+  .chip { display: inline-block; padding: 3px 9px; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--line); font-size: 12.5px; margin: 0 4px 4px 0; cursor: pointer; }
+  .chip:hover { border-color: var(--ink-3); }
+  .price { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .est { font-weight: 600; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+  input[type=text], input[type=number], input[type=date], input[type=url], input[type=search], select, textarea {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; min-width: 0; width: 100%;
+  }
+  input:focus, select:focus, textarea:focus, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  label.f { display: grid; gap: 4px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+
+  main { padding: 16px 0 60px; }
+
+  /* ---------- Build (customizer) ---------- */
+  .build-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-bottom: 14px; }
+  .build-head .f { flex: 1 1 220px; }
+  .total { margin-left: auto; text-align: right; }
+  .total .amt { font-size: 30px; font-weight: 800; letter-spacing: -.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .total .sub { font-size: 12.5px; color: var(--ink-2); margin-top: 4px; }
+  .build-main { display: grid; grid-template-columns: minmax(0, 1fr) 360px; grid-template-areas: "stage picker" "strip strip"; gap: 16px; }
+  .build-main .stage { grid-area: stage; }
+  .build-main .picker { grid-area: picker; }
+  .build-main .strip { grid-area: strip; }
+  .stage { position: relative; border-radius: 20px; background: radial-gradient(120% 90% at 50% 35%, var(--stage-a), var(--stage-b)); box-shadow: var(--shadow); overflow: hidden; min-height: 320px; display: grid; }
+  .stage svg { width: 100%; height: auto; display: block; align-self: center; }
+  .stage .floor { position: absolute; left: 10%; right: 10%; bottom: 8%; height: 18px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.18), transparent); filter: blur(2px); pointer-events: none; }
+  .stage .tag { position: absolute; left: 16px; top: 14px; font: 700 12px/1 var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  .stage .tag strong { display: block; font: 800 22px/1.1 var(--font); letter-spacing: -.02em; text-transform: none; color: var(--ink); margin-top: 4px; }
+
+  svg .base { transition: fill .35s ease; }
+  svg .fin-a { fill: var(--fin-a, #2a2b2e); }
+  svg .fin-b { fill: var(--fin-b, #2a2b2e); }
+  svg .steel { fill: var(--steel); }
+  svg .steel2 { fill: var(--steel-2); }
+  svg .cut { fill: var(--cut); }
+  svg .slot { cursor: pointer; }
+  svg .slot.picked .tint { stroke: var(--accent); stroke-width: 2.5; }
+  svg .slot.active .tint { stroke: var(--accent); stroke-width: 2.5; stroke-dasharray: 6 5; animation: march 1s linear infinite; }
+  svg .acc { display: none; }
+  svg .acc.on { display: inline; }
+  svg .acc.on.fresh { animation: pop .35s ease; }
+  svg .acc.ghost { display: inline; opacity: .35; }
+  svg .acc.ghost .tint { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 5 4; fill: none !important; }
+  svg .acc.ghost .deco { display: none; }
+  @keyframes march { to { stroke-dashoffset: -22; } }
+  @keyframes pop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+  svg .pin { cursor: pointer; }
+  svg .pin circle { fill: var(--panel); stroke: var(--ink); stroke-width: 1.5; }
+  svg .pin text { font: 700 12px var(--font); fill: var(--ink); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+  svg .pin.done circle { fill: var(--ink); }
+  svg .pin.done text { fill: var(--bg); }
+  svg .pin.active circle { fill: var(--accent); stroke: var(--accent); }
+  svg .pin.active text { fill: #fff; }
+  svg .pin.empty { opacity: .45; }
+
+  .picker { background: var(--panel); border-radius: 20px; box-shadow: var(--shadow); display: flex; flex-direction: column; min-height: 0; max-height: 640px; }
+  .picker-head { padding: 14px 16px 10px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 8px; }
+  .picker-head .step { font: 700 12px/1 var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  .picker-head h2 { margin: 3px 0 0; font-size: 20px; letter-spacing: -.01em; }
+  .picker-head .nav { margin-left: auto; display: flex; gap: 6px; }
+  .round { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: var(--panel); cursor: pointer; font-size: 16px; display: grid; place-items: center; }
+  .round:disabled { opacity: .35; cursor: default; }
+  .options { overflow-y: auto; padding: 10px; display: grid; gap: 8px; align-content: start; }
+  .opt { text-align: left; border: 1.5px solid var(--line); background: var(--panel); border-radius: 14px; padding: 10px 12px; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; }
+  .opt:hover { border-color: var(--ink-3); }
+  .opt[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+  .opt .brand { font: 700 11.5px/1.2 var(--cond); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .opt .name { font-weight: 700; grid-column: 1; }
+  .opt .meta { grid-column: 1 / -1; font-size: 12.5px; color: var(--ink-2); }
+  .opt .p { grid-row: 1 / span 2; grid-column: 2; text-align: right; align-self: center; }
+  .opt .p small { display: block; font-size: 11.5px; color: var(--ink-3); font-weight: 500; }
+  .opt .more { grid-column: 1 / -1; font-size: 12.5px; color: var(--accent); text-decoration: underline; cursor: pointer; justify-self: start; background: none; border: 0; padding: 2px 0 0; }
+  .empty-slot { padding: 18px 12px; text-align: center; color: var(--ink-2); font-size: 14px; }
+  .swatches { display: flex; flex-wrap: wrap; gap: 10px; padding: 4px 2px 10px; }
+  .sw { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--panel); box-shadow: 0 0 0 1px var(--line); cursor: pointer; position: relative; }
+  .sw[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent); }
+  .sw-label { font-size: 13px; font-weight: 600; color: var(--ink-2); margin: 6px 2px 2px; }
+
+  .strip { display: flex; gap: 8px; overflow-x: auto; padding: 0 2px 4px; margin-top: -4px; scrollbar-width: thin; }
+  .strip button { flex: 0 0 auto; border: 1.5px solid var(--line); background: var(--panel); border-radius: 999px; padding: 7px 12px 7px 7px; display: flex; gap: 8px; align-items: center; cursor: pointer; font-weight: 600; font-size: 14px; }
+  .strip button .n { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; background: var(--panel-2); border: 1px solid var(--line); }
+  .strip button.done .n { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .strip button[aria-current="true"] { border-color: var(--accent); }
+  .strip button[aria-current="true"] .n { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .strip button.empty { opacity: .55; }
+
+  .summary { margin-top: 12px; background: var(--panel); border-radius: 20px; box-shadow: var(--shadow); padding: 6px 16px; }
+  .summary .row { display: grid; grid-template-columns: 120px 1fr auto; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .summary .row:last-child { border-bottom: 0; }
+  .summary .slotname { font: 700 12px var(--cond); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .summary .none { color: var(--ink-3); }
+  .summary .actions { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 0; justify-content: flex-end; }
+
+  /* ---------- Catalog ---------- */
+  .toolbar { display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
+  .count-row { display: flex; align-items: center; gap: 10px; margin: 4px 0 10px; font-size: 14px; color: var(--ink-2); flex-wrap: wrap; }
+  .count-row .btn { margin-left: auto; }
+  table.parts { width: 100%; border-collapse: collapse; background: var(--panel); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
+  table.parts th { text-align: left; font: 700 12px var(--cond); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); padding: 10px 12px; border-bottom: 1px solid var(--line); background: var(--panel-2); }
+  table.parts td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.parts tr:last-child td { border-bottom: 0; }
+  table.parts tbody tr { cursor: pointer; }
+  table.parts tbody tr:hover td { background: var(--panel-2); }
+  table.parts .pn { font-weight: 700; }
+  table.parts .pb { font: 700 11.5px var(--cond); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  table.parts .num { text-align: right; white-space: nowrap; }
+
+  /* ---------- Firearms + builds ---------- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+  .card { background: var(--panel); border-radius: 16px; box-shadow: var(--shadow); padding: 14px; display: grid; gap: 6px; align-content: start; }
+  .card h3 { margin: 0; font-size: 17px; }
+  .card .row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  h2.sec { font-size: 13px; font: 700 13px var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin: 22px 0 10px; }
+  .addbox { background: var(--panel); border-radius: 16px; box-shadow: var(--shadow); padding: 14px; display: grid; grid-template-columns: 2fr 1fr 2fr auto; gap: 8px; align-items: end; }
+  .dots { display: flex; gap: 4px; }
+  .dots span { width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 0 1px var(--line); }
+
+  /* ---------- Dialogs ---------- */
+  dialog { border: 0; border-radius: 20px; padding: 0; width: min(720px, calc(100vw - 24px)); max-height: calc(100vh - 40px); background: var(--panel); color: var(--ink); box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+  dialog::backdrop { background: rgba(10,10,12,.5); }
+  .dlg-head { padding: 16px 18px 12px; border-bottom: 1px solid var(--line); display: flex; gap: 12px; align-items: flex-start; position: sticky; top: 0; background: var(--panel); z-index: 1; }
+  .dlg-head h2 { margin: 2px 0 0; font-size: 21px; letter-spacing: -.01em; }
+  .dlg-body { padding: 14px 18px 18px; display: grid; gap: 14px; }
+  .dlg-body h4 { margin: 0 0 6px; font: 700 12px var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  table.prices { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.prices th { text-align: left; font: 700 11.5px var(--cond); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); padding: 6px 6px; border-bottom: 1px solid var(--line); }
+  table.prices td { padding: 7px 6px; border-bottom: 1px solid var(--line); }
+  table.prices tr.best td { background: color-mix(in srgb, var(--good) 10%, transparent); }
+  .up { color: var(--bad); font-size: 12.5px; }
+  .down { color: var(--good); font-size: 12.5px; }
+  .pform { display: grid; grid-template-columns: 1.4fr .8fr 1fr; gap: 8px; align-items: end; }
+  .pform .wide { grid-column: span 2; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .form-grid .full { grid-column: 1 / -1; }
+  .fits-box { border: 1px solid var(--line); border-radius: 12px; padding: 10px; display: grid; gap: 8px; max-height: 240px; overflow: auto; }
+  .fits-box .grp { font: 700 11.5px var(--cond); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .fits-box .cks { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 4px 10px; }
+  .fits-box label { display: flex; gap: 6px; align-items: center; font-size: 14px; }
+  .dlg-foot { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+  .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-weight: 600; font-size: 14px; z-index: 50; box-shadow: var(--shadow); }
+
+  @media (max-width: 900px) {
+    .build-main { grid-template-columns: 1fr; grid-template-areas: "stage" "strip" "picker"; gap: 10px; }
+    .picker { max-height: none; }
+    .toolbar { grid-template-columns: 1fr 1fr; }
+    .toolbar .q { grid-column: 1 / -1; }
+    .addbox { grid-template-columns: 1fr 1fr; }
+    .addbox .full { grid-column: 1 / -1; }
+  }
+  @media (max-width: 640px) {
+    .logo span { display: none; }
+    .total { margin-left: 0; text-align: left; width: 100%; }
+    .stage { min-height: 0; border-radius: 16px; padding-top: 34px; }
+    svg .pin circle { r: 24px; stroke-width: 2.5; }
+    svg .pin text { font-size: 22px; }
+    .stage .tag strong { font-size: 17px; }
+    .summary .row { grid-template-columns: 1fr auto; }
+    .summary .slotname { grid-column: 1 / -1; }
+    table.parts thead { display: none; }
+    table.parts, table.parts tbody, table.parts tr, table.parts td { display: block; width: 100%; }
+    table.parts tr { border-bottom: 1px solid var(--line); padding: 8px 0; }
+    table.parts td { border: 0; padding: 2px 12px; }
+    table.parts td.num { text-align: left; }
+    table.parts td.cat::before { content: ""; }
+    .pform, .form-grid { grid-template-columns: 1fr; }
+    .pform .wide { grid-column: auto; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="logo"><b>PB</b><span>Parts Bin</span></div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-view="build" aria-selected="true">Build</button>
+      <button role="tab" data-view="catalog" aria-selected="false">Catalog</button>
+      <button role="tab" data-view="firearms" aria-selected="false">Firearms</button>
+      <button role="tab" data-view="builds" aria-selected="false">Saved builds</button>
+    </nav>
+    <details class="menu" id="dataMenu">
+      <summary>Data</summary>
+      <div class="pop">
+        <button data-act="export-json">Export everything (JSON)</button>
+        <button data-act="export-csv">Export parts &amp; prices (CSV)</button>
+        <button data-act="import-json">Import JSON…</button>
+        <hr>
+        <button data-act="reset" class="danger">Reset to starter data</button>
+      </div>
+    </details>
+    <input type="file" id="importFile" accept="application/json,.json" hidden>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="banner" id="banner" hidden>
+    <p><strong>Starter data is unverified.</strong> Claude drafted the parts, fitment and estimated prices from general knowledge, so check the maker's fitment list before you buy. Add real prices from retailers on any part, and tick <em>Verified</em> once you've confirmed a part's fitment. Your changes are saved in this browser; use <em>Data → Export</em> to keep a copy.</p>
+    <button class="x" id="bannerClose" aria-label="Dismiss">×</button>
+  </div>
+</div>
+
+<main class="wrap">
+  <!-- Build -->
+  <section id="view-build">
+    <div class="build-head">
+      <label class="f">Firearm<select id="bPlatform"></select></label>
+      <label class="f">Build name<input type="text" id="bName" placeholder="Name this build"></label>
+      <div class="total">
+        <div class="amt" id="bTotal">$0</div>
+        <div class="sub" id="bTotalSub">Pick parts to start</div>
+      </div>
+    </div>
+    <div class="build-main">
+      <div class="stage" id="stage">
+        <div class="tag"><span id="stageType">Pistol</span><strong id="stageName">—</strong></div>
+        <div class="floor"></div>
+        <div id="svgHost"></div>
+      </div>
+      <aside class="picker">
+        <div class="picker-head">
+          <div>
+            <div class="step" id="pkStep">Step 1 of 7</div>
+            <h2 id="pkTitle">Optic</h2>
+          </div>
+          <div class="nav">
+            <button class="round" id="pkPrev" aria-label="Previous slot">‹</button>
+            <button class="round" id="pkNext" aria-label="Next slot">›</button>
+          </div>
+        </div>
+        <div class="options" id="pkOptions"></div>
+      </aside>
+      <div class="strip" id="strip"></div>
+    </div>
+    <div class="summary">
+      <div id="sumRows"></div>
+      <div class="actions">
+        <button class="btn" id="bClear">Start over</button>
+        <button class="btn" id="bSaveAs" hidden>Save as new</button>
+        <button class="btn primary" id="bSave">Save build</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catalog -->
+  <section id="view-catalog" hidden>
+    <div class="toolbar">
+      <input class="q" type="search" id="cQ" placeholder="Search parts, brands, footprints, notes…">
+      <select id="cPlatform"></select>
+      <select id="cCat"></select>
+      <select id="cBrand"></select>
+      <select id="cSort">
+        <option value="name">Sort: Brand &amp; name</option>
+        <option value="price-asc">Sort: Price, low to high</option>
+        <option value="price-desc">Sort: Price, high to low</option>
+        <option value="recent">Sort: Recently priced</option>
+      </select>
+    </div>
+    <div class="count-row">
+      <span id="cCount"></span>
+      <label><input type="checkbox" id="cPriced"> Only parts with retailer prices</label>
+      <button class="btn dark" id="cAdd">+ Add part</button>
+    </div>
+    <table class="parts">
+      <thead><tr><th>Part</th><th>Category</th><th>Fits</th><th class="num">Best price</th></tr></thead>
+      <tbody id="cRows"></tbody>
+    </table>
+  </section>
+
+  <!-- Firearms -->
+  <section id="view-firearms" hidden>
+    <div class="addbox">
+      <label class="f">Firearm or platform<input type="text" id="fName" placeholder="e.g. Glock 45"></label>
+      <label class="f">Type<select id="fType"><option>Pistol</option><option>Rifle</option><option>Shotgun</option></select></label>
+      <label class="f full">Covers<input type="text" id="fCovers" placeholder="e.g. Gen 5, incl. MOS"></label>
+      <button class="btn dark" id="fAdd">Add firearm</button>
+    </div>
+    <div id="fList"></div>
+  </section>
+
+  <!-- Builds -->
+  <section id="view-builds" hidden>
+    <div id="buildList"></div>
+  </section>
+</main>
+
+<dialog id="dlgPart"></dialog>
+<dialog id="dlgEdit"></dialog>
+
+<script>
+"use strict";
+
+/* ================= Starter data =================
+   Drafted from general knowledge. Fitment and prices are UNVERIFIED estimates. */
+const SEED_PLATFORMS = [
+  ["glock-17", "Glock 17", "Pistol", "Gen 3–5, incl. MOS"],
+  ["glock-19", "Glock 19", "Pistol", "Gen 3–5, incl. MOS"],
+  ["glock-26", "Glock 26", "Pistol", "Gen 3–5, incl. MOS"],
+  ["glock-43x-48", "Glock 43X / 48", "Pistol", "Slimline, incl. MOS and Rail"],
+  ["sig-p365", "SIG P365 / P365X", "Pistol", "Micro-compact 9mm"],
+  ["sig-p365xl", "SIG P365XL", "Pistol", "Incl. Spectre Comp"],
+  ["sig-p365-macro", "SIG P365-XMACRO", "Pistol", "Incl. Comp and TACOPS"],
+  ["sig-p320", "SIG P320 / M17 / M18", "Pistol", "Full-size, carry and compact"],
+  ["sw-mp2", "S&W M&P 2.0", "Pistol", "Full-size and compact 9mm"],
+  ["sw-shield-plus", "S&W M&P Shield Plus", "Pistol", "Incl. Optics Ready"],
+  ["spr-hellcat", "Springfield Hellcat", "Pistol", "Incl. OSP and Pro"],
+  ["cz-p10c", "CZ P-10 C", "Pistol", "Incl. Optics Ready"],
+  ["ar15", "AR-15", "Rifle", "Mil-spec receivers, 5.56 / .223"],
+  ["ak", "AK-47 / AKM", "Rifle", "Stamped receivers, 7.62x39"],
+  ["ruger-1022", "Ruger 10/22", "Rifle", "Carbine and Takedown, .22 LR"],
+  ["rem-870", "Remington 870", "Shotgun", "12 gauge"],
+  ["moss-500", "Mossberg 500 / 590", "Shotgun", "12 gauge"],
+];
+const G_FULL = ["glock-17", "glock-19", "glock-26"];
+const RMR_PISTOLS = ["glock-17", "glock-19", "sig-p320", "sw-mp2", "cz-p10c"];
+const K_PISTOLS = ["glock-43x-48", "sig-p365", "sig-p365xl", "sig-p365-macro", "sw-shield-plus", "spr-hellcat"];
+const RAIL_FULL = ["glock-17", "glock-19", "sig-p320", "sw-mp2", "cz-p10c"];
+const ALL_PISTOLS = SEED_PLATFORMS.filter(p => p[2] === "Pistol").map(p => p[0]);
+
+// brand, name, category, fits, estimated street price, mount/footprint, notes
+const SEED_PARTS = [
+  ["Apex Tactical", "Action Enhancement Trigger Kit (Glock)", "Trigger", G_FULL, 150, "", "Separate SKUs for Gen 3/4 and Gen 5."],
+  ["Overwatch Precision", "TAC Trigger (Glock)", "Trigger", G_FULL, 170, "", "Gen-specific SKUs."],
+  ["Apex Tactical", "Action Enhancement Kit (M&P 2.0)", "Trigger", ["sw-mp2"], 150, "", ""],
+  ["Geissele", "SSA-E two-stage trigger", "Trigger", ["ar15"], 240, "Small-pin lower", "For .154\" pin receivers."],
+  ["Timney", "AR-15 Competition Trigger", "Trigger", ["ar15"], 230, "Small-pin lower", "Drop-in cassette."],
+  ["LaRue Tactical", "MBT-2S two-stage trigger", "Trigger", ["ar15"], 110, "Small-pin lower", ""],
+  ["ALG Defense", "AKT enhanced trigger", "Trigger", ["ak"], 80, "", ""],
+  ["Ruger", "BX-Trigger", "Trigger", ["ruger-1022"], 90, "", "Complete drop-in trigger group."],
+
+  ["Trijicon", "RMR Type 2", "Pistol optic", RMR_PISTOLS, 550, "RMR footprint", "Needs an optic-ready slide; Glock MOS, P320 and M&P OR use an adapter plate."],
+  ["Holosun", "507C X2", "Pistol optic", RMR_PISTOLS, 330, "RMR footprint", "Needs an optic-ready slide; plate may be required."],
+  ["Trijicon", "SRO", "Pistol optic", RMR_PISTOLS, 650, "RMR footprint", "Large window; sits taller than an RMR."],
+  ["Holosun", "507K X2", "Pistol optic", K_PISTOLS, 300, "RMSc / K footprint", "Needs an optic-cut slide (43X/48 MOS, P365X/XL/Macro, Shield Plus OR, Hellcat OSP)."],
+  ["Holosun", "EPS Carry", "Pistol optic", K_PISTOLS, 360, "RMSc / K footprint", "Enclosed emitter."],
+  ["Shield Sights", "RMSc", "Pistol optic", K_PISTOLS, 330, "RMSc / K footprint", ""],
+
+  ["Aimpoint", "Micro T-2", "Rifle optic", ["ar15"], 900, "Picatinny (with mount)", "Mount height sold separately."],
+  ["EOTech", "EXPS3", "Rifle optic", ["ar15"], 750, "Picatinny", "Holographic."],
+  ["Holosun", "HS510C", "Rifle optic", ["ar15"], 380, "Picatinny", "Open reflex."],
+  ["Vortex", "Strike Eagle 1-8x24", "Rifle optic", ["ar15"], 450, "LPVO, 30 mm tube", "Needs a 30 mm scope mount."],
+
+  ["Trijicon", "HD XR night sights (Glock)", "Sights", G_FULL, 150, "", "Standard height; too short to co-witness with most optics."],
+  ["XS Sights", "DXT2 Big Dot (Glock)", "Sights", G_FULL, 120, "", "Model-specific SKUs."],
+  ["Tech Sights", "TSR200 aperture sight", "Sights", ["ruger-1022"], 80, "", "Replaces factory sights; no gunsmithing."],
+
+  ["Streamlight", "TLR-1 HL", "Weapon light", [...RAIL_FULL, "ar15"], 150, "Picatinny / Glock rail", "Rifles need a rail section."],
+  ["SureFire", "X300U-A", "Weapon light", [...RAIL_FULL, "ar15"], 300, "Picatinny / Glock rail", "Rifles need a rail section."],
+  ["Streamlight", "TLR-7A", "Weapon light", RAIL_FULL, 140, "Picatinny / Glock rail", "Compact; stays behind the muzzle on full-size pistols."],
+  ["Streamlight", "TLR-7 Sub", "Weapon light", ["glock-43x-48", "sig-p365xl", "sig-p365-macro", "spr-hellcat"], 140, "Model-specific rail", "Rail-specific SKUs; 43X/48 need the Rail models."],
+  ["Streamlight", "TL-Racker forend light", "Weapon light", ["rem-870", "moss-500"], 160, "Forend replacement", "Model-specific SKUs."],
+
+  ["Magpul", "PMAG 30 AR/M4 Gen M3", "Magazine", ["ar15"], 16, "", ""],
+  ["Magpul", "PMAG 17 GL9", "Magazine", G_FULL, 16, "", "Sticks out below G19 and G26 grips."],
+  ["Shield Arms", "S15 15-round magazine", "Magazine", ["glock-43x-48"], 45, "", "Maker recommends their steel mag catch."],
+  ["Magpul", "PMAG 30 AK/AKM MOE", "Magazine", ["ak"], 18, "", ""],
+  ["Ruger", "BX-25 25-round magazine", "Magazine", ["ruger-1022"], 30, "", ""],
+
+  ["Magpul", "MOE SL carbine stock", "Stock", ["ar15"], 65, "Mil-spec buffer tube", ""],
+  ["B5 Systems", "Bravo stock", "Stock", ["ar15"], 60, "Mil-spec buffer tube", ""],
+  ["Magpul", "Zhukov-S folding stock", "Stock", ["ak"], 130, "", "Stamped receivers only."],
+  ["Magpul", "Hunter X-22 stock", "Stock", ["ruger-1022"], 140, "", "Separate Takedown version."],
+  ["Magpul", "SGA stock (Remington 870)", "Stock", ["rem-870"], 110, "", ""],
+  ["Magpul", "SGA stock (Mossberg 500/590)", "Stock", ["moss-500"], 110, "", ""],
+
+  ["Magpul", "MOE-K2 grip", "Grip", ["ar15"], 25, "", ""],
+  ["BCM", "Gunfighter Mod 3 grip", "Grip", ["ar15"], 25, "", ""],
+  ["Magpul", "MOE AK grip", "Grip", ["ak"], 22, "", ""],
+
+  ["BCM", "Gunfighter Charging Handle Mod 4", "Charging handle", ["ar15"], 60, "", ""],
+  ["Radian Weapons", "Raptor ambidextrous charging handle", "Charging handle", ["ar15"], 95, "", ""],
+
+  ["Geissele", "Super Modular Rail MK16 13.5\"", "Handguard", ["ar15"], 330, "M-LOK", "Replaces the barrel nut; not a drop-in."],
+  ["Magpul", "MOE forend (Remington 870)", "Forend", ["rem-870"], 35, "", ""],
+
+  ["SureFire", "WarComp 5.56", "Muzzle device", ["ar15"], 200, "1/2-28 thread", "Pin-and-weld on barrels under 16\"."],
+
+  ["Mesa Tactical", "SureShell side saddle (6 shell)", "Shell carrier", ["rem-870", "moss-500"], 60, "", "Model-specific SKUs."],
+
+  ["Tango Down", "Vickers Tactical slide stop (Glock)", "Controls", G_FULL, 20, "", "Gen-specific."],
+
+  ["Safariland", "578 GLS Pro-Fit", "Holster", ALL_PISTOLS, 45, "", "Size-numbered: pick the size for your model."],
+  ["Vedder", "LightTuck IWB", "Holster", ALL_PISTOLS, 70, "", "Made per model and light."],
+  ["Safariland", "6390RDS ALS", "Holster", ["glock-17", "glock-19", "sig-p320", "sw-mp2"], 160, "", "Model- and light-specific; optic-ready."],
+];
+
+const RETAILERS = ["Brownells", "MidwayUSA", "OpticsPlanet", "Primary Arms", "Palmetto State Armory", "GunMag Warehouse", "Rainier Arms", "EuroOptic", "Sportsman's Warehouse", "Bass Pro / Cabela's", "Manufacturer direct"];
+
+/* ================= Customizer slots ================= */
+const SLOTS = {
+  Pistol: [
+    { id: "optic", label: "Optic", cats: ["Pistol optic"] },
+    { id: "sights", label: "Sights", cats: ["Sights"] },
+    { id: "trigger", label: "Trigger", cats: ["Trigger"] },
+    { id: "light", label: "Light", cats: ["Weapon light"] },
+    { id: "magazine", label: "Magazine", cats: ["Magazine"] },
+    { id: "controls", label: "Controls", cats: ["Controls"] },
+    { id: "holster", label: "Holster", cats: ["Holster"] },
+    { id: "finish", label: "Finish", finish: true },
+  ],
+  Rifle: [
+    { id: "optic", label: "Optic", cats: ["Rifle optic"] },
+    { id: "sights", label: "Sights", cats: ["Sights"] },
+    { id: "charging", label: "Charging handle", cats: ["Charging handle"] },
+    { id: "handguard", label: "Handguard", cats: ["Handguard"] },
+    { id: "light", label: "Light", cats: ["Weapon light"] },
+    { id: "muzzle", label: "Muzzle", cats: ["Muzzle device"] },
+    { id: "magazine", label: "Magazine", cats: ["Magazine"] },
+    { id: "trigger", label: "Trigger", cats: ["Trigger"] },
+    { id: "grip", label: "Grip", cats: ["Grip"] },
+    { id: "stock", label: "Stock", cats: ["Stock"] },
+    { id: "finish", label: "Finish", finish: true },
+  ],
+  Shotgun: [
+    { id: "optic", label: "Optic", cats: ["Rifle optic", "Shotgun optic"] },
+    { id: "shells", label: "Shell carrier", cats: ["Shell carrier"] },
+    { id: "forend", label: "Forend", cats: ["Forend"] },
+    { id: "light", label: "Light", cats: ["Weapon light"] },
+    { id: "trigger", label: "Trigger", cats: ["Trigger"] },
+    { id: "stock", label: "Stock", cats: ["Stock"] },
+    { id: "finish", label: "Finish", finish: true },
+  ],
+};
+const FINISH_LABELS = {
+  Pistol: ["Slide", "Frame"],
+  Rifle: ["Upper & handguard", "Lower & stock"],
+  Shotgun: ["Receiver & barrel", "Stock & forend"],
+};
+const FINISHES = [
+  ["Black", "#2a2b2e"], ["Flat Dark Earth", "#b49a6d"], ["OD Green", "#5c6544"], ["Tungsten", "#6e7275"],
+  ["Sniper Grey", "#8d9192"], ["Burnt Bronze", "#8a5a35"], ["Robin's Egg", "#5fb7b0"], ["Stainless", "#c6c9cb"],
+  ["Crimson", "#8e2a2a"], ["Navy", "#2c3a55"],
+];
+
+/* ================= Silhouettes (generic, not any specific model) =================
+   Each slot is a <g data-slot>. "base" groups are always drawn and outline when picked;
+   "acc" groups only appear when picked (or as a ghost while that slot is open). */
+const SVGS = {
+  Pistol: { vb: "0 0 640 340", pins: { optic: [240, 34], sights: [494, 58], trigger: [312, 240], light: [440, 226], magazine: [272, 306], controls: [258, 126], holster: [584, 120], finish: [380, 76] }, art: `
+    <g class="acc slot" data-slot="holster"><path class="tint" d="M300 78 L548 78 L552 184 L372 236 L300 214 Z" fill="#3a3833" stroke-linejoin="round"/><path class="deco" d="M318 92 L536 92" stroke="#57534b" stroke-width="2" stroke-dasharray="3 5"/></g>
+    <g class="base"><rect class="steel2" x="500" y="106" width="16" height="18" rx="2"/></g>
+    <g class="base"><path class="fin-b" fill-rule="evenodd" d="M160 147 L500 147 L500 174 L352 174 Q354 216 318 218 L278 218 Q266 216 262 207 L248 300 Q246 312 232 312 L164 312 Q148 312 150 298 L168 192 Q150 172 160 147 Z M270 178 L338 178 Q340 206 314 208 L284 208 Q274 206 272 198 Z"/>
+      <g opacity=".22" stroke="#000" stroke-width="1.5"><path d="M180 210 L166 296 M192 210 L178 296 M204 210 L190 296 M216 210 L202 296 M228 210 L214 296 M240 210 L226 296"/></g></g>
+    <g class="base"><rect class="fin-a" x="150" y="96" width="360" height="52" rx="6"/><rect class="cut" x="300" y="101" width="62" height="14" rx="2"/>
+      <g stroke="rgba(0,0,0,.35)" stroke-width="3"><path d="M166 104 V140 M176 104 V140 M186 104 V140 M196 104 V140 M206 104 V140"/></g></g>
+    <g class="base slot" data-slot="controls"><rect class="steel2 tint" x="236" y="146" width="44" height="8" rx="3"/></g>
+    <g class="base slot" data-slot="trigger"><path class="steel2 tint" d="M298 178 Q290 194 297 206 L304 206 Q299 192 307 178 Z"/></g>
+    <g class="base slot" data-slot="magazine"><rect class="steel2 tint" x="158" y="304" width="84" height="12" rx="3"/></g>
+    <g class="acc slot" data-slot="magazine"><rect class="tint" x="156" y="304" width="88" height="26" rx="5" fill="#1c1d1f"/><rect class="deco" x="166" y="318" width="68" height="4" rx="2" fill="var(--accent)"/></g>
+    <g class="base slot" data-slot="sights"><rect class="steel2 tint" x="488" y="88" width="9" height="9"/><rect class="steel2 tint" x="160" y="86" width="18" height="11"/></g>
+    <g class="acc slot" data-slot="sights"><rect class="tint" x="486" y="84" width="13" height="13" fill="#141516"/><rect class="tint" x="157" y="82" width="24" height="15" fill="#141516"/><circle class="deco" cx="492.5" cy="90" r="3.2" fill="#8cff6b"/><circle class="deco" cx="163" cy="89" r="2.6" fill="#8cff6b"/><circle class="deco" cx="175" cy="89" r="2.6" fill="#8cff6b"/></g>
+    <g class="acc slot" data-slot="optic"><path class="tint" d="M202 96 L208 64 Q210 56 220 56 L262 56 Q272 56 274 64 L280 96 Z" fill="#1d1f22"/><rect class="deco" x="214" y="63" width="54" height="24" rx="4" fill="#7ab8d9" opacity=".45"/><circle class="deco" cx="241" cy="75" r="2.4" fill="#ff3b30"/></g>
+    <g class="acc slot" data-slot="light"><rect class="tint" x="384" y="174" width="112" height="34" rx="7" fill="#1b1c1e"/><rect class="deco" x="492" y="176" width="9" height="30" rx="2" fill="#fff6c8"/><path class="deco" d="M501 176 L640 150 L640 232 L501 206 Z" fill="url(#beam)"/></g>
+  `},
+  Rifle: { vb: "0 0 820 280", pins: { optic: [282, 30], sights: [640, 64], charging: [190, 80], handguard: [500, 80], light: [592, 188], muzzle: [770, 82], magazine: [418, 236], trigger: [312, 212], grip: [206, 246], stock: [100, 86], finish: [440, 30] }, art: `
+    <g class="base slot" data-slot="stock"><path class="fin-b tint" d="M40 112 L176 118 L176 160 L62 180 Q40 182 40 166 Z"/><rect class="steel2" x="170" y="118" width="42" height="18"/></g>
+    <g class="base slot" data-slot="handguard"><rect class="fin-a tint" x="384" y="104" width="242" height="40" rx="4"/><g fill="rgba(0,0,0,.35)"><rect x="410" y="128" width="22" height="7" rx="3"/><rect x="450" y="128" width="22" height="7" rx="3"/><rect x="490" y="128" width="22" height="7" rx="3"/><rect x="530" y="128" width="22" height="7" rx="3"/><rect x="570" y="128" width="22" height="7" rx="3"/></g></g>
+    <g class="base"><rect class="steel" x="626" y="117" width="122" height="12"/></g>
+    <g class="base slot" data-slot="muzzle"><rect class="steel2 tint" x="746" y="113" width="34" height="20" rx="2"/></g>
+    <g class="acc slot" data-slot="muzzle"><rect class="tint" x="744" y="110" width="44" height="26" rx="3" fill="#1c1d1f"/><g class="deco" fill="#55575c"><rect x="752" y="114" width="5" height="8"/><rect x="762" y="114" width="5" height="8"/><rect x="772" y="114" width="5" height="8"/></g></g>
+    <g class="base"><rect class="fin-b" x="206" y="138" width="176" height="26" rx="2"/><path d="M276 164 L276 188 L334 188 L342 164" fill="none" stroke="var(--fin-b, #2a2b2e)" stroke-width="6"/></g>
+    <g class="base"><rect class="fin-a" x="206" y="102" width="180" height="38" rx="3"/><rect class="cut" x="290" y="112" width="58" height="14" rx="2"/></g>
+    <g class="base slot" data-slot="charging"><rect class="steel2 tint" x="196" y="104" width="14" height="10" rx="2"/></g>
+    <g class="acc slot" data-slot="charging"><path class="tint" d="M188 100 L214 100 L214 116 L188 116 Z M180 104 L222 104 L222 112 L180 112 Z" fill="#1c1d1f"/></g>
+    <g class="base slot" data-slot="trigger"><path class="steel2 tint" d="M302 164 Q296 178 302 188 L308 188 Q304 176 310 164 Z"/></g>
+    <g class="base slot" data-slot="grip"><path class="steel tint" d="M242 162 L222 228 Q220 238 232 238 L258 238 Q264 238 264 230 L272 162 Z"/></g>
+    <g class="base slot" data-slot="magazine"><path class="steel tint" d="M344 162 L388 162 L394 210 Q398 240 382 248 L352 250 Q340 220 344 162 Z"/></g>
+    <g class="acc slot" data-slot="sights"><path class="tint" d="M214 102 L214 84 L234 84 L234 102 Z M600 104 L606 82 L616 82 L620 104 Z" fill="#141516"/><circle class="deco" cx="224" cy="91" r="4" fill="none" stroke="#8a8d93" stroke-width="2"/></g>
+    <g class="acc slot" data-slot="optic"><rect class="deco" x="252" y="88" width="60" height="16" rx="2" fill="#2a2b2e"/><rect class="tint" x="238" y="56" width="88" height="34" rx="14" fill="#1d1f22"/><rect class="deco" x="322" y="60" width="6" height="26" rx="2" fill="#7ab8d9" opacity=".7"/></g>
+    <g class="acc slot" data-slot="light"><rect class="tint" x="560" y="144" width="62" height="20" rx="5" fill="#1b1c1e"/><rect class="deco" x="618" y="145" width="6" height="18" rx="2" fill="#fff6c8"/></g>
+  `},
+  Shotgun: { vb: "0 0 820 280", pins: { optic: [282, 52], shells: [356, 190], forend: [505, 186], light: [672, 192], trigger: [290, 210], stock: [110, 92], finish: [600, 72] }, art: `
+    <g class="base slot" data-slot="stock"><path class="fin-b tint" d="M40 122 L222 110 L222 152 Q172 158 142 178 L62 190 Q40 192 40 172 Z"/></g>
+    <g class="base"><rect class="steel" x="372" y="104" width="404" height="14" rx="3"/><rect class="steel2" x="372" y="122" width="334" height="14" rx="3"/><circle class="steel2" cx="770" cy="101" r="3"/></g>
+    <g class="base"><rect class="fin-a" x="214" y="98" width="162" height="52" rx="5"/><rect class="cut" x="262" y="108" width="58" height="16" rx="2"/><path d="M262 150 L262 176 L318 176 L326 150" fill="none" stroke="var(--fin-a, #2a2b2e)" stroke-width="6"/></g>
+    <g class="base slot" data-slot="trigger"><path class="steel2 tint" d="M286 150 Q280 164 286 174 L292 174 Q288 162 294 150 Z"/></g>
+    <g class="base slot" data-slot="forend"><rect class="fin-b tint" x="440" y="116" width="132" height="32" rx="9"/><g stroke="rgba(0,0,0,.3)" stroke-width="3"><path d="M456 120 V144 M468 120 V144 M480 120 V144 M492 120 V144 M504 120 V144 M516 120 V144 M528 120 V144 M540 120 V144 M552 120 V144"/></g></g>
+    <g class="acc slot" data-slot="shells"><rect class="tint" x="228" y="104" width="108" height="34" rx="3" fill="#1f2022"/><g class="deco"><rect x="236" y="108" width="12" height="26" rx="2" fill="#b3312a"/><rect x="252" y="108" width="12" height="26" rx="2" fill="#b3312a"/><rect x="268" y="108" width="12" height="26" rx="2" fill="#b3312a"/><rect x="284" y="108" width="12" height="26" rx="2" fill="#b3312a"/><rect x="300" y="108" width="12" height="26" rx="2" fill="#b3312a"/><rect x="316" y="108" width="12" height="26" rx="2" fill="#b3312a"/><rect x="236" y="128" width="92" height="6" fill="#c9a447"/></g></g>
+    <g class="acc slot" data-slot="optic"><rect class="deco" x="254" y="88" width="56" height="12" fill="#2a2b2e"/><path class="tint" d="M250 88 L256 66 L304 66 L312 88 Z" fill="#1d1f22"/><rect class="deco" x="264" y="70" width="34" height="14" fill="#7ab8d9" opacity=".45"/></g>
+    <g class="acc slot" data-slot="light"><rect class="tint" x="436" y="112" width="140" height="40" rx="10" fill="#1b1c1e"/><rect class="deco" x="574" y="118" width="6" height="28" rx="2" fill="#fff6c8"/></g>
+  `},
+};
+
+/* ================= State ================= */
+const STORE_KEY = "partsbin.v1";
+const BANNER_KEY = "partsbin.banner";
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const safeUrl = u => /^https?:\/\//i.test(String(u || "").trim()) ? String(u).trim() : "";
+const today = () => { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); };
+const money = n => n == null || isNaN(n) ? "—" : "$" + Number(n).toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
+const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60) || "x";
+const uid = () => Math.random().toString(36).slice(2, 9);
+
+function seedDb() {
+  const used = new Set();
+  const parts = SEED_PARTS.map(([brand, name, category, fits, est, mount, notes]) => {
+    let id = slug(brand + "-" + name); while (used.has(id)) id += "-2"; used.add(id);
+    return { id, brand, name, category, fits: [...fits], est, mount, notes, url: "", verified: false, seed: true, prices: [] };
+  });
+  return {
+    version: 1,
+    platforms: SEED_PLATFORMS.map(([id, name, type, covers]) => ({ id, name, type, covers })),
+    parts,
+    builds: [],
+    draft: null,
+  };
+}
+function validDb(d) {
+  return d && Array.isArray(d.platforms) && Array.isArray(d.parts) &&
+    d.platforms.every(p => p && typeof p.id === "string" && typeof p.name === "string") &&
+    d.parts.every(p => p && typeof p.id === "string" && typeof p.name === "string" && Array.isArray(p.fits));
+}
+function normalize(d) {
+  d.builds = Array.isArray(d.builds) ? d.builds : [];
+  d.parts.forEach(p => { p.prices = Array.isArray(p.prices) ? p.prices : []; p.brand = p.brand || ""; p.category = p.category || "Other"; });
+  d.platforms.forEach(p => { if (!SLOTS[p.type]) p.type = "Pistol"; });
+  return d;
+}
+function load() {
+  try { const s = localStorage.getItem(STORE_KEY); if (s) { const d = JSON.parse(s); if (validDb(d)) return normalize(d); } } catch (e) {}
+  return seedDb();
+}
+let db = load();
+function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(db)); } catch (e) {} }
+
+const platformById = id => db.platforms.find(p => p.id === id);
+const partById = id => db.parts.find(p => p.id === id);
+
+/* ================= Prices ================= */
+function latestByRetailer(part) {
+  const m = new Map();
+  part.prices.forEach((e, i) => {
+    const k = e.retailer.trim().toLowerCase(); const cur = m.get(k);
+    if (!cur || e.date > cur.e.date || (e.date === cur.e.date && i > cur.i)) m.set(k, { e, i });
+  });
+  return [...m.values()].map(v => v.e).sort((a, b) => a.price - b.price);
+}
+function bestPrice(part) {
+  const l = latestByRetailer(part); const inStock = l.filter(e => e.inStock !== false);
+  return (inStock.length ? inStock : l)[0] || null;
+}
+function priceOf(part) {
+  const b = bestPrice(part);
+  if (b) return { amount: b.price, est: false, src: b.retailer };
+  if (part.est != null && part.est !== "") return { amount: Number(part.est), est: true };
+  return null;
+}
+function priceHtml(part, withSrc = true) {
+  const p = priceOf(part);
+  if (!p) return `<span class="faint">No price</span>`;
+  if (p.est) return `<span class="est">~${money(p.amount)}</span> <span class="faint" style="font-size:12px">est.</span>`;
+  return `<span class="price">${money(p.amount)}</span>${withSrc ? `<div class="faint" style="font-size:12px">${esc(p.src)}</div>` : ""}`;
+}
+function changeFor(part, entry) {
+  const same = part.prices.filter(e => e.retailer.trim().toLowerCase() === entry.retailer.trim().toLowerCase()).sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
+  const i = same.indexOf(entry); if (i < 1) return "";
+  const d = entry.price - same[i - 1].price; if (!d) return `<span class="faint" style="font-size:12.5px">no change</span>`;
+  return d > 0 ? `<span class="up">▲ ${money(d)}</span>` : `<span class="down">▼ ${money(-d)}</span>`;
+}
+
+/* ================= Tabs ================= */
+let view = "build";
+function setView(v) {
+  view = v;
+  $$("nav.tabs button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.view === v)));
+  ["build", "catalog", "firearms", "builds"].forEach(k => $("#view-" + k).hidden = k !== v);
+  renderView();
+  window.scrollTo({ top: 0 });
+}
+function renderView() {
+  if (view === "build") renderBuild();
+  if (view === "catalog") renderCatalog();
+  if (view === "firearms") renderFirearms();
+  if (view === "builds") renderBuilds();
+}
+$$("nav.tabs button").forEach(b => b.addEventListener("click", () => setView(b.dataset.view)));
+
+/* ================= Build (customizer) ================= */
+function newBuild(platformId) {
+  const p = platformById(platformId) || db.platforms[0];
+  return { id: null, name: "", platform: p ? p.id : "", picks: {}, finish: { a: FINISHES[0][1], b: FINISHES[0][1] } };
+}
+let build = db.draft && platformById(db.draft.platform) ? db.draft : newBuild("glock-19");
+let slotIdx = 0;
+let shownPicks = null; // picks drawn last render, so only a newly chosen part animates in
+
+function slotsFor(p) { return SLOTS[p?.type] || SLOTS.Pistol; }
+function optionsFor(slot, platformId) {
+  if (slot.finish) return [];
+  return db.parts.filter(pt => slot.cats.includes(pt.category) && pt.fits.includes(platformId))
+    .sort((a, b) => (priceOf(a)?.amount ?? 1e9) - (priceOf(b)?.amount ?? 1e9));
+}
+function persistDraft() { db.draft = build; save(); }
+
+function renderPlatformSelect(sel, value, allLabel) {
+  const types = ["Pistol", "Rifle", "Shotgun"];
+  sel.innerHTML = (allLabel ? `<option value="">${esc(allLabel)}</option>` : "") + types.map(t => {
+    const ps = db.platforms.filter(p => p.type === t);
+    return ps.length ? `<optgroup label="${t}s">${ps.map(p => `<option value="${esc(p.id)}">${esc(p.name)}</option>`).join("")}</optgroup>` : "";
+  }).join("");
+  sel.value = value || "";
+}
+
+function renderBuild() {
+  const plat = platformById(build.platform) || db.platforms[0];
+  if (!plat) { $("#svgHost").innerHTML = `<div class="empty-slot">Add a firearm on the Firearms tab to start a build.</div>`; return; }
+  build.platform = plat.id;
+  const slots = slotsFor(plat);
+  slotIdx = Math.max(0, Math.min(slotIdx, slots.length - 1));
+  // drop picks that no longer fit / exist
+  Object.keys(build.picks).forEach(k => { const pt = partById(build.picks[k]); if (!pt || !pt.fits.includes(plat.id) || !slots.some(s => s.id === k)) delete build.picks[k]; });
+
+  renderPlatformSelect($("#bPlatform"), plat.id);
+  $("#bName").value = build.name;
+  $("#stageType").textContent = plat.type;
+  $("#stageName").textContent = build.name || plat.name;
+
+  // stage art
+  const art = SVGS[plat.type] || SVGS.Pistol;
+  const pins = slots.map((s, i) => {
+    const [x, y] = art.pins[s.id] || [20 + i * 30, 20];
+    const done = s.finish ? false : !!build.picks[s.id];
+    const empty = !s.finish && !optionsFor(s, plat.id).length;
+    const cls = ["pin", i === slotIdx ? "active" : "", done ? "done" : "", empty ? "empty" : ""].join(" ");
+    return `<g class="${cls}" data-i="${i}" role="button" tabindex="0" aria-label="${esc(s.label)}"><circle cx="${x}" cy="${y}" r="13"/><text x="${x}" y="${y}">${s.finish ? "✦" : i + 1}</text></g>`;
+  }).join("");
+  $("#svgHost").innerHTML = `<svg viewBox="${art.vb}" style="--fin-a:${esc(build.finish.a)};--fin-b:${esc(build.finish.b)}" aria-label="${esc(plat.name)} build preview">
+    <defs><linearGradient id="beam" x1="0" x2="1"><stop offset="0" stop-color="#fff6c8" stop-opacity=".55"/><stop offset="1" stop-color="#fff6c8" stop-opacity="0"/></linearGradient></defs>
+    ${art.art}${pins}</svg>`;
+  const svg = $("#svgHost svg");
+  const active = slots[slotIdx];
+  $$(".slot", svg).forEach(g => {
+    const id = g.dataset.slot; const picked = !!build.picks[id];
+    if (g.classList.contains("acc")) {
+      // accessory: show when picked; ghost when its slot is open and empty
+      const isMagExtra = id === "magazine"; // mag accessory = extended base pad
+      g.classList.toggle("on", picked);
+      g.classList.toggle("fresh", picked && !!shownPicks && shownPicks[id] !== build.picks[id]);
+      g.classList.toggle("ghost", !picked && active.id === id && !isMagExtra);
+    } else {
+      g.classList.toggle("picked", picked);
+      g.classList.toggle("active", active.id === id && !picked);
+    }
+    g.addEventListener("click", () => { const i = slots.findIndex(s => s.id === id); if (i >= 0) { slotIdx = i; renderBuild(); } });
+  });
+  $$(".pin", svg).forEach(g => {
+    const go = () => { slotIdx = +g.dataset.i; renderBuild(); };
+    g.addEventListener("click", go);
+    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+  });
+
+  shownPicks = { ...build.picks };
+
+  // picker
+  $("#pkStep").textContent = `Step ${slotIdx + 1} of ${slots.length}`;
+  $("#pkTitle").textContent = active.label;
+  $("#pkPrev").disabled = slotIdx === 0;
+  $("#pkNext").disabled = slotIdx === slots.length - 1;
+  const box = $("#pkOptions");
+  if (active.finish) {
+    const [la, lb] = FINISH_LABELS[plat.type] || FINISH_LABELS.Pistol;
+    const sw = (key) => FINISHES.map(([n, c]) => `<button class="sw" data-k="${key}" data-c="${c}" title="${esc(n)}" aria-label="${esc(n)}" aria-pressed="${build.finish[key] === c}" style="background:${c}"></button>`).join("");
+    const nm = c => (FINISHES.find(f => f[1] === c) || ["Custom"])[0];
+    box.innerHTML = `<div class="sw-label">${esc(la)} · ${esc(nm(build.finish.a))}</div><div class="swatches">${sw("a")}</div>
+      <div class="sw-label">${esc(lb)} · ${esc(nm(build.finish.b))}</div><div class="swatches">${sw("b")}</div>
+      <p class="faint" style="font-size:13px;margin:4px 2px">Finish is for the preview only and isn't priced. Cerakote and similar coatings vary a lot by shop.</p>`;
+    $$(".sw", box).forEach(b => b.addEventListener("click", () => { build.finish[b.dataset.k] = b.dataset.c; persistDraft(); renderBuild(); }));
+  } else {
+    const opts = optionsFor(active, plat.id);
+    const cur = build.picks[active.id] || "";
+    box.innerHTML = `<button class="opt" data-id="" aria-pressed="${!cur}"><div class="brand">Keep</div><div class="name">Factory / none</div><div class="p"><span class="faint">$0</span></div></button>` +
+      (opts.length ? opts.map(pt => `<div class="opt" role="button" tabindex="0" data-id="${esc(pt.id)}" aria-pressed="${cur === pt.id}">
+          <div class="brand">${esc(pt.brand)} ${pt.verified ? `<span class="badge ok">Verified</span>` : ""}</div>
+          <div class="name">${esc(pt.name)}</div>
+          <div class="p">${priceHtml(pt)}</div>
+          ${(pt.mount || pt.notes) ? `<div class="meta">${esc([pt.mount, pt.notes].filter(Boolean).join(" · "))}</div>` : ""}
+          <button class="more" data-more="${esc(pt.id)}">Prices &amp; details</button>
+        </div>`).join("")
+        : `<div class="empty-slot">Nothing in the catalog fits a ${esc(plat.name)} here yet.<br><button class="btn small" id="pkAddPart" style="margin-top:10px">+ Add a ${esc(active.label.toLowerCase())}</button></div>`);
+    $$(".opt", box).forEach(el => {
+      const pick = () => { if (el.dataset.id) build.picks[active.id] = el.dataset.id; else delete build.picks[active.id]; persistDraft(); renderBuild(); };
+      el.addEventListener("click", e => { if (e.target.closest(".more")) return; pick(); });
+      el.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target === el) { e.preventDefault(); pick(); } });
+    });
+    $$(".more", box).forEach(b => b.addEventListener("click", e => { e.stopPropagation(); openPart(b.dataset.more); }));
+    const add = $("#pkAddPart"); if (add) add.addEventListener("click", () => openEdit(null, { category: active.cats[0], fits: [plat.id] }));
+  }
+
+  // strip
+  $("#strip").innerHTML = slots.map((s, i) => {
+    const done = !s.finish && !!build.picks[s.id];
+    const empty = !s.finish && !optionsFor(s, plat.id).length;
+    return `<button data-i="${i}" class="${done ? "done" : ""} ${empty ? "empty" : ""}" aria-current="${i === slotIdx}"><span class="n">${s.finish ? "✦" : done ? "✓" : i + 1}</span>${esc(s.label)}</button>`;
+  }).join("");
+  $$("#strip button").forEach(b => b.addEventListener("click", () => { slotIdx = +b.dataset.i; renderBuild(); }));
+  const cur = $(`#strip button[aria-current="true"]`); if (cur) cur.scrollIntoView({ block: "nearest", inline: "nearest" });
+
+  // summary + total
+  let total = 0, estCount = 0, n = 0;
+  const rows = slots.filter(s => !s.finish).map(s => {
+    const pt = partById(build.picks[s.id]);
+    if (!pt) return `<div class="row"><div class="slotname">${esc(s.label)}</div><div class="none">Factory</div><div></div></div>`;
+    const pr = priceOf(pt); n++;
+    if (pr) { total += pr.amount; if (pr.est) estCount++; } else estCount++;
+    return `<div class="row"><div class="slotname">${esc(s.label)}</div><div><a href="#" data-open="${esc(pt.id)}"><strong>${esc(pt.brand)}</strong> ${esc(pt.name)}</a></div><div style="text-align:right">${priceHtml(pt)}</div></div>`;
+  });
+  $("#sumRows").innerHTML = rows.join("");
+  $$("#sumRows [data-open]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); openPart(a.dataset.open); }));
+  $("#bTotal").textContent = (estCount ? "~" : "") + money(total);
+  $("#bTotalSub").textContent = !n ? "Pick parts to start" :
+    `${n} part${n === 1 ? "" : "s"} · ${estCount ? `${n - estCount} from retailer prices, ${estCount} estimated` : "all from retailer prices"}`;
+  $("#bSave").textContent = build.id ? "Update build" : "Save build";
+  $("#bSaveAs").hidden = !build.id;
+}
+
+$("#bPlatform").addEventListener("change", e => {
+  const fin = build.finish;
+  build = newBuild(e.target.value); build.finish = fin;
+  slotIdx = 0; persistDraft(); renderBuild();
+});
+$("#bName").addEventListener("input", e => { build.name = e.target.value; $("#stageName").textContent = build.name || platformById(build.platform)?.name || ""; persistDraft(); });
+$("#pkPrev").addEventListener("click", () => { slotIdx--; renderBuild(); });
+$("#pkNext").addEventListener("click", () => { slotIdx++; renderBuild(); });
+$("#bClear").addEventListener("click", () => { build = newBuild(build.platform); slotIdx = 0; persistDraft(); renderBuild(); });
+function saveBuild(asNew) {
+  const plat = platformById(build.platform);
+  if (!build.name.trim()) build.name = `${plat ? plat.name : "My"} build`;
+  const copy = JSON.parse(JSON.stringify(build));
+  if (asNew || !copy.id) { copy.id = uid(); if (asNew) copy.name = copy.name + " (copy)"; db.builds.unshift(copy); }
+  else { const i = db.builds.findIndex(b => b.id === copy.id); if (i >= 0) db.builds[i] = copy; else db.builds.unshift(copy); }
+  copy.saved = today();
+  build = JSON.parse(JSON.stringify(copy));
+  persistDraft(); renderBuild(); toast(`Saved “${copy.name}”`);
+}
+$("#bSave").addEventListener("click", () => saveBuild(false));
+$("#bSaveAs").addEventListener("click", () => saveBuild(true));
+
+/* ================= Catalog ================= */
+const cState = { q: "", platform: "", cat: "", brand: "", sort: "name", priced: false };
+function renderCatalog() {
+  renderPlatformSelect($("#cPlatform"), cState.platform, "All firearms");
+  const cats = [...new Set(db.parts.map(p => p.category))].sort();
+  $("#cCat").innerHTML = `<option value="">All categories</option>` + cats.map(c => `<option>${esc(c)}</option>`).join("");
+  $("#cCat").value = cState.cat;
+  const brands = [...new Set(db.parts.map(p => p.brand))].filter(Boolean).sort((a, b) => a.localeCompare(b));
+  $("#cBrand").innerHTML = `<option value="">All brands</option>` + brands.map(c => `<option>${esc(c)}</option>`).join("");
+  $("#cBrand").value = cState.brand;
+  $("#cSort").value = cState.sort; $("#cQ").value = cState.q; $("#cPriced").checked = cState.priced;
+  renderCatalogRows();
+}
+function renderCatalogRows() {
+  const toks = cState.q.toLowerCase().split(/\s+/).filter(Boolean);
+  let list = db.parts.filter(p => {
+    if (cState.platform && !p.fits.includes(cState.platform)) return false;
+    if (cState.cat && p.category !== cState.cat) return false;
+    if (cState.brand && p.brand !== cState.brand) return false;
+    if (cState.priced && !p.prices.length) return false;
+    if (toks.length) {
+      const hay = [p.brand, p.name, p.category, p.mount, p.notes, ...p.fits.map(f => platformById(f)?.name || "")].join(" ").toLowerCase();
+      if (!toks.every(t => hay.includes(t))) return false;
+    }
+    return true;
+  });
+  const pv = p => priceOf(p)?.amount;
+  const lastDate = p => p.prices.reduce((m, e) => e.date > m ? e.date : m, "");
+  const byName = (a, b) => (a.brand + a.name).localeCompare(b.brand + b.name);
+  list.sort({
+    "name": byName,
+    "price-asc": (a, b) => (pv(a) ?? 1e9) - (pv(b) ?? 1e9) || byName(a, b),
+    "price-desc": (a, b) => (pv(b) ?? -1) - (pv(a) ?? -1) || byName(a, b),
+    "recent": (a, b) => lastDate(b).localeCompare(lastDate(a)) || byName(a, b),
+  }[cState.sort]);
+  $("#cCount").textContent = `Showing ${list.length} of ${db.parts.length} parts · ${db.parts.reduce((n, p) => n + p.prices.length, 0)} price entries`;
+  $("#cRows").innerHTML = list.length ? list.map(p => {
+    const fits = p.fits.map(f => platformById(f)).filter(Boolean);
+    const nRet = latestByRetailer(p).length;
+    return `<tr data-id="${esc(p.id)}">
+      <td><div class="pb">${esc(p.brand)}</div><div class="pn">${esc(p.name)} ${p.verified ? `<span class="badge ok">Verified</span>` : ""}</div>${p.mount ? `<div class="faint" style="font-size:12.5px">${esc(p.mount)}</div>` : ""}</td>
+      <td class="cat">${esc(p.category)}</td>
+      <td>${fits.slice(0, 3).map(f => `<span class="chip" data-plat="${esc(f.id)}">${esc(f.name)}</span>`).join("")}${fits.length > 3 ? `<span class="faint" style="font-size:12.5px">+${fits.length - 3} more</span>` : ""}</td>
+      <td class="num">${priceHtml(p)}${nRet > 1 ? `<div class="faint" style="font-size:12px">${nRet} retailers</div>` : ""}</td>
+    </tr>`;
+  }).join("") : `<tr><td colspan="4" class="empty-slot">No parts match. Try clearing a filter.</td></tr>`;
+  $$("#cRows tr[data-id]").forEach(tr => tr.addEventListener("click", e => {
+    const chip = e.target.closest("[data-plat]");
+    if (chip) { cState.platform = chip.dataset.plat; renderCatalog(); return; }
+    openPart(tr.dataset.id);
+  }));
+}
+$("#cQ").addEventListener("input", e => { cState.q = e.target.value; renderCatalogRows(); });
+$("#cPlatform").addEventListener("change", e => { cState.platform = e.target.value; renderCatalogRows(); });
+$("#cCat").addEventListener("change", e => { cState.cat = e.target.value; renderCatalogRows(); });
+$("#cBrand").addEventListener("change", e => { cState.brand = e.target.value; renderCatalogRows(); });
+$("#cSort").addEventListener("change", e => { cState.sort = e.target.value; renderCatalogRows(); });
+$("#cPriced").addEventListener("change", e => { cState.priced = e.target.checked; renderCatalogRows(); });
+$("#cAdd").addEventListener("click", () => openEdit(null, cState.platform ? { fits: [cState.platform] } : {}));
+
+/* ================= Part detail (prices) ================= */
+let openPartId = null;
+function openPart(id) {
+  const p = partById(id); if (!p) return;
+  openPartId = id;
+  const dlg = $("#dlgPart");
+  const latest = latestByRetailer(p);
+  const best = bestPrice(p);
+  const history = [...p.prices].filter(e => !latest.includes(e)).sort((a, b) => b.date.localeCompare(a.date));
+  const fits = p.fits.map(f => platformById(f)).filter(Boolean);
+  const url = safeUrl(p.url);
+  const shop = "https://www.google.com/search?tbm=shop&q=" + encodeURIComponent(`${p.brand} ${p.name}`);
+  const row = (e, isLatest) => `<tr class="${isLatest && e === best ? "best" : ""}">
+      <td>${esc(e.retailer)}${e.inStock === false ? ` <span class="badge">Out of stock</span>` : ""}</td>
+      <td class="price">${money(e.price)}</td>
+      <td>${changeFor(p, e)}</td>
+      <td class="faint">${esc(e.date)}</td>
+      <td>${safeUrl(e.url) ? `<a href="${esc(safeUrl(e.url))}" target="_blank" rel="noopener">Link</a>` : ""}</td>
+      <td style="text-align:right"><button class="x" data-del="${esc(e.id)}" aria-label="Delete price">×</button></td></tr>`;
+  dlg.innerHTML = `
+    <div class="dlg-head">
+      <div style="flex:1">
+        <div class="pb faint" style="font:700 12px var(--cond);letter-spacing:.06em;text-transform:uppercase">${esc(p.brand)} · ${esc(p.category)}</div>
+        <h2>${esc(p.name)}</h2>
+        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          ${p.verified ? `<span class="badge ok">Fitment verified</span>` : `<span class="badge">Unverified</span>`}
+          ${p.mount ? `<span class="muted" style="font-size:13px">${esc(p.mount)}</span>` : ""}
+          ${p.est != null && p.est !== "" ? `<span class="muted" style="font-size:13px">Est. street price ~${money(p.est)}</span>` : ""}
+        </div>
+      </div>
+      <button class="x" data-close aria-label="Close">×</button>
+    </div>
+    <div class="dlg-body">
+      ${p.notes ? `<div>${esc(p.notes)}</div>` : ""}
+      <div><h4>Fits</h4>${fits.length ? fits.map(f => `<span class="chip" data-plat="${esc(f.id)}">${esc(f.name)}</span>`).join("") : `<span class="faint">No firearms set.</span>`}</div>
+      <div>
+        <h4>Retailer prices</h4>
+        ${latest.length ? `<table class="prices"><thead><tr><th>Retailer</th><th>Price</th><th>Change</th><th>Checked</th><th></th><th></th></tr></thead><tbody>${latest.map(e => row(e, true)).join("")}</tbody></table>`
+          : `<p class="muted" style="margin:0">No retailer prices yet. Check a few stores and log what you find below.</p>`}
+        ${history.length ? `<details style="margin-top:8px"><summary class="muted" style="cursor:pointer;font-size:14px">Price history (${history.length} older)</summary><table class="prices"><tbody>${history.map(e => row(e, false)).join("")}</tbody></table></details>` : ""}
+      </div>
+      <form class="pform" id="priceForm" autocomplete="off">
+        <label class="f">Retailer<input type="text" name="retailer" list="retailerList" required placeholder="e.g. Brownells"></label>
+        <label class="f">Price ($)<input type="number" name="price" min="0" step="0.01" required></label>
+        <label class="f">Checked on<input type="date" name="date" value="${today()}" required></label>
+        <label class="f wide">Link (optional)<input type="url" name="url" placeholder="https://"></label>
+        <label style="display:flex;gap:6px;align-items:center;font-size:14px"><input type="checkbox" name="inStock" checked> In stock</label>
+        <div style="grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn dark" type="submit">Log price</button>
+          <a class="btn" href="${shop}" target="_blank" rel="noopener">Search prices online ↗</a>
+          ${url ? `<a class="btn" href="${esc(url)}" target="_blank" rel="noopener">Product page ↗</a>` : ""}
+        </div>
+      </form>
+      <datalist id="retailerList">${[...new Set([...RETAILERS, ...db.parts.flatMap(x => x.prices.map(e => e.retailer))])].map(r => `<option value="${esc(r)}">`).join("")}</datalist>
+      <div class="dlg-foot">
+        <button class="btn danger" data-delete>Delete part</button>
+        <button class="btn" data-verify>${p.verified ? "Mark unverified" : "Mark fitment verified"}</button>
+        <button class="btn" data-edit>Edit part</button>
+      </div>
+    </div>`;
+  dlg.querySelector("[data-close]").onclick = () => dlg.close();
+  $$("[data-plat]", dlg).forEach(c => c.onclick = () => { dlg.close(); cState.platform = c.dataset.plat; setView("catalog"); });
+  $$("[data-del]", dlg).forEach(b => b.onclick = () => { p.prices = p.prices.filter(e => e.id !== b.dataset.del); save(); openPart(id); renderView(); });
+  dlg.querySelector("[data-verify]").onclick = () => { p.verified = !p.verified; save(); openPart(id); renderView(); };
+  dlg.querySelector("[data-edit]").onclick = () => { dlg.close(); openEdit(id); };
+  dlg.querySelector("[data-delete]").onclick = () => {
+    if (!confirm(`Delete “${p.brand} ${p.name}” and its prices?`)) return;
+    db.parts = db.parts.filter(x => x.id !== id); save(); dlg.close(); renderView(); toast("Part deleted");
+  };
+  $("#priceForm", dlg).onsubmit = e => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const price = parseFloat(f.get("price"));
+    const retailer = String(f.get("retailer") || "").trim();
+    if (!retailer || isNaN(price)) return;
+    p.prices.push({ id: uid(), retailer, price, date: String(f.get("date") || today()), url: String(f.get("url") || "").trim(), inStock: f.get("inStock") === "on" });
+    save(); openPart(id); renderView(); toast(`Logged ${money(price)} at ${retailer}`);
+  };
+  if (!dlg.open) dlg.showModal();
+}
+
+/* ================= Add / edit part ================= */
+function openEdit(id, preset = {}) {
+  const p = id ? partById(id) : { id: null, brand: "", name: "", category: preset.category || "", fits: preset.fits || [], est: "", mount: "", notes: "", url: "", verified: false };
+  const dlg = $("#dlgEdit");
+  const cats = [...new Set([...db.parts.map(x => x.category), ...Object.values(SLOTS).flat().flatMap(s => s.cats || [])])].sort();
+  const brands = [...new Set(db.parts.map(x => x.brand))].filter(Boolean).sort();
+  const groups = ["Pistol", "Rifle", "Shotgun"].map(t => {
+    const ps = db.platforms.filter(x => x.type === t); if (!ps.length) return "";
+    return `<div><div class="grp">${t}s</div><div class="cks">${ps.map(x => `<label><input type="checkbox" name="fits" value="${esc(x.id)}" ${p.fits.includes(x.id) ? "checked" : ""}> ${esc(x.name)}</label>`).join("")}</div></div>`;
+  }).join("");
+  dlg.innerHTML = `
+    <form method="dialog" id="editForm" autocomplete="off">
+      <div class="dlg-head"><div style="flex:1"><h2>${id ? "Edit part" : "Add a part"}</h2></div><button class="x" type="button" data-close aria-label="Close">×</button></div>
+      <div class="dlg-body">
+        <div class="form-grid">
+          <label class="f">Brand<input type="text" name="brand" list="brandList" required value="${esc(p.brand)}"></label>
+          <label class="f">Part name<input type="text" name="name" required value="${esc(p.name)}"></label>
+          <label class="f">Category<input type="text" name="category" list="catList" required value="${esc(p.category)}" placeholder="e.g. Trigger"></label>
+          <label class="f">Mount / footprint<input type="text" name="mount" value="${esc(p.mount)}" placeholder="e.g. RMR footprint"></label>
+          <label class="f">Est. street price ($)<input type="number" name="est" min="0" step="0.01" value="${p.est ?? ""}"></label>
+          <label class="f">Product page<input type="url" name="url" value="${esc(p.url)}" placeholder="https://"></label>
+          <label class="f full">Notes<textarea name="notes" rows="2">${esc(p.notes)}</textarea></label>
+          <div class="full"><div class="f" style="margin-bottom:4px">Fits</div><div class="fits-box">${groups}</div></div>
+          <label class="full" style="display:flex;gap:6px;align-items:center;font-size:14px"><input type="checkbox" name="verified" ${p.verified ? "checked" : ""}> I've checked this fitment against the maker's list</label>
+        </div>
+        <p class="faint" style="font-size:12.5px;margin:0">Parts show up in the builder under the matching slot: Pistol optic, Rifle optic, Sights, Trigger, Weapon light, Magazine, Controls, Holster, Stock, Grip, Charging handle, Handguard, Muzzle device, Forend, Shell carrier. Other categories appear in the catalog only.</p>
+        <div class="dlg-foot"><button class="btn" type="button" data-close>Cancel</button><button class="btn primary" type="submit">${id ? "Save changes" : "Add part"}</button></div>
+      </div>
+      <datalist id="catList">${cats.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
+      <datalist id="brandList">${brands.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
+    </form>`;
+  $$("[data-close]", dlg).forEach(b => b.onclick = () => dlg.close());
+  $("#editForm", dlg).onsubmit = e => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const v = k => String(f.get(k) || "").trim();
+    const estRaw = v("est");
+    const data = { brand: v("brand"), name: v("name"), category: v("category") || "Other", mount: v("mount"), notes: v("notes"), url: v("url"), est: estRaw === "" ? null : Number(estRaw), fits: f.getAll("fits").map(String), verified: f.get("verified") === "on" };
+    if (!data.brand || !data.name) return;
+    let target;
+    if (id) { target = partById(id); Object.assign(target, data); target.seed = false; }
+    else {
+      let nid = slug(data.brand + "-" + data.name); while (partById(nid)) nid += "-" + uid().slice(0, 3);
+      target = { id: nid, ...data, seed: false, prices: [] }; db.parts.push(target);
+    }
+    save(); dlg.close(); renderView(); toast(id ? "Part updated" : "Part added");
+    if (!id) openPart(target.id);
+  };
+  dlg.showModal();
+}
+
+/* ================= Firearms ================= */
+function renderFirearms() {
+  const counts = {}; db.parts.forEach(p => p.fits.forEach(f => counts[f] = (counts[f] || 0) + 1));
+  $("#fList").innerHTML = ["Pistol", "Rifle", "Shotgun"].map(t => {
+    const ps = db.platforms.filter(p => p.type === t); if (!ps.length) return "";
+    return `<h2 class="sec">${t}s</h2><div class="grid">${ps.map(p => `<div class="card">
+      <h3>${esc(p.name)}</h3><div class="muted" style="font-size:14px">${esc(p.covers || "")}</div>
+      <div class="faint" style="font-size:13px">${counts[p.id] || 0} parts in catalog</div>
+      <div class="row"><button class="btn small primary" data-build="${esc(p.id)}">Build one</button><button class="btn small" data-parts="${esc(p.id)}">See parts</button><button class="btn small danger" data-del="${esc(p.id)}">Remove</button></div>
+    </div>`).join("")}</div>`;
+  }).join("");
+  $$("#fList [data-build]").forEach(b => b.onclick = () => { build = newBuild(b.dataset.build); slotIdx = 0; persistDraft(); setView("build"); });
+  $$("#fList [data-parts]").forEach(b => b.onclick = () => { cState.platform = b.dataset.parts; setView("catalog"); });
+  $$("#fList [data-del]").forEach(b => b.onclick = () => {
+    const p = platformById(b.dataset.del); const n = counts[p.id] || 0;
+    if (!confirm(`Remove ${p.name}?${n ? ` It's listed as a fit on ${n} parts; those links will be removed.` : ""}`)) return;
+    db.platforms = db.platforms.filter(x => x.id !== p.id);
+    db.parts.forEach(x => x.fits = x.fits.filter(f => f !== p.id));
+    db.builds = db.builds.filter(x => x.platform !== p.id);
+    if (build.platform === p.id) build = newBuild(db.platforms[0]?.id);
+    save(); renderFirearms();
+  });
+}
+$("#fAdd").addEventListener("click", () => {
+  const name = $("#fName").value.trim(); if (!name) { $("#fName").focus(); return; }
+  let id = slug(name); while (platformById(id)) id += "-" + uid().slice(0, 3);
+  db.platforms.push({ id, name, type: $("#fType").value, covers: $("#fCovers").value.trim() });
+  $("#fName").value = ""; $("#fCovers").value = "";
+  save(); renderFirearms(); toast(`Added ${name}`);
+});
+
+/* ================= Saved builds ================= */
+function buildTotal(b) {
+  let total = 0, est = 0, n = 0;
+  Object.values(b.picks).forEach(id => { const pt = partById(id); if (!pt) return; n++; const pr = priceOf(pt); if (pr) { total += pr.amount; if (pr.est) est++; } else est++; });
+  return { total, est, n };
+}
+function renderBuilds() {
+  if (!db.builds.length) { $("#buildList").innerHTML = `<div class="card" style="text-align:center;padding:30px"><h3>No saved builds yet</h3><p class="muted">Spec one out on the Build tab and hit Save.</p><div><button class="btn primary" id="goBuild">Start a build</button></div></div>`; $("#goBuild").onclick = () => setView("build"); return; }
+  $("#buildList").innerHTML = `<div class="grid">${db.builds.map(b => {
+    const p = platformById(b.platform); const t = buildTotal(b);
+    const parts = Object.values(b.picks).map(partById).filter(Boolean);
+    return `<div class="card">
+      <div class="dots"><span style="background:${esc(b.finish?.a)}"></span><span style="background:${esc(b.finish?.b)}"></span></div>
+      <h3>${esc(b.name)}</h3><div class="muted" style="font-size:14px">${esc(p?.name || "Unknown firearm")} · saved ${esc(b.saved || "")}</div>
+      <div style="font-size:22px;font-weight:800">${t.est ? "~" : ""}${money(t.total)}</div>
+      <div class="faint" style="font-size:13px">${parts.length ? parts.map(x => esc(x.brand + " " + x.name)).join(" · ") : "Factory parts only"}</div>
+      <div class="row"><button class="btn small primary" data-open="${esc(b.id)}">Open</button><button class="btn small" data-dup="${esc(b.id)}">Duplicate</button><button class="btn small danger" data-del="${esc(b.id)}">Delete</button></div>
+    </div>`;
+  }).join("")}</div>`;
+  $$("#buildList [data-open]").forEach(x => x.onclick = () => { build = JSON.parse(JSON.stringify(db.builds.find(b => b.id === x.dataset.open))); slotIdx = 0; persistDraft(); setView("build"); });
+  $$("#buildList [data-dup]").forEach(x => x.onclick = () => { const b = JSON.parse(JSON.stringify(db.builds.find(b => b.id === x.dataset.dup))); b.id = uid(); b.name += " (copy)"; b.saved = today(); db.builds.unshift(b); save(); renderBuilds(); });
+  $$("#buildList [data-del]").forEach(x => x.onclick = () => { const b = db.builds.find(b => b.id === x.dataset.del); if (!confirm(`Delete “${b.name}”?`)) return; db.builds = db.builds.filter(y => y.id !== b.id); if (build.id === b.id) build.id = null; save(); renderBuilds(); });
+}
+
+/* ================= Data menu ================= */
+function download(name, text, type) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([text], { type }));
+  a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+const csvCell = v => { const s = String(v ?? ""); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+$("#dataMenu").addEventListener("click", e => {
+  const act = e.target.closest("[data-act]")?.dataset.act; if (!act) return;
+  $("#dataMenu").open = false;
+  if (act === "export-json") download(`parts-bin-${today()}.json`, JSON.stringify({ ...db, draft: undefined }, null, 2), "application/json");
+  if (act === "export-csv") {
+    const rows = [["brand", "name", "category", "mount", "fits", "est_price", "best_price", "best_retailer", "verified", "retailer", "price", "date", "in_stock", "url"]];
+    db.parts.forEach(p => {
+      const b = bestPrice(p); const base = [p.brand, p.name, p.category, p.mount, p.fits.map(f => platformById(f)?.name || f).join("; "), p.est ?? "", b?.price ?? "", b?.retailer ?? "", p.verified ? "yes" : "no"];
+      if (!p.prices.length) rows.push([...base, "", "", "", "", p.url]);
+      p.prices.forEach(e => rows.push([...base, e.retailer, e.price, e.date, e.inStock === false ? "no" : "yes", e.url || p.url]));
+    });
+    download(`parts-bin-${today()}.csv`, rows.map(r => r.map(csvCell).join(",")).join("\n"), "text/csv");
+  }
+  if (act === "import-json") $("#importFile").click();
+  if (act === "reset") {
+    if (!confirm("Replace everything with the starter data? Your parts, prices and builds will be lost unless you've exported them.")) return;
+    db = seedDb(); build = newBuild("glock-19"); slotIdx = 0; save(); renderView(); toast("Reset to starter data");
+  }
+});
+$("#importFile").addEventListener("change", async e => {
+  const file = e.target.files[0]; e.target.value = ""; if (!file) return;
+  try {
+    const d = JSON.parse(await file.text());
+    if (!validDb(d)) throw new Error("bad shape");
+    if (!confirm(`Import ${d.parts.length} parts and ${d.platforms.length} firearms? This replaces what's here now.`)) return;
+    db = normalize(d); db.draft = null; build = newBuild(db.platforms[0]?.id); slotIdx = 0; save(); renderView(); toast("Imported");
+  } catch (err) { alert("That file isn't a Parts Bin export."); }
+});
+
+/* ================= Misc ================= */
+let toastT;
+function toast(msg) {
+  let t = $(".toast"); if (!t) { t = document.createElement("div"); t.className = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); }
+  t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, 2200);
+}
+document.addEventListener("click", e => { const m = $("#dataMenu"); if (m.open && !m.contains(e.target)) m.open = false; });
+[$("#dlgPart"), $("#dlgEdit")].forEach(d => d.addEventListener("click", e => { if (e.target === d) d.close(); }));
+try { if (localStorage.getItem(BANNER_KEY) !== "hide") $("#banner").hidden = false; } catch (e) { $("#banner").hidden = false; }
+$("#bannerClose").addEventListener("click", () => { $("#banner").hidden = true; try { localStorage.setItem(BANNER_KEY, "hide"); } catch (e) {} });
+
+renderView();
+</script>
+</body>
+</html>

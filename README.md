@@ -60,3 +60,31 @@ seconds). There's also a random late-game deficit mode.
 
 Situations and lineups are approximations from public game accounts; a few
 depth-chart spots and jersey numbers may be off.
+
+---
+
+# Parts Bin
+
+`parts-bin/index.html` is a single-file aftermarket firearm parts catalog with a
+product-customizer front end, the way sneaker sites let you build your own shoe.
+
+- **Build**: pick a firearm and it appears on a studio stage as a generic
+  silhouette. Numbered hotspots walk you through each slot (optic, sights,
+  trigger, light, magazine, stock, handguard, muzzle and so on). Each slot only
+  offers parts listed as fitting that firearm, and your picks show up on the
+  drawing. A Finish step recolors the slide and frame (or upper and lower). The
+  running total uses the best retailer price you've logged, or the estimate.
+  Save as many builds as you like.
+- **Catalog**: search and filter every part by firearm, category and brand, and
+  sort by price. Open a part to log what retailers charge (with date, link and
+  stock). It shows the best current price, the change since your last check at
+  that store, and the older history.
+- **Firearms**: add your own platforms; the builder picks the pistol, rifle or
+  shotgun layout from the type.
+- **Data**: everything saves in the browser. Export to JSON (full backup) or
+  CSV (parts and prices), import a JSON backup, or reset to the starter data.
+
+The starter data (about 50 parts across 17 platforms) was drafted from general
+knowledge. Fitment and estimated prices are **unverified**: check the maker's
+fitment list before buying, and tick *Verified* on a part once you have. No
+retailer prices are included; those are yours to log.
