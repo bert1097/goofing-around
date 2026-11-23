@@ -325,7 +325,7 @@
   .gunchip .links { display: flex; gap: 14px; margin-top: 2px; }
   .linkbtn { border: 0; background: none; padding: 0; color: var(--accent); font-weight: 600; font-size: 13.5px; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 
-  .tip { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line); background: var(--panel); color: var(--ink-2); font: 700 11px/1 var(--font); display: inline-grid; place-items: center; cursor: help; padding: 0; margin-left: 7px; vertical-align: 3px; flex: none; }
+  .tip { width: 17px; height: 17px; border-radius: 50%; border: 1.5px solid currentColor; background: none; color: var(--ink-3); font: 700 11px/1 Georgia, "Times New Roman", serif; display: inline-grid; place-items: center; cursor: help; padding: 0; margin-left: 7px; vertical-align: 3px; flex: none; }
   .tip:hover, .tip[aria-expanded="true"] { color: var(--accent); border-color: var(--accent); }
   #tipPop { position: fixed; z-index: 60; max-width: min(290px, calc(100vw - 24px)); background: var(--ink); color: var(--bg); padding: 9px 12px; border-radius: 10px; font-size: 13.5px; line-height: 1.4; box-shadow: var(--shadow); pointer-events: none; }
   .steptip { display: grid; place-items: center; padding: 0 2px; }
@@ -488,7 +488,7 @@
     <div id="bPick">
       <div class="pick-head">
         <div>
-          <h1>Choose your firearm<button type="button" class="tip" aria-label="How this works" data-tip="Every later step only offers parts that fit the firearm you pick here.">?</button></h1>
+          <h1>Choose your firearm<button type="button" class="tip" aria-label="More info" data-tip="Every later step only offers parts that fit the firearm you pick here.">i</button></h1>
           <p class="muted">Start with the gun. Every step after this only offers parts that fit it.</p>
         </div>
         <div class="pick-tools">
@@ -507,7 +507,7 @@
           <div id="setupHost"></div>
         </div>
         <aside class="picker">
-          <div class="picker-head"><div><div class="step">Set it up</div><h2>Which version do you have?<button type="button" class="tip" aria-label="How this works" data-tip="These choices decide what fits. For example, a MOS slide takes an optic on a plate, and a free-float handguard needs a low-profile gas block.">?</button></h2></div></div>
+          <div class="picker-head"><div><div class="step">Set it up</div><h2>Which version do you have?<button type="button" class="tip" aria-label="More info" data-tip="These choices decide what fits. For example, a MOS slide takes an optic on a plate, and a free-float handguard needs a low-profile gas block.">i</button></h2></div></div>
           <div class="options" id="setupOpts"></div>
           <div class="setup-foot"><button class="btn" id="setupBack" type="button">← Firearms</button><button class="btn primary" id="setupGo" type="button">Customize parts →</button></div>
         </aside>
@@ -523,13 +523,13 @@
       </div>
       <input class="bb-name" type="text" id="bName" placeholder="Name this build" aria-label="Build name">
       <button type="button" class="bb-fit" id="bbFit" aria-label="Go to fit check"></button>
-      <div class="total"><div class="amt"><span id="bTotal">$0</span><button type="button" class="tip" aria-label="How this works" data-tip="Uses the lowest price you've logged at a store. Without one it uses an estimate, marked with ~ and est.">?</button></div><div class="sub" id="bTotalSub">Pick parts to start</div></div>
+      <div class="total"><div class="amt"><span id="bTotal">$0</span><button type="button" class="tip" aria-label="More info" data-tip="Uses the lowest price you've logged at a store. Without one it uses an estimate, marked with ~ and est.">i</button></div><div class="sub" id="bTotalSub">Pick parts to start</div></div>
       <div class="bb-actions"><button class="btn small" id="bbPlan" type="button">Plan</button><button class="btn small primary" id="bbSave" type="button">Save</button></div>
     </div>
     <div class="build-main">
       <div class="stage" id="stage">
         <div class="tag"><span id="stageType">Pistol</span><strong id="stageName">—</strong></div>
-        <div class="viewbox"><div class="seg viewseg" id="viewSeg" role="group" aria-label="Stage view"><button type="button" data-v="side">Side</button><button type="button" data-v="rear">Rear</button></div><button type="button" class="tip" aria-label="How this works" data-tip="Side shows the build. Rear shows what you see from behind the gun: the dot, and whether your iron sights show through the optic window.">?</button></div>
+        <div class="viewbox"><div class="seg viewseg" id="viewSeg" role="group" aria-label="Stage view"><button type="button" data-v="side">Side</button><button type="button" data-v="rear">Rear</button></div><button type="button" class="tip" aria-label="More info" data-tip="Side shows the build. Rear shows what you see from behind the gun: the dot, and whether your iron sights show through the optic window.">i</button></div>
         <div class="floor"></div>
         <div id="svgHost"></div>
         <div class="stage-cap" id="stageCap" hidden></div>
@@ -538,7 +538,7 @@
         <div class="picker-head">
           <div>
             <div class="step" id="pkStep">Step 1 of 7</div>
-            <h2><span id="pkTitle">Optic</span><button type="button" class="tip" aria-label="How this works" data-tip="Choose a part for this spot. Click the numbered dots on the gun or the steps under it to jump between spots. Each option shows whether it fits.">?</button></h2>
+            <h2><span id="pkTitle">Optic</span><button type="button" class="tip" aria-label="More info" data-tip="Choose a part for this spot. Click the numbered dots on the gun or the steps under it to jump between spots. Each option shows whether it fits.">i</button></h2>
           </div>
           <div class="nav">
             <button class="round" id="pkPrev" aria-label="Previous slot">‹</button>
@@ -560,8 +560,8 @@
       </div>
     </div>
     <div class="cols">
-      <section class="panel" id="pFit"><div class="panel-head"><h3>Fit check<button type="button" class="tip" aria-label="How this works" data-tip="Checks every part against your firearm and the other parts. Orange Add buttons put in the plate, mount or part that makes it work. Each verdict links to its source.">?</button></h3><span id="fitSummary"></span></div><div id="fitBody"></div></section>
-      <section class="panel" id="pPlan"><div class="panel-head"><h3>Install plan<button type="button" class="tip" aria-label="How this works" data-tip="Every part's install steps in a sensible order, with tools, difficulty and time. Tick steps off as you go.">?</button></h3><button class="btn small" id="planCopy" hidden>Copy plan</button></div><div id="planBody"></div></section>
+      <section class="panel" id="pFit"><div class="panel-head"><h3>Fit check<button type="button" class="tip" aria-label="More info" data-tip="Checks every part against your firearm and the other parts. Orange Add buttons put in the plate, mount or part that makes it work. Each verdict links to its source.">i</button></h3><span id="fitSummary"></span></div><div id="fitBody"></div></section>
+      <section class="panel" id="pPlan"><div class="panel-head"><h3>Install plan<button type="button" class="tip" aria-label="More info" data-tip="Every part's install steps in a sensible order, with tools, difficulty and time. Tick steps off as you go.">i</button></h3><button class="btn small" id="planCopy" hidden>Copy plan</button></div><div id="planBody"></div></section>
     </div>
     </div>
   </section>
@@ -581,7 +581,7 @@
       </select>
     </div>
     <div class="count-row">
-      <span><span id="cCount"></span><button type="button" class="tip" aria-label="How this works" data-tip="Click a part to see its fit rules, sources and prices, and to log a price you found.">?</button></span>
+      <span><span id="cCount"></span><button type="button" class="tip" aria-label="More info" data-tip="Click a part to see its fit rules, sources and prices, and to log a price you found.">i</button></span>
       <select id="cSrc" style="width:auto"><option value="">Any source status</option><option value="sourced">Sourced</option><option value="partial">Partly sourced</option><option value="none">Unsourced</option><option value="disputed">Disputed</option></select>
       <label><input type="checkbox" id="cPriced"> Only parts with retailer prices</label>
       <button class="btn dark" id="cAdd">+ Add part</button>
@@ -3413,7 +3413,7 @@ function renderStepper(plat) {
     const order = ["pick", "setup", "parts"]; const done = order.indexOf(id) < order.indexOf(bStage);
     return `<button type="button" data-st="${id}" ${id === "pick" || ok ? "" : "disabled"} class="${done ? "done" : ""}" ${bStage === id ? 'aria-current="step"' : ""}><span class="k">${k}</span><span class="v">${esc(v)}</span></button>`;
   }).join("");
-  $("#stepper").insertAdjacentHTML("beforeend", `<span class="steptip"><button type="button" class="tip" aria-label="How this works" data-tip="Pick a firearm, choose which version you have, then add parts. Click any step to go back.">?</button></span>`);
+  $("#stepper").insertAdjacentHTML("beforeend", `<span class="steptip"><button type="button" class="tip" aria-label="More info" data-tip="Pick a firearm, choose which version you have, then add parts. Click any step to go back.">i</button></span>`);
   $$("#stepper button[data-st]").forEach(b => b.onclick = () => goStage(b.dataset.st));
 }
 
