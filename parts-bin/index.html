@@ -325,6 +325,27 @@
   .gunchip .links { display: flex; gap: 14px; margin-top: 2px; }
   .linkbtn { border: 0; background: none; padding: 0; color: var(--accent); font-weight: 600; font-size: 13.5px; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 
+  .tip { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line); background: var(--panel); color: var(--ink-2); font: 700 11px/1 var(--font); display: inline-grid; place-items: center; cursor: help; padding: 0; margin-left: 7px; vertical-align: 3px; flex: none; }
+  .tip:hover, .tip[aria-expanded="true"] { color: var(--accent); border-color: var(--accent); }
+  #tipPop { position: fixed; z-index: 60; max-width: min(290px, calc(100vw - 24px)); background: var(--ink); color: var(--bg); padding: 9px 12px; border-radius: 10px; font-size: 13.5px; line-height: 1.4; box-shadow: var(--shadow); pointer-events: none; }
+  .steptip { display: grid; place-items: center; padding: 0 2px; }
+  .buildbar { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 57px); z-index: 15; display: flex; align-items: center; gap: 14px; padding: 10px 0; margin: -6px 0 14px; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .bb-gun { display: grid; min-width: 0; flex: 1 1 auto; line-height: 1.25; }
+  .bb-gun strong { font-size: 17px; letter-spacing: -.01em; }
+  .bb-cfg { font-size: 13px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bb-gun .links { display: flex; gap: 12px; }
+  .bb-name { width: 200px; flex: 0 1 200px; }
+  .bb-fit { border: 0; background: none; padding: 0; cursor: pointer; flex: none; }
+  .buildbar .total { margin-left: 0; flex: none; width: auto !important; text-align: right !important; }
+  .buildbar .total .amt { font-size: 24px; display: flex; align-items: center; justify-content: flex-end; }
+  .buildbar .total .sub { font-size: 12px; margin-top: 2px; }
+  .bb-actions { display: flex; gap: 6px; flex: none; }
+  .viewbox { position: absolute; top: 12px; right: 12px; z-index: 2; display: flex; align-items: center; }
+  .viewbox .viewseg { position: static; }
+  .picker-head h2 { display: flex; align-items: center; }
+  .mtabs, #pList .mname { display: none; }
+  .build-main > * { min-width: 0; }
+
   /* ---------- Catalog ---------- */
   .toolbar { display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
   .count-row { display: flex; align-items: center; gap: 10px; margin: 4px 0 10px; font-size: 14px; color: var(--ink-2); flex-wrap: wrap; }
@@ -374,6 +395,30 @@
   dialog.ask { width: min(440px, calc(100vw - 32px)); }
   .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-weight: 600; font-size: 14px; z-index: 50; box-shadow: var(--shadow); }
 
+  @media (max-width: 899px) {
+    .buildbar { gap: 10px; padding: 8px 0; }
+    .bb-name, .bb-gun .links, #bbPlan, .buildbar .total .sub, .buildbar .total .tip { display: none; }
+    .bb-gun strong { font-size: 15px; }
+    .buildbar .total .amt { font-size: 19px; }
+    #bParts .build-main .stage { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 57px + 54px); z-index: 5; box-shadow: 0 6px 14px rgba(0,0,0,.08); }
+    #bParts .stage svg { max-height: 28vh; width: auto; max-width: 100%; margin: 0 auto; }
+    #bParts .stage { padding-top: 30px; padding-bottom: 6px; }
+    .stage .tag { top: 10px; } .stage .tag strong { display: none; }
+    .viewbox { top: 6px; right: 8px; }
+    #bParts .opt .meta { display: none; }
+    #bParts .picker { box-shadow: none; background: transparent; }
+    #bParts .picker-head { padding: 8px 2px; }
+    #bParts .options { padding: 4px 0; }
+    .mtabs { display: flex; width: 100%; margin: 14px 0 10px; }
+    .mtabs button { flex: 1; }
+    .mtabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+    #pList .mname { display: grid; padding: 12px 0 4px; }
+    #bParts .cols { display: block; margin-top: 0; }
+    #bParts[data-mp="list"] #pFit, #bParts[data-mp="list"] #pPlan,
+    #bParts[data-mp="fit"] #pList, #bParts[data-mp="fit"] #pPlan,
+    #bParts[data-mp="plan"] #pList, #bParts[data-mp="plan"] #pFit { display: none; }
+    #bParts .summary { margin-top: 0; }
+  }
   @media (max-width: 900px) {
     .build-main { grid-template-columns: 1fr; grid-template-areas: "stage" "strip" "picker"; gap: 10px; }
     .picker { max-height: none; }
@@ -443,7 +488,7 @@
     <div id="bPick">
       <div class="pick-head">
         <div>
-          <h1>Choose your firearm</h1>
+          <h1>Choose your firearm<button type="button" class="tip" aria-label="How this works" data-tip="Every later step only offers parts that fit the firearm you pick here.">?</button></h1>
           <p class="muted">Start with the gun. Every step after this only offers parts that fit it.</p>
         </div>
         <div class="pick-tools">
@@ -462,31 +507,29 @@
           <div id="setupHost"></div>
         </div>
         <aside class="picker">
-          <div class="picker-head"><div><div class="step">Set it up</div><h2>Which version do you have?</h2></div></div>
+          <div class="picker-head"><div><div class="step">Set it up</div><h2>Which version do you have?<button type="button" class="tip" aria-label="How this works" data-tip="These choices decide what fits. For example, a MOS slide takes an optic on a plate, and a free-float handguard needs a low-profile gas block.">?</button></h2></div></div>
           <div class="options" id="setupOpts"></div>
           <div class="setup-foot"><button class="btn" id="setupBack" type="button">← Firearms</button><button class="btn primary" id="setupGo" type="button">Customize parts →</button></div>
         </aside>
       </div>
     </div>
 
-    <div id="bParts" hidden>
-    <div class="build-head">
-      <div class="gunchip">
-        <span class="lbl">Firearm</span>
+    <div id="bParts" data-mp="list" hidden>
+    <div class="buildbar" id="buildbar">
+      <div class="bb-gun">
         <strong id="bGun">—</strong>
-        <span class="muted" id="bGunCfg"></span>
-        <span class="links"><button class="linkbtn" id="bChangeGun" type="button">Change firearm</button><button class="linkbtn" id="bEditSetup" type="button">Edit setup</button></span>
+        <span class="bb-cfg" id="bGunCfg"></span>
+        <span class="links"><button class="linkbtn" id="bChangeGun" type="button">Change</button><button class="linkbtn" id="bEditSetup" type="button">Setup</button></span>
       </div>
-      <label class="f">Build name<input type="text" id="bName" placeholder="Name this build"></label>
-      <div class="total">
-        <div class="amt" id="bTotal">$0</div>
-        <div class="sub" id="bTotalSub">Pick parts to start</div>
-      </div>
+      <input class="bb-name" type="text" id="bName" placeholder="Name this build" aria-label="Build name">
+      <button type="button" class="bb-fit" id="bbFit" aria-label="Go to fit check"></button>
+      <div class="total"><div class="amt"><span id="bTotal">$0</span><button type="button" class="tip" aria-label="How this works" data-tip="Uses the lowest price you've logged at a store. Without one it uses an estimate, marked with ~ and est.">?</button></div><div class="sub" id="bTotalSub">Pick parts to start</div></div>
+      <div class="bb-actions"><button class="btn small" id="bbPlan" type="button">Plan</button><button class="btn small primary" id="bbSave" type="button">Save</button></div>
     </div>
     <div class="build-main">
       <div class="stage" id="stage">
         <div class="tag"><span id="stageType">Pistol</span><strong id="stageName">—</strong></div>
-        <div class="seg viewseg" id="viewSeg" role="group" aria-label="Stage view"><button type="button" data-v="side">Side</button><button type="button" data-v="rear">Rear view</button></div>
+        <div class="viewbox"><div class="seg viewseg" id="viewSeg" role="group" aria-label="Stage view"><button type="button" data-v="side">Side</button><button type="button" data-v="rear">Rear</button></div><button type="button" class="tip" aria-label="How this works" data-tip="Side shows the build. Rear shows what you see from behind the gun: the dot, and whether your iron sights show through the optic window.">?</button></div>
         <div class="floor"></div>
         <div id="svgHost"></div>
         <div class="stage-cap" id="stageCap" hidden></div>
@@ -495,7 +538,7 @@
         <div class="picker-head">
           <div>
             <div class="step" id="pkStep">Step 1 of 7</div>
-            <h2 id="pkTitle">Optic</h2>
+            <h2><span id="pkTitle">Optic</span><button type="button" class="tip" aria-label="How this works" data-tip="Choose a part for this spot. Click the numbered dots on the gun or the steps under it to jump between spots. Each option shows whether it fits.">?</button></h2>
           </div>
           <div class="nav">
             <button class="round" id="pkPrev" aria-label="Previous slot">‹</button>
@@ -506,7 +549,9 @@
       </aside>
       <div class="strip" id="strip"></div>
     </div>
-    <div class="summary">
+    <div class="mtabs seg" id="mTabs" role="tablist" aria-label="Build details"><button type="button" data-p="list">Parts</button><button type="button" data-p="fit">Fit check</button><button type="button" data-p="plan">Plan</button></div>
+    <div class="summary" id="pList">
+      <label class="f mname">Build name<input type="text" id="bNameM" placeholder="Name this build"></label>
       <div id="sumRows"></div>
       <div class="actions">
         <button class="btn" id="bClear">Start over</button>
@@ -515,8 +560,8 @@
       </div>
     </div>
     <div class="cols">
-      <section class="panel"><div class="panel-head"><h3>Fit check</h3><span id="fitSummary"></span></div><div id="fitBody"></div></section>
-      <section class="panel"><div class="panel-head"><h3>Install plan</h3><button class="btn small" id="planCopy" hidden>Copy plan</button></div><div id="planBody"></div></section>
+      <section class="panel" id="pFit"><div class="panel-head"><h3>Fit check<button type="button" class="tip" aria-label="How this works" data-tip="Checks every part against your firearm and the other parts. Orange Add buttons put in the plate, mount or part that makes it work. Each verdict links to its source.">?</button></h3><span id="fitSummary"></span></div><div id="fitBody"></div></section>
+      <section class="panel" id="pPlan"><div class="panel-head"><h3>Install plan<button type="button" class="tip" aria-label="How this works" data-tip="Every part's install steps in a sensible order, with tools, difficulty and time. Tick steps off as you go.">?</button></h3><button class="btn small" id="planCopy" hidden>Copy plan</button></div><div id="planBody"></div></section>
     </div>
     </div>
   </section>
@@ -536,7 +581,7 @@
       </select>
     </div>
     <div class="count-row">
-      <span id="cCount"></span>
+      <span><span id="cCount"></span><button type="button" class="tip" aria-label="How this works" data-tip="Click a part to see its fit rules, sources and prices, and to log a price you found.">?</button></span>
       <select id="cSrc" style="width:auto"><option value="">Any source status</option><option value="sourced">Sourced</option><option value="partial">Partly sourced</option><option value="none">Unsourced</option><option value="disputed">Disputed</option></select>
       <label><input type="checkbox" id="cPriced"> Only parts with retailer prices</label>
       <button class="btn dark" id="cAdd">+ Add part</button>
@@ -572,6 +617,7 @@
     <button class="x" id="bannerClose" aria-label="Dismiss">×</button>
   </div>
 </div>
+<div id="tipPop" role="tooltip" hidden></div>
 <dialog id="dlgPart"></dialog>
 <dialog id="dlgAsk" class="ask"><div class="dlg-body"><p id="askMsg" style="margin:0"></p><div class="dlg-foot"><button class="btn" id="askNo" type="button">Cancel</button><button class="btn primary" id="askYes" type="button">OK</button></div></div></dialog>
 <dialog id="dlgText"><div class="dlg-head"><div style="flex:1"><h2 id="txtTitle"></h2><p class="muted" id="txtHint" style="margin:4px 0 0;font-size:14px"></p></div><button class="x" id="txtClose" type="button" aria-label="Close">×</button></div>
@@ -3367,7 +3413,8 @@ function renderStepper(plat) {
     const order = ["pick", "setup", "parts"]; const done = order.indexOf(id) < order.indexOf(bStage);
     return `<button type="button" data-st="${id}" ${id === "pick" || ok ? "" : "disabled"} class="${done ? "done" : ""}" ${bStage === id ? 'aria-current="step"' : ""}><span class="k">${k}</span><span class="v">${esc(v)}</span></button>`;
   }).join("");
-  $$("#stepper button").forEach(b => b.onclick = () => goStage(b.dataset.st));
+  $("#stepper").insertAdjacentHTML("beforeend", `<span class="steptip"><button type="button" class="tip" aria-label="How this works" data-tip="Pick a firearm, choose which version you have, then add parts. Click any step to go back.">?</button></span>`);
+  $$("#stepper button[data-st]").forEach(b => b.onclick = () => goStage(b.dataset.st));
 }
 
 // Small, static drawing of a firearm for cards and the setup stage.
@@ -3440,8 +3487,9 @@ function renderParts() {
   build.extras = build.extras.filter(id => partById(id)?.fits.includes(plat.id));
   const ev = evaluate(build);
 
-  $("#bName").value = build.name;
+  $("#bName").value = build.name; $("#bNameM").value = build.name;
   $("#bGun").textContent = plat.name;
+  $$("#mTabs button").forEach(x => x.setAttribute("aria-selected", String(x.dataset.p === $("#bParts").dataset.mp)));
   $("#bGunCfg").textContent = configSummary(plat, build.config) || plat.covers || "";
   $("#bEditSetup").hidden = !plat.options.length;
   $("#stageType").textContent = plat.type;
@@ -3568,6 +3616,8 @@ function renderParts() {
 function renderFitCheck(ev) {
   const box = $("#fitBody");
   const counts = { bad: ev.issues.filter(i => i.type === "no" || i.type === "conflict").length, fix: ev.issues.filter(i => i.type === "fix").length, warn: ev.issues.filter(i => i.type === "warn" || i.type === "unknown").length };
+  $("#bbFit").innerHTML = !ev.items.length ? `<span class="fit unknown">No parts yet</span>` :
+    counts.bad ? `<span class="fit no">✕ ${counts.bad} won't work</span>` : counts.fix ? `<span class="fit fix">＋ ${counts.fix} need${counts.fix === 1 ? "s" : ""} parts</span>` : counts.warn ? `<span class="fit warn">! ${counts.warn} note${counts.warn === 1 ? "" : "s"}</span>` : `<span class="fit ok">✓ All fits</span>`;
   $("#fitSummary").innerHTML = !ev.items.length ? "" :
     counts.bad ? `<span class="fit no">✕ ${counts.bad} won't work</span>` : counts.fix ? `<span class="fit fix">＋ ${counts.fix} need${counts.fix === 1 ? "s" : ""} parts</span>` : counts.warn ? `<span class="fit warn">! ${counts.warn} note${counts.warn === 1 ? "" : "s"}</span>` : `<span class="fit ok">✓ All good</span>`;
   if (!ev.items.length) { box.innerHTML = `<p class="muted" style="margin:0">Pick parts and this checks them against your ${esc(ev.plat.name)} and each other.</p>`; return; }
@@ -3650,6 +3700,7 @@ $("#planCopy").addEventListener("click", async () => {
   try { await navigator.clipboard.writeText(text); toast("Install plan copied"); } catch (e) { showText({ title: "Install plan", hint: "Select and copy.", text, go: "Copy" }); }
 });
 
+["#bName", "#bNameM"].forEach(sel => $(sel).addEventListener("input", e => { $(sel === "#bName" ? "#bNameM" : "#bName").value = e.target.value; }));
 $("#bName").addEventListener("input", e => { build.name = e.target.value; $("#stageName").textContent = build.name || platformById(build.platform)?.name || ""; persistDraft(); });
 $("#pkPrev").addEventListener("click", () => { slotIdx--; renderBuild(); });
 $("#pkNext").addEventListener("click", () => { slotIdx++; renderBuild(); });
@@ -3665,6 +3716,20 @@ function saveBuild(asNew) {
   persistDraft(); renderBuild(); toast(`Saved “${copy.name}”`);
 }
 $("#bSave").addEventListener("click", () => saveBuild(false));
+$("#bbSave").addEventListener("click", () => saveBuild(false));
+$("#bNameM").addEventListener("input", e => { build.name = e.target.value; $("#stageName").textContent = build.name || platformById(build.platform)?.name || ""; persistDraft(); });
+const isPhone = () => matchMedia("(max-width: 899px)").matches;
+// On phones the parts list, fit check and plan are tabs; on desktop they sit side by side.
+function showPanel(which) {
+  $("#bParts").dataset.mp = which;
+  $$("#mTabs button").forEach(x => x.setAttribute("aria-selected", String(x.dataset.p === which)));
+  const target = isPhone() ? $("#mTabs") : $(which === "plan" ? "#pPlan" : which === "fit" ? "#pFit" : "#pList");
+  const y = target.getBoundingClientRect().top + window.scrollY - ($("#buildbar").getBoundingClientRect().bottom + 8);
+  window.scrollTo({ top: Math.max(0, y), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+}
+$$("#mTabs button").forEach(x => x.addEventListener("click", () => showPanel(x.dataset.p)));
+$("#bbFit").addEventListener("click", () => showPanel("fit"));
+$("#bbPlan").addEventListener("click", () => showPanel("plan"));
 $("#bSaveAs").addEventListener("click", () => saveBuild(true));
 
 /* ================= Catalog ================= */
@@ -4100,6 +4165,32 @@ function showText({ title, hint, text = "", go, onImport }) {
   if (!d.open) d.showModal();
   if (!onImport) { ta.focus(); ta.select(); }
 }
+
+/* ================= Help tips ================= */
+let tipOpen = null, tipY = 0, tipAt = 0;
+function showTip(btn) {
+  const pop = $("#tipPop"); pop.textContent = btn.dataset.tip; pop.hidden = false;
+  const r = btn.getBoundingClientRect(), w = pop.offsetWidth, h = pop.offsetHeight;
+  const left = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), innerWidth - w - 8);
+  const top = r.bottom + 8 + h > innerHeight - 8 ? r.top - h - 8 : r.bottom + 8;
+  pop.style.left = left + "px"; pop.style.top = top + "px";
+  if (tipOpen && tipOpen !== btn) tipOpen.setAttribute("aria-expanded", "false");
+  if (tipOpen !== btn) tipAt = Date.now();
+  tipOpen = btn; tipY = scrollY; btn.setAttribute("aria-expanded", "true");
+}
+function hideTip() { $("#tipPop").hidden = true; if (tipOpen) tipOpen.setAttribute("aria-expanded", "false"); tipOpen = null; }
+const canHover = () => matchMedia("(hover: hover)").matches;
+document.addEventListener("mouseover", e => { const t = e.target.closest?.(".tip"); if (t && canHover()) showTip(t); });
+document.addEventListener("mouseout", e => { const t = e.target.closest?.(".tip"); if (t && canHover() && !t.contains(e.relatedTarget)) hideTip(); });
+document.addEventListener("click", e => {
+  const t = e.target.closest(".tip");
+  if (t) { e.preventDefault(); e.stopPropagation(); if (tipOpen === t && !canHover() && Date.now() - tipAt > 400) hideTip(); else showTip(t); return; }
+  if (tipOpen) hideTip();
+}, true);
+document.addEventListener("focusin", e => { if (e.target.classList?.contains("tip")) showTip(e.target); });
+document.addEventListener("focusout", e => { if (e.target.classList?.contains("tip")) hideTip(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") hideTip(); });
+addEventListener("scroll", () => { if (tipOpen && Math.abs(scrollY - tipY) > 40) hideTip(); }, { passive: true });
 
 /* ================= Misc ================= */
 let toastT;
