@@ -100,6 +100,7 @@
   details.menu .pop button:hover { background: var(--panel-2); }
   details.menu .pop hr { border: 0; border-top: 1px solid var(--line); margin: 4px 0; }
 
+  .banner.foot { margin: 0 0 32px; }
   .banner { margin: 14px 0 0; padding: 10px 14px; border-radius: 12px; background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); font-size: 14px; display: flex; gap: 12px; align-items: flex-start; }
   .banner p { margin: 0; flex: 1; }
   .x { border: 0; background: none; cursor: pointer; font-size: 18px; line-height: 1; color: var(--ink-2); padding: 2px 6px; }
@@ -280,6 +281,9 @@
   .srcform .cks { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 4px 10px; font-size: 14px; }
   .srcform .cks label { display: flex; gap: 6px; align-items: center; }
 
+  .viewseg { position: absolute; top: 12px; right: 12px; z-index: 2; }
+  .viewseg button { padding: 5px 11px; font-size: 13px; }
+  .stage-cap { position: absolute; left: 16px; right: 16px; bottom: 14px; text-align: center; font-size: 14px; color: var(--ink-2); text-wrap: balance; }
   .stepper { display: flex; gap: 6px; margin: 0 0 16px; overflow-x: auto; scrollbar-width: none; }
   .stepper button { flex: 1 1 0; min-width: 150px; text-align: left; border: 0; border-bottom: 3px solid var(--line); background: none; padding: 6px 2px 8px; cursor: pointer; display: grid; gap: 2px; }
   .stepper button:disabled { cursor: default; opacity: .45; }
@@ -429,12 +433,7 @@
   </div>
 </header>
 
-<div class="wrap">
-  <div class="banner" id="banner" hidden>
-    <p><strong>Check the sources.</strong> Every fit rule shows where it came from. A part is <em>Sourced</em> only when each of its rules is backed by a maker, retailer or reference page; anything marked <em>Unsourced</em> was drafted by Claude from general knowledge. Add sources as you confirm things. Your changes are saved in this browser; use <em>Data → Back up</em> to keep a copy.</p>
-    <button class="x" id="bannerClose" aria-label="Dismiss">×</button>
-  </div>
-</div>
+
 
 <main class="wrap">
   <!-- Build -->
@@ -487,8 +486,10 @@
     <div class="build-main">
       <div class="stage" id="stage">
         <div class="tag"><span id="stageType">Pistol</span><strong id="stageName">—</strong></div>
+        <div class="seg viewseg" id="viewSeg" role="group" aria-label="Stage view"><button type="button" data-v="side">Side</button><button type="button" data-v="rear">Rear view</button></div>
         <div class="floor"></div>
         <div id="svgHost"></div>
+        <div class="stage-cap" id="stageCap" hidden></div>
       </div>
       <aside class="picker">
         <div class="picker-head">
@@ -565,6 +566,12 @@
   </section>
 </main>
 
+<div class="wrap">
+  <div class="banner foot" id="banner" hidden>
+    <p><strong>Check the sources.</strong> Every fit rule shows where it came from. A part is <em>Sourced</em> only when each of its rules is backed by a maker, retailer or reference page; anything marked <em>Unsourced</em> was drafted by Claude from general knowledge. Add sources as you confirm things. Your changes are saved in this browser; use <em>Data → Back up</em> to keep a copy.</p>
+    <button class="x" id="bannerClose" aria-label="Dismiss">×</button>
+  </div>
+</div>
 <dialog id="dlgPart"></dialog>
 <dialog id="dlgAsk" class="ask"><div class="dlg-body"><p id="askMsg" style="margin:0"></p><div class="dlg-foot"><button class="btn" id="askNo" type="button">Cancel</button><button class="btn primary" id="askYes" type="button">OK</button></div></div></dialog>
 <dialog id="dlgText"><div class="dlg-head"><div style="flex:1"><h2 id="txtTitle"></h2><p class="muted" id="txtHint" style="margin:4px 0 0;font-size:14px"></p></div><button class="x" id="txtClose" type="button" aria-label="Close">×</button></div>
@@ -2720,8 +2727,8 @@ const SVGS = {
     <g class="base slot" data-slot="magazine"><rect class="steel2 tint" x="158" y="304" width="84" height="12" rx="3"/></g>
     <g class="acc slot" data-slot="magazine"><rect class="tint" x="156" y="304" width="88" height="26" rx="5" fill="#1c1d1f"/><rect class="deco" x="166" y="318" width="68" height="4" rx="2" fill="var(--accent)"/></g>
     <g class="base slot" data-slot="sights"><rect class="steel2 tint" x="488" y="88" width="9" height="9"/><rect class="steel2 tint" x="160" y="86" width="18" height="11"/></g>
-    <g class="acc slot" data-slot="sights"><rect class="tint" x="486" y="84" width="13" height="13" fill="#141516"/><rect class="tint" x="157" y="82" width="24" height="15" fill="#141516"/><circle class="deco" cx="492.5" cy="90" r="3.2" fill="#8cff6b"/><circle class="deco" cx="163" cy="89" r="2.6" fill="#8cff6b"/><circle class="deco" cx="175" cy="89" r="2.6" fill="#8cff6b"/></g>
-    <g class="acc slot" data-slot="optic"><path class="tint" d="M202 96 L208 64 Q210 56 220 56 L262 56 Q272 56 274 64 L280 96 Z" fill="#1d1f22"/><rect class="deco" x="214" y="63" width="54" height="24" rx="4" fill="#7ab8d9" opacity=".45"/><circle class="deco" cx="241" cy="75" r="2.4" fill="#ff3b30"/></g>
+    <g class="acc slot" data-slot="sights">{{SIGHTS}}</g>
+    <g class="acc slot" data-slot="optic">{{OPTIC}}</g>
     <g class="acc slot" data-slot="light"><rect class="tint" x="384" y="174" width="112" height="34" rx="7" fill="#1b1c1e"/><rect class="deco" x="492" y="176" width="9" height="30" rx="2" fill="#fff6c8"/><path class="deco" d="M501 176 L640 150 L640 232 L501 206 Z" fill="url(#beam)"/></g>
   `},
   Rifle: { vb: "0 0 820 280", pins: { optic: [282, 30], sights: [640, 64], charging: [190, 80], handguard: [500, 80], light: [592, 188], muzzle: [770, 82], magazine: [418, 236], trigger: [312, 212], grip: [206, 246], stock: [100, 86], finish: [440, 30] }, art: `
@@ -2741,7 +2748,7 @@ const SVGS = {
     <g class="base slot" data-slot="grip"><path class="steel tint" d="M242 162 L222 228 Q220 238 232 238 L258 238 Q264 238 264 230 L272 162 Z"/></g>
     <g class="base slot" data-slot="magazine"><path class="steel tint" d="M344 162 L388 162 L394 210 Q398 240 382 248 L352 250 Q340 220 344 162 Z"/></g>
     <g class="acc slot" data-slot="sights"><path class="tint" d="M214 102 L214 84 L234 84 L234 102 Z M600 104 L606 82 L616 82 L620 104 Z" fill="#141516"/><circle class="deco" cx="224" cy="91" r="4" fill="none" stroke="#8a8d93" stroke-width="2"/></g>
-    <g class="acc slot" data-slot="optic"><rect class="deco" x="252" y="88" width="60" height="16" rx="2" fill="#2a2b2e"/><rect class="tint" x="238" y="56" width="88" height="34" rx="14" fill="#1d1f22"/><rect class="deco" x="322" y="60" width="6" height="26" rx="2" fill="#7ab8d9" opacity=".7"/></g>
+    <g class="acc slot" data-slot="optic">{{OPTIC}}</g>
     <g class="acc slot" data-slot="light"><rect class="tint" x="560" y="146" width="62" height="20" rx="5" fill="#1b1c1e"/><rect class="deco" x="618" y="147" width="6" height="18" rx="2" fill="#fff6c8"/></g>
   `},
   Shotgun: { vb: "0 0 820 280", pins: { optic: [282, 52], shells: [356, 190], forend: [505, 186], light: [672, 192], trigger: [290, 210], stock: [110, 92], finish: [600, 72] }, art: `
@@ -2751,7 +2758,7 @@ const SVGS = {
     <g class="base slot" data-slot="trigger"><path class="steel2 tint" d="M286 150 Q280 164 286 174 L292 174 Q288 162 294 150 Z"/></g>
     <g class="base slot" data-slot="forend"><rect class="fin-b tint" x="440" y="116" width="132" height="32" rx="9"/><g stroke="rgba(0,0,0,.3)" stroke-width="3"><path d="M456 120 V144 M468 120 V144 M480 120 V144 M492 120 V144 M504 120 V144 M516 120 V144 M528 120 V144 M540 120 V144 M552 120 V144"/></g></g>
     <g class="acc slot" data-slot="shells"><rect class="tint" x="228" y="104" width="108" height="34" rx="3" fill="#1f2022"/><g class="deco"><rect x="236" y="108" width="12" height="26" rx="2" fill="#b3312a"/><rect x="252" y="108" width="12" height="26" rx="2" fill="#b3312a"/><rect x="268" y="108" width="12" height="26" rx="2" fill="#b3312a"/><rect x="284" y="108" width="12" height="26" rx="2" fill="#b3312a"/><rect x="300" y="108" width="12" height="26" rx="2" fill="#b3312a"/><rect x="316" y="108" width="12" height="26" rx="2" fill="#b3312a"/><rect x="236" y="128" width="92" height="6" fill="#c9a447"/></g></g>
-    <g class="acc slot" data-slot="optic"><rect class="deco" x="254" y="88" width="56" height="12" fill="#2a2b2e"/><path class="tint" d="M250 88 L256 66 L304 66 L312 88 Z" fill="#1d1f22"/><rect class="deco" x="264" y="70" width="34" height="14" fill="#7ab8d9" opacity=".45"/></g>
+    <g class="acc slot" data-slot="optic">{{OPTIC}}</g>
     <g class="acc slot" data-slot="light"><rect class="tint" x="436" y="112" width="140" height="40" rx="10" fill="#1b1c1e"/><rect class="deco" x="574" y="118" width="6" height="28" rx="2" fill="#fff6c8"/></g>
   `},
 };
@@ -2978,6 +2985,170 @@ function fitChip(r) {
   return `<span class="fit ${r.status}">${esc(t)}</span>`;
 }
 
+/* ================= Optic & sight drawings =================
+   Side view: each optic is drawn by type (open reflex, small K/RMSc, SRO, enclosed; rifle tube,
+   holographic box, open reflex, LPVO). Rear view: what the shooter sees from behind the gun,
+   including whether the iron sights show through the optic window (co-witness). */
+const DARK = "#1d1f22", DARK2 = "#2c2f33", GLASS = "#8fc3dc";
+function opticLook(p) {
+  if (!p) return null;
+  const n = p.name || "", m = p.mount || "";
+  if (/EPS/i.test(n)) return "enclosed";
+  if (/\bSRO\b/.test(n)) return "sro";
+  if (p.category === "Pistol optic") return /507K|RMSc|\bK\b/.test(n) || /K footprint|RMSc/.test(m) ? "small" : "open";
+  if (/T-1|T-2|Micro/i.test(n)) return "tube";
+  if (/EXPS|XPS|EOTech/i.test(n)) return "holo";
+  if (/\b1-\d+x|LPVO/i.test(n) || /30 mm/.test(m)) return "lpvo";
+  return "reflex";
+}
+const nightSights = p => !!p && /night|tritium|HD XR|DXT|suppressor/i.test(p.name);
+
+function pistolOpticSide(look) {
+  const by = 96;
+  if (look === "enclosed") {
+    const x = 204, w = 74, h = 34;
+    return `<path class="tint" fill="${DARK}" d="M${x} ${by} V${by - h + 6} Q${x} ${by - h} ${x + 6} ${by - h} H${x + w - 6} Q${x + w} ${by - h} ${x + w} ${by - h + 6} V${by} Z"/>
+      <rect class="deco" x="${x + w - 6}" y="${by - h + 6}" width="4" height="${h - 14}" fill="${GLASS}" opacity=".85"/>
+      <rect class="deco" x="${x + 2}" y="${by - h + 6}" width="4" height="${h - 14}" fill="${GLASS}" opacity=".6"/>
+      <rect class="deco" x="${x + 26}" y="${by - 18}" width="10" height="6" rx="1.5" fill="#44484e"/><rect class="deco" x="${x + 40}" y="${by - 18}" width="10" height="6" rx="1.5" fill="#44484e"/>`;
+  }
+  if (look === "sro") {
+    const x = 198, w = 88, h = 50;
+    return `<path class="tint" fill="${DARK}" d="M${x} ${by} V${by - 14} H${x + 10} V${by - h + 12} Q${x + 10} ${by - h} ${x + 22} ${by - h} H${x + w - 20} Q${x + w - 4} ${by - h} ${x + w - 2} ${by - h + 16} L${x + w} ${by} Z"/>
+      <path class="deco" d="M${x + w - 12} ${by - h + 3} Q${x + w + 2} ${by - h + 22} ${x + w - 1} ${by - 15}" stroke="${GLASS}" stroke-width="5" fill="none" opacity=".85"/>
+      <rect class="deco" x="${x + 34}" y="${by - 11}" width="12" height="6" rx="1.5" fill="#44484e"/><circle class="deco" cx="${x + 24}" cy="${by - h + 12}" r="5" fill="#44484e"/>`;
+  }
+  const small = look === "small";
+  const x = small ? 210 : 204, w = small ? 64 : 76, h = small ? 28 : 32;
+  const t = by - h;
+  return `<path class="tint" fill="${DARK}" d="M${x} ${by} L${x} ${t + 8} Q${x} ${t} ${x + 8} ${t} L${x + w * 0.56} ${t} Q${x + w * 0.84} ${t} ${x + w * 0.92} ${by - h * 0.5} L${x + w} ${by} Z"/>
+    <path class="deco" d="M${x + w * 0.8} ${t + 2} Q${x + w * 0.95} ${by - h * 0.55} ${x + w - 2} ${by - 1}" stroke="${GLASS}" stroke-width="4" fill="none" opacity=".85"/>
+    <rect class="deco" x="${x + 4}" y="${by - 9}" width="11" height="5" rx="1" fill="#44484e"/>
+    <rect class="deco" x="${x + w * 0.34}" y="${by - h * 0.55}" width="8" height="5" rx="1.5" fill="#44484e"/>`;
+}
+function pistolSightsSide(tall, glow) {
+  const fy = tall ? 70 : 84, ry = tall ? 68 : 82;
+  const dot = glow ? "#8cff6b" : "#f2f2f2";
+  return `<path class="tint" fill="#141516" d="M486 97 V${fy + 3} Q486 ${fy} 489 ${fy} H496 Q499 ${fy} 499 ${fy + 3} V97 Z"/>
+    <path class="tint" fill="#141516" d="M156 97 V${ry} H183 V97 Z"/><rect class="deco" x="166" y="${ry}" width="7" height="5" fill="var(--stage-b)"/>
+    <circle class="deco" cx="492.5" cy="${fy + 6}" r="3" fill="${dot}"/>`;
+}
+function longOpticSide(look, cx, by) {
+  const L = cx - 44;
+  if (look === "tube") return `<rect class="deco" x="${cx - 22}" y="${by - 18}" width="44" height="18" rx="2" fill="${DARK2}"/>
+    <rect class="tint" x="${L}" y="${by - 52}" width="88" height="34" rx="10" fill="${DARK}"/>
+    <rect class="deco" x="${L - 2}" y="${by - 54}" width="10" height="38" rx="3" fill="${DARK2}"/><rect class="deco" x="${L + 80}" y="${by - 54}" width="10" height="38" rx="3" fill="${DARK2}"/>
+    <rect class="deco" x="${cx - 8}" y="${by - 62}" width="16" height="10" rx="2" fill="${DARK2}"/><circle class="deco" cx="${cx + 4}" cy="${by - 35}" r="7" fill="${DARK2}"/>
+    <rect class="deco" x="${L + 86}" y="${by - 48}" width="4" height="26" rx="1" fill="${GLASS}" opacity=".8"/>`;
+  if (look === "holo") return `<rect class="deco" x="${L - 6}" y="${by - 12}" width="100" height="12" rx="2" fill="${DARK2}"/>
+    <path class="tint" fill="${DARK}" fill-rule="evenodd" d="M${L} ${by - 10} V${by - 54} Q${L} ${by - 60} ${L + 6} ${by - 60} H${L + 82} Q${L + 88} ${by - 60} ${L + 88} ${by - 54} V${by - 10} Z M${L + 14} ${by - 22} V${by - 50} H${L + 76} V${by - 22} Z"/>
+    <rect class="deco" x="${L + 14}" y="${by - 50}" width="62" height="28" fill="${GLASS}" opacity=".18"/>
+    <rect class="deco" x="${L + 4}" y="${by - 20}" width="8" height="6" rx="1" fill="#44484e"/><rect class="deco" x="${L + 66}" y="${by - 8}" width="22" height="5" rx="2" fill="#44484e"/>`;
+  if (look === "lpvo") return `<rect class="deco" x="${cx - 60}" y="${by - 12}" width="120" height="12" rx="2" fill="${DARK2}"/>
+    <rect class="deco" x="${cx - 42}" y="${by - 46}" width="14" height="36" rx="3" fill="${DARK2}"/><rect class="deco" x="${cx + 26}" y="${by - 46}" width="14" height="36" rx="3" fill="${DARK2}"/>
+    <rect class="tint" x="${cx - 96}" y="${by - 46}" width="196" height="22" rx="8" fill="${DARK}"/>
+    <path class="deco" d="M${cx - 112} ${by - 52} L${cx - 88} ${by - 46} V${by - 24} L${cx - 112} ${by - 18} Z" fill="${DARK}"/>
+    <path class="deco" d="M${cx + 98} ${by - 46} L${cx + 130} ${by - 56} V${by - 14} L${cx + 98} ${by - 24} Z" fill="${DARK}"/>
+    <rect class="deco" x="${cx - 4}" y="${by - 60}" width="18" height="16" rx="2" fill="${DARK2}"/><circle class="deco" cx="${cx + 5}" cy="${by - 35}" r="8" fill="${DARK2}"/>
+    <rect class="deco" x="${cx + 127}" y="${by - 53}" width="4" height="36" fill="${GLASS}" opacity=".8"/>`;
+  // open reflex
+  return `<rect class="deco" x="${L + 4}" y="${by - 12}" width="80" height="12" rx="2" fill="${DARK2}"/>
+    <path class="tint" fill="none" stroke="${DARK}" stroke-width="7" stroke-linejoin="round" d="M${L + 14} ${by - 10} L${L + 18} ${by - 44} Q${L + 20} ${by - 50} ${L + 26} ${by - 50} H${L + 62} Q${L + 68} ${by - 50} ${L + 70} ${by - 44} L${L + 76} ${by - 10}"/>
+    <path class="deco" d="M${L + 68} ${by - 46} L${L + 74} ${by - 14}" stroke="${GLASS}" stroke-width="4" opacity=".85"/>`;
+}
+
+// Fill the per-part optic and sight drawings into a firearm's side art.
+function sideArt(plat, b, iface) {
+  const a = SVGS[plat.type] || SVGS.Pistol;
+  const optic = partById(b?.picks?.optic);
+  const look = opticLook(optic) || (plat.type === "Pistol" ? "open" : "reflex");
+  const sightsPart = partById(b?.picks?.sights);
+  const opticArt = plat.type === "Pistol" ? pistolOpticSide(look) : longOpticSide(look, 282, plat.type === "Shotgun" ? 98 : 102);
+  return a.art.replace("{{OPTIC}}", opticArt).replace("{{SIGHTS}}", pistolSightsSide(iface?.sights_height === "cowitness", nightSights(sightsPart)));
+}
+
+// ---- rear view ----
+function windowShape(look, cx) {
+  // returns {outer, hole, glass:{...}} paths for the optic seen from behind
+  if (look === "sro") return { outer: `M${cx - 56} 94 V64 Q${cx - 56} 18 ${cx} 16 Q${cx + 56} 18 ${cx + 56} 64 V94 Z`, hole: `M${cx} 22 m-36 34 a36 36 0 1 0 72 0 a36 36 0 1 0 -72 0 Z`, top: 22, bot: 90, dot: 54 };
+  if (look === "enclosed") return { outer: `M${cx - 52} 94 V40 Q${cx - 52} 32 ${cx - 44} 32 H${cx + 44} Q${cx + 52} 32 ${cx + 52} 40 V94 Z`, hole: `M${cx - 40} 44 H${cx + 40} V80 H${cx - 40} Z`, top: 44, bot: 80, dot: 60 };
+  const w = look === "small" ? 46 : 56;
+  return { outer: `M${cx - w} 94 V52 Q${cx - w} 32 ${cx - w + 18} 32 H${cx + w - 18} Q${cx + w} 32 ${cx + w} 52 V94 Z`, hole: `M${cx - w + 12} 82 V54 Q${cx - w + 12} 42 ${cx - w + 24} 42 H${cx + w - 24} Q${cx + w - 12} 42 ${cx + w - 12} 54 V82 Z`, top: 42, bot: 82, dot: 60 };
+}
+function rearPistol(plat, b, iface) {
+  const cx = 320;
+  const optic = partById(b.picks.optic), look = opticLook(optic);
+  const tall = iface.sights_height === "cowitness";
+  const glow = nightSights(partById(b.picks.sights)) ? "#8cff6b" : "#f2f2f2";
+  const top = tall ? 70 : 88;
+  const ext = !!b.picks.magazine;
+  let s = `
+    <path class="fin-b" d="M276 186 L366 186 L360 318 Q358 326 350 326 L290 326 Q282 326 280 318 Z"/>
+    <g opacity=".22" stroke="#000" stroke-width="1.5"><path d="M292 200 V316 M304 200 V318 M316 200 V318 M328 200 V318 M340 200 V318 M352 200 V316"/></g>
+    <rect class="steel2" x="${ext ? 282 : 288}" y="320" width="${ext ? 76 : 64}" height="${ext ? 18 : 10}" rx="3"/>
+    ${ext ? `<rect x="292" y="330" width="56" height="3" rx="1.5" fill="var(--accent)"/>` : ""}
+    <path class="fin-b" d="M266 150 H374 V178 Q374 190 362 190 H278 Q266 190 266 178 Z"/>
+    <path class="fin-a" d="M262 152 V112 Q262 96 278 94 H362 Q378 96 378 112 V152 Z"/>
+    <rect class="steel2" x="306" y="112" width="28" height="26" rx="3"/>
+    <rect class="steel2" x="${cx - 4}" y="${top}" width="8" height="${94 - top}"/>
+    <circle cx="${cx}" cy="${top + 4}" r="3.2" fill="${glow}"/>`;
+  if (optic) {
+    const w = windowShape(look, cx);
+    s += `<path fill="${DARK}" fill-rule="evenodd" d="${w.outer} ${w.hole}"/>
+      <path d="${w.hole}" fill="${GLASS}" opacity=".22"/>
+      <circle cx="${cx}" cy="${w.dot}" r="7" fill="#ff3b30" opacity=".25"/><circle cx="${cx}" cy="${w.dot}" r="3.2" fill="#ff3b30"/>`;
+  }
+  const ears = tall ? 68 : 86;
+  const notch = Math.min(ears + 10, 94);
+  s += `<path fill="#141516" d="M286 98 V${ears} H312 V${notch} H328 V${ears} H354 V98 Z"/>
+    <circle cx="299" cy="${ears + 5}" r="3.2" fill="${glow}"/><circle cx="341" cy="${ears + 5}" r="3.2" fill="${glow}"/>`;
+  let cap;
+  if (!optic) cap = "Iron sights: put the front post in the rear notch, tops even.";
+  else if (tall) cap = "Your sights show in the lower part of the optic window, so they work as a backup if the dot fails.";
+  else cap = "Your sights sit below the optic window, so you'll only see the dot. Suppressor-height sights would show through as a backup.";
+  return { svg: s, cap };
+}
+function rearLong(plat, b, iface) {
+  const cx = 320, shot = plat.type === "Shotgun";
+  const optic = partById(b.picks.optic), look = opticLook(optic);
+  let s = shot
+    ? `<path class="fin-b" d="M284 236 H356 L362 340 H278 Z"/>
+       <rect class="fin-a" x="276" y="118" width="88" height="120" rx="12"/>
+       <circle class="steel2" cx="${cx}" cy="112" r="4"/>`
+    : `<path class="fin-b" d="M288 246 H352 L360 340 H280 Z"/>
+       <rect class="fin-b" x="290" y="206" width="60" height="44" rx="4"/>
+       <rect class="fin-a" x="284" y="150" width="72" height="62" rx="6"/>
+       <rect class="steel2" x="${b.picks.charging ? 268 : 290}" y="196" width="${b.picks.charging ? 104 : 60}" height="10" rx="3"/>
+       ${iface.gas_block === "fsb" ? `<path class="steel2" d="M316 140 V104 H324 V140 Z"/><path class="steel2" d="M306 140 L310 118 H330 L334 140 Z" opacity=".7"/>` : ""}
+       ${iface.top_rail === "carry" ? `<path class="fin-a" fill-rule="evenodd" d="M290 150 V92 Q290 80 302 80 H338 Q350 80 350 92 V150 Z M${cx} 98 m-6 0 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0 Z"/>` : `<rect class="steel2" x="296" y="140" width="48" height="10" rx="1"/>`}`;
+  if (optic) {
+    const by = shot ? 116 : 140;
+    if (look === "tube") s += `<rect fill="${DARK2}" x="${cx - 16}" y="${by - 40}" width="32" height="40"/>
+      <circle cx="${cx}" cy="${by - 70}" r="36" fill="${DARK}"/><circle cx="${cx}" cy="${by - 70}" r="26" fill="${GLASS}" opacity=".3"/>`;
+    else if (look === "holo") s += `<path fill="${DARK}" fill-rule="evenodd" d="M${cx - 58} ${by} V${by - 96} Q${cx - 58} ${by - 104} ${cx - 50} ${by - 104} H${cx + 50} Q${cx + 58} ${by - 104} ${cx + 58} ${by - 96} V${by} Z M${cx - 44} ${by - 20} V${by - 90} H${cx + 44} V${by - 20} Z"/>
+      <rect x="${cx - 44}" y="${by - 90}" width="88" height="70" fill="${GLASS}" opacity=".2"/>
+      <circle cx="${cx}" cy="${by - 56}" r="20" fill="none" stroke="#ff3b30" stroke-width="2"/>`;
+    else if (look === "lpvo") s += `<rect fill="${DARK2}" x="${cx - 46}" y="${by - 30}" width="92" height="30"/>
+      <circle cx="${cx}" cy="${by - 74}" r="44" fill="${DARK}"/><circle cx="${cx}" cy="${by - 74}" r="34" fill="${DARK2}"/><circle cx="${cx}" cy="${by - 74}" r="27" fill="${GLASS}" opacity=".3"/>
+      <path d="M${cx - 27} ${by - 74} H${cx + 27} M${cx} ${by - 101} V${by - 47}" stroke="#141516" stroke-width="1.2"/>`;
+    else s += `<path fill="${DARK}" fill-rule="evenodd" d="M${cx - 50} ${by} V${by - 76} Q${cx - 50} ${by - 92} ${cx - 34} ${by - 92} H${cx + 34} Q${cx + 50} ${by - 92} ${cx + 50} ${by - 76} V${by} Z M${cx - 38} ${by - 14} V${by - 72} Q${cx - 38} ${by - 80} ${cx - 30} ${by - 80} H${cx + 30} Q${cx + 38} ${by - 80} ${cx + 38} ${by - 72} V${by - 14} Z"/>
+      <path d="M${cx - 38} ${by - 14} V${by - 72} Q${cx - 38} ${by - 80} ${cx - 30} ${by - 80} H${cx + 30} Q${cx + 38} ${by - 80} ${cx + 38} ${by - 72} V${by - 14} Z" fill="${GLASS}" opacity=".2"/>`;
+    const dy = look === "tube" ? by - 70 : look === "holo" ? by - 56 : look === "lpvo" ? by - 74 : by - 46;
+    s += `<circle cx="${cx}" cy="${dy}" r="7" fill="#ff3b30" opacity=".25"/><circle cx="${cx}" cy="${dy}" r="3" fill="#ff3b30"/>`;
+  }
+  let cap;
+  if (!optic) cap = shot ? "Bead sight: put the bead on the target." : iface.top_rail === "carry" ? "Iron sights: the front sight post through the carry handle's rear aperture." : iface.gas_block === "fsb" ? "Front sight base, no rear sight or optic yet. Add an optic to aim." : "No sights or optic yet. Add an optic to aim.";
+  else if (look === "lpvo") cap = "Magnified scope: you look through the eyepiece at the reticle.";
+  else if (!shot && iface.gas_block === "fsb" && look !== "lpvo") cap = "The front sight base shows in the lower part of the optic window.";
+  else cap = look === "holo" ? "Holographic: ring and center dot float in the window." : "Red dot centered in the window.";
+  return { svg: s, cap };
+}
+function rearSvg(plat, b, iface) {
+  const r = plat.type === "Pistol" ? rearPistol(plat, b, iface) : rearLong(plat, b, iface);
+  return { svg: `<svg viewBox="0 0 640 340" style="--fin-a:${esc(b.finish.a)};--fin-b:${esc(b.finish.b)}" aria-label="${esc(plat.name)} from behind">${r.svg}</svg>`, cap: r.cap };
+}
+let stageView = "side";
+
 /* ================= Tabs ================= */
 let view = "build";
 function setView(v) {
@@ -3073,7 +3244,7 @@ function renderStepper(plat) {
 // Small, static drawing of a firearm for cards and the setup stage.
 function gunSvg(plat, b, iface, cls = "") {
   const art = SVGS[plat.type] || SVGS.Pistol;
-  const html = `<svg class="${cls}" viewBox="${art.vb}" style="--fin-a:${esc(b?.finish?.a || FINISHES[0][1])};--fin-b:${esc(b?.finish?.b || FINISHES[0][1])}" aria-hidden="true">${art.art}</svg>`;
+  const html = `<svg class="${cls}" viewBox="${art.vb}" style="--fin-a:${esc(b?.finish?.a || FINISHES[0][1])};--fin-b:${esc(b?.finish?.b || FINISHES[0][1])}" aria-hidden="true">${sideArt(plat, b, iface)}</svg>`;
   return html.replace(/<g data-if="(\w+):([^"]+)">/g, (m, k, v) => String(iface[k]) === v ? "<g>" : '<g style="display:none">');
 }
 
@@ -3124,6 +3295,7 @@ function renderSetup(plat) {
   const src = $("#setupSrc"); if (src) src.onclick = () => openPlatform(plat.id);
 }
 $("#setupBack").addEventListener("click", () => goStage("pick"));
+$$("#viewSeg button").forEach(x => x.addEventListener("click", () => { stageView = x.dataset.v; renderBuild(); }));
 $("#setupGo").addEventListener("click", () => goStage("parts"));
 $("#bChangeGun").addEventListener("click", () => goStage("pick"));
 $("#bEditSetup").addEventListener("click", () => goStage("setup"));
@@ -3154,9 +3326,13 @@ function renderParts() {
     const cls = ["pin", i === slotIdx ? "active" : "", pid ? "done" : "", empty ? "empty" : "", st === "no" || st === "conflict" ? "bad" : st === "fix" || st === "warn" ? "warn" : ""].join(" ");
     return `<g class="${cls}" data-i="${i}" role="button" tabindex="0" aria-label="${esc(s.label)}"><circle cx="${x}" cy="${y}" r="13"/><text x="${x}" y="${y}">${s.finish ? "✦" : i + 1}</text></g>`;
   }).join("");
-  $("#svgHost").innerHTML = `<svg viewBox="${art.vb}" style="--fin-a:${esc(build.finish.a)};--fin-b:${esc(build.finish.b)}" aria-label="${esc(plat.name)} build preview">
+  $$("#viewSeg button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.v === stageView)));
+  const rear = stageView === "rear" ? rearSvg(plat, build, ev.final) : null;
+  $("#stageCap").hidden = !rear; $("#stageCap").textContent = rear ? rear.cap : "";
+  $("#stageType").textContent = rear ? `${plat.type} · from behind` : plat.type;
+  $("#svgHost").innerHTML = rear ? rear.svg : `<svg viewBox="${art.vb}" style="--fin-a:${esc(build.finish.a)};--fin-b:${esc(build.finish.b)}" aria-label="${esc(plat.name)} build preview">
     <defs><linearGradient id="beam" x1="0" x2="1"><stop offset="0" stop-color="#fff6c8" stop-opacity=".55"/><stop offset="1" stop-color="#fff6c8" stop-opacity="0"/></linearGradient></defs>
-    ${art.art}${pins}</svg>`;
+    ${sideArt(plat, build, ev.final)}${pins}</svg>`;
   const svg = $("#svgHost svg");
   $$("[data-if]", svg).forEach(g => { const [k, v] = g.dataset.if.split(":"); g.style.display = String(ev.final[k]) === v ? "" : "none"; });
   const active = slots[slotIdx];
