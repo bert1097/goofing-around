@@ -95,8 +95,12 @@ product-customizer front end, the way sneaker sites let you build your own shoe.
   that store, and the older history.
 - **Firearms**: add your own platforms, optionally copying another one's fit
   setup (and which parts fit) as a starting point.
-- **Data**: everything saves in the browser. Export to JSON (full backup) or
-  CSV (parts and prices), import a JSON backup, or reset to the starter data.
+- **Data**: everything saves in the browser. Back up to JSON or copy parts and
+  prices as CSV (both shown for copying, since artifact pages can't download),
+  restore by pasting a backup or choosing a file, or reset to the starter data.
+
+The page also runs as a claude.ai artifact: `python3 parts-bin/build-artifact.py out.html`
+strips the document wrapper the viewer adds itself.
 
 - **Sources**: every rule (which firearms a part fits, each need, what it
   provides, what it replaces, its install steps) and every firearm setup fact

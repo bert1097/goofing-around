@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Parts Bin</title>
+<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Archivo+Narrow:wght@500;600;700&display=swap">
 <style>
   /* Layout: a product-customizer studio (stage + option rail + slot strip) over a plain parts database */
@@ -23,6 +24,7 @@
     --warn: #a86400;
     --stage-a: #ffffff;
     --stage-b: #e9e7e2;
+    --gun-edge: rgba(0,0,0,0);
     --steel: #2b2c2f;
     --steel-2: #1c1d1f;
     --cut: #46484c;
@@ -32,7 +34,7 @@
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
       --bg: #121315;
       --panel: #1b1c1f;
       --panel-2: #222326;
@@ -44,8 +46,9 @@
       --good: #4cc483;
       --bad: #ff7a66;
       --warn: #f0a640;
-      --stage-a: #2a2b2f;
-      --stage-b: #17181a;
+      --stage-a: #45474d;
+      --gun-edge: rgba(255,255,255,.28);
+      --stage-b: #26272b;
       --steel: #0e0f10;
       --steel-2: #050506;
       --cut: #3a3c40;
@@ -53,14 +56,36 @@
       color-scheme: dark;
     }
   }
+  :root[data-theme="dark"] {
+    --bg: #121315;
+      --panel: #1b1c1f;
+      --panel-2: #222326;
+      --ink: #f1f0ed;
+      --ink-2: #b4b6bb;
+      --ink-3: #7c7f85;
+      --line: #2e3034;
+      --accent-soft: #3a2217;
+      --good: #4cc483;
+      --bad: #ff7a66;
+      --warn: #f0a640;
+      --stage-a: #45474d;
+      --gun-edge: rgba(255,255,255,.28);
+      --stage-b: #26272b;
+      --steel: #0e0f10;
+      --steel-2: #050506;
+      --cut: #3a3c40;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.3);
+      color-scheme: dark;
+  }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
   body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 var(--font); }
   button, input, select, textarea { font: inherit; color: inherit; }
   a { color: inherit; }
-  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 16px; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
 
-  header.top { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
   header.top .wrap { display: flex; align-items: center; gap: 16px; height: 56px; }
   .logo { font-weight: 800; letter-spacing: -.02em; font-size: 20px; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
   .logo b { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 7px; background: var(--accent); color: var(--accent-ink); font-size: 14px; }
@@ -85,6 +110,7 @@
   .btn.dark { background: var(--ink); border-color: var(--ink); color: var(--bg); }
   .btn.small { padding: 5px 10px; font-size: 13px; }
   .btn.danger { color: var(--bad); }
+  .btn.dangerfill { background: var(--bad); border-color: var(--bad); color: var(--bg); }
   .muted { color: var(--ink-2); }
   .faint { color: var(--ink-3); }
   .badge { display: inline-block; font: 600 11px/1 var(--cond); letter-spacing: .04em; text-transform: uppercase; padding: 4px 6px; border-radius: 5px; background: var(--panel-2); border: 1px solid var(--line); color: var(--ink-2); vertical-align: 1px; }
@@ -113,7 +139,7 @@
   .build-main .picker { grid-area: picker; }
   .build-main .strip { grid-area: strip; }
   .stage { position: relative; border-radius: 20px; background: radial-gradient(120% 90% at 50% 35%, var(--stage-a), var(--stage-b)); box-shadow: var(--shadow); overflow: hidden; min-height: 320px; display: grid; }
-  .stage svg { width: 100%; height: auto; display: block; align-self: center; }
+  .stage svg { width: 100%; height: auto; display: block; align-self: center; filter: drop-shadow(0 0 1.5px var(--gun-edge)); }
   .stage .floor { position: absolute; left: 10%; right: 10%; bottom: 8%; height: 18px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.18), transparent); filter: blur(2px); pointer-events: none; }
   .stage .tag { position: absolute; left: 16px; top: 14px; font: 700 12px/1 var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
   .stage .tag strong { display: block; font: 800 22px/1.1 var(--font); letter-spacing: -.02em; text-transform: none; color: var(--ink); margin-top: 4px; }
@@ -299,6 +325,7 @@
   .fits-box .cks { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 4px 10px; }
   .fits-box label { display: flex; gap: 6px; align-items: center; font-size: 14px; }
   .dlg-foot { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+  dialog.ask { width: min(440px, calc(100vw - 32px)); }
   .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-weight: 600; font-size: 14px; z-index: 50; box-shadow: var(--shadow); }
 
   @media (max-width: 900px) {
@@ -343,9 +370,9 @@
     <details class="menu" id="dataMenu">
       <summary>Data</summary>
       <div class="pop">
-        <button data-act="export-json">Export everything (JSON)</button>
-        <button data-act="export-csv">Export parts &amp; prices (CSV)</button>
-        <button data-act="import-json">Import JSON…</button>
+        <button data-act="export-json">Back up everything (JSON)</button>
+        <button data-act="export-csv">Parts &amp; prices as CSV</button>
+        <button data-act="import-json">Restore from a backup…</button>
         <hr>
         <button data-act="reset" class="danger">Reset to starter data</button>
       </div>
@@ -356,7 +383,7 @@
 
 <div class="wrap">
   <div class="banner" id="banner" hidden>
-    <p><strong>Check the sources.</strong> Every fit rule shows where it came from. A part is <em>Sourced</em> only when each of its rules is backed by a maker, retailer or reference page; anything marked <em>Unsourced</em> was drafted by Claude from general knowledge. Add sources as you confirm things. Your changes are saved in this browser; use <em>Data → Export</em> to keep a copy.</p>
+    <p><strong>Check the sources.</strong> Every fit rule shows where it came from. A part is <em>Sourced</em> only when each of its rules is backed by a maker, retailer or reference page; anything marked <em>Unsourced</em> was drafted by Claude from general knowledge. Add sources as you confirm things. Your changes are saved in this browser; use <em>Data → Back up</em> to keep a copy.</p>
     <button class="x" id="bannerClose" aria-label="Dismiss">×</button>
   </div>
 </div>
@@ -454,6 +481,10 @@
 </main>
 
 <dialog id="dlgPart"></dialog>
+<dialog id="dlgAsk" class="ask"><div class="dlg-body"><p id="askMsg" style="margin:0"></p><div class="dlg-foot"><button class="btn" id="askNo" type="button">Cancel</button><button class="btn primary" id="askYes" type="button">OK</button></div></div></dialog>
+<dialog id="dlgText"><div class="dlg-head"><div style="flex:1"><h2 id="txtTitle"></h2><p class="muted" id="txtHint" style="margin:4px 0 0;font-size:14px"></p></div><button class="x" id="txtClose" type="button" aria-label="Close">×</button></div>
+  <div class="dlg-body"><textarea id="txtArea" rows="14" spellcheck="false" style="font:12.5px/1.4 ui-monospace,Menlo,Consolas,monospace"></textarea><p class="bad-t" id="txtErr" style="margin:0;font-size:14px" hidden></p>
+  <div class="dlg-foot"><button class="btn" id="txtFile" type="button" hidden>Choose a file…</button><button class="btn primary" id="txtGo" type="button"></button></div></div></dialog>
 <dialog id="dlgEdit"></dialog>
 
 <script>
@@ -3138,7 +3169,7 @@ $("#planCopy").addEventListener("click", async () => {
   const ev = evaluate(build); const pl = ev.plan;
   const text = [`${build.name || ev.plat.name} install plan (${configSummary(ev.plat, build.config) || ev.plat.name})`, `Difficulty: ${LEVELS[pl.lvl]} · ~${dur(pl.mins)}${pl.shop ? " + shop time" : ""}`, pl.tools.length ? `Tools: ${pl.tools.join(", ")}` : "", "",
     ...pl.steps.map((s, i) => `${i + 1}. [${LEVELS[s.lvl]}] ${s.text} (${s.src})`)].filter((l, i) => l || i === 3).join("\n");
-  try { await navigator.clipboard.writeText(text); toast("Install plan copied"); } catch (e) { download("install-plan.txt", text, "text/plain"); }
+  try { await navigator.clipboard.writeText(text); toast("Install plan copied"); } catch (e) { showText({ title: "Install plan", hint: "Select and copy.", text, go: "Copy" }); }
 });
 
 $("#bPlatform").addEventListener("change", e => {
@@ -3274,8 +3305,8 @@ function sourcesHtml(obj, keys, pl) {
       </form></details></div>`;
 }
 function bindSources(dlg, obj, rerender) {
-  $$("[data-srcdel]", dlg).forEach(b => b.onclick = () => {
-    if (!confirm("Remove this source?")) return;
+  $$("[data-srcdel]", dlg).forEach(b => b.onclick = async () => {
+    if (!(await ask("Remove this source?", "Remove", true))) return;
     obj.sources = obj.sources.filter(x => x.id !== b.dataset.srcdel); save(); rerender(); renderView();
   });
   const form = $(".srcform", dlg); if (!form) return;
@@ -3283,8 +3314,8 @@ function bindSources(dlg, obj, rerender) {
     e.preventDefault();
     const f = new FormData(form); const v = k => String(f.get(k) || "").trim();
     const covers = f.getAll("covers").map(String);
-    if (!safeUrl(v("url"))) { alert("Add a link that starts with http:// or https://"); return; }
-    if (!covers.length) { alert("Tick at least one rule this source backs."); return; }
+    if (!safeUrl(v("url"))) { toast("Add a link that starts with http:// or https://"); return; }
+    if (!covers.length) { toast("Tick at least one rule this source backs"); return; }
     obj.sources = obj.sources || [];
     obj.sources.push({ id: uid(), url: v("url"), publisher: v("publisher") || hostOf(v("url")), title: v("title"), kind: v("kind"), quote: v("quote"), verdict: v("verdict"), checked: v("checked") || today(), covers });
     save(); rerender(); renderView(); toast("Source saved");
@@ -3386,8 +3417,8 @@ function openPart(id) {
   dlg.querySelector("[data-verify]").onclick = () => { p.verified = !p.verified; save(); openPart(id); renderView(); };
   bindSources(dlg, p, () => openPart(id));
   dlg.querySelector("[data-edit]").onclick = () => { dlg.close(); openEdit(id); };
-  dlg.querySelector("[data-delete]").onclick = () => {
-    if (!confirm(`Delete “${p.brand} ${p.name}” and its prices?`)) return;
+  dlg.querySelector("[data-delete]").onclick = async () => {
+    if (!(await ask(`Delete “${p.brand} ${p.name}” and its prices?`, "Delete", true))) return;
     db.parts = db.parts.filter(x => x.id !== id); save(); dlg.close(); renderView(); toast("Part deleted");
   };
   $("#priceForm", dlg).onsubmit = e => {
@@ -3450,7 +3481,7 @@ function openEdit(id, preset = {}) {
       r = JSON.parse(v("rules") || "{}");
       if (r.needs && !(Array.isArray(r.needs) && r.needs.every(n => n && typeof n.k === "string" && Array.isArray(n.in)))) throw new Error("needs");
       if (r.steps && !(Array.isArray(r.steps) && r.steps.every(s => s && typeof s.text === "string"))) throw new Error("steps");
-    } catch (err) { alert("The fit rules aren't valid JSON in the expected shape. Check the format note above them."); return; }
+    } catch (err) { toast("The fit rules aren't valid JSON in the expected shape. Check the format note above them."); return; }
     const estRaw = v("est");
     const data = {
       brand: v("brand"), name: v("name"), category: v("category") || "Other", mount: v("mount"), notes: v("notes"), url: v("url"),
@@ -3487,9 +3518,9 @@ function renderFirearms() {
   $$("#fList [data-build]").forEach(b => b.onclick = () => { build = newBuild(b.dataset.build); slotIdx = 0; persistDraft(); setView("build"); });
   $$("#fList [data-parts]").forEach(b => b.onclick = () => { cState.platform = b.dataset.parts; setView("catalog"); });
   $$("#fList [data-psrc]").forEach(b => b.onclick = () => openPlatform(b.dataset.psrc));
-  $$("#fList [data-del]").forEach(b => b.onclick = () => {
+  $$("#fList [data-del]").forEach(b => b.onclick = async () => {
     const p = platformById(b.dataset.del); const n = counts[p.id] || 0;
-    if (!confirm(`Remove ${p.name}?${n ? ` It's listed as a fit on ${n} parts; those links will be removed.` : ""}`)) return;
+    if (!(await ask(`Remove ${p.name}?${n ? ` It's listed as a fit on ${n} parts; those links will be removed.` : ""}`, "Remove", true))) return;
     db.platforms = db.platforms.filter(x => x.id !== p.id);
     db.parts.forEach(x => x.fits = x.fits.filter(f => f !== p.id));
     db.builds = db.builds.filter(x => x.platform !== p.id);
@@ -3530,21 +3561,25 @@ function renderBuilds() {
   }).join("")}</div>`;
   $$("#buildList [data-open]").forEach(x => x.onclick = () => { build = fixBuild(clone(db.builds.find(b => b.id === x.dataset.open))); slotIdx = 0; persistDraft(); setView("build"); });
   $$("#buildList [data-dup]").forEach(x => x.onclick = () => { const b = clone(db.builds.find(b => b.id === x.dataset.dup)); b.id = uid(); b.name += " (copy)"; b.saved = today(); b.done = {}; db.builds.unshift(b); save(); renderBuilds(); });
-  $$("#buildList [data-del]").forEach(x => x.onclick = () => { const b = db.builds.find(b => b.id === x.dataset.del); if (!confirm(`Delete “${b.name}”?`)) return; db.builds = db.builds.filter(y => y.id !== b.id); if (build.id === b.id) build.id = null; save(); renderBuilds(); });
+  $$("#buildList [data-del]").forEach(x => x.onclick = async () => { const b = db.builds.find(b => b.id === x.dataset.del); if (!(await ask(`Delete “${b.name}”?`, "Delete", true))) return; db.builds = db.builds.filter(y => y.id !== b.id); if (build.id === b.id) build.id = null; save(); renderBuilds(); });
 }
 
 /* ================= Data menu ================= */
-function download(name, text, type) {
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([text], { type }));
-  a.download = name; document.body.appendChild(a); a.click();
-  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
-}
 const csvCell = v => { const s = String(v ?? ""); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
-$("#dataMenu").addEventListener("click", e => {
+function importText(text) {
+  let d;
+  try { d = JSON.parse(text); } catch (e) { return "That isn't valid JSON. Paste the whole backup, from the first { to the last }."; }
+  if (!validDb(d)) return "That JSON isn't a Parts Bin backup.";
+  return ask(`Import ${d.parts.length} parts and ${d.platforms.length} firearms? This replaces what's here now.`, "Replace", true).then(ok => {
+    if (!ok) return "Import cancelled.";
+    db = normalize(upgrade(d)); db.draft = null; build = newBuild(db.platforms[0]?.id); slotIdx = 0; save(); renderView(); toast("Imported");
+    return "";
+  });
+}
+$("#dataMenu").addEventListener("click", async e => {
   const act = e.target.closest("[data-act]")?.dataset.act; if (!act) return;
   $("#dataMenu").open = false;
-  if (act === "export-json") download(`parts-bin-${today()}.json`, JSON.stringify({ ...db, draft: undefined }, null, 2), "application/json");
+  if (act === "export-json") showText({ title: "Back up everything", hint: "Copy this and keep it somewhere safe. Paste it into Restore to bring it back.", text: JSON.stringify({ ...db, draft: undefined }, null, 2), go: "Copy" });
   if (act === "export-csv") {
     const rows = [["brand", "name", "category", "mount", "fits", "est_price", "best_price", "best_retailer", "source_status", "sources", "checked_by_me", "retailer", "price", "date", "in_stock", "url"]];
     db.parts.forEach(p => {
@@ -3552,23 +3587,46 @@ $("#dataMenu").addEventListener("click", e => {
       if (!p.prices.length) rows.push([...base, "", "", "", "", p.url]);
       p.prices.forEach(e => rows.push([...base, e.retailer, e.price, e.date, e.inStock === false ? "no" : "yes", e.url || p.url]));
     });
-    download(`parts-bin-${today()}.csv`, rows.map(r => r.map(csvCell).join(",")).join("\n"), "text/csv");
+    showText({ title: "Parts & prices as CSV", hint: "Copy and paste into a spreadsheet.", text: rows.map(r => r.map(csvCell).join(",")).join("\n"), go: "Copy" });
   }
-  if (act === "import-json") $("#importFile").click();
+  if (act === "import-json") showText({ title: "Restore from a backup", hint: "Paste a backup from Data → Back up, or choose a saved .json file.", go: "Restore", onImport: importText });
   if (act === "reset") {
-    if (!confirm("Replace everything with the starter data? Your parts, prices and builds will be lost unless you've exported them.")) return;
+    if (!(await ask("Replace everything with the starter data? Your parts, prices and builds will be lost unless you've backed them up.", "Reset", true))) return;
     db = seedDb(); build = newBuild("glock-19"); slotIdx = 0; save(); renderView(); toast("Reset to starter data");
   }
 });
 $("#importFile").addEventListener("change", async e => {
   const file = e.target.files[0]; e.target.value = ""; if (!file) return;
-  try {
-    const d = JSON.parse(await file.text());
-    if (!validDb(d)) throw new Error("bad shape");
-    if (!confirm(`Import ${d.parts.length} parts and ${d.platforms.length} firearms? This replaces what's here now.`)) return;
-    db = normalize(upgrade(d)); db.draft = null; build = newBuild(db.platforms[0]?.id); slotIdx = 0; save(); renderView(); toast("Imported");
-  } catch (err) { alert("That file isn't a Parts Bin export."); }
+  const msg = await importText(await file.text());
+  if (msg) { $("#txtErr").textContent = msg; $("#txtErr").hidden = false; } else if ($("#dlgText").open) $("#dlgText").close();
 });
+
+/* ================= In-page dialogs (the artifact viewer has no alert/confirm or downloads) ================= */
+function ask(msg, yes = "OK", danger = false) {
+  return new Promise(res => {
+    const d = $("#dlgAsk"); $("#askMsg").textContent = msg;
+    const y = $("#askYes"); y.textContent = yes; y.classList.toggle("dangerfill", danger);
+    let done = false; const fin = v => { if (done) return; done = true; if (d.open) d.close(); res(v); };
+    y.onclick = () => fin(true); $("#askNo").onclick = () => fin(false); d.onclose = () => fin(false);
+    d.showModal(); y.focus();
+  });
+}
+// Export: show the text with a Copy button. Import: paste text (or pick a file) and hand it to onImport.
+function showText({ title, hint, text = "", go, onImport }) {
+  const d = $("#dlgText"), ta = $("#txtArea"), err = $("#txtErr");
+  $("#txtTitle").textContent = title; $("#txtHint").textContent = hint || ""; err.hidden = true;
+  ta.value = text; ta.readOnly = !onImport; ta.placeholder = onImport ? "Paste a Parts Bin backup here" : "";
+  $("#txtFile").hidden = !onImport; $("#txtGo").textContent = go;
+  $("#txtClose").onclick = () => d.close();
+  $("#txtFile").onclick = () => $("#importFile").click();
+  $("#txtGo").onclick = async () => {
+    if (onImport) { const msg = await onImport(ta.value); if (msg) { err.textContent = msg; err.hidden = false; } else d.close(); return; }
+    try { await navigator.clipboard.writeText(ta.value); toast("Copied"); }
+    catch (e) { ta.focus(); ta.select(); toast("Selected; press Ctrl/Cmd+C to copy"); }
+  };
+  if (!d.open) d.showModal();
+  if (!onImport) { ta.focus(); ta.select(); }
+}
 
 /* ================= Misc ================= */
 let toastT;
