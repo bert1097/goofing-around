@@ -1,0 +1,445 @@
+[
+ {
+  "part": "apex-tactical-action-enhancement-trigger-kit-glock",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.primaryarms.com/apex-tactical-glock-action-enhancement-trigger-kit",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "Apex Tactical Action Enhancement Trigger Kit for GLOCK",
+  "quote": "Glock Gen 3-4 G17, 19, 22, 23, 24, 26, 27, 31, 32, 33, 34, 35",
+  "note": "Gen 3/4 SKU is Apex 102-115 (\"Not compatible with Gen 5\"; not for 10mm/.45). Kit includes a Gen 3 factory trigger bar, Apex safety plunger and Performance Connector. Apex's own site (apextactical.com) returned 403.",
+  "msrp": 140.0
+ },
+ {
+  "part": "apex-tactical-action-enhancement-trigger-kit-glock",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.primaryarms.com/apex-tactical-glock-gen-5-action-enhancement-trigger-kit",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "Apex Tactical Action Enhancement Trigger Kit for GLOCK Gen5",
+  "quote": "Glock Gen 5 G17, 19, 19x, 26, 34, 45",
+  "note": "Gen 5 is a separate SKU (Apex 102-116), \"Not compatible with Gen 3-4\". This confirms the gen-specific SKU rule.",
+  "msrp": 135.0
+ },
+ {
+  "part": "overwatch-precision-tac-trigger-glock",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://overwatchprecision.com/tac-trigger-for-glock/",
+  "publisher": "Overwatch Precision",
+  "kind": "manufacturer",
+  "title": "TAC Trigger for Glock",
+  "quote": "Gen 1-4 G17, G17L, G19, G22, G23, G24, G26, G27, G31, G32, G33, G34, G35, G37, G38, G39",
+  "note": "There's one product page with a Model selector, and the options are gen-specific: Gen 1-4 small frame, Gen 1-4 large frame, Gen 5 (G17/G19/G26/G34/G19X/G45/G47 9mm), Gen 6 (G17/G19/G45 9mm) and slimline. Says \"Does NOT fit G43\" for the small-frame option. So it's one listing with gen-specific variants, not separate product pages.",
+  "msrp": 135.0
+ },
+ {
+  "part": "apex-tactical-action-enhancement-kit-m-p-2-0",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://www.primaryarms.com/apex-tactical-m-p-2.0-polymer-enhancement-trigger-duty-carry-kit",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "Apex Tactical M&P M2.0 Polymer Enhancement Trigger & Duty/Carry Kit",
+  "quote": "Will not function in the M&P Shield",
+  "note": "This page is for the POLYMER M2.0 kit (MPN 100-126). It fits the M&P M2.0 (9mm/.40/.45) including the M2.0 Compact, and also lists the M&P (v1.0) 45. Not for M&P 9/40 1.0 or any Shield. The aluminum AEK page (Apex and Gun Mag Warehouse) returned 403, so confirm the exact SKU. Add an exclusion: no Shield/Shield Plus.",
+  "msrp": 110.0
+ },
+ {
+  "part": "tango-down-vickers-tactical-slide-stop-glock",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://www.primaryarms.com/vickers-tactical-glock-slide-stop-vtss-001",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "Vickers Tactical Slide Stop For Glock",
+  "quote": "17, 17L, 18, 19, 21, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33, 34, 45, and 41!",
+  "note": "VTSS-001 is the pre-Gen 5 part. The retailer lists models but no generations (it oddly includes the 45, which is Gen 5 only). Tango Down's own site search now shows only VTSS-004 (G43X/48 ONLY) and VTSS-005 (Gen5 .45/10mm), so VTSS-001/-003 may be discontinued at the manufacturer.",
+  "msrp": null
+ },
+ {
+  "part": "tango-down-vickers-tactical-slide-stop-glock",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.primaryarms.com/tango-down-vickers-tactical-glock-slide-stop-gen5",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "Tango Down Vickers Tactical Slide Stop for Gen5",
+  "quote": "All Gen5 Glock Handguns",
+  "note": "Gen 5 is a separate SKU (TDVTSS-003), so the gen-specific rule holds. Tango Down also sells VTSS-005 for Gen5 .45/10mm and VTSS-004 for G43X/48 only.",
+  "msrp": null
+ },
+ {
+  "part": "streamlight-tlr-1-hl",
+  "covers": [
+   "fits",
+   "need:light_mount"
+  ],
+  "verdict": "partly",
+  "url": "https://www.streamlight.com/products/detail/tlr-1-hl",
+  "publisher": "Streamlight",
+  "kind": "manufacturer",
+  "title": "TLR-1 HL | Tactical Weapon Light | Streamlight",
+  "quote": "Includes keys for GLOCK®-style rails, MIL-STD-1913 (Picatinny) rails, Beretta® 90two, Smith & Wesson® SW99, Smith & Wesson® TSW, and SIG SAUER® P320® rails",
+  "note": "Rail need confirmed (Glock-style, 1913 or P320 key). Streamlight sells a separate 'TLR-1 HL Long Gun Kit' for AR-15 use, but the 1913 key fits a Picatinny rail as is.",
+  "msrp": null
+ },
+ {
+  "part": "streamlight-tlr-1-hl",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://www.streamlight.com/docs/default-source/compatibility-list/tlr-1_tlr-2_hl_hp-compatibility-list.pdf?sfvrsn=ea00e8f3_19",
+  "publisher": "Streamlight",
+  "kind": "manufacturer",
+  "title": "TLR-1/TLR-2/HL/HP Compatibility List",
+  "quote": "Most full size & compact models with rails (Up to Gen 4)",
+  "note": "Lists Glock (GL key up to Gen 4, 1913 key Gen 5), SIG P320 Full-Size/Carry (P320 key) and P320 Compact (1913 key), and M&P (Full Size, 1913 key). The CZ P-10 C and M&P compact are NOT on Streamlight's TLR-1 list, so the CZ P-10 C fit is unconfirmed (it probably fits with the 1913 key, given that the TLR-7 list gives P-10 the 1913-1 key). Also: \"Any SIG SAUER frame with a round-bottom rail is not recommended.\"",
+  "msrp": null
+ },
+ {
+  "part": "surefire-x300u-a",
+  "covers": [
+   "fits",
+   "need:light_mount"
+  ],
+  "verdict": "partly",
+  "url": "https://www.surefire.com/x300u-a-weaponlight/",
+  "publisher": "SureFire",
+  "kind": "manufacturer",
+  "title": "X300U-A WeaponLight",
+  "quote": "Attaches securely to both Universal and Picatinny accessory rails",
+  "note": "Rail need confirmed. SureFire gives no per-gun list. 'Lever Latch system permits rapid attachment to and removal from rails on pistols or rifles' supports AR-15 Picatinny. The per-model fits (G17/19, P320, M&P 2.0, CZ P-10 C) are reasonable for full-size Universal/1913-railed guns but are not listed by SureFire. Listed price $379-$399.",
+  "msrp": 379.0
+ },
+ {
+  "part": "streamlight-tlr-7a",
+  "covers": [
+   "fits",
+   "need:light_mount"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.streamlight.com/docs/default-source/compatibility-list/tlr-7ortlr-8_compatibilitylist.pdf?sfvrsn=4",
+  "publisher": "Streamlight",
+  "kind": "manufacturer",
+  "title": "TLR-7 // TLR-8 Series Compatibility List",
+  "quote": "Most full-size & compact models with rails (Up to Gen 4)",
+  "note": "List: Glock up to Gen 4 UNIV-1 / Gen 5 1913-1; CZ P-01, P-07 & P-10 1913-1; SIG 320 Compact 1913-1, 320 Carry & Full Size 1913-3; M&P Full Size 1913-2, Compact 1913-4. It also fits the P365 XMACRO with the 1913-3 key. The streamlight.com/products/detail/tlr-7a URL now redirects to the TLR-7 X (multi-fuel successor), so the TLR-7A may be superseded.",
+  "msrp": null
+ },
+ {
+  "part": "streamlight-tlr-7a",
+  "covers": [
+   "need:light_mount"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.streamlight.com/docs/default-source/info-sheet-with-part-numbers/tlr-7-x_sup.pdf?sfvrsn=2a750cf3_97",
+  "publisher": "Streamlight",
+  "kind": "manufacturer",
+  "title": "TLR-7 X info sheet (part numbers)",
+  "quote": "Key Kit (TLR-7 X and TLR-8 X) – Includes Rail Locating Keys for Universal or 1913 Picatinny style rails and mounting tools",
+  "note": "This sheet is for the TLR-7 X, the current successor to the TLR-7A (item #69424 black, #69429 FDE, #69455/69456 USB).",
+  "msrp": null
+ },
+ {
+  "part": "streamlight-tlr-7-sub",
+  "covers": [
+   "fits",
+   "need:light_mount"
+  ],
+  "verdict": "partly",
+  "url": "https://www.streamlight.com/docs/default-source/info-sheet-with-part-numbers/tlr-7-x-sub_sup.pdf?sfvrsn=47bf1bf3_69",
+  "publisher": "Streamlight",
+  "kind": "manufacturer",
+  "title": "TLR-7 X SUB USB // TLR-7 X SUB info sheet (item numbers)",
+  "quote": "TLR-7 X sub (1913OS) - Includes mounting kit with key, multi-tool and (1) CR123A lithium battery",
+  "note": "Streamlight sells FOUR rail versions, not three: 69400 GLOCK 43X/48 MOS | 43X/48 Rail; 69401 SIG SAUER P365/XL closed rail systems; 69402 1913 (short, multiple keys); 69404 1913OS (formerly sold as the 'SA Hellcat' version; retailers still list 69404 as Hellcat). USB versions: 69405/69406/69407/69408. Add the 1913OS version and map the Hellcat to it (or to the Hellcat-specific kit), not to '1913 short'.",
+  "msrp": null
+ },
+ {
+  "part": "streamlight-tlr-7-sub",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://www.streamlight.com/products/detail/tlr-7-sub",
+  "publisher": "Streamlight",
+  "kind": "manufacturer",
+  "title": "TLR-7 X sub | Rechargeable Rail-Mounted Light | Streamlight",
+  "quote": "The SIG SAUER® P365®/XL models do not fit the P365® XMACRO. However, the 1913OS models with the #4 key do.",
+  "note": "The P365-XMACRO needs the 1913/1913OS version with the #4 key, NOT the SIG P365 version. The SIG version (69401) fits P365 AND P365XL. That means the base P365/P365X also takes this light, which contradicts platform:sig-p365 'no rail'. Product URL now shows the TLR-7 X sub.",
+  "msrp": null
+ },
+ {
+  "part": "streamlight-tlr-7-sub",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.streamlight.com/docs/default-source/compatibility-list/tlr-7sub_compatibilitylist.pdf?sfvrsn=312a42f3_83",
+  "publisher": "Streamlight",
+  "kind": "manufacturer",
+  "title": "TLR-7 sub // TLR-8 sub Series: 1913 Keys (rev. 11/09/2026)",
+  "quote": "P365® XMACRO/Fuse",
+  "note": "1913 key list: P365 XMACRO/Fuse key 4; Hellcat Pro key 5; M&P M2.0 Subcompact key 3. The plain Hellcat is NOT on the 1913 key list, which supports using the dedicated Hellcat/1913OS version.",
+  "msrp": null
+ },
+ {
+  "part": "magpul-pmag-17-gl9",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://magpul.com/pmag-17-gl9-glock-17.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "Magpul PMAG 17 GL9 – GLOCK G17",
+  "quote": "The PMAG 17 GL9 is compatible with most full-size 9mm GLOCK handguns, as well as compact and sub-compact variants with some protrusion below the grip.",
+  "note": "Also: \"May not be compatible with the G19X without modification due to the lip on the grip's front strap.\" Page price $14.95.",
+  "msrp": 14.95
+ },
+ {
+  "part": "shield-arms-s15-15-round-magazine",
+  "covers": [
+   "fits",
+   "need:mag_catch"
+  ],
+  "verdict": "contradicted",
+  "url": "https://www.primaryarms.com/shield-arms-s15-gen3-magazine-for-glock-43x-48-15-rounds-black-nitride",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "Shield Arms S15 Gen3 Magazine for Glock 43X/48 15 Rounds Black Nitride",
+  "quote": "Compatible only with Shield Arms steel magazine catches, the S15 Gen3 supports increased capacity without compromising reliability.",
+  "note": "Fits G43X/G48 is confirmed. The mag-catch rule is HARD, not soft, for the Gen3 S15 (MPN SA-S15-NC-GEN3): change it to need:mag_catch (steel catch required). Shield Arms' site blocks bots (403/Cloudflare).",
+  "msrp": null
+ },
+ {
+  "part": "shield-arms-steel-magazine-catch-glock-43x-48",
+  "covers": [
+   "give:mag_catch",
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.opticsplanet.com/shield-arms-magazine-catch-release-fits-glock-43x-48-steel.html",
+  "publisher": "OpticsPlanet",
+  "kind": "retailer",
+  "title": "Shield Arms Magazine Catch/Release",
+  "quote": "Our steel mag catch is optimized to work with the Shield Arms Patented S15 magazine.",
+  "note": "Fits Glock 48 and 43X. Caveats: \"OEM mags may not drop free.\" \"We do not recommend using our steel mag catch with plastic OEM mags.\" MPNs G43X-EMR-BLK/GOLD/BLUE/GREY/BRONZE. List price $14.00 for most finishes ($18.99 black). Consider a soft rule: steel catch + OEM polymer mags = not recommended.",
+  "msrp": 14.0
+ },
+ {
+  "part": "safariland-578-gls-pro-fit",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://www.safariland.com/paddle/model-578-gls-pro-fit-holster-57800.html",
+  "publisher": "Safariland",
+  "kind": "manufacturer",
+  "title": "578 - GLS Pro-Fit Holster, Paddle & Belt Loop Combo",
+  "quote": "The Pro-Fit™ is customizable and adjusts to securely fit over 225 firearms.",
+  "note": "It's multi-fit (adjustable GLS), and the current Safariland page shows price-group variants rather than 'Size 1/2/3' labels. Size numbers appear on retailer listings. Also optic capable. Price $80.00.",
+  "msrp": 80.0
+ },
+ {
+  "part": "safariland-578-gls-pro-fit",
+  "covers": [
+   "need:light"
+  ],
+  "verdict": "confirmed",
+  "url": "https://inside.safariland.com/blog/the-safariland-model-578-gls-pro-fit",
+  "publisher": "Safariland (Inside Safariland blog)",
+  "kind": "manufacturer",
+  "title": "The Safariland Model 578 GLS Pro Fit - Inside Safariland",
+  "quote": "The standard 57X series won’t fit lights by any means.",
+  "note": "Confirms NOT for a mounted light. The article also says it fits guns from the Glock 34 down to the Glock 26.",
+  "msrp": null
+ },
+ {
+  "part": "vedder-lighttuck-iwb",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://www.vedderholsters.com/holsters/lighttuck/",
+  "publisher": "Vedder Holsters",
+  "kind": "manufacturer",
+  "title": "LightTuck Kydex IWB Holster | Vedder Holsters",
+  "quote": "Each holster is handcrafted to your precise gun model, creating the perfect fit while maintaining the thinnest profile both in your pants and on your belt.",
+  "note": "Made per gun model: confirmed. The LightTuck is NOT inherently light-bearing. It's Vedder's standard IWB, and the main page has no light selector. Light-bearing LightTucks exist only as specific gun+light SKUs (e.g. 'S&W M2.0 4.25 9mm w/ TLR-7A'). Model it as per gun, with an optional per-gun light variant, not as a light holster. From $69.99.",
+  "msrp": 69.99
+ },
+ {
+  "part": "vedder-lighttuck-iwb",
+  "covers": [
+   "fits",
+   "need:light"
+  ],
+  "verdict": "partly",
+  "url": "https://www.vedderholsters.com/collections/sig-sauer/p365x-with-thumb-safety/",
+  "publisher": "Vedder Holsters",
+  "kind": "manufacturer",
+  "title": "Sig P365X With Thumb Safety Holsters | Kydex & Hybrid CCW",
+  "quote": "Frame-Mounted Light/Laser Crimson Trace LG-422 (5) FOXTROT365 (5) LIMA Laser (5) None (2) Streamlight TLR-6 (4) Streamlight TLR-7 Sub (8)",
+  "note": "The light is a filter/variant per gun collection (TLR-6, TLR-7 Sub, Surefire XSC, lasers or None). So 'made per gun model and light' is right only for the light-variant SKUs. This also shows the P365X takes rail lights (TLR-7 Sub, XSC).",
+  "msrp": null
+ },
+ {
+  "part": "safariland-6390rds-als",
+  "covers": [
+   "fits",
+   "need:light"
+  ],
+  "verdict": "confirmed",
+  "url": "https://safariland.com/products/model-6390rds-als-mid-ride-level-i-retention-duty-holster-model_6390rds",
+  "publisher": "Safariland",
+  "kind": "manufacturer",
+  "title": "6390RDS - ALS Mid-Ride Duty Rated Level I Retention Holster | Safariland",
+  "quote": "Images are representational. The product you receive may look different based on your gun and light selections.",
+  "note": "Light-specific: yes. Each variant is a gun + light combination chosen in a configurator. Optic-ready ('For use with red dot optic-equipped weapons'), with a caveat: Safariland 'cannot guarantee that RDS holsters will be compatible with non-factory (Glock MOS, M&P CORE, etc.) mounted red dots.' Price $188.00-$279.25.",
+  "msrp": 188.0
+ },
+ {
+  "part": "safariland-6390rds-als",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.primaryarms.com/brand/safariland/compatible-model/sw-mp-m20",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "Safariland products compatible with S&W M&P M2.0",
+  "quote": "Safariland 6390RDS ALS Mid-Ride Level I Duty Holster for M&P 2.0 with RDS/X300 - Cordura MultiCam - Right Hand",
+  "note": "M&P 2.0 fit confirmed (X300 variant). Search results also show Glock 17/19 MOS (X300, TLR-7) and SIG P320 (X300U) variants.",
+  "msrp": null
+ },
+ {
+  "part": "platform:glock-26",
+  "covers": [
+   "base:light_mount"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.streamlight.com/docs/default-source/compatibility-list/tlr6compatibilitylist.pdf?sfvrsn=3a3ca7f0_50",
+  "publisher": "Streamlight",
+  "kind": "reference",
+  "title": "TLR-6 Compatibility List",
+  "quote": "69272 // 69282 NON-RAILED GLOCK® FIREARMS",
+  "note": "Streamlight lists GLOCK 26/27/33 under its NON-RAILED Glock TLR-6 trigger-guard kit. Recover Tactical's GR26 rail adapter Q&A agrees ('the GR26 will provide you with a Picatinny rail').",
+  "msrp": null
+ },
+ {
+  "part": "platform:glock-43x-48",
+  "covers": [
+   "option:frame",
+   "base:light_mount"
+  ],
+  "verdict": "confirmed",
+  "url": "https://us.glock.com/en/products/commercial-firearms/pistols/g43x-us",
+  "publisher": "GLOCK Inc.",
+  "kind": "manufacturer",
+  "title": "G43X",
+  "quote": "The frame features the GLOCK Mounting rail slim for mounting tactical accessories",
+  "note": "Glock calls it the 'GLOCK Mounting rail slim' (slimline rail). The same page: 'the G43X Rail features a compact Slimline frame with a slim mounting rail'.",
+  "msrp": null
+ },
+ {
+  "part": "platform:glock-43x-48",
+  "covers": [
+   "option:frame"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.streamlight.com/docs/default-source/compatibility-list/tlr6compatibilitylist.pdf?sfvrsn=3a3ca7f0_50",
+  "publisher": "Streamlight",
+  "kind": "reference",
+  "title": "TLR-6 Compatibility List",
+  "quote": "69286 RAIL MOUNT (GLOCK® 43X/48)",
+  "note": "Streamlight lists standard G43X/G48 under NON-RAILED Glock kits (69270/69280) and has a separate RAIL MOUNT kit for the 43X/48 rail frames (which it labels 'GLOCK 43X MOS / GLOCK 48 MOS'). Streamlight's '43X/48 MOS' naming is ambiguous; the light needs the Rail frame.",
+  "msrp": null
+ },
+ {
+  "part": "platform:sig-p365",
+  "covers": [
+   "base:light_mount"
+  ],
+  "verdict": "contradicted",
+  "url": "https://inside.safariland.com/blog/sig-p365-models/",
+  "publisher": "Safariland (Inside Safariland blog)",
+  "kind": "reference",
+  "title": "SIG P365 models - Inside Safariland",
+  "quote": "The P365, P365-XL, and P365X have the proprietary Sig rail, so make certain you choose the correct light.",
+  "note": "WRONG: the P365 and P365X DO have an accessory rail, SIG's proprietary short rail. Streamlight's TLR-7 sub SIG version (69401) and TLR-6 (69284/69285) fit the P365. Change base:light_mount from none to the SIG proprietary rail.",
+  "msrp": null
+ },
+ {
+  "part": "platform:sig-p365xl",
+  "covers": [
+   "base:light_mount"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.streamlight.com/docs/default-source/info-sheet-with-part-numbers/tlr-7-x-sub_sup.pdf?sfvrsn=47bf1bf3_69",
+  "publisher": "Streamlight",
+  "kind": "reference",
+  "title": "TLR-7 X SUB info sheet",
+  "quote": "TLR-7 X sub (SIG SAUER® P365®/XL closed rail systems) - Includes mounting kit with key, multi-tool and (1) CR123A lithium battery",
+  "note": "P365XL rail = the same SIG proprietary rail as the P365 (Streamlight calls it 'closed rail'). It is NOT 1913.",
+  "msrp": null
+ },
+ {
+  "part": "platform:sig-p365-macro",
+  "covers": [
+   "base:light_mount"
+  ],
+  "verdict": "confirmed",
+  "url": "https://inside.safariland.com/blog/sig-p365-models/",
+  "publisher": "Safariland (Inside Safariland blog)",
+  "kind": "reference",
+  "title": "SIG P365 models - Inside Safariland",
+  "quote": "This model also incorporates a 1913 Picatinny rail for the first time instead of the proprietary Sig rail.",
+  "note": "XMACRO = short 1913 Picatinny. Streamlight agrees: the TLR-7 sub SIG version does not fit; the 1913/1913OS version with the #4 key does. sigsauer.com returned 403.",
+  "msrp": null
+ },
+ {
+  "part": "platform:spr-hellcat",
+  "covers": [
+   "base:light_mount"
+  ],
+  "verdict": "partly",
+  "url": "https://www.springfield-armory.com/hellcat-series-handguns/hellcat-3-micro-compact-handguns",
+  "publisher": "Springfield Armory",
+  "kind": "manufacturer",
+  "title": "Hellcat Micro-Compact Handguns - Springfield Armory",
+  "quote": "NON-PROPRIETARY RAIL Customize your EDC with lights and lasers that fit on a non-proprietary accessory rail.",
+  "note": "Springfield says 'non-proprietary', not '1913'. It's a very short rail: Streamlight makes Hellcat-specific mounts (TLR-6 69287 'RAIL MOUNT (SPRINGFIELD ARMORY HELLCAT)'; TLR-7 sub 69404, now '1913OS'), and the 3in Hellcat is absent from the TLR-7 sub generic 1913 key list. Call it a short single-slot non-proprietary rail, not generic 1913. Hellcat 3in OSP spec sheet MSRP $653; series MSRP $649-$802.",
+  "msrp": 653.0
+ },
+ {
+  "part": "platform:sw-shield-plus",
+  "covers": [
+   "base:light_mount"
+  ],
+  "verdict": "not_found",
+  "url": "",
+  "publisher": "",
+  "kind": "reference",
+  "title": "",
+  "quote": "",
+  "note": "No source loaded that explicitly states the Shield Plus has no rail. The S&W shop page has no 'rail' text. Streamlight's TLR-6 list has an M&P SHIELD trigger-guard kit (M&P9/M&P40 SHIELD) but doesn't list the Shield Plus. The claim is believed correct but unverified.",
+  "msrp": null
+ }
+]

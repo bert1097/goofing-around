@@ -1,0 +1,531 @@
+[
+ {
+  "part": "trijicon-rmr-type-2",
+  "covers": [
+   "fits",
+   "give:optic",
+   "steps"
+  ],
+  "verdict": "partly",
+  "url": "https://www.trijicon.com/products/details/rm06-c-700672",
+  "publisher": "Trijicon",
+  "kind": "manufacturer",
+  "title": "Trijicon RMR® Type 2 Red Dot Sight (RM06-C-700672)",
+  "quote": "If selecting an RMR for mounting on the Glock® MOS, Springfield® OSP, Walther® PDP, or H&K® VP9 Optics Ready, a Trijicon RMR® mounting kit (AC32064) is required.",
+  "note": "RMR footprint confirmed ('identical physical dimensions and mounting footprint to that of the original RMR Type 1'). Mount not included. On Glock MOS, Trijicon says to use its AC32064 kit; on P320, M&P 2.0 OR and CZ P-10 C OR you need that platform's RMR plate (or a sealing plate on P320 slides drilled for RMR). It does not bolt straight onto every 'optic-ready' slide. Body height 1 in. Trijicon's page says nothing about co-witness.",
+  "msrp": 779
+ },
+ {
+  "part": "holosun-507c-x2",
+  "covers": [
+   "give:optic",
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.holosun.com/products/hs507c-x2",
+  "publisher": "Holosun",
+  "kind": "manufacturer",
+  "title": "HS507C X2",
+  "quote": "Industry standard RMR footprint allows direct mounting to a wide range of optics ready pistol slides.",
+  "note": "RMR footprint confirmed. 'Direct mount' means onto RMR-cut slides or plates. Plate-system slides (Glock MOS, P320 Pro-cut, M&P 2.0 OR, CZ P-10 C OR) still need an RMR plate. No pistols are named. $364.69 is the price on the page; it is not labeled MSRP.",
+  "msrp": 364.69
+ },
+ {
+  "part": "trijicon-sro",
+  "covers": [
+   "give:optic",
+   "fits",
+   "need:sights_height"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.trijicon.com/products/details/sro3-c-2500003",
+  "publisher": "Trijicon",
+  "kind": "manufacturer",
+  "title": "Trijicon SRO® Red Dot Sight (SRO3-C-2500003)",
+  "quote": "SAME FOOTPRINT AS RMR®",
+  "note": "Also says it 'Mounts easily using the same base as the Trijicon RMR®' and is 'compatible with suppressor-height iron sights'. Taller than the RMR: SRO is 2.2 x 1.3 x 1.4 in, RMR Type 2 is 1.8 x 1.1 x 1 in. For Glock MOS / Springfield OSP / Walther PDP / HK VP9 OR, Trijicon requires SRO mounting kit AC32085, not the RMR kit.",
+  "msrp": 822
+ },
+ {
+  "part": "holosun-507k-x2",
+  "covers": [
+   "give:optic",
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://www.holosun.com/products/hs507k-x2",
+  "publisher": "Holosun",
+  "kind": "manufacturer",
+  "title": "HS507K X2",
+  "quote": "Designed around the Holosun K footprint for direct mounting on many modern micro-compact optics-ready pistols.",
+  "note": "Holosun says 'K Footprint', not RMSc. K uses the RMSc screw spacing but has no rear recoil-lug holes. It mounts directly on P365/P365X/P365XL/X-Macro. On four-lug RMSc cuts (Glock 43X/48 MOS, Hellcat OSP) it needs an adapter plate or modified recoil posts (see other 507K rows). Change the need from 'RMSc / K' to 'K footprint', with 'RMSc via plate'. $348.22 is the price on the page; it is not labeled MSRP.",
+  "msrp": 348.22
+ },
+ {
+  "part": "holosun-507k-x2",
+  "covers": [
+   "fits",
+   "give:optic"
+  ],
+  "verdict": "contradicted",
+  "url": "https://www.opticsplanet.com/howto/the-holosun-k-red-dot-footprint.html",
+  "publisher": "OpticsPlanet",
+  "kind": "retailer",
+  "title": "Holosun K Red Dot Footprint Mounting Guide",
+  "quote": "Holosun K optics do not have rear recoil holes to accept rear recoil lugs",
+  "note": "Same guide: the Glock 43X MOS cut 'uses both front and rear recoil lugs that will not allow you to mount a Holosun K optic directly to the slide.' It lists P365, P365X, P365XL and P365 X-Macro as direct fits. So the 507K is NOT a direct fit on Glock 43X/48 MOS; it needs a plate (e.g. C&H 43X/48 MOS to 407K/507K plate) or post modification.",
+  "msrp": null
+ },
+ {
+  "part": "holosun-507k-x2",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "contradicted",
+  "url": "https://www.swampfoxoptics.com/best-red-dot-sights-for-glock-43x-and-48-mos",
+  "publisher": "Swampfox Optics",
+  "kind": "reference",
+  "title": "Best Red Dot Sights for Glock 43X & 48 MOS",
+  "quote": "The most popular micro red dots out there, like the Holosun 407k and 507k, do not fit directly onto your slide.",
+  "note": "About the Glock 43X/48 MOS: K-series optics 'use a \"modified\" RMSc footprint that skips the rear lug holes entirely'. The 43X/48 MOS fit needs a plate or slide modification. Swampfox is a competing optics maker.",
+  "msrp": null
+ },
+ {
+  "part": "holosun-507k-x2",
+  "covers": [
+   "fits",
+   "steps"
+  ],
+  "verdict": "contradicted",
+  "url": "https://chpws.com/product/springfield-hellcat-to-holosun-407k-507k-adapter-plate/",
+  "publisher": "C&H Precision",
+  "kind": "manufacturer",
+  "title": "Springfield Hellcat w/ RMSc Footprint to Holosun 407k / 507k",
+  "quote": "This plate is required to mount a Holosun 507k / 407k without having to modify the existing recoil posts on the slide.",
+  "note": "Hellcat OSP (RMSc four-post cut) is not a direct fit for the 507K. It needs this $51.49 plate or modified recoil posts. Shield Plus OR: S&W calls its cut 'RMSc'. Newer S&W slides (Shield X, Carry Comp) say 'RMSc/K footprint'. So 507K direct fit on a Shield Plus is uncertain and depends on the slide revision.",
+  "msrp": null
+ },
+ {
+  "part": "holosun-eps-carry",
+  "covers": [
+   "give:optic",
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://www.holosun.com/products/eps-carry-rd-2",
+  "publisher": "Holosun",
+  "kind": "manufacturer",
+  "title": "Holosun EPS-CARRY-RD-2 Enclosed 2 MOA Red Dot",
+  "quote": "Direct K footprint mounting with included RMSc to K adapter plate",
+  "note": "Native footprint is K, not RMSc. It ships with an RMSc-to-K plate, so it fits four-lug RMSc slides (Glock 43X/48 MOS, Hellcat OSP, Shield Plus OR) with that plate and K-cut P365-family slides directly. Enclosed emitter confirmed: 'Sealed emitter construction protects the optic from debris, moisture, and everyday carry buildup.' $388.22 is the price on the page; it is not labeled MSRP.",
+  "msrp": 388.22
+ },
+ {
+  "part": "shield-sights-rmsc",
+  "covers": [
+   "give:optic",
+   "fits",
+   "need:sights_height"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.shieldsights.com/portfolio-posts/reflex-mini-sight-compact",
+  "publisher": "Shield Sights",
+  "kind": "manufacturer",
+  "title": "Reflex Mini Sight Compact",
+  "quote": "designed to fit on single-stack pistols such as concealed carry handguns like the Glock 43",
+  "note": "Also says 'The latest addition to the arsenal is the Glock 43x and G48.' The page names the 'SHIELD footprint' as 'the universal standard for many optic-ready subcompact handguns'. P365/Hellcat/Shield Plus are not named, but their makers say the slides are RMSc-cut (see platform rows). Co-witness with standard irons is claimed only when paired with Shield's low-profile Glock MOS plate. Store price $429.99 (each 4/8 MOA variant).",
+  "msrp": 429.99
+ },
+ {
+  "part": "c-h-precision-optic-adapter-plate-rmr",
+  "covers": [
+   "fits",
+   "give:optic"
+  ],
+  "verdict": "partly",
+  "url": "https://chpws.com/product/glock-mos-v4-mil-leo-to-trijicon-rmr-sro-holosun-407c-507c-508c-508t/",
+  "publisher": "C&H Precision",
+  "kind": "manufacturer",
+  "title": "V4 MIL/LEO Adapter Trijicon RMR / RMR HD / SRO / Holosun 407C / 507C / 507Comp / 508T ... Fits GLOCK MOS",
+  "quote": "THIS PRODUCT WILL NOT FIT THE NEW GLOCK GEN 6 OPTIC CUT!",
+  "note": "C&H sells a separate plate SKU for each platform, not one plate for all. This Glock MOS plate (GL-RSH, $79.99) fits Gen4/Gen5 MOS: G17, G19, G26 Gen5, G34, G45, G47 and others. Gen 6 needs plate G6-RSH, MOS5 cuts need another SKU, and 43X/48 MOS needs GLX-RSH. Not compatible with the Trijicon RCR. Model this as several parts, or one part with a fitment per platform.",
+  "msrp": 79.99
+ },
+ {
+  "part": "c-h-precision-optic-adapter-plate-rmr",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://chpws.com/product/sw-core-2-0-1-975/",
+  "publisher": "C&H Precision",
+  "kind": "manufacturer",
+  "title": "S&W M2.0 C.O.R.E. to Trijicon RMR / RMR HD / SRO / Holosun 407C / 507C / 507Comp / C&H EDC-XL / COMP / COMP MAX / Olight Osight X",
+  "quote": "Fits all calibers of Smith & Wesson Performance 2.0 optics-ready slides. (9mm, 10mm, ect.)",
+  "note": "This is a separate M&P 2.0 SKU, $51.99. It does NOT work with the Holosun 508T.",
+  "msrp": 51.99
+ },
+ {
+  "part": "c-h-precision-optic-adapter-plate-rmr",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://chpws.com/product/sig-p320-w-r1p-dpp-cut-w-rmr-holosun-holes-filler-plate-for-rmr-sro-holosun/",
+  "publisher": "C&H Precision",
+  "kind": "manufacturer",
+  "title": "SIG P320 RX Series / Pro Series / AXG Scorpion w/ R1P / DPP CUT w/ RMR / Holosun Holes – Filler Plate",
+  "quote": "THIS PLATE REQUIRES A ROMEO 1 PRO OPTIC READY CUT WITH RMR HOLES, REFER TO THE PICTURES TO VERIFY YOUR SLIDE HAS THE CORRECT HOLES AND CUT.",
+  "note": "The P320 version is a filler plate ($62.99), only for Romeo1Pro/DPP-cut slides that are also drilled for RMR. Romeo1Pro-only slides need a different C&H X-series R1P adapter plate. A CZ P-10 C plate (C&H CZ-RSH) exists per retailers, but I could not load C&H's own CZ page.",
+  "msrp": 62.99
+ },
+ {
+  "part": "slide-milling-shop-rmr-optic-cut",
+  "covers": [
+   "steps",
+   "option:slide"
+  ],
+  "verdict": "confirmed",
+  "url": "https://chpws.com/product/glock-slide-optic-milling/",
+  "publisher": "C&H Precision",
+  "kind": "manufacturer",
+  "title": "Slide Optic Milling Service for GLOCK Pistols",
+  "quote": "Remove the slide from your pistol.",
+  "note": "The shipping steps cover only the slide, sent to 'CHPWS – \"ATTN: Slide Milling\"'. The page does not literally say 'do not send the frame'. Price from $125. Lead time '5 working days or less' after receipt. RMR cover plate offered for standard-width Glock slides.",
+  "msrp": 125
+ },
+ {
+  "part": "slide-milling-shop-rmr-optic-cut",
+  "covers": [
+   "steps",
+   "option:slide"
+  ],
+  "verdict": "confirmed",
+  "url": "https://jagerwerks.com/faq",
+  "publisher": "Jagerwerks",
+  "kind": "manufacturer",
+  "title": "FAQ",
+  "quote": "We mill Glock slides for the following optics: Aimpoint Acro, Shield RMSc, Trijicon RMR/SRO, Trijicon RMRcc.",
+  "note": "The FAQ tells customers to 'mail your slide and any accessories you want installed to us', i.e. the slide only, not the serialized frame.",
+  "msrp": null
+ },
+ {
+  "part": "slide-milling-shop-rmsc-optic-cut",
+  "covers": [
+   "steps",
+   "option:slide"
+  ],
+  "verdict": "confirmed",
+  "url": "https://jagerwerks.com/faq",
+  "publisher": "Jagerwerks",
+  "kind": "manufacturer",
+  "title": "FAQ",
+  "quote": "We mill the P365 for the following optics: Shield RMSc, Holosun EPS/Carry and Holosun K series, Trijicon RMRcc, and the Sig Romeo Zero.",
+  "note": "Glock slides can also be milled for Shield RMSc. The customer mails only the slide ('mail your slide and any accessories you want installed to us').",
+  "msrp": null
+ },
+ {
+  "part": "trijicon-hd-xr-night-sights-glock",
+  "covers": [
+   "fits",
+   "give:sights_height"
+  ],
+  "verdict": "partly",
+  "url": "https://www.trijicon.com/products/details/gl601-c-600836",
+  "publisher": "Trijicon",
+  "kind": "manufacturer",
+  "title": "Trijicon HD XR™ Night Sights - Glock Standard Frames",
+  "quote": "Fits Glock Models: 17, 17L, 19, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33, 34, 35, 37, 38, 39, and 45. (Does not fit MOS)",
+  "note": "G17/19/26 fit confirmed, but this SKU excludes MOS slides. MOS guns need the separate 'Glock Standard Frames (MOS)' SKU GL614-C-601091/-601092 (also $192). Since this DB pairs these sights with optic-ready slides, split the part or add a non-MOS restriction.",
+  "msrp": 192
+ },
+ {
+  "part": "trijicon-hd-xr-night-sights-glock",
+  "covers": [
+   "give:sights_height"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.trijicon.com/products/details/gl614-c-601091",
+  "publisher": "Trijicon",
+  "kind": "manufacturer",
+  "title": "Trijicon HD XR™ Night Sights - Glock Standard Frames (MOS)",
+  "quote": "The HD XR MOS Fit sights are NOT intended to be used while also running a red dot",
+  "note": "Trijicon adds that 'they are not tall enough to be viewed through the red dot window', which confirms standard height with no co-witness. The MOS SKU fits 17MOS, 19MOS, 34MOS, 45MOS and the standard models.",
+  "msrp": 192
+ },
+ {
+  "part": "xs-sights-dxt2-big-dot-glock",
+  "covers": [
+   "fits",
+   "give:sights_height"
+  ],
+  "verdict": "confirmed",
+  "url": "https://xssights.com/products/dxt2-big-dot-night-sights-fits-glock.html",
+  "publisher": "XS Sights",
+  "kind": "manufacturer",
+  "title": "DXT2 Big Dot Night Sights fits Glock",
+  "quote": "Glock 17, 19, 22, 23, 24, 26, 28, 27, 31, 32, 33, 34, 35, 36, 38, 39, 45, & 47",
+  "note": "Standard Height variant: front 0.250 in, rear 0.220 in, $144.99. The same page sells a Suppressor Height variant (0.405/0.375 in, $153.99) that XS says works with the RMR, SRO and Holosun 507C. Make sure the DB part is the standard-height SKU.",
+  "msrp": 144.99
+ },
+ {
+  "part": "trijicon-suppressor-night-sights-glock",
+  "covers": [
+   "fits",
+   "give:sights_height"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.trijicon.com/products/details/gl201-c-600661",
+  "publisher": "Trijicon",
+  "kind": "manufacturer",
+  "title": "Trijicon® Suppressor/Optic Height Sights - Glock Standard Frames",
+  "quote": "as backup iron sights for a slide-mounted red dot sight, such as the Trijicon RMR®.",
+  "note": "Fits G17/17L/19/26 and other standard-frame models. The page does not use the word 'co-witness' and names only the RMR. 'Co-witnesses through most pistol optics' is broader than the source. Taller optics such as the SRO may sit the dot higher. $160.",
+  "msrp": 160
+ },
+ {
+  "part": "platform:glock-17",
+  "covers": [
+   "option:slide"
+  ],
+  "verdict": "partly",
+  "url": "https://us.glock.com/en/about/technology/MOS",
+  "publisher": "GLOCK",
+  "kind": "manufacturer",
+  "title": "GLOCK MOS / Optic Ready technology",
+  "quote": "GLOCK pistol models in standard MOS configuration now come with a single MOS adapter plate.",
+  "note": "Correct for Gen4/Gen5 MOS (metal adapter plate). The G17 Gen6 uses a new 'Optic Ready System' with three numbered polymer plates (02 = Trijicon RMR/SRO/Holosun 507C etc.). Gen5 MOS plates do NOT fit Gen6 (C&H: 'WILL NOT FIT THE NEW GLOCK GEN 6 OPTIC CUT'). Add a Gen6 slide option.",
+  "msrp": null
+ },
+ {
+  "part": "platform:glock-19",
+  "covers": [
+   "option:slide"
+  ],
+  "verdict": "partly",
+  "url": "https://us.glock.com/en/about/technology/MOS",
+  "publisher": "GLOCK",
+  "kind": "manufacturer",
+  "title": "GLOCK MOS / Optic Ready technology",
+  "quote": "GLOCK pistol models in standard MOS configuration now come with a single MOS adapter plate.",
+  "note": "Correct for Gen4/Gen5 MOS. The G19 Gen6 uses the polymer-plate Optic Ready System (plate 02 for RMR-footprint optics), which takes different plates. Add a Gen6 slide option.",
+  "msrp": null
+ },
+ {
+  "part": "platform:glock-26",
+  "covers": [
+   "option:slide"
+  ],
+  "verdict": "confirmed",
+  "url": "https://us.glock.com/en/about/technology/MOS",
+  "publisher": "GLOCK",
+  "kind": "manufacturer",
+  "title": "GLOCK MOS / Optic Ready technology",
+  "quote": "GLOCK pistol models in standard MOS configuration now come with a single MOS adapter plate.",
+  "note": "Correct. The G26 Gen5 MOS uses a MOS adapter plate (C&H lists 'G26 Gen5' MOS). There is no G26 in Glock's Gen6 optic-ready list.",
+  "msrp": null
+ },
+ {
+  "part": "platform:glock-17",
+  "covers": [
+   "option:slide",
+   "steps"
+  ],
+  "verdict": "partly",
+  "url": "https://eu.glock.com/en/Technology/GLOCK-Optic-Ready-System",
+  "publisher": "GLOCK (EU)",
+  "kind": "manufacturer",
+  "title": "GLOCK Optic Ready System (Gen6)",
+  "quote": "This system allows optics to be screwed directly into the slide after inserting the optic ready plate.",
+  "note": "Gen6 G17/G19/G45/G49 ship with '3 numbered GLOCK OR Plates'. Plate 02 = Trijicon/Holosun (except 509)/Ameriglo, 6-32 UNC. Still a plate system, but not interchangeable with Gen4/5 MOS plates.",
+  "msrp": null
+ },
+ {
+  "part": "platform:glock-19",
+  "covers": [
+   "option:slide",
+   "steps"
+  ],
+  "verdict": "partly",
+  "url": "https://eu.glock.com/en/Technology/GLOCK-Optic-Ready-System",
+  "publisher": "GLOCK (EU)",
+  "kind": "manufacturer",
+  "title": "GLOCK Optic Ready System (Gen6)",
+  "quote": "This system allows optics to be screwed directly into the slide after inserting the optic ready plate.",
+  "note": "Gen6 G17/G19/G45/G49 ship with '3 numbered GLOCK OR Plates'. Plate 02 = Trijicon/Holosun (except 509)/Ameriglo, 6-32 UNC. Still a plate system, but not interchangeable with Gen4/5 MOS plates.",
+  "msrp": null
+ },
+ {
+  "part": "platform:glock-43x-48",
+  "covers": [
+   "option:slide",
+   "base:optic"
+  ],
+  "verdict": "confirmed",
+  "url": "https://us.glock.com/en/about/technology/MOS",
+  "publisher": "GLOCK",
+  "kind": "manufacturer",
+  "title": "GLOCK MOS / Optic Ready technology",
+  "quote": "The Slimline MOS pistol models have slide cuts designed for specific micro-optics and do not need Adapter Plates.",
+  "note": "The G43X MOS page also says 'The G43X with the Modular Optic System (MOS) does not come with adapter plates.' Glock does not name the footprint; third parties say it is Shield RMSc with four recoil lugs (next row).",
+  "msrp": null
+ },
+ {
+  "part": "platform:glock-43x-48",
+  "covers": [
+   "base:optic"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.swampfoxoptics.com/best-red-dot-sights-for-glock-43x-and-48-mos",
+  "publisher": "Swampfox Optics",
+  "kind": "reference",
+  "title": "Best Red Dot Sights for Glock 43X & 48 MOS",
+  "quote": "The G43, G43X, and G48 all share the same RMSc footprint, so everything here applies across the board.",
+  "note": "'The Slimline MOS cut has four recoil lugs (two front, two rear)'. That is why K-footprint optics (507K/EPS Carry) need a plate here.",
+  "msrp": null
+ },
+ {
+  "part": "platform:sig-p365",
+  "covers": [
+   "option:slide"
+  ],
+  "verdict": "partly",
+  "url": "https://www.thefirearmblog.com/blog/2021/08/12/tfb-review-sig-sauers-new-p365x/",
+  "publisher": "The Firearm Blog",
+  "kind": "reference",
+  "title": "TFB Review: SIG Sauer's New P365X Pistol",
+  "quote": "decided to incorporate an optics cut on the slide of a regular P365 slide which hasn't been done from SIG on a factory firearm.",
+  "note": "Supports: the original P365 had no factory optic cut and the P365X introduced one (P365X MSRP $829.99 at launch). sigsauer.com returned 403, so SIG's own footprint statement was not verified. Per OpticsPlanet, the P365-family cut has no recoil lugs and takes RMSc and K optics directly. Later P365 variants/slides also ship optic-ready, so 'original P365 = no cut' should apply to the 2018 slide only (not independently verified).",
+  "msrp": null
+ },
+ {
+  "part": "platform:sig-p365",
+  "covers": [
+   "option:slide"
+  ],
+  "verdict": "confirmed",
+  "url": "https://jagerwerks.com/faq",
+  "publisher": "Jagerwerks",
+  "kind": "manufacturer",
+  "title": "FAQ",
+  "quote": "We mill the P365 for the following optics: Shield RMSc, Holosun EPS/Carry and Holosun K series, Trijicon RMRcc, and the Sig Romeo Zero.",
+  "note": "Supports the milling option for an uncut P365 slide.",
+  "msrp": null
+ },
+ {
+  "part": "platform:sig-p365xl",
+  "covers": [
+   "base:optic"
+  ],
+  "verdict": "partly",
+  "url": "https://www.opticsplanet.com/howto/the-holosun-k-red-dot-footprint.html",
+  "publisher": "OpticsPlanet",
+  "kind": "retailer",
+  "title": "Holosun K Red Dot Footprint Mounting Guide",
+  "quote": "Holosun K footprint is a slightly modified version of the Shield RMSc (J-Point) footprint.",
+  "note": "The guide lists P365XL and P365 X-Macro among guns where the 507K/407K/EPS Carry mount directly. The cut uses the RMSc screw pattern without rear recoil lugs, so both RMSc and K optics bolt on. SIG's own page was blocked (403). Retailer search snippets say current models use a SIG-LOC cut with M4 hardware that is backward-compatible with RMSc (not verified).",
+  "msrp": null
+ },
+ {
+  "part": "platform:sig-p365-macro",
+  "covers": [
+   "base:optic"
+  ],
+  "verdict": "partly",
+  "url": "https://www.opticsplanet.com/howto/the-holosun-k-red-dot-footprint.html",
+  "publisher": "OpticsPlanet",
+  "kind": "retailer",
+  "title": "Holosun K Red Dot Footprint Mounting Guide",
+  "quote": "Holosun K footprint is a slightly modified version of the Shield RMSc (J-Point) footprint.",
+  "note": "The guide lists P365XL and P365 X-Macro among guns where the 507K/407K/EPS Carry mount directly. The cut uses the RMSc screw pattern without rear recoil lugs, so both RMSc and K optics bolt on. SIG's own page was blocked (403). Retailer search snippets say current models use a SIG-LOC cut with M4 hardware that is backward-compatible with RMSc (not verified).",
+  "msrp": null
+ },
+ {
+  "part": "platform:sig-p320",
+  "covers": [
+   "option:slide",
+   "base:optic"
+  ],
+  "verdict": "partly",
+  "url": "https://www.opticsplanet.com/sig-sauer-sealing-plate-kit-trijicon-rmr-sro.html",
+  "publisher": "OpticsPlanet (SIG SAUER product)",
+  "kind": "retailer",
+  "title": "SIG SAUER Trijicon RMR/SRO Sealing Plate Kit",
+  "quote": "Sealing plate to adapt the Trijicon RMR/SRO to Xseries slides.",
+  "note": "Too broad. Current P320 X-series/Pro-cut ('R1P') slides are cut for the ROMEO1PRO / Leupold DeltaPoint Pro footprint and take those optics direct, no plate. RMR/SRO goes on with SIG's sealing plate kit (1303084-R, list $59) only on slides also drilled for RMR. Romeo1Pro-only slides need an aftermarket RMR adapter plate (C&H X-series R1P plate). Older 'RX' slides were cut for the original ROMEO1. Change to: base:optic = ROMEO1PRO/DPP direct; RMR = sealing plate or adapter, depending on slide. sigsauer.com was blocked (403).",
+  "msrp": null
+ },
+ {
+  "part": "platform:sig-p320",
+  "covers": [
+   "option:slide"
+  ],
+  "verdict": "partly",
+  "url": "https://chpws.com/product/sig-p320-w-r1p-dpp-cut-w-rmr-holosun-holes-filler-plate-for-rmr-sro-holosun/",
+  "publisher": "C&H Precision",
+  "kind": "manufacturer",
+  "title": "SIG P320 R1P/DPP cut w/ RMR holes filler plate",
+  "quote": "THIS PLATE REQUIRES A ROMEO 1 PRO OPTIC READY CUT WITH RMR HOLES, REFER TO THE PICTURES TO VERIFY YOUR SLIDE HAS THE CORRECT HOLES AND CUT.",
+  "note": "Confirms the P320 factory cut is the Romeo1Pro/DPP pattern, with RMR holes on some slides only. The RMR is mounted through a filler or sealing plate.",
+  "msrp": null
+ },
+ {
+  "part": "platform:sw-mp2",
+  "covers": [
+   "option:slide"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.americanrifleman.org/content/new-for-2020-smith-wesson-m-p-m2-0-compact-optics-ready",
+  "publisher": "American Rifleman (NRA)",
+  "kind": "reference",
+  "title": "New for 2020: Smith & Wesson M&P M2.0 Compact Optics Ready",
+  "quote": "This milled section is compatible with seven mounting plates that ship with the gun.",
+  "note": "Plates are confirmed for the M2.0 Optics Ready / C.O.R.E. cut. Factory sights on these guns are 'tall enough to co-witness'. Launch MSRP $616 (Compact OR). Caveat: S&W now sells some M2.0 slide kits with a plate-free direct-mount cut for the Aimpoint ACRO P-2, so not every optic-ready M2.0 slide uses plates.",
+  "msrp": null
+ },
+ {
+  "part": "platform:sw-shield-plus",
+  "covers": [
+   "option:slide",
+   "base:optic"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.smith-wesson.com/product/m-p-9-shield-plus-optics-ready",
+  "publisher": "Smith & Wesson",
+  "kind": "manufacturer",
+  "title": "M&P®9 SHIELD PLUS OPTICS READY",
+  "quote": "The Shield Plus optics-ready models also use the RMSc footprint but lack the ClearSight feature, which may result in more frequent optic cleaning in high-round-count scenarios.",
+  "note": "Text taken from the page's embedded HTML; the page renders with JS. S&W lists Shield Plus OR at $549. S&W labels newer slides (Shield X, Shield Plus Carry Comp) 'RMSc/K footprint'. A forum report says Shield Plus OR slides changed mid-production (unverified). Footprint is RMSc, direct, no plate.",
+  "msrp": null
+ },
+ {
+  "part": "platform:spr-hellcat",
+  "covers": [
+   "option:slide",
+   "base:optic"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.thearmorylife.com/a-hellcat-reflex-the-shield-rmsc-red-dot/",
+  "publisher": "The Armory Life (Springfield Armory's publication)",
+  "kind": "reference",
+  "title": "Shield RMSc Review: Improve Your Hellcat's Reflexes",
+  "quote": "the Hellcat OSP's slide is cut to accept the Shield (or JP Enterprises JPoint) directly with no adapter plate needed.",
+  "note": "Shield RMSc footprint confirmed: the RMSc is fixed with 'two M4-0.7 threaded screws'. springfield-armory.com itself was not fetched. Four-post cut, so K-footprint optics need a plate (C&H Hellcat-to-507K plate).",
+  "msrp": null
+ },
+ {
+  "part": "platform:cz-p10c",
+  "covers": [
+   "option:slide",
+   "steps"
+  ],
+  "verdict": "confirmed",
+  "url": "https://egwguns.com/cz-p-10c-optic-mounts-rmr-407k-507k-eps-carry-509t/",
+  "publisher": "EGW (Evolution Gun Works)",
+  "kind": "reference",
+  "title": "CZ P-10C Optic Mounts – RMR, 407k/507k, EPS Carry, 509T",
+  "quote": "Has a factory cut with a removable cover plate near the rear sight.",
+  "note": "For Optics Ready owners EGW says 'If you have that, buy an Adapter Plate' (RMR-footprint OR plate, $49.99). cz-usa.com was not fetched, so it is unverified whether CZ includes any plate in the box.",
+  "msrp": null
+ }
+]

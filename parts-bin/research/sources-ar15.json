@@ -1,0 +1,393 @@
+[
+ {
+  "part": "geissele-ssa-e-two-stage-trigger",
+  "covers": [
+   "need:trigger_pins",
+   "option:pins"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.opticsplanet.com/geissele-ssa-e-super-semi-automatic-enhanced-trigger-large-pin.html",
+  "publisher": "OpticsPlanet",
+  "kind": "retailer",
+  "title": "Geissele AR-15 Super Semi-Automatic Enhanced (SSA-E) Large Pin Trigger | 4.6 Star Rating",
+  "quote": "The large pin dimension is 0.169 inches, whereas the standard pin dimension is 0.155 inches.",
+  "note": "Standard SSA-E is small-pin; a separate large-pin SKU (05-171) exists for Colt AR rifles made 1990-2009 (page: 'for use in Colt AR rifles manufactured from 1990 to 2009'). Geissele quotes standard pins as 0.155\" (nominal .154\"). The page also says Geissele AR15 triggers are not compatible with Sig MPX/MCX or PCC AR variants. Quote taken from a WebFetch extraction (direct load blocked). MSRP not on the loaded page.",
+  "msrp": null
+ },
+ {
+  "part": "timney-ar-15-competition-trigger",
+  "covers": [
+   "need:trigger_pins",
+   "option:pins",
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://timneytriggers.com/ar-15-competition-trigger/",
+  "publisher": "Timney Triggers",
+  "kind": "manufacturer",
+  "title": "AR-15 Competition Replacement Trigger",
+  "quote": "Pin Size: * Choose/Reset Options Small Pin Large Pin Pull Weight: * Choose/Reset Options 3 lb 4 lb 4.5 lb",
+  "note": "CORRECTION: not small-pin only. Timney sells the AR-15 Competition in both Small Pin and Large Pin versions (page also lists 'Large Pin Colt Rifles from the 90s' as compatible). Change rule to: match the pin-size option to the lower. Not compatible with .308/7.62 ARs or S&W 15-22. Price range $199.99-$269.99 depending on shoe/pin/weight.",
+  "msrp": 199.99
+ },
+ {
+  "part": "timney-ar-15-competition-trigger",
+  "covers": [
+   "steps",
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://timneytriggers.com/content/productpdf/11172020-07-AR-InstallInstructions-AR15_AR10_Competition_Impact-V4.pdf",
+  "publisher": "Timney Triggers",
+  "kind": "manufacturer",
+  "title": "AR TRIGGER INSTALLATION INSTRUCTIONS - AR15 & AR10 COMPETITION AND IMPACT",
+  "quote": "Tighten the pre-installed setscrews in the trigger housing located under each hammer spring leg and then install the two locking screws that are included in the plastic bag with the trigger to prevent the mounting screws from backing out.",
+  "note": "Drop-in cassette with set screws confirmed. Timney asks polymer-lower owners to request a metal plate to fit under the trigger. Product page: '100% drop-in, cassette style trigger' and 'Anti walk pins not required'. Quote joined across PDF layout line breaks.",
+  "msrp": null
+ },
+ {
+  "part": "larue-tactical-mbt-2s-two-stage-trigger",
+  "covers": [
+   "need:trigger_pins"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.primaryarms.com:443/larue-tactical-mbt-2s-ar-15-trigger-curved",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "LaRue Tactical MBT-2S Two Stage AR-15 Trigger - Curved",
+  "quote": "Compatible only with small-pin lower receivers using mil-spec .154\" trigger pins",
+  "note": "No large-pin version found. LaRue's own product URL from search results (larue.com/products/larue-tactical-mbt-2s-trigger/) returned 404, so MSRP is unverified; retailer price was $134.99. A straight-bow version (LT-MBT-2S-SB) exists. Quote taken from a WebFetch extraction.",
+  "msrp": null
+ },
+ {
+  "part": "aimpoint-micro-t-2",
+  "covers": [
+   "need:scope_mount",
+   "need:top_rail"
+  ],
+  "verdict": "partly",
+  "url": "https://ar15discounts.com/products/aimpoint-micro-t-2-2-moa-ar15-ready-lrp-mount-39mm-spacer",
+  "publisher": "AR15Discounts",
+  "kind": "retailer",
+  "title": "200198 - Aimpoint Micro T-2 2 MOA AR15-ready LRP Mount/39mm spacer - AR15Discounts",
+  "quote": "this AR15-ready configuration features a 39mm spacer and LRP mount, ensuring seamless integration on Picatinny rails",
+  "note": "CORRECTION: depends on SKU. The Micro T-2 ships as a no-mount version, a low-mount version (200170, standard Picatinny mount, not AR height), the 'AR15-ready' 200198 (LRP mount plus 39 mm spacer) and bundles such as the Unity FAST version. Only the no-mount and low-mount SKUs need a separate AR-height Micro-footprint mount. Aimpoint's own sites (aimpoint.com, aimpoint.us) returned 403 to fetches. Retailer price $1,109.",
+  "msrp": null
+ },
+ {
+  "part": "eotech-exps3",
+  "covers": [
+   "fits",
+   "need:top_rail"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.eotechinc.com/products/eotech-hws-exps3",
+  "publisher": "EOTECH",
+  "kind": "manufacturer",
+  "title": "Model EXPS3™ HWS | EOTECH",
+  "quote": "The EXPS3 offers true two eyes open shooting for fast target acquisition, night vision compatible settings, and a 7mm raised quick detach base for lower 1/3 iron sight co-witness.",
+  "note": "Integrated QD base. Spec line: 'Mount 1\" Weaver or MIL-STD-1913 rail'. $859 for all reticle/color variants.",
+  "msrp": 859.0
+ },
+ {
+  "part": "holosun-hs510c",
+  "covers": [
+   "fits",
+   "need:top_rail"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.holosun.com/products/hs510c",
+  "publisher": "Holosun",
+  "kind": "manufacturer",
+  "title": "Holosun HS510C Open Reflex MRS Solar QD Mount",
+  "quote": "Quick Detach Picatinny Mount Integrated QD mount allows fast installation or removal while maintaining reliable zero on Picatinny rails.",
+  "note": "Spec table: 'Fitment Direct Mount Picatinny Rail'. Dot height 1.41\" with integrated mount. No price shown on the page.",
+  "msrp": null
+ },
+ {
+  "part": "vortex-strike-eagle-1-8x24",
+  "covers": [
+   "need:scope_mount"
+  ],
+  "verdict": "confirmed",
+  "url": "https://vortexoptics.com/vortex-strike-eagle-1-8x24-ar-bdc3.html",
+  "publisher": "Vortex Optics",
+  "kind": "manufacturer",
+  "title": "Vortex Strike Eagle 1-8x24 Riflescope",
+  "quote": "Strike Eagle ® 1-8x24 AR-BDC3 (MOA) Reticle | 30 mm Tube $559.99 MSRP",
+  "note": "Spec table: 'Tube Size 30mm'. What's in the box: scope, throw lever, flip caps, cloth, battery, so no mount (SKU SE-1824-2). Caveat: retail bundles that include a cantilever mount exist (e.g. SE-1801K1, FFP version), and the FFP model's MSRP is $699.99.",
+  "msrp": 559.99
+ },
+ {
+  "part": "unity-tactical-fast-micro-mount",
+  "covers": [
+   "give:scope_mount",
+   "need:top_rail"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.primaryarms.com/unity-tactical-fast-ap-micro-mount-black",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "Unity Tactical FAST - Aimpoint Micro Mount - Black",
+  "quote": "Compatible with Aimpoint T1, T2, and many other microdots with same footprint 2.26” optical centerline height for fast sight acquisition",
+  "note": "Specs: 'Accessory Attachment M1913 Picatinny ... Mount Compatibility Aimpoint Micro Mount Height 2.26 in.' Height is 2.26\" (taller than the 1.93\" lower-1/3 standard). Retailers say it does not fit the CompM5s/M5b (use FAST Micro-S). Unity's site returned 403. Retail $186.",
+  "msrp": null
+ },
+ {
+  "part": "vortex-sport-cantilever-30-mm-mount",
+  "covers": [
+   "give:scope_mount",
+   "need:top_rail"
+  ],
+  "verdict": "partly",
+  "url": "https://www.opticsplanet.com/v/cm-202-vortex-cantilever-ring-mount-for.html",
+  "publisher": "OpticsPlanet",
+  "kind": "retailer",
+  "title": "Vortex Sport Cantilever 30mm Rifle Scope Ring",
+  "quote": "Vortex cantilever ring mounts provide the correct height and forward placement for proper scope mounting on flattop ARs.",
+  "note": "Fit confirmed: 30 mm, 2\" offset, specs 'Gun Rail: Picatinny' (CM-202). CAVEAT: OpticsPlanet says it 'has been discontinued by Vortex and is no longer available'. Some retailers still list stock. Consider flagging it discontinued. Quotes taken from a WebFetch extraction.",
+  "msrp": null
+ },
+ {
+  "part": "magpul-moe-sl-carbine-stock",
+  "covers": [
+   "need:buffer_tube",
+   "option:tube"
+  ],
+  "verdict": "partly",
+  "url": "https://magpul.com/moe-sl-carbine-stock-mil-spec.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "MOE SL Carbine Stock – Mil-Spec",
+  "quote": "There are two basic sizes of M4 Carbine receiver extensions (buffer tubes): Mil-Spec and Commercial-Spec. If you have a commercial-spec size extension on your rifle, make sure to order the Commercial-Spec MOE SL .",
+  "note": "This SKU (MAG347) needs a mil-spec tube, but Magpul also sells a Commercial-Spec MOE SL. Fix the rule to: the Mil-Spec SKU needs a mil-spec tube, and the Commercial-Spec SKU fits commercial tubes. $69.95.",
+  "msrp": 69.95
+ },
+ {
+  "part": "b5-systems-bravo-stock",
+  "covers": [
+   "need:buffer_tube"
+  ],
+  "verdict": "confirmed",
+  "url": "https://b5systems.com/collection/ar/bravo-stock/",
+  "publisher": "B5 Systems",
+  "kind": "manufacturer",
+  "title": "BRAVO STOCK",
+  "quote": "Made of MIL-SPEC Materials and Finishes Fits MIL-SPEC Carbine Receiver Extensions Available in All Standard Colors",
+  "note": "No commercial-spec Bravo found on B5's site or in retailer listings, so treat it as mil-spec only. B5's stock collection lists only BRAVO and BRAVO-C, and the Bravo-C (8.74\" long, 10.25 oz) is a different, also mil-spec, stock. Price not shown on the manufacturer page. Primary Arms sells it at $57.95.",
+  "msrp": null
+ },
+ {
+  "part": "aero-precision-mil-spec-carbine-buffer-tube-kit",
+  "covers": [
+   "give:buffer_tube"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.primaryarms.com/aero-precision-ar-15-buffer-tube-kit-mil-spec-aprh100151",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "Aero Precision AR-15 Carbine Buffer Kit - 6 Position",
+  "quote": "a mil-spec diameter, 6-position receiver extension made from 7075-T6 aluminum, a standard carbine recoil buffer, a buffer spring, an end plate, and a castle nut.",
+  "note": "SKU APRH100151C. The kit includes buffer, spring, end plate and castle nut. It does not include a stock. $67.99 (out of stock at the time).",
+  "msrp": null
+ },
+ {
+  "part": "magpul-moe-k2-grip",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://magpul.com/moe-k2-grip-ar15-m4.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "Magpul MOE-K2 Grip: Upgrade Your AR15/M4",
+  "quote": "MOE-K2® Grip – AR15/M4 A larger size and more vertical grip angle than our MOE-K®",
+  "note": "AR15/M4 fit confirmed, SKU MAG522, $21.95. The page doesn't mention the detent spring. See the platform-level grip/detent source.",
+  "msrp": 21.95
+ },
+ {
+  "part": "bcm-gunfighter-mod-3-grip",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://bravocompanyusa.com/bcm-grip-mod-3-black/",
+  "publisher": "Bravo Company USA",
+  "kind": "manufacturer",
+  "title": "BCM® AR15 Pistol Grip Mod 3, Black | Bravo Company",
+  "quote": "BCM® Grip Mod 3 - Black BCM MSRP: $22.00 Your Price: $19.95",
+  "note": "Page title states AR15. MSRP $22.00.",
+  "msrp": 22.0
+ },
+ {
+  "part": "platform:ar15",
+  "covers": [
+   "steps"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.shootingillustrated.com/articles/2015/10/16/ar-lower-receiver-build-grip-and-fire-control-selector-installation",
+  "publisher": "Shooting Illustrated (NRA)",
+  "kind": "reference",
+  "title": "AR Lower-Receiver Build: Grip and Fire Control Selector Installation",
+  "quote": "Insert the spring in the hole in the pistol grip and install the grip, aligning the spring with the detent and the hole in the receiver.",
+  "note": "Supports 'grip holds the safety-selector detent spring' (applies to both magpul-moe-k2-grip and bcm-gunfighter-mod-3-grip). The Timney install PDF also warns, when removing the grip: 'Be careful not to lose the safety spring and plunger!'",
+  "msrp": null
+ },
+ {
+  "part": "bcm-gunfighter-charging-handle-mod-4",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://bravocompanyusa.com/bcm-asymmetric-mk2-charging-handle-medium-latch-5-56mm-223/",
+  "publisher": "Bravo Company USA",
+  "kind": "manufacturer",
+  "title": "AR15 Charging Handle, MK2 MED - Bravo Company USA",
+  "quote": "Medium latch extends past the main body approximately 0.92\". Single-sided latch. Compatible with Mil-Spec AR-15 Direct Impingement Weapon Systems.",
+  "note": "CORRECTION/CAVEAT: BCM's charging-handle category now lists only MK2 handles (Asymmetric/Ambidextrous, Medium/Large), and the old Mod 4/Mod 4B product URL returns 404. The Gunfighter Mod 4 looks superseded by the 'Asymmetric MK2 - Medium Latch' (BCM-GFH-MK2-MED, MSRP $80). AR-15 drop-in fit confirmed for the current model. Consider renaming the part or marking it discontinued.",
+  "msrp": 80.0
+ },
+ {
+  "part": "radian-weapons-raptor-ambidextrous-charging-handle",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.primaryarms.com/radian-weapons-ar15-m16-raptor-ambidextrous-charging-handle-black",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "Radian Raptor AR-15 Ambidextrous Charging Handle",
+  "quote": "The Radian Raptor AR-15 Charging Handle solves the classic problems of a standard Mil-Spec charging handle — small, one-sided, and hard to grab in a hurry — with large, textured latches on both sides of the handle.",
+  "note": "SKU R0001, platform AR-15, retail $104.95. AR-10 Raptor is a separate SKU. Radian's own page rendered empty (JS-only).",
+  "msrp": null
+ },
+ {
+  "part": "geissele-super-modular-rail-mk16-13-5",
+  "covers": [
+   "give:fore_rail",
+   "need:gas_block",
+   "steps"
+  ],
+  "verdict": "partly",
+  "url": "https://www.primaryarms.com/geissele-automatics-mk16-super-modular-m-lok-rail-black-13.5",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "Geissele Automatics MK16 Free Float AR-15 Handguard - M-LOK - 13.5\"",
+  "quote": "Extended-length Geissele barrel nut Anti-rotation tabs and set screws Picatinny top rail with 7 sides of M-LOK 7000-series aluminum construction Black Type III hardcoat anodize Does not include barrel nut wrench",
+  "note": "Proprietary barrel nut included and M-LOK confirmed (05-650B, $350 retail). The page never states the low-profile gas block requirement. That is implied by a 1.35\" inner-diameter free-float tube, which can't clear a front sight base, so it's inferred, not quoted. Add a note: Geissele barrel nut wrench is required and sold separately. Mid-length gas listed.",
+  "msrp": null
+ },
+ {
+  "part": "aero-precision-750-low-profile-gas-block",
+  "covers": [
+   "give:gas_block"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.primaryarms.com/aero-precision-low-profile-gas-block-.750in-Nitride",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "Aero Precision Low Profile Nitride - Gas Block - .750\"",
+  "quote": "This version is sized for a .750\" gas block journal, with .485\" set screw spacing for dimpled barrels.",
+  "note": "APRH101205C, set-screw mounted, 'tucks under nearly any free float handguard'. Fits rifle and carbine length gas tubes. $35.99.",
+  "msrp": null
+ },
+ {
+  "part": "magpul-m-lok-aluminum-rail-section-5-slot",
+  "covers": [
+   "give:light_mount",
+   "need:fore_rail"
+  ],
+  "verdict": "confirmed",
+  "url": "https://magpul.com/media/wysiwyg/GIS/MAG580-MAG583_M-LOK_Aluminum_Rail_Sections_GIS_01.pdf",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "M-LOK ALUMINUM RAIL SECTIONS (MAG580-MAG583 info sheet)",
+  "quote": "M-LOK Aluminum Rail Sections allow the attachment of various 1913 Picatinny spec rail-mounted accessories such as lights, vertical grips, etc.",
+  "note": "5-slot is MAG581 ('MAG581 - 5 Slots, max overall length of 2.5\"'). Hardware for aluminum or polymer M-LOK handguards included. Price not on the sheet.",
+  "msrp": null
+ },
+ {
+  "part": "surefire-warcomp-5-56",
+  "covers": [
+   "need:thread"
+  ],
+  "verdict": "partly",
+  "url": "https://www.surefire.com/warcomp-flash-hider/",
+  "publisher": "SureFire",
+  "kind": "manufacturer",
+  "title": "WARCOMP Flash Hider - SureFire",
+  "quote": "WARCOMP-556-1/2-28 can be timed for right- or left-handed shooters, or for neutral timing",
+  "note": "1/2-28 thread confirmed (5.56 model WARCOMP-556-1/2-28. A 7.62 5/8-24 model also exists). SureFire doesn't mention pin-and-weld: the page says 'Installation requires no permanent modifications to weapon'. Pin-and-weld is a builder option for sub-16\" barrels (length 2.7\"), not a product requirement, so reword the rule as conditional. It's also a suppressor adapter for SureFire SOCOM cans. $169.",
+  "msrp": 169.0
+ },
+ {
+  "part": "magpul-pmag-30-ar-m4-gen-m3",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://magpul.com/pmag-30-ar-m4-gen-m3.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "PMAG 30 AR/M4 GEN M3",
+  "quote": "Compatibility Wide compatibility with most 'STANAG 4179' platforms such as the AR15, M4, M16, SCAR MK16/16S, HK416, MR556, M27 IAR, IWI Tavor, and others",
+  "note": "MAG557, $15.95. 5.56x45/.223. Use the 300 BLK-specific PMAG for 300 BLK.",
+  "msrp": 15.95
+ },
+ {
+  "part": "platform:ar15",
+  "covers": [
+   "option:pins"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.opticsplanet.com/geissele-ssa-e-super-semi-automatic-enhanced-trigger-large-pin.html",
+  "publisher": "OpticsPlanet",
+  "kind": "retailer",
+  "title": "Geissele AR-15 Super Semi-Automatic Enhanced (SSA-E) Large Pin Trigger | 4.6 Star Rating",
+  "quote": "The large pin dimension is 0.169 inches, whereas the standard pin dimension is 0.155 inches.",
+  "note": "Small (~.154-.155\") vs large (.169\") pins confirmed. Large pin is mainly Colt AR rifles made 1990-2009. Timney also sells Small/Large Pin options.",
+  "msrp": null
+ },
+ {
+  "part": "platform:ar15",
+  "covers": [
+   "option:tube"
+  ],
+  "verdict": "confirmed",
+  "url": "https://magpul.com/moe-sl-carbine-stock-mil-spec.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "MOE SL Carbine Stock – Mil-Spec",
+  "quote": "There are two basic sizes of M4 Carbine receiver extensions (buffer tubes): Mil-Spec and Commercial-Spec.",
+  "note": "Two sizes confirmed. Magpul doesn't give diameters here. Commonly mil-spec is ~1.148\" OD and commercial ~1.168\" (numbers not verified on a fetched page).",
+  "msrp": null
+ },
+ {
+  "part": "platform:ar15",
+  "covers": [
+   "option:barrel"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.law.cornell.edu/uscode/text/26/5845",
+  "publisher": "Legal Information Institute (Cornell) - 26 U.S.C. 5845",
+  "kind": "reference",
+  "title": "26 U.S. Code § 5845 - Definitions",
+  "quote": "(3) a rifle having a barrel or barrels of less than 16 inches in length;",
+  "note": "Statutory NFA 'firearm' definition. Since tax year 2026 the NFA making/transfer tax for SBRs was reportedly cut to $0 by 2025 legislation, but SBRs still require NFA registration (not verified on a fetched page in this run).",
+  "msrp": null
+ },
+ {
+  "part": "platform:ar15",
+  "covers": [
+   "option:barrel"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.shootingillustrated.com/articles/2016/10/26/pinning-a-muzzle-brake-to-your-rifle",
+  "publisher": "Shooting Illustrated (NRA), quoting the ATF NFA Handbook",
+  "kind": "reference",
+  "title": "Pinning a Muzzle Brake to Your Rifle",
+  "quote": "Permanent methods of attachment include full-fusion gas or electric steel-seam welding, high-temperature (1,100 degrees Fahrenheit) silver soldering, or blind pinning with the pin head welded over.",
+  "note": "Secondary quotation of the ATF NFA Handbook (atf.gov PDFs returned 403). Same passage: barrel length is measured from the closed bolt 'to the furthermost end of the barrel or permanently attached muzzle device'. Pin-and-weld is one of several accepted permanent methods (also full weld, high-temp silver solder).",
+  "msrp": null
+ }
+]

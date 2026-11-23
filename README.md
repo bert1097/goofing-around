@@ -98,8 +98,21 @@ product-customizer front end, the way sneaker sites let you build your own shoe.
 - **Data**: everything saves in the browser. Export to JSON (full backup) or
   CSV (parts and prices), import a JSON backup, or reset to the starter data.
 
-The starter data (60 parts across 17 platforms, with fit rules and install
-steps) was drafted from general knowledge. Fitment, rules, steps and estimated
-prices are **unverified**: check the maker's
-fitment list before buying, and tick *Verified* on a part once you have. No
-retailer prices are included; those are yours to log.
+- **Sources**: every rule (which firearms a part fits, each need, what it
+  provides, what it replaces, its install steps) and every firearm setup fact
+  can cite sources: link, publisher, type (maker / retailer / reference), a
+  verbatim quote, the date checked, and whether it supports, partly supports or
+  contradicts the rule. A part is *Sourced* only when every rule has a
+  supporting source; *Disputed* if any source contradicts it. The fit check
+  and install plan show the source next to each verdict and step, a coverage
+  bar shows how much of a build's check is backed, and the catalog can filter
+  to Unsourced parts as a to-do list.
+
+The starter data (64 parts across 17 platforms) was drafted from general
+knowledge, then checked against maker, retailer and reference pages. That pass
+corrected about 40 rules: the RMSc vs. Holosun K footprint, separate RMR plates
+for each optic system, the P320's ROMEO1PRO cut, SIG and Hellcat rails, the
+S15's required steel mag catch, large-pin and commercial-tube versions, and
+more. It attached 119 sources. About 60% of rules are sourced so far; install
+steps are the main gap. The raw findings and the generator live in
+`parts-bin/research/`. No retailer prices are included; those are yours to log.

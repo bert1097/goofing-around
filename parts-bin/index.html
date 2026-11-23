@@ -475,8 +475,8 @@
 
 /* ================= Interface vocabulary ================= */
 const KEYS = {
-  optic: { label: "Optic mounting", vals: { none: "no optic cut", plate: "an optic cut that takes adapter plates", RMR: "the RMR footprint", RMSc: "the RMSc / K footprint" } },
-  light_mount: { label: "Light mount", vals: { none: "no accessory rail", picatinny: "a Picatinny / full-size pistol rail", "mlok-only": "M-LOK slots only", "slim-rail": "the Glock slimline rail", "p365-rail": "the SIG P365 rail", "1913-short": "a short 1913 rail" } },
+  optic: { label: "Optic mounting", vals: { none: "no optic cut", "glock-mos": "a Glock MOS cut (takes plates)", "mp-core": "an M&P C.O.R.E. cut (takes plates)", r1pro: "a ROMEO1PRO / DeltaPoint Pro cut", "cz-or": "a CZ Optics Ready cut (takes plates)", RMR: "the RMR footprint", RMSc: "a four-lug RMSc cut", "RMSc-K": "an RMSc cut without rear lugs (takes RMSc and K)", K: "the Holosun K footprint" } },
+  light_mount: { label: "Light mount", vals: { none: "no accessory rail", picatinny: "a Picatinny / full-size pistol rail", "mlok-only": "M-LOK slots only", "slim-rail": "the Glock slim mounting rail", "sig-rail": "SIG's proprietary P365 rail", "1913-short": "a short 1913 rail", "hellcat-rail": "the Hellcat's short accessory rail" } },
   sights_height: { label: "Sight height", vals: { standard: "standard-height sights", cowitness: "suppressor-height sights" } },
   mag_catch: { label: "Magazine catch", vals: { polymer: "the factory polymer catch", steel: "a steel catch" } },
   gen: { label: "Generation", vals: { 3: "Gen 3", 4: "Gen 4", 5: "Gen 5" } },
@@ -561,18 +561,18 @@ const slideOpt = (cut, cutLabel) => OPT("slide", "Slide", [["Standard (no optic 
 const PB = { sights_height: "standard", mag_catch: "polymer", light: "none" };
 
 const SEED_PLATFORMS = [
-  { id: "glock-17", name: "Glock 17", type: "Pistol", covers: "Gen 3–5, incl. MOS", base: { ...PB, family: "glock-dbl", light_mount: "picatinny" }, options: [GLOCK_GEN, slideOpt("plate", "MOS (optic plates)")] },
-  { id: "glock-19", name: "Glock 19", type: "Pistol", covers: "Gen 3–5, incl. MOS", base: { ...PB, family: "glock-dbl", light_mount: "picatinny" }, options: [GLOCK_GEN, slideOpt("plate", "MOS (optic plates)")] },
-  { id: "glock-26", name: "Glock 26", type: "Pistol", covers: "Gen 3–5, incl. MOS", base: { ...PB, family: "glock-dbl", light_mount: "none" }, options: [GLOCK_GEN, slideOpt("plate", "MOS (optic plates)")] },
+  { id: "glock-17", name: "Glock 17", type: "Pistol", covers: "Gen 3–5, incl. MOS (Gen 6 not modeled yet)", base: { ...PB, family: "glock-dbl", light_mount: "picatinny" }, options: [GLOCK_GEN, slideOpt("glock-mos", "MOS (optic plates)")] },
+  { id: "glock-19", name: "Glock 19", type: "Pistol", covers: "Gen 3–5, incl. MOS (Gen 6 not modeled yet)", base: { ...PB, family: "glock-dbl", light_mount: "picatinny" }, options: [GLOCK_GEN, slideOpt("glock-mos", "MOS (optic plates)")] },
+  { id: "glock-26", name: "Glock 26", type: "Pistol", covers: "Gen 3–5, incl. MOS", base: { ...PB, family: "glock-dbl", light_mount: "none" }, options: [GLOCK_GEN, slideOpt("glock-mos", "MOS (optic plates)")] },
   { id: "glock-43x-48", name: "Glock 43X / 48", type: "Pistol", covers: "Slimline, incl. MOS and Rail", base: { ...PB, family: "glock-slim", gen: "5" }, options: [slideOpt("RMSc", "MOS (RMSc cut)"), OPT("frame", "Frame", [["Standard (no rail)", { light_mount: "none" }], ["Rail", { light_mount: "slim-rail" }]])] },
-  { id: "sig-p365", name: "SIG P365 / P365X", type: "Pistol", covers: "Micro-compact 9mm", base: { ...PB, family: "p365", light_mount: "none" }, options: [OPT("slide", "Model", [["P365 (no optic cut)", { optic: "none" }], ["P365X / optic-ready", { optic: "RMSc" }]], 1)] },
-  { id: "sig-p365xl", name: "SIG P365XL", type: "Pistol", covers: "Incl. Spectre Comp", base: { ...PB, family: "p365", optic: "RMSc", light_mount: "p365-rail" }, options: [] },
-  { id: "sig-p365-macro", name: "SIG P365-XMACRO", type: "Pistol", covers: "Incl. Comp and TACOPS", base: { ...PB, family: "p365", optic: "RMSc", light_mount: "p365-rail" }, options: [] },
-  { id: "sig-p320", name: "SIG P320 / M17 / M18", type: "Pistol", covers: "Full-size, carry and compact", base: { ...PB, family: "p320", light_mount: "picatinny" }, options: [slideOpt("plate", "Optic-ready (plates)")] },
-  { id: "sw-mp2", name: "S&W M&P 2.0", type: "Pistol", covers: "Full-size and compact 9mm", base: { ...PB, family: "mp2", light_mount: "picatinny" }, options: [slideOpt("plate", "Optics Ready (plates)")] },
+  { id: "sig-p365", name: "SIG P365 / P365X", type: "Pistol", covers: "Micro-compact 9mm", base: { ...PB, family: "p365", light_mount: "sig-rail" }, options: [OPT("slide", "Model", [["P365 (no optic cut)", { optic: "none" }], ["P365X / optic-ready", { optic: "RMSc-K" }]], 1)] },
+  { id: "sig-p365xl", name: "SIG P365XL", type: "Pistol", covers: "Incl. Spectre Comp", base: { ...PB, family: "p365", optic: "RMSc-K", light_mount: "sig-rail" }, options: [] },
+  { id: "sig-p365-macro", name: "SIG P365-XMACRO", type: "Pistol", covers: "Incl. Comp and TACOPS", base: { ...PB, family: "p365", optic: "RMSc-K", light_mount: "1913-short" }, options: [] },
+  { id: "sig-p320", name: "SIG P320 / M17 / M18", type: "Pistol", covers: "Full-size, carry and compact", base: { ...PB, family: "p320", light_mount: "picatinny" }, options: [slideOpt("r1pro", "Optic-ready (ROMEO1PRO cut)")] },
+  { id: "sw-mp2", name: "S&W M&P 2.0", type: "Pistol", covers: "Full-size and compact 9mm", base: { ...PB, family: "mp2", light_mount: "picatinny" }, options: [slideOpt("mp-core", "Optics Ready (C.O.R.E. plates)")] },
   { id: "sw-shield-plus", name: "S&W M&P Shield Plus", type: "Pistol", covers: "Incl. Optics Ready", base: { ...PB, family: "shield-plus", light_mount: "none" }, options: [slideOpt("RMSc", "Optics Ready (RMSc cut)")] },
-  { id: "spr-hellcat", name: "Springfield Hellcat", type: "Pistol", covers: "Incl. OSP and Pro", base: { ...PB, family: "hellcat", light_mount: "1913-short" }, options: [slideOpt("RMSc", "OSP (RMSc cut)")] },
-  { id: "cz-p10c", name: "CZ P-10 C", type: "Pistol", covers: "Incl. Optics Ready", base: { ...PB, family: "p10", light_mount: "picatinny" }, options: [slideOpt("plate", "Optics Ready (plates)")] },
+  { id: "spr-hellcat", name: "Springfield Hellcat", type: "Pistol", covers: "Incl. OSP and Pro", base: { ...PB, family: "hellcat", light_mount: "hellcat-rail" }, options: [slideOpt("RMSc", "OSP (RMSc cut)")] },
+  { id: "cz-p10c", name: "CZ P-10 C", type: "Pistol", covers: "Incl. Optics Ready", base: { ...PB, family: "p10", light_mount: "picatinny" }, options: [slideOpt("cz-or", "Optics Ready (plates)")] },
   { id: "ar15", name: "AR-15", type: "Rifle", covers: "5.56 / .223", base: { scope_mount: "none", light: "none" }, options: [
     OPT("upper", "Upper", [["Flat-top", { top_rail: "picatinny" }], ["A2 carry handle", { top_rail: "carry" }]]),
     OPT("handguard", "Handguard", [["Polymer M4 + front sight base", { fore_rail: "none", light_mount: "none", gas_block: "fsb" }], ["Quad rail + front sight base", { fore_rail: "picatinny", light_mount: "picatinny", gas_block: "fsb" }], ["M-LOK free-float + low-profile gas block", { fore_rail: "mlok", light_mount: "mlok-only", gas_block: "lowpro" }]]),
@@ -611,109 +611,1922 @@ const ST = {
   mk16: [
     S(3, 20, "Remove the muzzle device, handguard, gas block, gas tube, factory barrel nut and delta ring.", ["Upper receiver vise block", "Bench vise", "AR armorer's wrench"]),
     S(4, 0, "A pinned-and-welded muzzle device must be cut off by a gunsmith before the barrel nut can come off, then re-pinned.", [], N("barrel", "14.5")),
-    S(3, 30, "Install the new barrel nut, torqued to the maker's spec and timed for the gas tube.", ["Torque wrench", "Barrel nut grease"]),
+    S(3, 30, "Install the new barrel nut, torqued to the maker's spec and timed for the gas tube.", ["Geissele barrel nut wrench (sold separately)", "Torque wrench", "Barrel nut grease"]),
     S(3, 20, "Reinstall the gas tube and low-profile gas block, check gas-block alignment, then mount the handguard."),
   ],
   gasBlock: [S(3, 30, "Drive the taper pins out of the front sight base (small end first) and slide it off. Many owners have a gunsmith do this.", ["Taper pin punches", "Barrel support block"]), S(3, 15, "Fit the low-profile gas block on the .750\" journal and lock it with set screws and high-temp thread locker, or pin it.")],
   muzzle: [
     S(3, 15, "Remove the factory flash hider and crush washer (a pinned-and-welded one has to be cut off by a gunsmith first).", ["Upper receiver vise block", "Bench vise", "Wrench for the flash hider"]),
     S(3, 15, "Time the new device with a crush or peel washer and torque it to the maker's spec."),
-    S(4, 0, "On a 14.5\" barrel, have a gunsmith pin and weld the device so the barrel measures at least 16\". A shorter barrel without it is a short-barreled rifle under the NFA.", [], N("barrel", "14.5")),
+    S(4, 0, "On a 14.5\" barrel, have a gunsmith permanently attach the device (pin and weld, full weld or high-temperature silver solder) so the barrel measures at least 16\". Otherwise it's a short-barreled rifle under the NFA.", [], N("barrel", "14.5")),
   ],
   railSection: [S(1, 5, "Bolt the rail section into the M-LOK slots where the light should sit.", ["Hex key"])],
   rifleLight: [S(1, 5, "Clamp the light to the rail and route any pressure switch.")],
   rifleOptic: [S(1, 10, "Mount on the top rail, far enough forward for a full field of view, and torque the mount to spec.", ["Inch-pound torque wrench"])],
   scopeMount: [S(2, 15, "Torque the mount to the rail, then the ring caps to spec; level the reticle on a magnified optic.", ["Inch-pound torque wrench"])],
   bufferTube: [S(3, 30, "Unstake and remove the castle nut, fit the mil-spec tube, end plate, buffer retainer and spring, then torque and stake the castle nut.", ["Castle nut wrench", "Staking tool"])],
-  ak922: S(1, 0, "This counts as a US-made part toward 922(r) on an imported AK; keep your parts count compliant.", [], N("origin", "imported")),
+  ak922: S(1, 0, "Imported AK in a non-sporting configuration? No more than 10 of the 20 parts listed in 27 CFR 478.39 may be imported. A US-made part like this one lowers your imported count.", [], N("origin", "imported")),
   sga: [S(2, 15, "Remove the buttpad and the long stock bolt, then fit the SGA with its hardware.", ["Socket set", "Long socket extension"])],
   forend870: [S(2, 20, "Remove the magazine cap and barrel, unscrew the forend tube nut and swap the forend.", ["Forend tube nut wrench"])],
 };
 
 function P(brand, name, category, fits, est, mount, notes, x = {}) {
-  return { brand, name, category, fits: [...fits], est, mount, notes, needs: x.needs || [], gives: x.gives || {}, occ: x.occ || [], steps: x.steps || [], since: x.since || 1 };
+  return { brand, name, category, fits: [...fits], est, mount, notes, needs: x.needs || [], gives: x.gives || {}, occ: x.occ || [], steps: x.steps || [], since: x.since || 1, ...(x.msrp ? { msrp: x.msrp } : {}) };
 }
-const RMR_NEEDS = [N("optic", "RMR"), N("sights_height", "cowitness", { soft: true, why: "Factory-height sights sit below most RMR-size optic windows. Suppressor-height sights let you co-witness." })];
+const RMR_NEEDS = [N("optic", "RMR", { why: "Needs an RMR-footprint mount: an RMR-cut slide, or the adapter plate made for this slide." }), N("sights_height", "cowitness", { soft: true, why: "Standard-height sights are too short to see through a red dot. Suppressor-height sights work as a backup through the window." })];
 const SEED_PARTS = [
-  P("Apex Tactical", "Action Enhancement Trigger Kit (Glock)", "Trigger", G_FULL, 150, "", "Separate SKUs for Gen 3/4 and Gen 5.", { steps: ST.glockTrigger }),
-  P("Overwatch Precision", "TAC Trigger (Glock)", "Trigger", G_FULL, 170, "", "Gen-specific SKUs.", { steps: ST.glockTrigger }),
-  P("Apex Tactical", "Action Enhancement Kit (M&P 2.0)", "Trigger", ["sw-mp2"], 150, "", "", { steps: [S(2, 45, "Detail strip the frame (sear housing block and trigger pin) and install the kit per Apex's instructions.", ["Punch set"])] }),
-  P("Geissele", "SSA-E two-stage trigger", "Trigger", ["ar15"], 240, "Small-pin lower", "For .154\" pin receivers.", { needs: [N("trigger_pins", "small", { why: "Built for small-pin (.154\") receivers; this lower is large-pin. Look for a large-pin version." })], steps: ST.arTrigger }),
-  P("Timney", "AR-15 Competition Trigger", "Trigger", ["ar15"], 230, "Small-pin lower", "Drop-in cassette.", { needs: [N("trigger_pins", "small", { why: "Built for small-pin (.154\") receivers; this lower is large-pin." })], steps: [S(2, 20, "Remove the factory hammer, trigger and pins; drop in the cassette and snug the set screws per Timney's instructions.", ["Punch set", "Hex keys"])] }),
+  P("Apex Tactical", "Action Enhancement Trigger Kit (Glock)", "Trigger", G_FULL, 140, "", "102-115 for Gen 3/4 (includes a Gen 3 trigger bar); 102-116 for Gen 5.", { steps: ST.glockTrigger, msrp: 140 }),
+  P("Overwatch Precision", "TAC Trigger (Glock)", "Trigger", G_FULL, 135, "", "One product; pick Gen 1-4, Gen 5 or Gen 6 when ordering.", { steps: ST.glockTrigger, msrp: 135 }),
+  P("Apex Tactical", "Action Enhancement Kit (M&P 2.0)", "Trigger", ["sw-mp2"], 150, "", "Polymer kit 100-126: M2.0 9/.40/.45 incl. Compact. Not the M&P 9/40 1.0 or any Shield.", { steps: [S(2, 45, "Detail strip the frame (sear housing block and trigger pin) and install the kit per Apex's instructions.", ["Punch set"])] }),
+  P("Geissele", "SSA-E two-stage trigger", "Trigger", ["ar15"], 240, "Small-pin lower", "Not for SIG MPX/MCX or pistol-caliber ARs.", { needs: [N("trigger_pins", "small", { why: "The standard SSA-E is for small-pin lowers. Geissele sells a large-pin version (05-171) for Colt rifles made 1990–2009." })], steps: ST.arTrigger }),
+  P("Timney", "AR-15 Competition Trigger", "Trigger", ["ar15"], 230, "Small- or large-pin", "Drop-in cassette; sold in small-pin and large-pin versions.", { needs: [N("trigger_pins", ["small", "large"])], msrp: 269.99, steps: [S(1, 0, "Order the {trigger_pins} version."), S(2, 20, "Remove the factory hammer, trigger and pins; drop in the cassette and snug the set screws per Timney's instructions.", ["Punch set", "Hex keys"])] }),
   P("LaRue Tactical", "MBT-2S two-stage trigger", "Trigger", ["ar15"], 110, "Small-pin lower", "", { needs: [N("trigger_pins", "small", { why: "Built for small-pin (.154\") receivers; this lower is large-pin." })], steps: ST.arTrigger }),
-  P("ALG Defense", "AKT enhanced trigger", "Trigger", ["ak"], 80, "", "", { steps: [S(2, 30, "Pull the retaining wire and pins and remove the factory trigger, hammer and disconnector; install the ALG group per the maker's instructions.", ["Needle-nose pliers", "Punch"]), ST.ak922] }),
-  P("Ruger", "BX-Trigger", "Trigger", ["ruger-1022"], 90, "", "Complete drop-in trigger group.", { steps: [S(1, 15, "Take the action out of the stock, push out the two trigger-group pins and drop in the BX-Trigger.", ["Punch"])] }),
+  P("ALG Defense", "AKT enhanced trigger", "Trigger", ["ak"], 80, "", "Most semi-auto AK-47/AK-74 pattern rifles; not 12 ga, .308 or 7.62x54R variants. Counts as 3 parts for 922(r).", { steps: [S(2, 30, "Pull the retaining wire and pins and remove the factory trigger, hammer and disconnector; install the ALG group per the maker's instructions.", ["Needle-nose pliers", "Punch"]), S(2, 0, "Check the trigger-guard rivet; a tall one may need shaving for clearance."), ST.ak922] }),
+  P("Ruger", "BX-Trigger", "Trigger", ["ruger-1022"], 110, "", "Complete drop-in trigger group; also fits the 22 Charger. Ruger doesn't ship it to California.", { msrp: 109.95, steps: [S(1, 15, "Take the action out of the stock, push out the two trigger-group pins and drop in the BX-Trigger.", ["Punch"])] }),
 
-  P("Trijicon", "RMR Type 2", "Pistol optic", RMR_PISTOLS, 550, "RMR footprint", "Needs an RMR-cut slide or an adapter plate.", { needs: RMR_NEEDS, steps: ST.pistolOptic }),
-  P("Holosun", "507C X2", "Pistol optic", RMR_PISTOLS, 330, "RMR footprint", "Needs an RMR-cut slide or an adapter plate.", { needs: RMR_NEEDS, steps: ST.pistolOptic }),
-  P("Trijicon", "SRO", "Pistol optic", RMR_PISTOLS, 650, "RMR footprint", "Large window; sits taller than an RMR.", { needs: RMR_NEEDS, steps: ST.pistolOptic }),
-  P("Holosun", "507K X2", "Pistol optic", K_PISTOLS, 300, "RMSc / K footprint", "", { needs: [N("optic", "RMSc")], steps: ST.pistolOptic }),
-  P("Holosun", "EPS Carry", "Pistol optic", K_PISTOLS, 360, "RMSc / K footprint", "Enclosed emitter.", { needs: [N("optic", "RMSc")], steps: ST.pistolOptic }),
-  P("Shield Sights", "RMSc", "Pistol optic", K_PISTOLS, 330, "RMSc / K footprint", "", { needs: [N("optic", "RMSc")], steps: ST.pistolOptic }),
+  P("Trijicon", "RMR Type 2", "Pistol optic", RMR_PISTOLS, 550, "RMR footprint", "Plate-system slides (Glock MOS, M&P, P320, CZ) need the RMR plate for that slide.", { needs: RMR_NEEDS, steps: ST.pistolOptic, msrp: 779 }),
+  P("Holosun", "507C X2", "Pistol optic", RMR_PISTOLS, 330, "RMR footprint", "Plate-system slides need the RMR plate for that slide.", { needs: RMR_NEEDS, steps: ST.pistolOptic, msrp: 364.69 }),
+  P("Trijicon", "SRO", "Pistol optic", RMR_PISTOLS, 650, "RMR footprint", "Large window; about 1.4\" tall vs the RMR's 1\".", { needs: RMR_NEEDS, steps: ST.pistolOptic, msrp: 822 }),
+  P("Holosun", "507K X2", "Pistol optic", K_PISTOLS, 300, "Holosun K footprint", "K = RMSc screw spacing without the rear recoil-lug holes. Bolts straight onto P365-family cuts; four-lug RMSc cuts need a plate.", { needs: [N("optic", ["K", "RMSc-K"], { why: "K-footprint optics don't fit a four-lug RMSc cut without an adapter plate or modified recoil posts." })], steps: ST.pistolOptic, msrp: 348.22 }),
+  P("Holosun", "EPS Carry", "Pistol optic", K_PISTOLS, 360, "Holosun K footprint", "Enclosed emitter. Ships with an RMSc-to-K plate.", { needs: [N("optic", ["K", "RMSc-K", "RMSc"])], steps: [S(2, 5, "On a four-lug RMSc cut, fit the RMSc-to-K plate that comes with the optic first.", ["Torx / hex drivers"], N("optic", "RMSc")), ...ST.pistolOptic], msrp: 388.22 }),
+  P("Shield Sights", "RMSc", "Pistol optic", K_PISTOLS, 330, "RMSc footprint", "", { needs: [N("optic", ["RMSc", "RMSc-K"])], steps: ST.pistolOptic, msrp: 429.99 }),
 
-  P("C&H Precision", "Optic adapter plate (RMR)", "Adapter plate", [...G_FULL, "sig-p320", "sw-mp2", "cz-p10c"], 40, "Plate system → RMR", "Made per slide; order the one for your model.", { needs: [N("optic", "plate")], gives: { optic: "RMR" }, occ: ["optic plate"], steps: ST.plate, since: 2 }),
+  P("C&H Precision", "Glock MOS RMR plate (GL-RSH)", "Adapter plate", G_FULL, 79.99, "Glock MOS → RMR", "For Gen 4/Gen 5 MOS slides; not Gen 6 (G6-RSH) or slimline MOS. Trijicon's AC32064 kit is an alternative.", { needs: [N("optic", "glock-mos")], gives: { optic: "RMR" }, occ: ["optic plate"], steps: ST.plate, since: 3, msrp: 79.99 }),
+  P("C&H Precision", "M&P C.O.R.E. RMR plate", "Adapter plate", ["sw-mp2"], 51.99, "M&P C.O.R.E. → RMR", "", { needs: [N("optic", "mp-core")], gives: { optic: "RMR" }, occ: ["optic plate"], steps: ST.plate, since: 3, msrp: 51.99 }),
+  P("C&H Precision", "P320 RMR filler plate", "Adapter plate", ["sig-p320"], 62.99, "ROMEO1PRO cut → RMR", "Only for ROMEO1PRO-cut slides that are also drilled for RMR screws.", { needs: [N("optic", "r1pro")], gives: { optic: "RMR" }, occ: ["optic plate"], steps: ST.plate, since: 3, msrp: 62.99 }),
+  P("EGW", "CZ P-10 C optic plate (RMR)", "Adapter plate", ["cz-p10c"], null, "CZ Optics Ready → RMR", "EGW also makes 407K/507K and 509T plates for this slide.", { needs: [N("optic", "cz-or")], gives: { optic: "RMR" }, occ: ["optic plate"], steps: ST.plate, since: 3 }),
+  P("C&H Precision", "Hellcat OSP to 407K/507K plate", "Adapter plate", ["spr-hellcat"], 51.49, "Four-lug RMSc → K", "", { needs: [N("optic", "RMSc")], gives: { optic: "K" }, occ: ["optic plate"], steps: ST.plate, since: 3, msrp: 51.49 }),
   P("Slide milling shop", "RMR optic cut", "Service", [...G_FULL, "sig-p320", "sw-mp2", "cz-p10c"], 175, "No cut → RMR", "Price varies by shop.", { needs: [N("optic", "none", { why: "This slide already has an optic cut." })], gives: { optic: "RMR" }, occ: ["optic cut"], steps: ST.mill, since: 2 }),
   P("Slide milling shop", "RMSc optic cut", "Service", K_PISTOLS, 150, "No cut → RMSc", "Price varies by shop.", { needs: [N("optic", "none", { why: "This slide already has an optic cut." })], gives: { optic: "RMSc" }, occ: ["optic cut"], steps: ST.mill, since: 2 }),
 
-  P("Aimpoint", "Micro T-2", "Rifle optic", ["ar15"], 900, "Micro footprint", "Mount sold separately.", { needs: [N("top_rail", "picatinny"), N("scope_mount", "micro", { why: "The Micro T-2 needs a Micro mount to sit at AR height." })], steps: ST.rifleOptic }),
+  P("Aimpoint", "Micro T-2", "Rifle optic", ["ar15"], 900, "Micro footprint", "This is the no-mount version. Aimpoint also sells it with a low mount, or AR15-ready with an LRP mount and spacer.", { needs: [N("top_rail", "picatinny"), N("scope_mount", "micro", { why: "The Micro T-2 needs a Micro mount to sit at AR height." })], steps: ST.rifleOptic }),
   P("EOTech", "EXPS3", "Rifle optic", ["ar15"], 750, "Picatinny", "Holographic; built-in mount.", { needs: [N("top_rail", "picatinny")], steps: ST.rifleOptic }),
   P("Holosun", "HS510C", "Rifle optic", ["ar15"], 380, "Picatinny", "Open reflex; built-in mount.", { needs: [N("top_rail", "picatinny")], steps: ST.rifleOptic }),
-  P("Vortex", "Strike Eagle 1-8x24", "Rifle optic", ["ar15"], 450, "30 mm tube", "Needs a 30 mm scope mount.", { needs: [N("top_rail", "picatinny"), N("scope_mount", "30mm", { why: "A 1-8x scope needs a 30 mm mount." })], steps: ST.rifleOptic }),
+  P("Vortex", "Strike Eagle 1-8x24", "Rifle optic", ["ar15"], 450, "30 mm tube", "Scope only; some retail bundles include a mount.", { msrp: 559.99, needs: [N("top_rail", "picatinny"), N("scope_mount", "30mm", { why: "A 1-8x scope needs a 30 mm mount." })], steps: ST.rifleOptic }),
   P("Unity Tactical", "FAST Micro mount", "Optic mount", ["ar15"], 140, "Micro footprint", "", { needs: [N("top_rail", "picatinny")], gives: { scope_mount: "micro" }, occ: ["optic mount"], steps: ST.scopeMount, since: 2 }),
-  P("Vortex", "Sport cantilever 30 mm mount", "Optic mount", ["ar15"], 90, "30 mm", "", { needs: [N("top_rail", "picatinny")], gives: { scope_mount: "30mm" }, occ: ["optic mount"], steps: ST.scopeMount, since: 2 }),
+  P("Vortex", "Sport cantilever 30 mm mount", "Optic mount", ["ar15"], 90, "30 mm, 2\" offset", "Reported discontinued (CM-202); any 30 mm AR cantilever mount does the same job.", { needs: [N("top_rail", "picatinny")], gives: { scope_mount: "30mm" }, occ: ["optic mount"], steps: ST.scopeMount, since: 2 }),
 
-  P("Trijicon", "HD XR night sights (Glock)", "Sights", G_FULL, 150, "", "Standard height; too short to co-witness with most optics.", { gives: { sights_height: "standard" }, steps: ST.pistolSights }),
-  P("XS Sights", "DXT2 Big Dot (Glock)", "Sights", G_FULL, 120, "", "Model-specific SKUs.", { gives: { sights_height: "standard" }, steps: ST.pistolSights }),
-  P("Trijicon", "Suppressor night sights (Glock)", "Sights", G_FULL, 170, "", "Tall enough to co-witness through most pistol optics.", { gives: { sights_height: "cowitness" }, steps: ST.pistolSights, since: 2 }),
-  P("Tech Sights", "TSR200 aperture sight", "Sights", ["ruger-1022"], 80, "", "Uses existing mounting points; no drilling.", { steps: [S(2, 30, "Mount the rear aperture on the receiver and drift the new front sight into the dovetail.", ["Hex keys", "Brass punch"])] }),
+  P("Trijicon", "HD XR night sights (Glock)", "Sights", G_FULL, 150, "", "Standard height; too short to see through a red dot. Separate MOS version.", { gives: { sights_height: "standard" }, steps: [S(1, 0, "On a MOS slide, order the MOS version (GL614); the standard set doesn't fit MOS.", [], N("optic", "glock-mos")), ...ST.pistolSights], msrp: 192 }),
+  P("XS Sights", "DXT2 Big Dot (Glock)", "Sights", G_FULL, 120, "", "Standard height; XS sells a suppressor-height version separately.", { gives: { sights_height: "standard" }, steps: ST.pistolSights, msrp: 144.99 }),
+  P("Trijicon", "Suppressor night sights (Glock)", "Sights", G_FULL, 160, "", "Trijicon pitches them as a backup sight with a slide-mounted RMR.", { gives: { sights_height: "cowitness" }, steps: ST.pistolSights, since: 2, msrp: 160 }),
+  P("Tech Sights", "TSR200 aperture sight", "Sights", ["ruger-1022"], 69, "", "No drilling: uses the receiver's scope-base holes (so no scope base too) and the front-sight dovetail. Bull barrels need an adaptor.", { msrp: 69, steps: [S(2, 30, "Remove any scope base, mount the rear aperture in the receiver's scope-base holes and drift the new front sight into the dovetail.", ["Hex keys", "Brass punch"])] }),
 
-  P("Streamlight", "TLR-1 HL", "Weapon light", [...RAIL_FULL, "ar15"], 150, "Picatinny / Glock rail", "", { needs: [N("light_mount", "picatinny")], gives: { light: "a TLR-1 HL" }, steps: ST.pistolLight }),
-  P("SureFire", "X300U-A", "Weapon light", [...RAIL_FULL, "ar15"], 300, "Picatinny / Glock rail", "", { needs: [N("light_mount", "picatinny")], gives: { light: "an X300U-A" }, steps: ST.pistolLight }),
-  P("Streamlight", "TLR-7A", "Weapon light", RAIL_FULL, 140, "Picatinny / Glock rail", "Compact; stays behind the muzzle on full-size pistols.", { needs: [N("light_mount", "picatinny")], gives: { light: "a TLR-7A" }, steps: ST.pistolLight }),
-  P("Streamlight", "TLR-7 Sub", "Weapon light", ["glock-43x-48", "sig-p365xl", "sig-p365-macro", "spr-hellcat"], 140, "Model-specific rail", "Rail-specific SKUs.", { needs: [N("light_mount", ["slim-rail", "p365-rail", "1913-short"])], gives: { light: "a TLR-7 Sub" }, steps: [S(1, 0, "Order the TLR-7 Sub version for {light_mount}."), ...ST.pistolLight] }),
-  P("Streamlight", "TL-Racker forend light", "Weapon light", ["rem-870", "moss-500"], 160, "Forend replacement", "Model-specific SKUs.", { gives: { light: "a TL-Racker" }, occ: ["forend"], steps: [...ST.forend870, S(1, 5, "Route the switch wiring and test both switches.")] }),
+  P("Streamlight", "TLR-1 HL", "Weapon light", ["glock-17", "glock-19", "sig-p320", "sw-mp2", "ar15"], 150, "Picatinny / Glock rail", "Streamlight warns against SIG frames with a round-bottom rail. On a rifle, use the 1913 key; a Long Gun Kit is sold separately.", { needs: [N("light_mount", "picatinny")], gives: { light: "a TLR-1 HL" }, steps: ST.pistolLight }),
+  P("SureFire", "X300U-A", "Weapon light", [...RAIL_FULL, "ar15"], 300, "Picatinny / Universal rail", "SureFire gives no per-gun list, only Universal and Picatinny rails.", { needs: [N("light_mount", "picatinny")], gives: { light: "an X300U-A" }, steps: ST.pistolLight }),
+  P("Streamlight", "TLR-7A", "Weapon light", [...RAIL_FULL, "sig-p365-macro"], 140, "Picatinny / Glock rail", "Compact. Fits the XMACRO with the 1913-3 key. Streamlight's page now points to the TLR-7 X, which looks like its replacement.", { needs: [N("light_mount", ["picatinny", "1913-short"])], gives: { light: "a TLR-7A" }, steps: ST.pistolLight }),
+  P("Streamlight", "TLR-7 Sub", "Weapon light", ["glock-43x-48", "sig-p365", "sig-p365xl", "sig-p365-macro", "spr-hellcat"], 140, "Rail-specific versions", "69400 Glock 43X/48 Rail · 69401 SIG P365/P365XL · 69402 short 1913 rails · 69404 1913OS (Hellcat). USB versions 69405–69408.", { needs: [N("light_mount", ["slim-rail", "sig-rail", "1913-short", "hellcat-rail"])], gives: { light: "a TLR-7 Sub" }, steps: [S(1, 0, "Order the TLR-7 Sub version for {light_mount}: 69400 Glock slim rail, 69401 SIG P365 rail, 69402 short 1913 rail, 69404 Hellcat."), ...ST.pistolLight] }),
+  P("Streamlight", "TL-Racker forend light", "Weapon light", ["rem-870", "moss-500"], 160, "Forend replacement", "12 gauge only. Mossberg model fits 7¾\" action slides; not the FLEX or the 870 Super Mag. Separate Shockwave/TAC-14 model.", { gives: { light: "a TL-Racker" }, occ: ["forend"], steps: [...ST.forend870, S(1, 5, "Route the switch wiring and test both switches.")] }),
   P("Magpul", "M-LOK aluminum rail section (5 slot)", "Rail section", ["ar15"], 25, "M-LOK → Picatinny", "", { needs: [N("fore_rail", "mlok")], gives: { light_mount: "picatinny" }, steps: ST.railSection, since: 2 }),
 
   P("Magpul", "PMAG 30 AR/M4 Gen M3", "Magazine", ["ar15"], 16, "", ""),
-  P("Magpul", "PMAG 17 GL9", "Magazine", G_FULL, 16, "", "Sticks out below G19 and G26 grips."),
-  P("Shield Arms", "S15 15-round magazine", "Magazine", ["glock-43x-48"], 45, "", "", { needs: [N("mag_catch", "steel", { soft: true, why: "Shield Arms recommends a steel mag catch; the factory polymer catch can wear against their metal magazines." })] }),
-  P("Shield Arms", "Steel magazine catch (Glock 43X/48)", "Mag catch", ["glock-43x-48"], 30, "", "", { gives: { mag_catch: "steel" }, steps: [S(2, 15, "Pry the mag catch spring aside with a small screwdriver, swap in the steel catch and reseat the spring.", ["Small flat screwdriver"])], since: 2 }),
-  P("Magpul", "PMAG 30 AK/AKM MOE", "Magazine", ["ak"], 18, "", ""),
-  P("Ruger", "BX-25 25-round magazine", "Magazine", ["ruger-1022"], 30, "", ""),
+  P("Magpul", "PMAG 17 GL9", "Magazine", G_FULL, 15, "", "Sticks out below G19 and G26 grips; may not fit the G19X without modification.", { msrp: 14.95 }),
+  P("Shield Arms", "S15 15-round magazine", "Magazine", ["glock-43x-48"], 45, "", "Gen 3 S15.", { needs: [N("mag_catch", "steel", { why: "Shield Arms: the Gen 3 S15 is compatible only with their steel magazine catch." })] }),
+  P("Shield Arms", "Steel magazine catch (Glock 43X/48)", "Mag catch", ["glock-43x-48"], 14, "", "Shield Arms doesn't recommend it with factory polymer magazines, which may not drop free.", { msrp: 14, gives: { mag_catch: "steel" }, steps: [S(2, 15, "Pry the mag catch spring aside with a small screwdriver, swap in the steel catch and reseat the spring.", ["Small flat screwdriver"])], since: 2 }),
+  P("Magpul", "PMAG 30 AK/AKM MOE", "Magazine", ["ak"], 16, "", "7.62x39. Counts as 3 parts for 922(r).", { msrp: 15.95 }),
+  P("Ruger", "BX-25 25-round magazine", "Magazine", ["ruger-1022"], 39, "", "Also fits the SR-22, 22 Charger and .22 LR American Rimfire / 77/22. Sales restricted in some states.", { msrp: 38.95 }),
 
-  P("Magpul", "MOE SL carbine stock", "Stock", ["ar15"], 65, "Mil-spec buffer tube", "", { needs: [N("buffer_tube", "milspec")], steps: ST.arStock }),
+  P("Magpul", "MOE SL carbine stock", "Stock", ["ar15"], 65, "Mil-spec buffer tube", "This is the Mil-Spec version (MAG347); Magpul sells a Commercial-Spec one separately.", { msrp: 69.95, needs: [N("buffer_tube", "milspec")], steps: ST.arStock }),
   P("B5 Systems", "Bravo stock", "Stock", ["ar15"], 60, "Mil-spec buffer tube", "", { needs: [N("buffer_tube", "milspec")], steps: ST.arStock }),
   P("Aero Precision", "Mil-spec carbine buffer tube kit", "Buffer tube", ["ar15"], 60, "", "", { gives: { buffer_tube: "milspec" }, steps: ST.bufferTube, since: 2 }),
-  P("Magpul", "Zhukov-S folding stock", "Stock", ["ak"], 130, "", "Stamped receivers only.", { needs: [N("receiver", "stamped", { why: "Made for stamped receivers; it won't fit a milled one." })], steps: [S(2, 30, "Remove the factory stock from the rear trunnion and install the Zhukov-S per Magpul's instructions.", ["Screwdrivers", "Hex keys"]), ST.ak922] }),
-  P("Magpul", "Hunter X-22 stock", "Stock", ["ruger-1022"], 140, "", "", { needs: [N("action", "carbine", { why: "Takedown rifles need the separate X-22 Takedown version." })], steps: [S(1, 10, "Remove the takedown screw and barrel band, lift out the action and drop it into the new stock.", ["Screwdriver"])] }),
-  P("Magpul", "SGA stock (Remington 870)", "Stock", ["rem-870"], 110, "", "", { steps: ST.sga }),
-  P("Magpul", "SGA stock (Mossberg 500/590)", "Stock", ["moss-500"], 110, "", "", { steps: ST.sga }),
+  P("Magpul", "Zhukov-S folding stock", "Stock", ["ak"], 110, "", "Stamped AK-47/AK-74 receivers with a single-tang rear trunnion; not Yugo M70 pattern or Norinco Type 56S/MAK-90.", { msrp: 109.95, needs: [N("receiver", "stamped", { why: "Made for stamped receivers with a single-tang trunnion; it won't fit a milled one." })], steps: [S(2, 30, "Remove the factory stock from the rear trunnion and install the Zhukov-S per Magpul's instructions.", ["Screwdrivers", "Hex keys"]), ST.ak922] }),
+  P("Magpul", "Hunter X-22 stock", "Stock", ["ruger-1022"], 145, "", "Factory pencil barrels or bull barrels up to .920\".", { msrp: 144.95, needs: [N("action", "carbine", { why: "Takedown rifles need the separate X-22 Takedown version." })], steps: [S(1, 10, "Remove the takedown screw and barrel band, lift out the action and drop it into the new stock.", ["Screwdriver"])] }),
+  P("Magpul", "SGA stock (Remington 870)", "Stock", ["rem-870"], 125, "", "12 gauge only.", { steps: ST.sga, msrp: 124.95 }),
+  P("Magpul", "SGA stock (Mossberg 500/590)", "Stock", ["moss-500"], 125, "", "12 gauge only; also fits the Maverick 88.", { steps: ST.sga, msrp: 124.95 }),
 
   P("Magpul", "MOE-K2 grip", "Grip", ["ar15"], 25, "", "", { steps: ST.arGrip }),
   P("BCM", "Gunfighter Mod 3 grip", "Grip", ["ar15"], 25, "", "", { steps: ST.arGrip }),
-  P("Magpul", "MOE AK grip", "Grip", ["ak"], 22, "", "", { steps: [S(1, 10, "Remove the grip screw from inside the grip and swap grips.", ["Screwdriver"]), ST.ak922] }),
+  P("Magpul", "MOE AK grip", "Grip", ["ak"], 22, "", "Stamped or milled receivers; may need minor fitting.", { steps: [S(1, 10, "Remove the grip screw from inside the grip and swap grips.", ["Screwdriver"]), ST.ak922] }),
 
-  P("BCM", "Gunfighter Charging Handle Mod 4", "Charging handle", ["ar15"], 60, "", "", { steps: ST.charging }),
+  P("BCM", "Gunfighter Charging Handle MK2 (medium latch)", "Charging handle", ["ar15"], 80, "", "Replaces the discontinued Mod 4.", { steps: ST.charging, since: 3, msrp: 80 }),
   P("Radian Weapons", "Raptor ambidextrous charging handle", "Charging handle", ["ar15"], 95, "", "", { steps: ST.charging }),
 
-  P("Geissele", "Super Modular Rail MK16 13.5\"", "Handguard", ["ar15"], 330, "M-LOK", "Replaces the barrel nut; not a drop-in.", { needs: [N("gas_block", "lowpro", { why: "A free-float handguard won't clear a front sight base; it needs a low-profile gas block." })], gives: { fore_rail: "mlok", light_mount: "mlok-only" }, steps: ST.mk16 }),
+  P("Geissele", "Super Modular Rail MK16 13.5\"", "Handguard", ["ar15"], 330, "M-LOK", "Uses its own extended barrel nut; not a drop-in. Geissele's barrel nut wrench is needed and not included.", { needs: [N("gas_block", "lowpro", { why: "A free-float handguard won't clear a front sight base; it needs a low-profile gas block." })], gives: { fore_rail: "mlok", light_mount: "mlok-only" }, steps: ST.mk16 }),
   P("Aero Precision", ".750 low-profile gas block", "Gas block", ["ar15"], 35, ".750\" journal", "", { gives: { gas_block: "lowpro" }, steps: ST.gasBlock, since: 2 }),
-  P("Magpul", "MOE forend (Remington 870)", "Forend", ["rem-870"], 35, "", "", { occ: ["forend"], steps: ST.forend870 }),
+  P("Magpul", "MOE forend (Remington 870)", "Forend", ["rem-870"], 30, "", "Not for the 870 Super Mag. Forend nut wrench included.", { occ: ["forend"], steps: ST.forend870, msrp: 29.95 }),
 
-  P("SureFire", "WarComp 5.56", "Muzzle device", ["ar15"], 200, "1/2-28 thread", "", { needs: [N("thread", "1/2-28", { why: "Needs a 1/2-28 threaded barrel." })], steps: ST.muzzle }),
+  P("SureFire", "WarComp 5.56", "Muzzle device", ["ar15"], 169, "1/2-28 thread", "Pin-and-weld is only needed to bring a short barrel to 16\".", { msrp: 169, needs: [N("thread", "1/2-28", { why: "Needs a 1/2-28 threaded barrel." })], steps: ST.muzzle }),
 
-  P("Mesa Tactical", "SureShell side saddle (6 shell)", "Shell carrier", ["rem-870", "moss-500"], 60, "", "Model-specific SKUs.", { steps: [S(2, 15, "870: swap the trigger-group pins for the threaded pins provided. 500/590: use the receiver screw holes.", ["Hex keys"])] }),
+  P("Mesa Tactical", "SureShell side saddle (6 shell)", "Shell carrier", ["rem-870", "moss-500"], 60, "", "Several styles per gun (side-mount, saddle-mount, with rail); the 870 versions also fit the 1100 and 11-87. The Mossberg version doesn't fit the 590R.", { steps: [S(2, 15, "Mount it per Mesa's instructions for your carrier style; the saddle-mount version uses the trigger-pin holes and the drilled and tapped holes on top of the receiver.", ["Hex keys"])] }),
 
-  P("Tango Down", "Vickers Tactical slide stop (Glock)", "Controls", G_FULL, 20, "", "Gen-specific.", { steps: [S(2, 20, "Field strip and swap the slide stop (the {gen} version).", ["3/32\" punch"])] }),
+  P("Tango Down", "Vickers Tactical slide stop (Glock)", "Controls", G_FULL, 20, "", "VTSS-001 for pre-Gen 5, VTSS-003 for Gen 5; may be discontinued at Tango Down.", { steps: [S(2, 20, "Field strip and swap the slide stop (the {gen} version).", ["3/32\" punch"])] }),
 
-  P("Safariland", "578 GLS Pro-Fit", "Holster", ALL_PISTOLS, 45, "", "Size-numbered: pick the size for your model.", { needs: [N("light", "none", { why: "Not made for a mounted light. Pick a light-bearing holster or drop the light." })], steps: ST.holster }),
-  P("Vedder", "LightTuck IWB", "Holster", ALL_PISTOLS, 70, "", "Made per model and light.", { steps: ST.holster }),
-  P("Safariland", "6390RDS ALS", "Holster", ["glock-17", "glock-19", "sig-p320", "sw-mp2"], 160, "", "Model- and light-specific; optic-ready.", { steps: ST.holster }),
+  P("Safariland", "578 GLS Pro-Fit", "Holster", ALL_PISTOLS, 80, "", "Safariland says it fits over 225 firearms; sold in size groups. Optic capable; won't take a light.", { needs: [N("light", "none", { why: "Not made for a mounted light. Pick a light-bearing holster or drop the light." })], steps: ST.holster }),
+  P("Vedder", "LightTuck IWB", "Holster", ALL_PISTOLS, 70, "", "Vedder's standard IWB, made per gun. Light-bearing versions exist only for specific gun + light combinations.", { steps: ST.holster }),
+  P("Safariland", "6390RDS ALS", "Holster", ["glock-17", "glock-19", "sig-p320", "sw-mp2"], 190, "", "Sold per gun and light; optic-ready, but Safariland doesn't guarantee fit with non-factory dot mounts (Glock MOS plates, M&P C.O.R.E.).", { steps: ST.holster }),
 ];
 
 /* SEED_SOURCES:BEGIN (generated from the research pass; see README) */
-const SEED_SOURCES = {};
-const SEED_REMOVED = [];
+const SEED_SOURCES = {
+ "trijicon-rmr-type-2": [
+  {
+   "id": "s1",
+   "url": "https://www.trijicon.com/products/details/rm06-c-700672",
+   "publisher": "Trijicon",
+   "title": "Trijicon RMR® Type 2 Red Dot Sight (RM06-C-700672)",
+   "kind": "manufacturer",
+   "quote": "If selecting an RMR for mounting on the Glock® MOS, Springfield® OSP, Walther® PDP, or H&K® VP9 Optics Ready, a Trijicon RMR® mounting kit (AC32064) is required.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:optic",
+    "steps"
+   ],
+   "note": "Rule updated to match this source."
+  },
+  {
+   "id": "s118",
+   "url": "https://www.trijicon.com/products/details/gl614-c-601091",
+   "publisher": "Trijicon",
+   "title": "Trijicon HD XR™ Night Sights - Glock Standard Frames (MOS)",
+   "kind": "manufacturer",
+   "quote": "The HD XR MOS Fit sights are NOT intended to be used while also running a red dot",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:sights_height"
+   ]
+  }
+ ],
+ "holosun-507c-x2": [
+  {
+   "id": "s2",
+   "url": "https://www.holosun.com/products/hs507c-x2",
+   "publisher": "Holosun",
+   "title": "HS507C X2",
+   "kind": "manufacturer",
+   "quote": "Industry standard RMR footprint allows direct mounting to a wide range of optics ready pistol slides.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:optic",
+    "fits"
+   ]
+  },
+  {
+   "id": "s119",
+   "url": "https://www.trijicon.com/products/details/gl614-c-601091",
+   "publisher": "Trijicon",
+   "title": "Trijicon HD XR™ Night Sights - Glock Standard Frames (MOS)",
+   "kind": "manufacturer",
+   "quote": "The HD XR MOS Fit sights are NOT intended to be used while also running a red dot",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:sights_height"
+   ]
+  }
+ ],
+ "trijicon-sro": [
+  {
+   "id": "s3",
+   "url": "https://www.trijicon.com/products/details/sro3-c-2500003",
+   "publisher": "Trijicon",
+   "title": "Trijicon SRO® Red Dot Sight (SRO3-C-2500003)",
+   "kind": "manufacturer",
+   "quote": "SAME FOOTPRINT AS RMR®",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:optic",
+    "fits",
+    "need:sights_height"
+   ]
+  }
+ ],
+ "holosun-507k-x2": [
+  {
+   "id": "s4",
+   "url": "https://www.holosun.com/products/hs507k-x2",
+   "publisher": "Holosun",
+   "title": "HS507K X2",
+   "kind": "manufacturer",
+   "quote": "Designed around the Holosun K footprint for direct mounting on many modern micro-compact optics-ready pistols.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:optic",
+    "fits"
+   ],
+   "note": "Rule updated to match this source."
+  },
+  {
+   "id": "s5",
+   "url": "https://www.opticsplanet.com/howto/the-holosun-k-red-dot-footprint.html",
+   "publisher": "OpticsPlanet",
+   "title": "Holosun K Red Dot Footprint Mounting Guide",
+   "kind": "retailer",
+   "quote": "Holosun K optics do not have rear recoil holes to accept rear recoil lugs",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:optic"
+   ],
+   "note": "Rule updated to match this source. Quote captured by a page-reading tool; exact wording may differ slightly."
+  },
+  {
+   "id": "s6",
+   "url": "https://www.swampfoxoptics.com/best-red-dot-sights-for-glock-43x-and-48-mos",
+   "publisher": "Swampfox Optics",
+   "title": "Best Red Dot Sights for Glock 43X & 48 MOS",
+   "kind": "reference",
+   "quote": "The most popular micro red dots out there, like the Holosun 407k and 507k, do not fit directly onto your slide.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:optic"
+   ],
+   "note": "Rule updated to match this source."
+  },
+  {
+   "id": "s8",
+   "url": "https://chpws.com/product/springfield-hellcat-to-holosun-407k-507k-adapter-plate/",
+   "publisher": "C&H Precision",
+   "title": "Springfield Hellcat w/ RMSc Footprint to Holosun 407k / 507k",
+   "kind": "manufacturer",
+   "quote": "This plate is required to mount a Holosun 507k / 407k without having to modify the existing recoil posts on the slide.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:optic"
+   ],
+   "note": "Rule updated to match this source."
+  }
+ ],
+ "c-h-precision-hellcat-osp-to-407k-507k-plate": [
+  {
+   "id": "s7",
+   "url": "https://chpws.com/product/springfield-hellcat-to-holosun-407k-507k-adapter-plate/",
+   "publisher": "C&H Precision",
+   "title": "Springfield Hellcat w/ RMSc Footprint to Holosun 407k / 507k",
+   "kind": "manufacturer",
+   "quote": "This plate is required to mount a Holosun 507k / 407k without having to modify the existing recoil posts on the slide.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:optic",
+    "give:optic"
+   ]
+  }
+ ],
+ "holosun-eps-carry": [
+  {
+   "id": "s9",
+   "url": "https://www.holosun.com/products/eps-carry-rd-2",
+   "publisher": "Holosun",
+   "title": "Holosun EPS-CARRY-RD-2 Enclosed 2 MOA Red Dot",
+   "kind": "manufacturer",
+   "quote": "Direct K footprint mounting with included RMSc to K adapter plate",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:optic",
+    "fits"
+   ],
+   "note": "Rule updated to match this source."
+  }
+ ],
+ "shield-sights-rmsc": [
+  {
+   "id": "s10",
+   "url": "https://www.shieldsights.com/portfolio-posts/reflex-mini-sight-compact",
+   "publisher": "Shield Sights",
+   "title": "Reflex Mini Sight Compact",
+   "kind": "manufacturer",
+   "quote": "designed to fit on single-stack pistols such as concealed carry handguns like the Glock 43",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:optic",
+    "fits"
+   ]
+  }
+ ],
+ "c-h-precision-glock-mos-rmr-plate-gl-rsh": [
+  {
+   "id": "s11",
+   "url": "https://chpws.com/product/glock-mos-v4-mil-leo-to-trijicon-rmr-sro-holosun-407c-507c-508c-508t/",
+   "publisher": "C&H Precision",
+   "title": "V4 MIL/LEO Adapter Trijicon RMR / RMR HD / SRO / Holosun 407C / 507C / 507Comp / 508T ... Fits GLOCK MOS",
+   "kind": "manufacturer",
+   "quote": "THIS PRODUCT WILL NOT FIT THE NEW GLOCK GEN 6 OPTIC CUT!",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:optic",
+    "give:optic"
+   ]
+  }
+ ],
+ "c-h-precision-m-p-c-o-r-e-rmr-plate": [
+  {
+   "id": "s12",
+   "url": "https://chpws.com/product/sw-core-2-0-1-975/",
+   "publisher": "C&H Precision",
+   "title": "S&W M2.0 C.O.R.E. to Trijicon RMR / RMR HD / SRO / Holosun 407C / 507C / 507Comp / C&H EDC-XL / COMP / COMP MAX / Olight Osight X",
+   "kind": "manufacturer",
+   "quote": "Fits all calibers of Smith & Wesson Performance 2.0 optics-ready slides. (9mm, 10mm, ect.)",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:optic",
+    "give:optic"
+   ]
+  }
+ ],
+ "c-h-precision-p320-rmr-filler-plate": [
+  {
+   "id": "s13",
+   "url": "https://chpws.com/product/sig-p320-w-r1p-dpp-cut-w-rmr-holosun-holes-filler-plate-for-rmr-sro-holosun/",
+   "publisher": "C&H Precision",
+   "title": "SIG P320 RX Series / Pro Series / AXG Scorpion w/ R1P / DPP CUT w/ RMR / Holosun Holes – Filler Plate",
+   "kind": "manufacturer",
+   "quote": "THIS PLATE REQUIRES A ROMEO 1 PRO OPTIC READY CUT WITH RMR HOLES, REFER TO THE PICTURES TO VERIFY YOUR SLIDE HAS THE CORRECT HOLES AND CUT.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:optic",
+    "give:optic"
+   ]
+  }
+ ],
+ "slide-milling-shop-rmr-optic-cut": [
+  {
+   "id": "s14",
+   "url": "https://chpws.com/product/glock-slide-optic-milling/",
+   "publisher": "C&H Precision",
+   "title": "Slide Optic Milling Service for GLOCK Pistols",
+   "kind": "manufacturer",
+   "quote": "Remove the slide from your pistol.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:optic",
+    "give:optic",
+    "steps"
+   ]
+  },
+  {
+   "id": "s15",
+   "url": "https://jagerwerks.com/faq",
+   "publisher": "Jagerwerks",
+   "title": "FAQ",
+   "kind": "manufacturer",
+   "quote": "We mill Glock slides for the following optics: Aimpoint Acro, Shield RMSc, Trijicon RMR/SRO, Trijicon RMRcc.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:optic",
+    "give:optic",
+    "steps"
+   ]
+  }
+ ],
+ "slide-milling-shop-rmsc-optic-cut": [
+  {
+   "id": "s16",
+   "url": "https://jagerwerks.com/faq",
+   "publisher": "Jagerwerks",
+   "title": "FAQ",
+   "kind": "manufacturer",
+   "quote": "We mill the P365 for the following optics: Shield RMSc, Holosun EPS/Carry and Holosun K series, Trijicon RMRcc, and the Sig Romeo Zero.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:optic",
+    "give:optic",
+    "steps"
+   ]
+  }
+ ],
+ "trijicon-hd-xr-night-sights-glock": [
+  {
+   "id": "s17",
+   "url": "https://www.trijicon.com/products/details/gl601-c-600836",
+   "publisher": "Trijicon",
+   "title": "Trijicon HD XR™ Night Sights - Glock Standard Frames",
+   "kind": "manufacturer",
+   "quote": "Fits Glock Models: 17, 17L, 19, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33, 34, 35, 37, 38, 39, and 45. (Does not fit MOS)",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "give:sights_height"
+   ],
+   "note": "Rule updated to match this source."
+  },
+  {
+   "id": "s18",
+   "url": "https://www.trijicon.com/products/details/gl614-c-601091",
+   "publisher": "Trijicon",
+   "title": "Trijicon HD XR™ Night Sights - Glock Standard Frames (MOS)",
+   "kind": "manufacturer",
+   "quote": "The HD XR MOS Fit sights are NOT intended to be used while also running a red dot",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "give:sights_height"
+   ]
+  }
+ ],
+ "xs-sights-dxt2-big-dot-glock": [
+  {
+   "id": "s19",
+   "url": "https://xssights.com/products/dxt2-big-dot-night-sights-fits-glock.html",
+   "publisher": "XS Sights",
+   "title": "DXT2 Big Dot Night Sights fits Glock",
+   "kind": "manufacturer",
+   "quote": "Glock 17, 19, 22, 23, 24, 26, 28, 27, 31, 32, 33, 34, 35, 36, 38, 39, 45, & 47",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "give:sights_height"
+   ]
+  }
+ ],
+ "trijicon-suppressor-night-sights-glock": [
+  {
+   "id": "s20",
+   "url": "https://www.trijicon.com/products/details/gl201-c-600661",
+   "publisher": "Trijicon",
+   "title": "Trijicon® Suppressor/Optic Height Sights - Glock Standard Frames",
+   "kind": "manufacturer",
+   "quote": "as backup iron sights for a slide-mounted red dot sight, such as the Trijicon RMR®.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "give:sights_height"
+   ]
+  }
+ ],
+ "platform:glock-17": [
+  {
+   "id": "s21",
+   "url": "https://us.glock.com/en/about/technology/MOS",
+   "publisher": "GLOCK",
+   "title": "GLOCK MOS / Optic Ready technology",
+   "kind": "manufacturer",
+   "quote": "GLOCK pistol models in standard MOS configuration now come with a single MOS adapter plate.",
+   "verdict": "partly",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ]
+  },
+  {
+   "id": "s24",
+   "url": "https://eu.glock.com/en/Technology/GLOCK-Optic-Ready-System",
+   "publisher": "GLOCK (EU)",
+   "title": "GLOCK Optic Ready System (Gen6)",
+   "kind": "manufacturer",
+   "quote": "This system allows optics to be screwed directly into the slide after inserting the optic ready plate.",
+   "verdict": "partly",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ]
+  }
+ ],
+ "platform:glock-19": [
+  {
+   "id": "s22",
+   "url": "https://us.glock.com/en/about/technology/MOS",
+   "publisher": "GLOCK",
+   "title": "GLOCK MOS / Optic Ready technology",
+   "kind": "manufacturer",
+   "quote": "GLOCK pistol models in standard MOS configuration now come with a single MOS adapter plate.",
+   "verdict": "partly",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ]
+  },
+  {
+   "id": "s25",
+   "url": "https://eu.glock.com/en/Technology/GLOCK-Optic-Ready-System",
+   "publisher": "GLOCK (EU)",
+   "title": "GLOCK Optic Ready System (Gen6)",
+   "kind": "manufacturer",
+   "quote": "This system allows optics to be screwed directly into the slide after inserting the optic ready plate.",
+   "verdict": "partly",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ]
+  }
+ ],
+ "platform:glock-26": [
+  {
+   "id": "s23",
+   "url": "https://us.glock.com/en/about/technology/MOS",
+   "publisher": "GLOCK",
+   "title": "GLOCK MOS / Optic Ready technology",
+   "kind": "manufacturer",
+   "quote": "GLOCK pistol models in standard MOS configuration now come with a single MOS adapter plate.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ]
+  },
+  {
+   "id": "s61",
+   "url": "https://www.streamlight.com/docs/default-source/compatibility-list/tlr6compatibilitylist.pdf?sfvrsn=3a3ca7f0_50",
+   "publisher": "Streamlight",
+   "title": "TLR-6 Compatibility List",
+   "kind": "reference",
+   "quote": "69272 // 69282 NON-RAILED GLOCK® FIREARMS",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "base:light_mount"
+   ]
+  }
+ ],
+ "platform:glock-43x-48": [
+  {
+   "id": "s26",
+   "url": "https://us.glock.com/en/about/technology/MOS",
+   "publisher": "GLOCK",
+   "title": "GLOCK MOS / Optic Ready technology",
+   "kind": "manufacturer",
+   "quote": "The Slimline MOS pistol models have slide cuts designed for specific micro-optics and do not need Adapter Plates.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ]
+  },
+  {
+   "id": "s62",
+   "url": "https://us.glock.com/en/products/commercial-firearms/pistols/g43x-us",
+   "publisher": "GLOCK Inc.",
+   "title": "G43X",
+   "kind": "manufacturer",
+   "quote": "The frame features the GLOCK Mounting rail slim for mounting tactical accessories",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:frame"
+   ]
+  },
+  {
+   "id": "s63",
+   "url": "https://www.streamlight.com/docs/default-source/compatibility-list/tlr6compatibilitylist.pdf?sfvrsn=3a3ca7f0_50",
+   "publisher": "Streamlight",
+   "title": "TLR-6 Compatibility List",
+   "kind": "reference",
+   "quote": "69286 RAIL MOUNT (GLOCK® 43X/48)",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:frame"
+   ]
+  }
+ ],
+ "platform:sig-p365": [
+  {
+   "id": "s27",
+   "url": "https://www.thefirearmblog.com/blog/2021/08/12/tfb-review-sig-sauers-new-p365x/",
+   "publisher": "The Firearm Blog",
+   "title": "TFB Review: SIG Sauer's New P365X Pistol",
+   "kind": "reference",
+   "quote": "decided to incorporate an optics cut on the slide of a regular P365 slide which hasn't been done from SIG on a factory firearm.",
+   "verdict": "partly",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ]
+  },
+  {
+   "id": "s28",
+   "url": "https://jagerwerks.com/faq",
+   "publisher": "Jagerwerks",
+   "title": "FAQ",
+   "kind": "manufacturer",
+   "quote": "We mill the P365 for the following optics: Shield RMSc, Holosun EPS/Carry and Holosun K series, Trijicon RMRcc, and the Sig Romeo Zero.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ]
+  },
+  {
+   "id": "s64",
+   "url": "https://inside.safariland.com/blog/sig-p365-models/",
+   "publisher": "Safariland (Inside Safariland blog)",
+   "title": "SIG P365 models - Inside Safariland",
+   "kind": "reference",
+   "quote": "The P365, P365-XL, and P365X have the proprietary Sig rail, so make certain you choose the correct light.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "base:light_mount"
+   ],
+   "note": "Rule updated to match this source."
+  }
+ ],
+ "platform:sig-p365xl": [
+  {
+   "id": "s29",
+   "url": "https://www.opticsplanet.com/howto/the-holosun-k-red-dot-footprint.html",
+   "publisher": "OpticsPlanet",
+   "title": "Holosun K Red Dot Footprint Mounting Guide",
+   "kind": "retailer",
+   "quote": "Holosun K footprint is a slightly modified version of the Shield RMSc (J-Point) footprint.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "base:optic"
+   ],
+   "note": "Rule updated to match this source. Quote captured by a page-reading tool; exact wording may differ slightly."
+  },
+  {
+   "id": "s65",
+   "url": "https://www.streamlight.com/docs/default-source/info-sheet-with-part-numbers/tlr-7-x-sub_sup.pdf?sfvrsn=47bf1bf3_69",
+   "publisher": "Streamlight",
+   "title": "TLR-7 X SUB info sheet",
+   "kind": "reference",
+   "quote": "TLR-7 X sub (SIG SAUER® P365®/XL closed rail systems) - Includes mounting kit with key, multi-tool and (1) CR123A lithium battery",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "base:light_mount"
+   ]
+  }
+ ],
+ "platform:sig-p365-macro": [
+  {
+   "id": "s30",
+   "url": "https://www.opticsplanet.com/howto/the-holosun-k-red-dot-footprint.html",
+   "publisher": "OpticsPlanet",
+   "title": "Holosun K Red Dot Footprint Mounting Guide",
+   "kind": "retailer",
+   "quote": "Holosun K footprint is a slightly modified version of the Shield RMSc (J-Point) footprint.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "base:optic"
+   ],
+   "note": "Rule updated to match this source. Quote captured by a page-reading tool; exact wording may differ slightly."
+  },
+  {
+   "id": "s66",
+   "url": "https://inside.safariland.com/blog/sig-p365-models/",
+   "publisher": "Safariland (Inside Safariland blog)",
+   "title": "SIG P365 models - Inside Safariland",
+   "kind": "reference",
+   "quote": "This model also incorporates a 1913 Picatinny rail for the first time instead of the proprietary Sig rail.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "base:light_mount"
+   ]
+  }
+ ],
+ "platform:sig-p320": [
+  {
+   "id": "s31",
+   "url": "https://www.opticsplanet.com/sig-sauer-sealing-plate-kit-trijicon-rmr-sro.html",
+   "publisher": "OpticsPlanet (SIG SAUER product)",
+   "title": "SIG SAUER Trijicon RMR/SRO Sealing Plate Kit",
+   "kind": "retailer",
+   "quote": "Sealing plate to adapt the Trijicon RMR/SRO to Xseries slides.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ],
+   "note": "Rule updated to match this source. Quote captured by a page-reading tool; exact wording may differ slightly."
+  },
+  {
+   "id": "s32",
+   "url": "https://chpws.com/product/sig-p320-w-r1p-dpp-cut-w-rmr-holosun-holes-filler-plate-for-rmr-sro-holosun/",
+   "publisher": "C&H Precision",
+   "title": "SIG P320 R1P/DPP cut w/ RMR holes filler plate",
+   "kind": "manufacturer",
+   "quote": "THIS PLATE REQUIRES A ROMEO 1 PRO OPTIC READY CUT WITH RMR HOLES, REFER TO THE PICTURES TO VERIFY YOUR SLIDE HAS THE CORRECT HOLES AND CUT.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ],
+   "note": "Rule updated to match this source."
+  }
+ ],
+ "platform:sw-mp2": [
+  {
+   "id": "s33",
+   "url": "https://www.americanrifleman.org/content/new-for-2020-smith-wesson-m-p-m2-0-compact-optics-ready",
+   "publisher": "American Rifleman (NRA)",
+   "title": "New for 2020: Smith & Wesson M&P M2.0 Compact Optics Ready",
+   "kind": "reference",
+   "quote": "This milled section is compatible with seven mounting plates that ship with the gun.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ]
+  }
+ ],
+ "platform:sw-shield-plus": [
+  {
+   "id": "s34",
+   "url": "https://www.smith-wesson.com/product/m-p-9-shield-plus-optics-ready",
+   "publisher": "Smith & Wesson",
+   "title": "M&P®9 SHIELD PLUS OPTICS READY",
+   "kind": "manufacturer",
+   "quote": "The Shield Plus optics-ready models also use the RMSc footprint but lack the ClearSight feature, which may result in more frequent optic cleaning in high-round-count scenarios.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ]
+  }
+ ],
+ "platform:spr-hellcat": [
+  {
+   "id": "s35",
+   "url": "https://www.thearmorylife.com/a-hellcat-reflex-the-shield-rmsc-red-dot/",
+   "publisher": "The Armory Life (Springfield Armory's publication)",
+   "title": "Shield RMSc Review: Improve Your Hellcat's Reflexes",
+   "kind": "reference",
+   "quote": "the Hellcat OSP's slide is cut to accept the Shield (or JP Enterprises JPoint) directly with no adapter plate needed.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ]
+  },
+  {
+   "id": "s67",
+   "url": "https://www.springfield-armory.com/hellcat-series-handguns/hellcat-3-micro-compact-handguns",
+   "publisher": "Springfield Armory",
+   "title": "Hellcat Micro-Compact Handguns - Springfield Armory",
+   "kind": "manufacturer",
+   "quote": "NON-PROPRIETARY RAIL Customize your EDC with lights and lasers that fit on a non-proprietary accessory rail.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "base:light_mount"
+   ],
+   "note": "Rule updated to match this source."
+  }
+ ],
+ "egw-cz-p-10-c-optic-plate-rmr": [
+  {
+   "id": "s36",
+   "url": "https://egwguns.com/cz-p-10c-optic-mounts-rmr-407k-507k-eps-carry-509t/",
+   "publisher": "EGW (Evolution Gun Works)",
+   "title": "CZ P-10C Optic Mounts – RMR, 407k/507k, EPS Carry, 509T",
+   "kind": "reference",
+   "quote": "Has a factory cut with a removable cover plate near the rear sight.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:optic",
+    "give:optic"
+   ]
+  }
+ ],
+ "platform:cz-p10c": [
+  {
+   "id": "s37",
+   "url": "https://egwguns.com/cz-p-10c-optic-mounts-rmr-407k-507k-eps-carry-509t/",
+   "publisher": "EGW (Evolution Gun Works)",
+   "title": "CZ P-10C Optic Mounts – RMR, 407k/507k, EPS Carry, 509T",
+   "kind": "reference",
+   "quote": "Has a factory cut with a removable cover plate near the rear sight.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:slide"
+   ]
+  }
+ ],
+ "apex-tactical-action-enhancement-trigger-kit-glock": [
+  {
+   "id": "s38",
+   "url": "https://www.primaryarms.com/apex-tactical-glock-action-enhancement-trigger-kit",
+   "publisher": "Primary Arms",
+   "title": "Apex Tactical Action Enhancement Trigger Kit for GLOCK",
+   "kind": "retailer",
+   "quote": "Glock Gen 3-4 G17, 19, 22, 23, 24, 26, 27, 31, 32, 33, 34, 35",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  },
+  {
+   "id": "s39",
+   "url": "https://www.primaryarms.com/apex-tactical-glock-gen-5-action-enhancement-trigger-kit",
+   "publisher": "Primary Arms",
+   "title": "Apex Tactical Action Enhancement Trigger Kit for GLOCK Gen5",
+   "kind": "retailer",
+   "quote": "Glock Gen 5 G17, 19, 19x, 26, 34, 45",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "overwatch-precision-tac-trigger-glock": [
+  {
+   "id": "s40",
+   "url": "https://overwatchprecision.com/tac-trigger-for-glock/",
+   "publisher": "Overwatch Precision",
+   "title": "TAC Trigger for Glock",
+   "kind": "manufacturer",
+   "quote": "Gen 1-4 G17, G17L, G19, G22, G23, G24, G26, G27, G31, G32, G33, G34, G35, G37, G38, G39",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "apex-tactical-action-enhancement-kit-m-p-2-0": [
+  {
+   "id": "s41",
+   "url": "https://www.primaryarms.com/apex-tactical-m-p-2.0-polymer-enhancement-trigger-duty-carry-kit",
+   "publisher": "Primary Arms",
+   "title": "Apex Tactical M&P M2.0 Polymer Enhancement Trigger & Duty/Carry Kit",
+   "kind": "retailer",
+   "quote": "Will not function in the M&P Shield",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Rule updated to match this source. Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "tango-down-vickers-tactical-slide-stop-glock": [
+  {
+   "id": "s42",
+   "url": "https://www.primaryarms.com/vickers-tactical-glock-slide-stop-vtss-001",
+   "publisher": "Primary Arms",
+   "title": "Vickers Tactical Slide Stop For Glock",
+   "kind": "retailer",
+   "quote": "17, 17L, 18, 19, 21, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33, 34, 45, and 41!",
+   "verdict": "partly",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  },
+  {
+   "id": "s43",
+   "url": "https://www.primaryarms.com/tango-down-vickers-tactical-glock-slide-stop-gen5",
+   "publisher": "Primary Arms",
+   "title": "Tango Down Vickers Tactical Slide Stop for Gen5",
+   "kind": "retailer",
+   "quote": "All Gen5 Glock Handguns",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "streamlight-tlr-1-hl": [
+  {
+   "id": "s44",
+   "url": "https://www.streamlight.com/products/detail/tlr-1-hl",
+   "publisher": "Streamlight",
+   "title": "TLR-1 HL | Tactical Weapon Light | Streamlight",
+   "kind": "manufacturer",
+   "quote": "Includes keys for GLOCK®-style rails, MIL-STD-1913 (Picatinny) rails, Beretta® 90two, Smith & Wesson® SW99, Smith & Wesson® TSW, and SIG SAUER® P320® rails",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:light_mount"
+   ],
+   "note": "Rule updated to match this source."
+  },
+  {
+   "id": "s45",
+   "url": "https://www.streamlight.com/docs/default-source/compatibility-list/tlr-1_tlr-2_hl_hp-compatibility-list.pdf?sfvrsn=ea00e8f3_19",
+   "publisher": "Streamlight",
+   "title": "TLR-1/TLR-2/HL/HP Compatibility List",
+   "kind": "manufacturer",
+   "quote": "Most full size & compact models with rails (Up to Gen 4)",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Rule updated to match this source."
+  }
+ ],
+ "surefire-x300u-a": [
+  {
+   "id": "s46",
+   "url": "https://www.surefire.com/x300u-a-weaponlight/",
+   "publisher": "SureFire",
+   "title": "X300U-A WeaponLight",
+   "kind": "manufacturer",
+   "quote": "Attaches securely to both Universal and Picatinny accessory rails",
+   "verdict": "partly",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:light_mount"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "streamlight-tlr-7a": [
+  {
+   "id": "s47",
+   "url": "https://www.streamlight.com/docs/default-source/compatibility-list/tlr-7ortlr-8_compatibilitylist.pdf?sfvrsn=4",
+   "publisher": "Streamlight",
+   "title": "TLR-7 // TLR-8 Series Compatibility List",
+   "kind": "manufacturer",
+   "quote": "Most full-size & compact models with rails (Up to Gen 4)",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:light_mount"
+   ]
+  },
+  {
+   "id": "s48",
+   "url": "https://www.streamlight.com/docs/default-source/info-sheet-with-part-numbers/tlr-7-x_sup.pdf?sfvrsn=2a750cf3_97",
+   "publisher": "Streamlight",
+   "title": "TLR-7 X info sheet (part numbers)",
+   "kind": "manufacturer",
+   "quote": "Key Kit (TLR-7 X and TLR-8 X) – Includes Rail Locating Keys for Universal or 1913 Picatinny style rails and mounting tools",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:light_mount"
+   ]
+  }
+ ],
+ "streamlight-tlr-7-sub": [
+  {
+   "id": "s49",
+   "url": "https://www.streamlight.com/docs/default-source/info-sheet-with-part-numbers/tlr-7-x-sub_sup.pdf?sfvrsn=47bf1bf3_69",
+   "publisher": "Streamlight",
+   "title": "TLR-7 X SUB USB // TLR-7 X SUB info sheet (item numbers)",
+   "kind": "manufacturer",
+   "quote": "TLR-7 X sub (1913OS) - Includes mounting kit with key, multi-tool and (1) CR123A lithium battery",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:light_mount"
+   ],
+   "note": "Rule updated to match this source."
+  },
+  {
+   "id": "s50",
+   "url": "https://www.streamlight.com/products/detail/tlr-7-sub",
+   "publisher": "Streamlight",
+   "title": "TLR-7 X sub | Rechargeable Rail-Mounted Light | Streamlight",
+   "kind": "manufacturer",
+   "quote": "The SIG SAUER® P365®/XL models do not fit the P365® XMACRO. However, the 1913OS models with the #4 key do.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Rule updated to match this source."
+  },
+  {
+   "id": "s51",
+   "url": "https://www.streamlight.com/docs/default-source/compatibility-list/tlr-7sub_compatibilitylist.pdf?sfvrsn=312a42f3_83",
+   "publisher": "Streamlight",
+   "title": "TLR-7 sub // TLR-8 sub Series: 1913 Keys (rev. 11/09/2026)",
+   "kind": "manufacturer",
+   "quote": "P365® XMACRO/Fuse",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  }
+ ],
+ "magpul-pmag-17-gl9": [
+  {
+   "id": "s52",
+   "url": "https://magpul.com/pmag-17-gl9-glock-17.html",
+   "publisher": "Magpul",
+   "title": "Magpul PMAG 17 GL9 – GLOCK G17",
+   "kind": "manufacturer",
+   "quote": "The PMAG 17 GL9 is compatible with most full-size 9mm GLOCK handguns, as well as compact and sub-compact variants with some protrusion below the grip.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  }
+ ],
+ "shield-arms-s15-15-round-magazine": [
+  {
+   "id": "s53",
+   "url": "https://www.primaryarms.com/shield-arms-s15-gen3-magazine-for-glock-43x-48-15-rounds-black-nitride",
+   "publisher": "Primary Arms",
+   "title": "Shield Arms S15 Gen3 Magazine for Glock 43X/48 15 Rounds Black Nitride",
+   "kind": "retailer",
+   "quote": "Compatible only with Shield Arms steel magazine catches, the S15 Gen3 supports increased capacity without compromising reliability.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:mag_catch"
+   ],
+   "note": "Rule updated to match this source. Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "shield-arms-steel-magazine-catch-glock-43x-48": [
+  {
+   "id": "s54",
+   "url": "https://www.opticsplanet.com/shield-arms-magazine-catch-release-fits-glock-43x-48-steel.html",
+   "publisher": "OpticsPlanet",
+   "title": "Shield Arms Magazine Catch/Release",
+   "kind": "retailer",
+   "quote": "Our steel mag catch is optimized to work with the Shield Arms Patented S15 magazine.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "give:mag_catch",
+    "fits"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "safariland-578-gls-pro-fit": [
+  {
+   "id": "s55",
+   "url": "https://www.safariland.com/paddle/model-578-gls-pro-fit-holster-57800.html",
+   "publisher": "Safariland",
+   "title": "578 - GLS Pro-Fit Holster, Paddle & Belt Loop Combo",
+   "kind": "manufacturer",
+   "quote": "The Pro-Fit™ is customizable and adjusts to securely fit over 225 firearms.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Rule updated to match this source. Quote captured by a page-reading tool; exact wording may differ slightly."
+  },
+  {
+   "id": "s56",
+   "url": "https://inside.safariland.com/blog/the-safariland-model-578-gls-pro-fit",
+   "publisher": "Safariland (Inside Safariland blog)",
+   "title": "The Safariland Model 578 GLS Pro Fit - Inside Safariland",
+   "kind": "manufacturer",
+   "quote": "The standard 57X series won’t fit lights by any means.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:light"
+   ]
+  }
+ ],
+ "vedder-lighttuck-iwb": [
+  {
+   "id": "s57",
+   "url": "https://www.vedderholsters.com/holsters/lighttuck/",
+   "publisher": "Vedder Holsters",
+   "title": "LightTuck Kydex IWB Holster | Vedder Holsters",
+   "kind": "manufacturer",
+   "quote": "Each holster is handcrafted to your precise gun model, creating the perfect fit while maintaining the thinnest profile both in your pants and on your belt.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Rule updated to match this source."
+  },
+  {
+   "id": "s58",
+   "url": "https://www.vedderholsters.com/collections/sig-sauer/p365x-with-thumb-safety/",
+   "publisher": "Vedder Holsters",
+   "title": "Sig P365X With Thumb Safety Holsters | Kydex & Hybrid CCW",
+   "kind": "manufacturer",
+   "quote": "Frame-Mounted Light/Laser Crimson Trace LG-422 (5) FOXTROT365 (5) LIMA Laser (5) None (2) Streamlight TLR-6 (4) Streamlight TLR-7 Sub (8)",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Rule updated to match this source."
+  }
+ ],
+ "safariland-6390rds-als": [
+  {
+   "id": "s59",
+   "url": "https://safariland.com/products/model-6390rds-als-mid-ride-level-i-retention-duty-holster-model_6390rds",
+   "publisher": "Safariland",
+   "title": "6390RDS - ALS Mid-Ride Duty Rated Level I Retention Holster | Safariland",
+   "kind": "manufacturer",
+   "quote": "Images are representational. The product you receive may look different based on your gun and light selections.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  },
+  {
+   "id": "s60",
+   "url": "https://www.primaryarms.com/brand/safariland/compatible-model/sw-mp-m20",
+   "publisher": "Primary Arms",
+   "title": "Safariland products compatible with S&W M&P M2.0",
+   "kind": "retailer",
+   "quote": "Safariland 6390RDS ALS Mid-Ride Level I Duty Holster for M&P 2.0 with RDS/X300 - Cordura MultiCam - Right Hand",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "geissele-ssa-e-two-stage-trigger": [
+  {
+   "id": "s68",
+   "url": "https://www.opticsplanet.com/geissele-ssa-e-super-semi-automatic-enhanced-trigger-large-pin.html",
+   "publisher": "OpticsPlanet",
+   "title": "Geissele AR-15 Super Semi-Automatic Enhanced (SSA-E) Large Pin Trigger | 4.6 Star Rating",
+   "kind": "retailer",
+   "quote": "The large pin dimension is 0.169 inches, whereas the standard pin dimension is 0.155 inches.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:trigger_pins"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "timney-ar-15-competition-trigger": [
+  {
+   "id": "s69",
+   "url": "https://timneytriggers.com/ar-15-competition-trigger/",
+   "publisher": "Timney Triggers",
+   "title": "AR-15 Competition Replacement Trigger",
+   "kind": "manufacturer",
+   "quote": "Pin Size: * Choose/Reset Options Small Pin Large Pin Pull Weight: * Choose/Reset Options 3 lb 4 lb 4.5 lb",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:trigger_pins",
+    "fits"
+   ],
+   "note": "Rule updated to match this source."
+  },
+  {
+   "id": "s70",
+   "url": "https://timneytriggers.com/content/productpdf/11172020-07-AR-InstallInstructions-AR15_AR10_Competition_Impact-V4.pdf",
+   "publisher": "Timney Triggers",
+   "title": "AR TRIGGER INSTALLATION INSTRUCTIONS - AR15 & AR10 COMPETITION AND IMPACT",
+   "kind": "manufacturer",
+   "quote": "Tighten the pre-installed setscrews in the trigger housing located under each hammer spring leg and then install the two locking screws that are included in the plastic bag with the trigger to prevent the mounting screws from backing out.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "steps",
+    "fits"
+   ]
+  }
+ ],
+ "larue-tactical-mbt-2s-two-stage-trigger": [
+  {
+   "id": "s71",
+   "url": "https://www.primaryarms.com:443/larue-tactical-mbt-2s-ar-15-trigger-curved",
+   "publisher": "Primary Arms",
+   "title": "LaRue Tactical MBT-2S Two Stage AR-15 Trigger - Curved",
+   "kind": "retailer",
+   "quote": "Compatible only with small-pin lower receivers using mil-spec .154\" trigger pins",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:trigger_pins"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "aimpoint-micro-t-2": [
+  {
+   "id": "s72",
+   "url": "https://ar15discounts.com/products/aimpoint-micro-t-2-2-moa-ar15-ready-lrp-mount-39mm-spacer",
+   "publisher": "AR15Discounts",
+   "title": "200198 - Aimpoint Micro T-2 2 MOA AR15-ready LRP Mount/39mm spacer - AR15Discounts",
+   "kind": "retailer",
+   "quote": "this AR15-ready configuration features a 39mm spacer and LRP mount, ensuring seamless integration on Picatinny rails",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:scope_mount",
+    "need:top_rail"
+   ],
+   "note": "Rule updated to match this source."
+  }
+ ],
+ "eotech-exps3": [
+  {
+   "id": "s73",
+   "url": "https://www.eotechinc.com/products/eotech-hws-exps3",
+   "publisher": "EOTECH",
+   "title": "Model EXPS3™ HWS | EOTECH",
+   "kind": "manufacturer",
+   "quote": "The EXPS3 offers true two eyes open shooting for fast target acquisition, night vision compatible settings, and a 7mm raised quick detach base for lower 1/3 iron sight co-witness.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:top_rail"
+   ]
+  }
+ ],
+ "holosun-hs510c": [
+  {
+   "id": "s74",
+   "url": "https://www.holosun.com/products/hs510c",
+   "publisher": "Holosun",
+   "title": "Holosun HS510C Open Reflex MRS Solar QD Mount",
+   "kind": "manufacturer",
+   "quote": "Quick Detach Picatinny Mount Integrated QD mount allows fast installation or removal while maintaining reliable zero on Picatinny rails.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:top_rail"
+   ]
+  }
+ ],
+ "vortex-strike-eagle-1-8x24": [
+  {
+   "id": "s75",
+   "url": "https://vortexoptics.com/vortex-strike-eagle-1-8x24-ar-bdc3.html",
+   "publisher": "Vortex Optics",
+   "title": "Vortex Strike Eagle 1-8x24 Riflescope",
+   "kind": "manufacturer",
+   "quote": "Strike Eagle ® 1-8x24 AR-BDC3 (MOA) Reticle | 30 mm Tube $559.99 MSRP",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:scope_mount"
+   ]
+  }
+ ],
+ "unity-tactical-fast-micro-mount": [
+  {
+   "id": "s76",
+   "url": "https://www.primaryarms.com/unity-tactical-fast-ap-micro-mount-black",
+   "publisher": "Primary Arms",
+   "title": "Unity Tactical FAST - Aimpoint Micro Mount - Black",
+   "kind": "retailer",
+   "quote": "Compatible with Aimpoint T1, T2, and many other microdots with same footprint 2.26” optical centerline height for fast sight acquisition",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "give:scope_mount",
+    "need:top_rail"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "vortex-sport-cantilever-30-mm-mount": [
+  {
+   "id": "s77",
+   "url": "https://www.opticsplanet.com/v/cm-202-vortex-cantilever-ring-mount-for.html",
+   "publisher": "OpticsPlanet",
+   "title": "Vortex Sport Cantilever 30mm Rifle Scope Ring",
+   "kind": "retailer",
+   "quote": "Vortex cantilever ring mounts provide the correct height and forward placement for proper scope mounting on flattop ARs.",
+   "verdict": "partly",
+   "checked": "2026-11-23",
+   "covers": [
+    "give:scope_mount",
+    "need:top_rail"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "magpul-moe-sl-carbine-stock": [
+  {
+   "id": "s78",
+   "url": "https://magpul.com/moe-sl-carbine-stock-mil-spec.html",
+   "publisher": "Magpul",
+   "title": "MOE SL Carbine Stock – Mil-Spec",
+   "kind": "manufacturer",
+   "quote": "There are two basic sizes of M4 Carbine receiver extensions (buffer tubes): Mil-Spec and Commercial-Spec. If you have a commercial-spec size extension on your rifle, make sure to order the Commercial-Spec MOE SL .",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:buffer_tube"
+   ],
+   "note": "Rule updated to match this source."
+  }
+ ],
+ "b5-systems-bravo-stock": [
+  {
+   "id": "s79",
+   "url": "https://b5systems.com/collection/ar/bravo-stock/",
+   "publisher": "B5 Systems",
+   "title": "BRAVO STOCK",
+   "kind": "manufacturer",
+   "quote": "Made of MIL-SPEC Materials and Finishes Fits MIL-SPEC Carbine Receiver Extensions Available in All Standard Colors",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:buffer_tube"
+   ]
+  }
+ ],
+ "aero-precision-mil-spec-carbine-buffer-tube-kit": [
+  {
+   "id": "s80",
+   "url": "https://www.primaryarms.com/aero-precision-ar-15-buffer-tube-kit-mil-spec-aprh100151",
+   "publisher": "Primary Arms",
+   "title": "Aero Precision AR-15 Carbine Buffer Kit - 6 Position",
+   "kind": "retailer",
+   "quote": "a mil-spec diameter, 6-position receiver extension made from 7075-T6 aluminum, a standard carbine recoil buffer, a buffer spring, an end plate, and a castle nut.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "give:buffer_tube"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "magpul-moe-k2-grip": [
+  {
+   "id": "s81",
+   "url": "https://magpul.com/moe-k2-grip-ar15-m4.html",
+   "publisher": "Magpul",
+   "title": "Magpul MOE-K2 Grip: Upgrade Your AR15/M4",
+   "kind": "manufacturer",
+   "quote": "MOE-K2® Grip – AR15/M4 A larger size and more vertical grip angle than our MOE-K®",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  },
+  {
+   "id": "s83",
+   "url": "https://www.shootingillustrated.com/articles/2015/10/16/ar-lower-receiver-build-grip-and-fire-control-selector-installation",
+   "publisher": "Shooting Illustrated (NRA)",
+   "title": "AR Lower-Receiver Build: Grip and Fire Control Selector Installation",
+   "kind": "reference",
+   "quote": "Insert the spring in the hole in the pistol grip and install the grip, aligning the spring with the detent and the hole in the receiver.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "steps"
+   ]
+  }
+ ],
+ "bcm-gunfighter-mod-3-grip": [
+  {
+   "id": "s82",
+   "url": "https://bravocompanyusa.com/bcm-grip-mod-3-black/",
+   "publisher": "Bravo Company USA",
+   "title": "BCM® AR15 Pistol Grip Mod 3, Black | Bravo Company",
+   "kind": "manufacturer",
+   "quote": "BCM® Grip Mod 3 - Black BCM MSRP: $22.00 Your Price: $19.95",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  },
+  {
+   "id": "s84",
+   "url": "https://www.shootingillustrated.com/articles/2015/10/16/ar-lower-receiver-build-grip-and-fire-control-selector-installation",
+   "publisher": "Shooting Illustrated (NRA)",
+   "title": "AR Lower-Receiver Build: Grip and Fire Control Selector Installation",
+   "kind": "reference",
+   "quote": "Insert the spring in the hole in the pistol grip and install the grip, aligning the spring with the detent and the hole in the receiver.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "steps"
+   ]
+  }
+ ],
+ "bcm-gunfighter-charging-handle-mk2-medium-latch": [
+  {
+   "id": "s85",
+   "url": "https://bravocompanyusa.com/bcm-asymmetric-mk2-charging-handle-medium-latch-5-56mm-223/",
+   "publisher": "Bravo Company USA",
+   "title": "AR15 Charging Handle, MK2 MED - Bravo Company USA",
+   "kind": "manufacturer",
+   "quote": "Medium latch extends past the main body approximately 0.92\". Single-sided latch. Compatible with Mil-Spec AR-15 Direct Impingement Weapon Systems.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Rule updated to match this source."
+  }
+ ],
+ "radian-weapons-raptor-ambidextrous-charging-handle": [
+  {
+   "id": "s86",
+   "url": "https://www.primaryarms.com/radian-weapons-ar15-m16-raptor-ambidextrous-charging-handle-black",
+   "publisher": "Primary Arms",
+   "title": "Radian Raptor AR-15 Ambidextrous Charging Handle",
+   "kind": "retailer",
+   "quote": "The Radian Raptor AR-15 Charging Handle solves the classic problems of a standard Mil-Spec charging handle — small, one-sided, and hard to grab in a hurry — with large, textured latches on both sides of the handle.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "geissele-super-modular-rail-mk16-13-5": [
+  {
+   "id": "s87",
+   "url": "https://www.primaryarms.com/geissele-automatics-mk16-super-modular-m-lok-rail-black-13.5",
+   "publisher": "Primary Arms",
+   "title": "Geissele Automatics MK16 Free Float AR-15 Handguard - M-LOK - 13.5\"",
+   "kind": "retailer",
+   "quote": "Extended-length Geissele barrel nut Anti-rotation tabs and set screws Picatinny top rail with 7 sides of M-LOK 7000-series aluminum construction Black Type III hardcoat anodize Does not include barrel nut wrench",
+   "verdict": "partly",
+   "checked": "2026-11-23",
+   "covers": [
+    "give:fore_rail",
+    "need:gas_block",
+    "steps"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "aero-precision-750-low-profile-gas-block": [
+  {
+   "id": "s88",
+   "url": "https://www.primaryarms.com/aero-precision-low-profile-gas-block-.750in-Nitride",
+   "publisher": "Primary Arms",
+   "title": "Aero Precision Low Profile Nitride - Gas Block - .750\"",
+   "kind": "retailer",
+   "quote": "This version is sized for a .750\" gas block journal, with .485\" set screw spacing for dimpled barrels.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "give:gas_block"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "magpul-m-lok-aluminum-rail-section-5-slot": [
+  {
+   "id": "s89",
+   "url": "https://magpul.com/media/wysiwyg/GIS/MAG580-MAG583_M-LOK_Aluminum_Rail_Sections_GIS_01.pdf",
+   "publisher": "Magpul",
+   "title": "M-LOK ALUMINUM RAIL SECTIONS (MAG580-MAG583 info sheet)",
+   "kind": "manufacturer",
+   "quote": "M-LOK Aluminum Rail Sections allow the attachment of various 1913 Picatinny spec rail-mounted accessories such as lights, vertical grips, etc.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "give:light_mount",
+    "need:fore_rail"
+   ]
+  }
+ ],
+ "surefire-warcomp-5-56": [
+  {
+   "id": "s90",
+   "url": "https://www.surefire.com/warcomp-flash-hider/",
+   "publisher": "SureFire",
+   "title": "WARCOMP Flash Hider - SureFire",
+   "kind": "manufacturer",
+   "quote": "WARCOMP-556-1/2-28 can be timed for right- or left-handed shooters, or for neutral timing",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "need:thread"
+   ],
+   "note": "Rule updated to match this source. Quote captured by a page-reading tool; exact wording may differ slightly."
+  }
+ ],
+ "magpul-pmag-30-ar-m4-gen-m3": [
+  {
+   "id": "s91",
+   "url": "https://magpul.com/pmag-30-ar-m4-gen-m3.html",
+   "publisher": "Magpul",
+   "title": "PMAG 30 AR/M4 GEN M3",
+   "kind": "manufacturer",
+   "quote": "Compatibility Wide compatibility with most 'STANAG 4179' platforms such as the AR15, M4, M16, SCAR MK16/16S, HK416, MR556, M27 IAR, IWI Tavor, and others",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  }
+ ],
+ "platform:ar15": [
+  {
+   "id": "s92",
+   "url": "https://www.opticsplanet.com/geissele-ssa-e-super-semi-automatic-enhanced-trigger-large-pin.html",
+   "publisher": "OpticsPlanet",
+   "title": "Geissele AR-15 Super Semi-Automatic Enhanced (SSA-E) Large Pin Trigger | 4.6 Star Rating",
+   "kind": "retailer",
+   "quote": "The large pin dimension is 0.169 inches, whereas the standard pin dimension is 0.155 inches.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:pins"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  },
+  {
+   "id": "s93",
+   "url": "https://magpul.com/moe-sl-carbine-stock-mil-spec.html",
+   "publisher": "Magpul",
+   "title": "MOE SL Carbine Stock – Mil-Spec",
+   "kind": "manufacturer",
+   "quote": "There are two basic sizes of M4 Carbine receiver extensions (buffer tubes): Mil-Spec and Commercial-Spec.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:tube"
+   ]
+  },
+  {
+   "id": "s94",
+   "url": "https://www.law.cornell.edu/uscode/text/26/5845",
+   "publisher": "Legal Information Institute (Cornell) - 26 U.S.C. 5845",
+   "title": "26 U.S. Code § 5845 - Definitions",
+   "kind": "reference",
+   "quote": "(3) a rifle having a barrel or barrels of less than 16 inches in length;",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:barrel"
+   ]
+  },
+  {
+   "id": "s95",
+   "url": "https://www.shootingillustrated.com/articles/2016/10/26/pinning-a-muzzle-brake-to-your-rifle",
+   "publisher": "Shooting Illustrated (NRA), quoting the ATF NFA Handbook",
+   "title": "Pinning a Muzzle Brake to Your Rifle",
+   "kind": "reference",
+   "quote": "Permanent methods of attachment include full-fusion gas or electric steel-seam welding, high-temperature (1,100 degrees Fahrenheit) silver soldering, or blind pinning with the pin head welded over.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:barrel"
+   ]
+  }
+ ],
+ "alg-defense-akt-enhanced-trigger": [
+  {
+   "id": "s96",
+   "url": "https://www.primaryarms.com/alg-defense-ak-trigger-enhanced-lightning-bow",
+   "publisher": "Primary Arms",
+   "title": "ALG Defense AK Trigger Enhanced with Lightning Bow",
+   "kind": "retailer",
+   "quote": "Designed for AK47 and AK74 variants ... Some models have a rear trigger guard rivet that may interfere with trigger function",
+   "verdict": "partly",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Quote captured by a page-reading tool; exact wording may differ slightly."
+  },
+  {
+   "id": "s97",
+   "url": "https://www.rifleconfigurator.com/catalog/triggers/alg-akt-el-ak-trigger",
+   "publisher": "Rifle Configurator",
+   "title": "ALG AKT-EL AK Trigger",
+   "kind": "reference",
+   "quote": "Not compatible with 12 gauge, .308, or 7.62x54R variants",
+   "verdict": "partly",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  }
+ ],
+ "magpul-zhukov-s-folding-stock": [
+  {
+   "id": "s98",
+   "url": "https://magpul.com/zhukov-sfoldingstock-ak47-ak74.html",
+   "publisher": "Magpul",
+   "title": "ZHUKOV-S® Stock, Model MAG585",
+   "kind": "manufacturer",
+   "quote": "Not compatible with Yugo pattern AKs or the Norinco Type 56S / MAK-90 due to differences in the trunnion’s tang.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:receiver"
+   ],
+   "note": "Rule updated to match this source."
+  }
+ ],
+ "magpul-moe-ak-grip": [
+  {
+   "id": "s99",
+   "url": "https://magpul.com/moeakgrip-ak-47-ak-74.html",
+   "publisher": "Magpul",
+   "title": "MOE® AK Grip – AK47/AK74, Model MAG523",
+   "kind": "manufacturer",
+   "quote": "Fits most Kalashnikov-pattern firearms, including stamped and milled receiver versions",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  }
+ ],
+ "magpul-pmag-30-ak-akm-moe": [
+  {
+   "id": "s100",
+   "url": "https://magpul.com/pmag-30-ak-akm-moe.html",
+   "publisher": "Magpul",
+   "title": "PMAG® 30 AK/AKM MOE®, Model MAG572",
+   "kind": "manufacturer",
+   "quote": "Compatible with a wide range of AK/AKM-pattern firearms chambered in 7.62x39mm",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  }
+ ],
+ "platform:ak": [
+  {
+   "id": "s101",
+   "url": "https://www.law.cornell.edu/cfr/text/27/478.39",
+   "publisher": "Cornell LII (text of 27 CFR 478.39)",
+   "title": "27 CFR § 478.39 - Assembly of semiautomatic rifles or shotguns",
+   "kind": "reference",
+   "quote": "No person shall assemble a semiautomatic rifle or any shotgun using more than 10 of the imported parts listed in paragraph (c) of this section if the assembled firearm is prohibited from importation under section 925(d)(3)",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:origin"
+   ],
+   "note": "Rule updated to match this source."
+  },
+  {
+   "id": "s102",
+   "url": "https://magpul.com/zhukov-sfoldingstock-ak47-ak74.html",
+   "publisher": "Magpul",
+   "title": "ZHUKOV-S® Stock, Model MAG585",
+   "kind": "manufacturer",
+   "quote": "Counts as one part for 922(r) compliance.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "option:origin"
+   ]
+  }
+ ],
+ "ruger-bx-trigger": [
+  {
+   "id": "s103",
+   "url": "https://shopruger.com/Ruger-BX-Trigger/productinfo/90462",
+   "publisher": "Ruger (ShopRuger)",
+   "title": "Ruger® BX-Trigger®",
+   "kind": "manufacturer",
+   "quote": "is sold as a complete assembly that drops in to replace the existing trigger assembly",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "steps"
+   ]
+  }
+ ],
+ "ruger-bx-25-25-round-magazine": [
+  {
+   "id": "s104",
+   "url": "https://shopruger.com/BX-25-Magazine/productinfo/90361/",
+   "publisher": "Ruger (ShopRuger)",
+   "title": "BX-25® Magazine",
+   "kind": "manufacturer",
+   "quote": "BX-25® magazines will work with any factory original 10/22® Rifle, SR-22® Rifle, 22 Charger® Pistol, .22 LR Ruger American Rimfire® Rifle and .22 LR Ruger 77/22® Rifle.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  }
+ ],
+ "tech-sights-tsr200-aperture-sight": [
+  {
+   "id": "s105",
+   "url": "https://www.tech-sights.com/ruger-products",
+   "publisher": "Tech-Sights",
+   "title": "Ruger 10/22 Aperture Sights",
+   "kind": "manufacturer",
+   "quote": "Rear Sight Base mounts solidly to the rear of the receiver utilizing the existing tapped scope base holes.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "steps"
+   ]
+  },
+  {
+   "id": "s106",
+   "url": "https://www.tech-sights.com/wp-content/uploads/2016/01/instruc-sheet-Rugers-3-14-rev-G.pdf",
+   "publisher": "Tech-Sights",
+   "title": "Instructions for the TSR100 & TSR200 Sight (Rev. G)",
+   "kind": "manufacturer",
+   "quote": "Use a brass punch to tap on the base of the front sight. Drive the front sight blade out of the dovetail slot from left to right.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "steps"
+   ]
+  }
+ ],
+ "magpul-hunter-x-22-stock": [
+  {
+   "id": "s107",
+   "url": "https://magpul.com/hunterx-22stock-ruger10-22.html",
+   "publisher": "Magpul",
+   "title": "Hunter X-22 Stock – Ruger® 10/22®",
+   "kind": "manufacturer",
+   "quote": "Drop-in design compatible with all factory Ruger® 10/22® .22 LR receivers.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  },
+  {
+   "id": "s108",
+   "url": "https://magpul.com/hunterx-22takedownstock-ruger10-22takedown.html",
+   "publisher": "Magpul",
+   "title": "Hunter X-22 Takedown Stock – Ruger® 10/22 Takedown®",
+   "kind": "manufacturer",
+   "quote": "Factory Ruger® 10/22 Takedown® .22 LR receivers",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "need:action"
+   ]
+  }
+ ],
+ "magpul-sga-stock-remington-870": [
+  {
+   "id": "s109",
+   "url": "https://magpul.com/sga-stock-remington-870.html",
+   "publisher": "Magpul",
+   "title": "SGA® Stock – Remington® 870, Model MAG460",
+   "kind": "manufacturer",
+   "quote": "A true drop-in replacement stock for Remington 870 12-gauge shotguns that provides easy, fast installation using simple tools",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  }
+ ],
+ "magpul-sga-stock-mossberg-500-590": [
+  {
+   "id": "s110",
+   "url": "https://magpul.com/sgastock-mossberg500-590-590a1.html",
+   "publisher": "Magpul",
+   "title": "SGA® Stock – Mossberg® 500/590/590A1",
+   "kind": "manufacturer",
+   "quote": "Mossberg® 500/590/590A1 12-gauge",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  }
+ ],
+ "magpul-moe-forend-remington-870": [
+  {
+   "id": "s111",
+   "url": "https://magpul.com/moe-m-lok-forend-remington-870.html",
+   "publisher": "Magpul",
+   "title": "MOE® M-LOK® Forend – Remington® 870",
+   "kind": "manufacturer",
+   "quote": "Compatible with Remington 870 12ga shotguns. NOTE: Not compatible with the Remington 870 Super Mag. Not compatible with heat shields.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Rule updated to match this source."
+  },
+  {
+   "id": "s112",
+   "url": "https://magpul.com/media/wysiwyg/Instructions/MAG496_MOE_M-LOK_SGA_Forend_Remington_INSRT.pdf",
+   "publisher": "Magpul",
+   "title": "MOE M-LOK Forend Installation Instructions (MAG496)",
+   "kind": "manufacturer",
+   "quote": "Remove magazine cap, barrel, forend tube nut (castle nut), and forend per manufacturer instructions.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "steps",
+    "occ"
+   ]
+  }
+ ],
+ "mesa-tactical-sureshell-side-saddle-6-shell": [
+  {
+   "id": "s113",
+   "url": "https://mesatactical.com/sureshell-saddle-mount-carrier-and-rail-for-rem-870-12-ga/",
+   "publisher": "Mesa Tactical",
+   "title": "SureShell® Saddle Mount Carrier and Rail for Rem 870 (12-GA)",
+   "kind": "manufacturer",
+   "quote": "Mounts via trigger pin holes",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "steps"
+   ],
+   "note": "Rule updated to match this source. Quote captured by a page-reading tool; exact wording may differ slightly."
+  },
+  {
+   "id": "s114",
+   "url": "https://mesatactical.com/sureshell-side-mount-carrier-for-remington-870-1100-11-87-12-ga/",
+   "publisher": "Mesa Tactical",
+   "title": "SureShell® Side Mount Carrier For Remington 870/1100/11-87 (12-GA )",
+   "kind": "manufacturer",
+   "quote": "All required attachment hardware is included and every SureShell carrier is proudly made in the USA.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Rule updated to match this source."
+  },
+  {
+   "id": "s115",
+   "url": "https://mesatactical.com/sureshell-side-mount-carrier-for-moss-500-590a1-mav88-12-ga/",
+   "publisher": "Mesa Tactical",
+   "title": "SureShell® Side Mount Carrier For Moss 500/590A1/Mav88 (12-GA)",
+   "kind": "manufacturer",
+   "quote": "Note: This product is not compatible with the Mossberg 590R due to design changes.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ],
+   "note": "Rule updated to match this source."
+  }
+ ],
+ "streamlight-tl-racker-forend-light": [
+  {
+   "id": "s116",
+   "url": "https://www.streamlight.com/docs/default-source/fact-sheet/333.pdf",
+   "publisher": "Streamlight",
+   "title": "TL-Racker® Product Fact Sheet (Document #333, Rev 3, 9/19/2024)",
+   "kind": "manufacturer",
+   "quote": "*Note: The TL-Racker will not fit Mossberg® FLEX models regardless of action slide length or Remington® 870 Super Magnum models.",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits",
+    "steps",
+    "occ"
+   ],
+   "note": "Rule updated to match this source."
+  },
+  {
+   "id": "s117",
+   "url": "https://www.streamlight.com/products/detail/tl-racker",
+   "publisher": "Streamlight",
+   "title": "TL-Racker® | Shotgun Forend Light | Streamlight®",
+   "kind": "manufacturer",
+   "quote": "Remington® model compatible with most 12 gauge 870s with the exception of the Remington 870 Express Supermag",
+   "verdict": "confirmed",
+   "checked": "2026-11-23",
+   "covers": [
+    "fits"
+   ]
+  }
+ ]
+};
+const SEED_REMOVED = ["c-h-precision-optic-adapter-plate-rmr","bcm-gunfighter-charging-handle-mod-4"];
 /* SEED_SOURCES:END */
 
 const RETAILERS = ["Brownells", "MidwayUSA", "OpticsPlanet", "Primary Arms", "Palmetto State Armory", "GunMag Warehouse", "Rainier Arms", "EuroOptic", "Sportsman's Warehouse", "Bass Pro / Cabela's", "Manufacturer direct"];
@@ -1415,6 +3228,9 @@ $("#cSrc").addEventListener("change", e => { cState.src = e.target.value; render
 $("#cAdd").addEventListener("click", () => openEdit(null, cState.platform ? { fits: [cState.platform] } : {}));
 
 /* ================= Part detail (prices, fit rules, steps) ================= */
+// Step text outside a build: fill placeholders with generic wording.
+const GENERIC = { model: "your model", gen: "your generation", light: "your light", light_mount: "your rail", trigger_pins: "your pin size" };
+const genericText = t => t.replace(/\{(\w+)\}/g, (m, k) => GENERIC[k] || "your " + keyLabel(k).toLowerCase());
 function partRuleDesc(p, key) {
   const [t, k] = key.split(":");
   if (t === "fits") return p.fits.map(f => platformById(f)?.name).filter(Boolean).join(", ") || "none set";
@@ -1536,7 +3352,7 @@ function openPart(id) {
       ${rulesHtml(p, partRuleKeys(p), key => partRuleDesc(p, key))}
       <div>
         <h4>Install steps</h4>
-        ${p.steps.length ? `<ol class="psteps">${p.steps.map(s => `<li><span class="lvl l${s.lvl || 1}">${esc(LEVELS[s.lvl || 1])}</span> ${esc(s.text)}${s.cond ? ` <span class="faint">(only with ${esc(s.cond.in.map(v => valLabel(s.cond.k, v)).join(" or "))})</span>` : ""}${s.tools?.length ? `<div class="faint" style="font-size:12.5px">Tools: ${esc(s.tools.join(", "))}</div>` : ""}</li>`).join("")}</ol>` : `<p class="muted" style="margin:0">Drop-in; no install steps.</p>`}
+        ${p.steps.length ? `<ol class="psteps">${p.steps.map(s => `<li><span class="lvl l${s.lvl || 1}">${esc(LEVELS[s.lvl || 1])}</span> ${esc(genericText(s.text))}${s.cond ? ` <span class="faint">(only with ${esc(s.cond.in.map(v => valLabel(s.cond.k, v)).join(" or "))})</span>` : ""}${s.tools?.length ? `<div class="faint" style="font-size:12.5px">Tools: ${esc(s.tools.join(", "))}</div>` : ""}</li>`).join("")}</ol>` : `<p class="muted" style="margin:0">Drop-in; no install steps.</p>`}
       </div>
       ${sourcesHtml(p, partRuleKeys(p))}
       <div>
