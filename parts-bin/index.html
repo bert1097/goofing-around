@@ -139,6 +139,7 @@
   .build-main .picker { grid-area: picker; }
   .build-main .strip { grid-area: strip; }
   .stage { position: relative; border-radius: 20px; background: radial-gradient(120% 90% at 50% 35%, var(--stage-a), var(--stage-b)); box-shadow: var(--shadow); overflow: hidden; min-height: 320px; display: grid; }
+  #svgHost, #setupHost { align-self: center; }
   .stage svg { width: 100%; height: auto; display: block; align-self: center; filter: drop-shadow(0 0 1.5px var(--gun-edge)); }
   .stage .floor { position: absolute; left: 10%; right: 10%; bottom: 8%; height: 18px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.18), transparent); filter: blur(2px); pointer-events: none; }
   .stage .tag { position: absolute; left: 16px; top: 14px; font: 700 12px/1 var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
@@ -279,6 +280,47 @@
   .srcform .cks { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 4px 10px; font-size: 14px; }
   .srcform .cks label { display: flex; gap: 6px; align-items: center; }
 
+  .stepper { display: flex; gap: 6px; margin: 0 0 16px; overflow-x: auto; scrollbar-width: none; }
+  .stepper button { flex: 1 1 0; min-width: 150px; text-align: left; border: 0; border-bottom: 3px solid var(--line); background: none; padding: 6px 2px 8px; cursor: pointer; display: grid; gap: 2px; }
+  .stepper button:disabled { cursor: default; opacity: .45; }
+  .stepper .k { font: 700 12px var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  .stepper .v { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stepper button.done { border-bottom-color: var(--ink); }
+  .stepper button[aria-current="step"] { border-bottom-color: var(--accent); }
+  .stepper button[aria-current="step"] .k { color: var(--accent); }
+  .pick-head { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; justify-content: space-between; margin-bottom: 14px; }
+  .pick-head h1 { margin: 0; font-size: 28px; letter-spacing: -.02em; text-wrap: balance; }
+  .pick-head p { margin: 4px 0 0; }
+  .pick-tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .pick-tools input { width: 200px; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--panel); }
+  .seg button { border: 0; background: none; padding: 6px 12px; border-radius: 999px; font-weight: 600; font-size: 14px; color: var(--ink-2); cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .pick-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+  .gun { text-align: left; border: 1.5px solid transparent; background: var(--panel); border-radius: 18px; padding: 10px; box-shadow: var(--shadow); cursor: pointer; display: grid; gap: 8px; }
+  .gun:hover { border-color: var(--ink-3); }
+  .gun[aria-current="true"] { border-color: var(--accent); }
+  .gun .thumb { border-radius: 12px; background: radial-gradient(120% 90% at 50% 35%, var(--stage-a), var(--stage-b)); aspect-ratio: 16 / 9; display: grid; place-items: center; overflow: hidden; }
+  .gun .thumb svg { width: 88%; height: auto; filter: drop-shadow(0 0 1.5px var(--gun-edge)); }
+  .gun .nm { font-weight: 800; font-size: 16px; padding: 0 4px; }
+  .gun .meta { font-size: 13px; color: var(--ink-2); padding: 0 4px 4px; display: flex; flex-wrap: wrap; gap: 4px 10px; }
+  .optgroup { display: grid; gap: 6px; padding: 4px 2px 8px; }
+  .choices { display: grid; gap: 6px; }
+  .choice { text-align: left; border: 1.5px solid var(--line); background: var(--panel); border-radius: 12px; padding: 9px 12px; font-weight: 600; cursor: pointer; }
+  .choice:hover { border-color: var(--ink-3); }
+  .choice[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+  .facts { border-top: 1px solid var(--line); padding-top: 10px; display: grid; gap: 4px; font-size: 13.5px; }
+  .facts .row { display: flex; gap: 8px; justify-content: space-between; }
+  .facts .row span:first-child { color: var(--ink-3); }
+  .facts .row span:last-child { text-align: right; }
+  .setup-foot { display: flex; gap: 8px; justify-content: space-between; padding: 12px 14px; border-top: 1px solid var(--line); margin-top: auto; }
+  .gunchip { display: grid; gap: 1px; flex: 1 1 240px; }
+  .gunchip .lbl { font-size: 13px; font-weight: 600; color: var(--ink-2); }
+  .gunchip strong { font-size: 20px; letter-spacing: -.01em; }
+  .gunchip .muted { font-size: 13.5px; }
+  .gunchip .links { display: flex; gap: 14px; margin-top: 2px; }
+  .linkbtn { border: 0; background: none; padding: 0; color: var(--accent); font-weight: 600; font-size: 13.5px; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+
   /* ---------- Catalog ---------- */
   .toolbar { display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
   .count-row { display: flex; align-items: center; gap: 10px; margin: 4px 0 10px; font-size: 14px; color: var(--ink-2); flex-wrap: wrap; }
@@ -344,6 +386,12 @@
     svg .pin circle { r: 24px; stroke-width: 2.5; }
     svg .pin text { font-size: 22px; }
     .stage .tag strong { font-size: 17px; }
+    .pick-head h1 { font-size: 23px; }
+    .pick-tools, .pick-tools input { width: 100%; }
+    .seg { width: 100%; } .seg button { flex: 1; padding: 6px 4px; }
+    .pick-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .gun { padding: 6px; } .gun .nm { font-size: 14px; } .gun .meta { font-size: 12px; }
+    .stepper button { min-width: 110px; }
     .summary .row { grid-template-columns: 1fr auto; }
     .summary .slotname { grid-column: 1 / -1; }
     table.parts thead { display: none; }
@@ -391,14 +439,50 @@
 <main class="wrap">
   <!-- Build -->
   <section id="view-build">
+    <nav class="stepper" id="stepper" aria-label="Build steps"></nav>
+
+    <div id="bPick">
+      <div class="pick-head">
+        <div>
+          <h1>Choose your firearm</h1>
+          <p class="muted">Start with the gun. Every step after this only offers parts that fit it.</p>
+        </div>
+        <div class="pick-tools">
+          <div class="seg" id="pickType" role="group" aria-label="Firearm type"></div>
+          <input type="search" id="pickQ" placeholder="Search firearms" aria-label="Search firearms">
+        </div>
+      </div>
+      <div id="pickGrid"></div>
+    </div>
+
+    <div id="bSetup" hidden>
+      <div class="build-main">
+        <div class="stage">
+          <div class="tag"><span id="setupType">Pistol</span><strong id="setupName">—</strong></div>
+          <div class="floor"></div>
+          <div id="setupHost"></div>
+        </div>
+        <aside class="picker">
+          <div class="picker-head"><div><div class="step">Set it up</div><h2>Which version do you have?</h2></div></div>
+          <div class="options" id="setupOpts"></div>
+          <div class="setup-foot"><button class="btn" id="setupBack" type="button">← Firearms</button><button class="btn primary" id="setupGo" type="button">Customize parts →</button></div>
+        </aside>
+      </div>
+    </div>
+
+    <div id="bParts" hidden>
     <div class="build-head">
-      <label class="f">Firearm<select id="bPlatform"></select></label>
+      <div class="gunchip">
+        <span class="lbl">Firearm</span>
+        <strong id="bGun">—</strong>
+        <span class="muted" id="bGunCfg"></span>
+        <span class="links"><button class="linkbtn" id="bChangeGun" type="button">Change firearm</button><button class="linkbtn" id="bEditSetup" type="button">Edit setup</button></span>
+      </div>
       <label class="f">Build name<input type="text" id="bName" placeholder="Name this build"></label>
       <div class="total">
         <div class="amt" id="bTotal">$0</div>
         <div class="sub" id="bTotalSub">Pick parts to start</div>
       </div>
-      <div class="cfg" id="bConfig"></div>
     </div>
     <div class="build-main">
       <div class="stage" id="stage">
@@ -432,6 +516,7 @@
     <div class="cols">
       <section class="panel"><div class="panel-head"><h3>Fit check</h3><span id="fitSummary"></span></div><div id="fitBody"></div></section>
       <section class="panel"><div class="panel-head"><h3>Install plan</h3><button class="btn small" id="planCopy" hidden>Copy plan</button></div><div id="planBody"></div></section>
+    </div>
     </div>
   </section>
 
@@ -2912,11 +2997,14 @@ $$("nav.tabs button").forEach(b => b.addEventListener("click", () => setView(b.d
 
 /* ================= Build (customizer) ================= */
 function newBuild(platformId) {
-  const p = platformById(platformId) || db.platforms[0];
+  const p = platformById(platformId);
   return fixBuild({ id: null, name: "", platform: p ? p.id : "", picks: {}, extras: [], config: {}, done: {} });
 }
-let build = db.draft && platformById(db.draft.platform) ? fixBuild(db.draft) : newBuild("glock-19");
+let build = db.draft && platformById(db.draft.platform) ? fixBuild(db.draft) : newBuild(null);
 let slotIdx = 0;
+// Build steps: "pick" a firearm, "setup" its version, then "parts".
+let bStage = build.id || Object.keys(build.picks).length || build.extras.length ? "parts" : "pick";
+const pState = { type: "", q: "" };
 let shownPicks = null; // picks drawn last render, so only a newly chosen part animates in
 
 function slotsFor(p) { return SLOTS[p?.type] || SLOTS.Pistol; }
@@ -2956,8 +3044,92 @@ function bridgeButtons(issue) {
 }
 
 function renderBuild() {
-  const plat = platformById(build.platform) || db.platforms[0];
-  if (!plat) { $("#svgHost").innerHTML = `<div class="empty-slot">Add a firearm on the Firearms tab to start a build.</div>`; return; }
+  const plat = platformById(build.platform);
+  if (!plat) bStage = "pick";
+  if (plat && bStage === "setup" && !plat.options.length) bStage = "parts";
+  renderStepper(plat);
+  $("#bPick").hidden = bStage !== "pick"; $("#bSetup").hidden = bStage !== "setup"; $("#bParts").hidden = bStage !== "parts";
+  if (bStage === "pick") renderPick();
+  else if (bStage === "setup") renderSetup(plat);
+  else renderParts();
+}
+function goStage(st) { bStage = st; renderBuild(); window.scrollTo({ top: 0 }); }
+
+function renderStepper(plat) {
+  const n = plat ? buildItems(build, plat).length : 0;
+  const cfg = plat ? configSummary(plat, build.config) : "";
+  const steps = [
+    ["pick", "1 · Firearm", plat ? plat.name : "Choose one", !!plat],
+    ["setup", "2 · Setup", !plat ? "—" : plat.options.length ? cfg : "Nothing to set up", !!plat && !!plat.options.length],
+    ["parts", "3 · Parts", !plat ? "—" : n ? `${n} part${n === 1 ? "" : "s"} picked` : "Customize", !!plat],
+  ];
+  $("#stepper").innerHTML = steps.map(([id, k, v, ok]) => {
+    const order = ["pick", "setup", "parts"]; const done = order.indexOf(id) < order.indexOf(bStage);
+    return `<button type="button" data-st="${id}" ${id === "pick" || ok ? "" : "disabled"} class="${done ? "done" : ""}" ${bStage === id ? 'aria-current="step"' : ""}><span class="k">${k}</span><span class="v">${esc(v)}</span></button>`;
+  }).join("");
+  $$("#stepper button").forEach(b => b.onclick = () => goStage(b.dataset.st));
+}
+
+// Small, static drawing of a firearm for cards and the setup stage.
+function gunSvg(plat, b, iface, cls = "") {
+  const art = SVGS[plat.type] || SVGS.Pistol;
+  const html = `<svg class="${cls}" viewBox="${art.vb}" style="--fin-a:${esc(b?.finish?.a || FINISHES[0][1])};--fin-b:${esc(b?.finish?.b || FINISHES[0][1])}" aria-hidden="true">${art.art}</svg>`;
+  return html.replace(/<g data-if="(\w+):([^"]+)">/g, (m, k, v) => String(iface[k]) === v ? "<g>" : '<g style="display:none">');
+}
+
+function renderPick() {
+  const types = [["", "All"], ["Pistol", "Pistols"], ["Rifle", "Rifles"], ["Shotgun", "Shotguns"]];
+  $("#pickType").innerHTML = types.map(([v, l]) => `<button type="button" data-t="${v}" aria-pressed="${pState.type === v}">${l}</button>`).join("");
+  $$("#pickType button").forEach(b => b.onclick = () => { pState.type = b.dataset.t; renderPick(); });
+  const q = pState.q.trim().toLowerCase();
+  const counts = {}; db.parts.forEach(p => p.fits.forEach(f => counts[f] = (counts[f] || 0) + 1));
+  const card = p => `<button type="button" class="gun" data-gun="${esc(p.id)}" ${p.id === build.platform && (Object.keys(build.picks).length || build.extras.length) ? 'aria-current="true"' : ""}>
+      <div class="thumb">${gunSvg(p, null, resolveIface(p, {}))}</div>
+      <div class="nm">${esc(p.name)}</div>
+      <div class="meta"><span>${esc(p.covers || p.type)}</span><span>${counts[p.id] || 0} parts fit</span>${p.id === build.platform && (Object.keys(build.picks).length || build.extras.length) ? `<span style="color:var(--accent);font-weight:600">Current build</span>` : ""}</div>
+    </button>`;
+  const groups = ["Pistol", "Rifle", "Shotgun"].filter(t => !pState.type || pState.type === t).map(t => {
+    const ps = db.platforms.filter(p => p.type === t && (!q || `${p.name} ${p.covers} ${p.type}`.toLowerCase().includes(q)));
+    return ps.length ? `<h2 class="sec">${t}s</h2><div class="pick-grid">${ps.map(card).join("")}</div>` : "";
+  }).join("");
+  $("#pickGrid").innerHTML = groups || `<div class="empty-slot">No firearms match. Add one on the Firearms tab.</div>`;
+  $$("#pickGrid [data-gun]").forEach(b => b.onclick = () => chooseGun(b.dataset.gun));
+}
+async function chooseGun(id) {
+  const plat = platformById(id); if (!plat) return;
+  const hasPicks = Object.keys(build.picks).length || build.extras.length;
+  if (id !== build.platform || !hasPicks) {
+    if (hasPicks && !(await ask(`Start a new build on the ${plat.name}? Your current picks will be cleared. Save the build first if you want to keep it.`, "Start new build"))) return;
+    const fin = build.finish; build = newBuild(id); build.finish = fin;
+  }
+  slotIdx = 0; persistDraft();
+  goStage(plat.options.length ? "setup" : "parts");
+}
+$("#pickQ").addEventListener("input", e => { pState.q = e.target.value; renderPick(); });
+
+const FACT_KEYS = ["optic", "light_mount", "top_rail", "fore_rail", "gas_block", "barrel", "thread", "trigger_pins", "buffer_tube", "receiver", "origin", "action", "gen"];
+function renderSetup(plat) {
+  const iface = resolveIface(plat, build.config);
+  $("#setupType").textContent = plat.type; $("#setupName").textContent = plat.name;
+  $("#setupHost").innerHTML = gunSvg(plat, build, iface);
+  const facts = FACT_KEYS.filter(k => k in iface);
+  $("#setupOpts").innerHTML = plat.options.map(o => {
+    const cur = build.config[o.id] ?? o.def ?? 0;
+    return `<div class="optgroup"><div class="sw-label" style="margin:0">${esc(o.label)}</div><div class="choices">${o.choices.map((c, i) =>
+      `<button type="button" class="choice" data-opt="${esc(o.id)}" data-i="${i}" aria-pressed="${cur === i}">${esc(c.label)}</button>`).join("")}</div></div>`;
+  }).join("") + (facts.length ? `<div class="facts"><div class="sw-label" style="margin:0 0 2px">What the fit check will use ${srcBadge(plat, platRuleKeys(plat))}</div>${facts.map(k =>
+      `<div class="row"><span>${esc(keyLabel(k))}</span><span>${esc(valLabel(k, iface[k]))}</span></div>`).join("")}
+      <button class="linkbtn" type="button" id="setupSrc" style="justify-self:start">Sources for these facts</button></div>` : "");
+  $$("#setupOpts .choice").forEach(b => b.onclick = () => { build.config[b.dataset.opt] = +b.dataset.i; persistDraft(); renderBuild(); });
+  const src = $("#setupSrc"); if (src) src.onclick = () => openPlatform(plat.id);
+}
+$("#setupBack").addEventListener("click", () => goStage("pick"));
+$("#setupGo").addEventListener("click", () => goStage("parts"));
+$("#bChangeGun").addEventListener("click", () => goStage("pick"));
+$("#bEditSetup").addEventListener("click", () => goStage("setup"));
+
+function renderParts() {
+  const plat = platformById(build.platform);
   build.platform = plat.id;
   const slots = slotsFor(plat);
   slotIdx = Math.max(0, Math.min(slotIdx, slots.length - 1));
@@ -2965,11 +3137,10 @@ function renderBuild() {
   build.extras = build.extras.filter(id => partById(id)?.fits.includes(plat.id));
   const ev = evaluate(build);
 
-  renderPlatformSelect($("#bPlatform"), plat.id);
   $("#bName").value = build.name;
-  $("#bConfig").innerHTML = plat.options.map(o => `<label class="f">${esc(o.label)}<select data-opt="${esc(o.id)}">${o.choices.map((c, i) => `<option value="${i}">${esc(c.label)}</option>`).join("")}</select></label>`).join("");
-  plat.options.forEach(o => { $(`#bConfig [data-opt="${o.id}"]`).value = String(build.config[o.id] ?? o.def ?? 0); });
-  $$("#bConfig select").forEach(s => s.addEventListener("change", () => { build.config[s.dataset.opt] = +s.value; persistDraft(); renderBuild(); }));
+  $("#bGun").textContent = plat.name;
+  $("#bGunCfg").textContent = configSummary(plat, build.config) || plat.covers || "";
+  $("#bEditSetup").hidden = !plat.options.length;
   $("#stageType").textContent = plat.type;
   $("#stageName").textContent = build.name || plat.name;
 
@@ -3172,11 +3343,6 @@ $("#planCopy").addEventListener("click", async () => {
   try { await navigator.clipboard.writeText(text); toast("Install plan copied"); } catch (e) { showText({ title: "Install plan", hint: "Select and copy.", text, go: "Copy" }); }
 });
 
-$("#bPlatform").addEventListener("change", e => {
-  const fin = build.finish;
-  build = newBuild(e.target.value); build.finish = fin;
-  slotIdx = 0; persistDraft(); renderBuild();
-});
 $("#bName").addEventListener("input", e => { build.name = e.target.value; $("#stageName").textContent = build.name || platformById(build.platform)?.name || ""; persistDraft(); });
 $("#pkPrev").addEventListener("click", () => { slotIdx--; renderBuild(); });
 $("#pkNext").addEventListener("click", () => { slotIdx++; renderBuild(); });
@@ -3515,7 +3681,7 @@ function renderFirearms() {
       <div class="row"><button class="btn small primary" data-build="${esc(p.id)}">Build one</button><button class="btn small" data-parts="${esc(p.id)}">See parts</button><button class="btn small" data-psrc="${esc(p.id)}">Setup &amp; sources</button><button class="btn small danger" data-del="${esc(p.id)}">Remove</button></div>
     </div>`).join("")}</div>`;
   }).join("");
-  $$("#fList [data-build]").forEach(b => b.onclick = () => { build = newBuild(b.dataset.build); slotIdx = 0; persistDraft(); setView("build"); });
+  $$("#fList [data-build]").forEach(b => b.onclick = () => { setView("build"); chooseGun(b.dataset.build); });
   $$("#fList [data-parts]").forEach(b => b.onclick = () => { cState.platform = b.dataset.parts; setView("catalog"); });
   $$("#fList [data-psrc]").forEach(b => b.onclick = () => openPlatform(b.dataset.psrc));
   $$("#fList [data-del]").forEach(b => b.onclick = async () => {
@@ -3524,7 +3690,7 @@ function renderFirearms() {
     db.platforms = db.platforms.filter(x => x.id !== p.id);
     db.parts.forEach(x => x.fits = x.fits.filter(f => f !== p.id));
     db.builds = db.builds.filter(x => x.platform !== p.id);
-    if (build.platform === p.id) build = newBuild(db.platforms[0]?.id);
+    if (build.platform === p.id) { build = newBuild(null); bStage = "pick"; }
     save(); renderFirearms();
   });
 }
@@ -3559,7 +3725,7 @@ function renderBuilds() {
       <div class="row"><button class="btn small primary" data-open="${esc(b.id)}">Open</button><button class="btn small" data-dup="${esc(b.id)}">Duplicate</button><button class="btn small danger" data-del="${esc(b.id)}">Delete</button></div>
     </div>`;
   }).join("")}</div>`;
-  $$("#buildList [data-open]").forEach(x => x.onclick = () => { build = fixBuild(clone(db.builds.find(b => b.id === x.dataset.open))); slotIdx = 0; persistDraft(); setView("build"); });
+  $$("#buildList [data-open]").forEach(x => x.onclick = () => { build = fixBuild(clone(db.builds.find(b => b.id === x.dataset.open))); slotIdx = 0; bStage = "parts"; persistDraft(); setView("build"); });
   $$("#buildList [data-dup]").forEach(x => x.onclick = () => { const b = clone(db.builds.find(b => b.id === x.dataset.dup)); b.id = uid(); b.name += " (copy)"; b.saved = today(); b.done = {}; db.builds.unshift(b); save(); renderBuilds(); });
   $$("#buildList [data-del]").forEach(x => x.onclick = async () => { const b = db.builds.find(b => b.id === x.dataset.del); if (!(await ask(`Delete “${b.name}”?`, "Delete", true))) return; db.builds = db.builds.filter(y => y.id !== b.id); if (build.id === b.id) build.id = null; save(); renderBuilds(); });
 }
@@ -3572,7 +3738,7 @@ function importText(text) {
   if (!validDb(d)) return "That JSON isn't a Parts Bin backup.";
   return ask(`Import ${d.parts.length} parts and ${d.platforms.length} firearms? This replaces what's here now.`, "Replace", true).then(ok => {
     if (!ok) return "Import cancelled.";
-    db = normalize(upgrade(d)); db.draft = null; build = newBuild(db.platforms[0]?.id); slotIdx = 0; save(); renderView(); toast("Imported");
+    db = normalize(upgrade(d)); db.draft = null; build = newBuild(null); slotIdx = 0; bStage = "pick"; save(); renderView(); toast("Imported");
     return "";
   });
 }
@@ -3592,7 +3758,7 @@ $("#dataMenu").addEventListener("click", async e => {
   if (act === "import-json") showText({ title: "Restore from a backup", hint: "Paste a backup from Data → Back up, or choose a saved .json file.", go: "Restore", onImport: importText });
   if (act === "reset") {
     if (!(await ask("Replace everything with the starter data? Your parts, prices and builds will be lost unless you've backed them up.", "Reset", true))) return;
-    db = seedDb(); build = newBuild("glock-19"); slotIdx = 0; save(); renderView(); toast("Reset to starter data");
+    db = seedDb(); build = newBuild(null); slotIdx = 0; bStage = "pick"; save(); renderView(); toast("Reset to starter data");
   }
 });
 $("#importFile").addEventListener("change", async e => {
