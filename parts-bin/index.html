@@ -191,6 +191,7 @@
   .fit.no, .fit.conflict { color: var(--bad); background: color-mix(in srgb, var(--bad) 12%, transparent); }
   .fit.unknown { color: var(--ink-2); background: var(--panel-2); }
   .opt .fitline { grid-column: 1 / -1; margin-top: 4px; }
+  .opt .brand .fit { text-transform: none; letter-spacing: 0; font: 600 11px/1.2 var(--font); padding: 2px 6px; margin-left: 4px; vertical-align: 1px; }
   .opt .why { font-size: 12.5px; color: var(--ink-2); margin-top: 3px; }
   .opt.nofit { opacity: .72; }
   svg .pin.warn circle { stroke: var(--warn); stroke-width: 3; }
@@ -226,6 +227,31 @@
   .rules ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; }
   ol.psteps { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 14px; }
   details.adv summary { cursor: pointer; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+
+  .srcline { font-size: 12.5px; margin-top: 3px; }
+  a.srcl { color: var(--good); text-decoration: none; font-weight: 600; white-space: nowrap; }
+  a.srcl:hover { text-decoration: underline; }
+  a.srcl.bad, .bad-t { color: var(--bad); }
+  .coverage { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+  .coverage a { color: inherit; }
+  .covbar { height: 6px; border-radius: 3px; background: var(--panel-2); border: 1px solid var(--line); overflow: hidden; }
+  .covbar span { display: block; height: 100%; background: var(--good); }
+  ul.rlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 14px; }
+  ul.rlist li { display: grid; grid-template-columns: 20px 1fr; gap: 8px; }
+  .rs { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 800; color: #fff; background: var(--ink-3); }
+  .rs.ok { background: var(--good); } .rs.disputed { background: var(--bad); }
+  .sources { display: grid; gap: 8px; }
+  .src { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: grid; gap: 4px; }
+  .src-top { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-weight: 600; }
+  .src-top a { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .src blockquote { margin: 0; padding-left: 10px; border-left: 3px solid var(--line); color: var(--ink-2); font-size: 13.5px; }
+  .src-note { font-size: 13px; color: var(--warn); }
+  details.addsrc summary { list-style: none; display: inline-block; }
+  details.addsrc summary::-webkit-details-marker { display: none; }
+  .srcform { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .srcform .wide { grid-column: 1 / -1; }
+  .srcform .cks { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 4px 10px; font-size: 14px; }
+  .srcform .cks label { display: flex; gap: 6px; align-items: center; }
 
   /* ---------- Catalog ---------- */
   .toolbar { display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
@@ -330,7 +356,7 @@
 
 <div class="wrap">
   <div class="banner" id="banner" hidden>
-    <p><strong>Starter data is unverified.</strong> Claude drafted the parts, fitment and estimated prices from general knowledge, so check the maker's fitment list before you buy. Add real prices from retailers on any part, and tick <em>Verified</em> once you've confirmed a part's fitment. Your changes are saved in this browser; use <em>Data → Export</em> to keep a copy.</p>
+    <p><strong>Check the sources.</strong> Every fit rule shows where it came from. A part is <em>Sourced</em> only when each of its rules is backed by a maker, retailer or reference page; anything marked <em>Unsourced</em> was drafted by Claude from general knowledge. Add sources as you confirm things. Your changes are saved in this browser; use <em>Data → Export</em> to keep a copy.</p>
     <button class="x" id="bannerClose" aria-label="Dismiss">×</button>
   </div>
 </div>
@@ -398,6 +424,7 @@
     </div>
     <div class="count-row">
       <span id="cCount"></span>
+      <select id="cSrc" style="width:auto"><option value="">Any source status</option><option value="sourced">Sourced</option><option value="partial">Partly sourced</option><option value="none">Unsourced</option><option value="disputed">Disputed</option></select>
       <label><input type="checkbox" id="cPriced"> Only parts with retailer prices</label>
       <button class="btn dark" id="cAdd">+ Add part</button>
     </div>
@@ -471,6 +498,60 @@ const valLabel = (k, v) => KEYS[k]?.vals?.[v] ?? String(v);
 const N = (k, vals, o = {}) => ({ k, in: [].concat(vals).map(String), ...o });
 const S = (lvl, mins, text, tools = [], cond) => ({ lvl, mins, text, tools, ...(cond ? { cond } : {}) });
 const LEVELS = { 1: "DIY", 2: "Basic tools", 3: "Armorer tools", 4: "Gunsmith / shop" };
+
+/* ================= Sources =================
+   Every rule can cite sources: {url, publisher, title, kind, quote, checked, verdict, covers:[rule keys]}.
+   Part rule keys: fits, need:<k>, give:<k>, occ, steps. Firearm keys: base:<k>, option:<id>.
+   A part or firearm counts as Sourced only when every one of its rules has a supporting source. */
+const SRC_KIND = { manufacturer: "Maker", retailer: "Retailer", reference: "Reference", other: "Other" };
+const VERDICTS = { confirmed: "Supports", partly: "Partly supports", contradicted: "Contradicts" };
+const DEFAULT_BASE_KEYS = ["light", "sights_height", "mag_catch", "family", "scope_mount"];
+const uniq = a => a.filter((x, i) => a.indexOf(x) === i);
+function partRuleKeys(p) {
+  return uniq(["fits", ...p.needs.map(n => "need:" + n.k), ...Object.keys(p.gives).filter(k => k !== "light").map(k => "give:" + k), ...(p.occ.length ? ["occ"] : []), ...(p.steps.length ? ["steps"] : [])]);
+}
+function platRuleKeys(pl) {
+  return [...Object.keys(pl.base || {}).filter(k => !DEFAULT_BASE_KEYS.includes(k)).map(k => "base:" + k), ...(pl.options || []).map(o => "option:" + o.id)];
+}
+function platKeysFor(pl, k) {
+  return [...(k in (pl.base || {}) ? ["base:" + k] : []), ...(pl.options || []).filter(o => o.choices.some(c => k in c.set)).map(o => "option:" + o.id)];
+}
+function ruleLabel(key, pl) {
+  const [t, k] = key.split(":");
+  if (t === "fits") return "Fits these firearms";
+  if (t === "need" || t === "base") return keyLabel(k);
+  if (t === "give") return "Changes " + keyLabel(k).toLowerCase();
+  if (t === "occ") return "Takes the place of";
+  if (t === "steps") return "Install steps";
+  if (t === "option") { const o = pl?.options?.find(o => o.id === k); return o ? `${o.label} choices` : k; }
+  return key;
+}
+function coverage(obj, keys) {
+  const out = {};
+  keys.forEach(k => {
+    const srcs = (obj.sources || []).filter(s => (s.covers || []).includes(k));
+    const status = srcs.some(s => s.verdict === "contradicted") ? "disputed" : srcs.length ? "ok" : "none";
+    out[k] = { srcs, status };
+  });
+  return out;
+}
+function sourceStatus(obj, keys) {
+  const c = Object.values(coverage(obj, keys));
+  if (!c.length) return (obj.sources || []).length ? "sourced" : "none";
+  if (c.some(x => x.status === "disputed")) return "disputed";
+  const n = c.filter(x => x.status === "ok").length;
+  return n === c.length ? "sourced" : n ? "partial" : "none";
+}
+const SRC_STATUS = { sourced: ["ok", "Sourced"], partial: ["fix", "Partly sourced"], none: ["unknown", "Unsourced"], disputed: ["no", "Disputed"] };
+function srcBadge(obj, keys) {
+  const st = sourceStatus(obj, keys); const c = Object.values(coverage(obj, keys));
+  const n = c.filter(x => x.status === "ok").length;
+  return `<span class="fit ${SRC_STATUS[st][0]}" title="${n} of ${c.length} rules have a source">${SRC_STATUS[st][1]}${st === "partial" ? ` ${n}/${c.length}` : ""}</span>`;
+}
+const hostOf = u => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return u; } };
+function srcLinks(srcs) {
+  return srcs.filter(s => safeUrl(s.url)).map(s => `<a class="srcl ${s.verdict === "contradicted" ? "bad" : ""}" href="${esc(safeUrl(s.url))}" target="_blank" rel="noopener" title="${esc((s.title || s.url) + (s.quote ? ` — “${s.quote}”` : ""))}">${esc(s.publisher || hostOf(s.url))} ↗</a>`).join(" ");
+}
 
 /* ================= Starter data =================
    Drafted from general knowledge. Fitment, rules, steps and prices are UNVERIFIED. */
@@ -630,6 +711,11 @@ const SEED_PARTS = [
   P("Safariland", "6390RDS ALS", "Holster", ["glock-17", "glock-19", "sig-p320", "sw-mp2"], 160, "", "Model- and light-specific; optic-ready.", { steps: ST.holster }),
 ];
 
+/* SEED_SOURCES:BEGIN (generated from the research pass; see README) */
+const SEED_SOURCES = {};
+const SEED_REMOVED = [];
+/* SEED_SOURCES:END */
+
 const RETAILERS = ["Brownells", "MidwayUSA", "OpticsPlanet", "Primary Arms", "Palmetto State Armory", "GunMag Warehouse", "Rainier Arms", "EuroOptic", "Sportsman's Warehouse", "Bass Pro / Cabela's", "Manufacturer direct"];
 
 // install order: lower runs first
@@ -744,7 +830,7 @@ const SVGS = {
 /* ================= State ================= */
 const STORE_KEY = "partsbin.v1";
 const BANNER_KEY = "partsbin.banner";
-const DATA_VERSION = 2;
+const DATA_VERSION = 3;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -761,24 +847,36 @@ function seedParts() {
   const used = new Set();
   return SEED_PARTS.map(p => {
     let id = slug(p.brand + "-" + p.name); while (used.has(id)) id += "-2"; used.add(id);
-    return { id, ...clone(p), url: "", verified: false, seed: true, prices: [] };
+    return { id, ...clone(p), url: "", verified: false, seed: true, prices: [], sources: clone(SEED_SOURCES[id] || []) };
   });
 }
 function seedDb() {
-  return { version: DATA_VERSION, platforms: clone(SEED_PLATFORMS), parts: seedParts(), builds: [], draft: null };
+  return { version: DATA_VERSION, platforms: SEED_PLATFORMS.map(p => ({ ...clone(p), sources: clone(SEED_SOURCES["platform:" + p.id] || []) })), parts: seedParts(), builds: [], draft: null };
 }
 function validDb(d) {
   return d && Array.isArray(d.platforms) && Array.isArray(d.parts) &&
     d.platforms.every(p => p && typeof p.id === "string" && typeof p.name === "string") &&
     d.parts.every(p => p && typeof p.id === "string" && typeof p.name === "string" && Array.isArray(p.fits));
 }
-// Bring older saves up to date: add fit rules and new starter parts without touching the user's edits.
+// Bring older saves up to date. Starter parts you haven't edited take the corrected rules and sources;
+// edited parts keep your rules and only gain sources. Prices and builds are never touched.
 function upgrade(d) {
-  if ((d.version || 1) >= DATA_VERSION) return d;
+  const v = d.version || 1;
+  if (v >= DATA_VERSION) return d;
   const sp = seedParts();
-  d.platforms.forEach(p => { const s = SEED_PLATFORMS.find(x => x.id === p.id); if (s) { if (!p.base) p.base = clone(s.base); if (!p.options) p.options = clone(s.options); } });
-  d.parts.forEach(p => { const s = sp.find(x => x.id === p.id); if (s) ["needs", "gives", "occ", "steps"].forEach(k => { if (p[k] === undefined) p[k] = clone(s[k]); }); });
-  sp.filter(s => s.since >= 2 && !d.parts.some(p => p.id === s.id)).forEach(s => d.parts.push(s));
+  d.platforms.forEach(p => {
+    const s = SEED_PLATFORMS.find(x => x.id === p.id); if (!s) return;
+    p.base = clone(s.base); p.options = clone(s.options); p.covers = s.covers;
+    if (!p.sources?.length) p.sources = clone(SEED_SOURCES["platform:" + p.id] || []);
+  });
+  d.parts = d.parts.filter(p => !(p.seed && SEED_REMOVED.includes(p.id)));
+  d.parts.forEach(p => {
+    const s = sp.find(x => x.id === p.id); if (!s) return;
+    if (p.seed) ["name", "fits", "needs", "gives", "occ", "steps", "notes", "mount", "category", "est"].forEach(k => p[k] = clone(s[k]));
+    else ["needs", "gives", "occ", "steps"].forEach(k => { if (p[k] === undefined) p[k] = clone(s[k]); });
+    if (!p.sources?.length) p.sources = clone(s.sources);
+  });
+  sp.filter(s => s.since > v && !d.parts.some(p => p.id === s.id)).forEach(s => d.parts.push(s));
   d.version = DATA_VERSION;
   return d;
 }
@@ -789,8 +887,9 @@ function normalize(d) {
     p.needs = Array.isArray(p.needs) ? p.needs.filter(n => n && n.k && Array.isArray(n.in)) : [];
     p.gives = p.gives && typeof p.gives === "object" ? p.gives : {};
     p.occ = Array.isArray(p.occ) ? p.occ : []; p.steps = Array.isArray(p.steps) ? p.steps.filter(s => s && s.text) : [];
+    p.sources = Array.isArray(p.sources) ? p.sources.filter(x => x && typeof x === "object") : [];
   });
-  d.platforms.forEach(p => { if (!SLOTS[p.type]) p.type = "Pistol"; p.base = p.base || {}; p.options = Array.isArray(p.options) ? p.options : []; });
+  d.platforms.forEach(p => { if (!SLOTS[p.type]) p.type = "Pistol"; p.base = p.base || {}; p.options = Array.isArray(p.options) ? p.options : []; p.sources = Array.isArray(p.sources) ? p.sources : []; });
   [...d.builds, d.draft].filter(Boolean).forEach(fixBuild);
   return d;
 }
@@ -888,15 +987,15 @@ function evaluate(b) {
   items.forEach(x => {
     const p = x.part, f = ifaceWithout(p), res = [];
     p.needs.forEach(n => {
-      if (!(n.k in f)) { res.push({ type: "unknown", msg: `Can't check ${keyLabel(n.k).toLowerCase()}: it isn't set up for this firearm.` }); return; }
+      if (!(n.k in f)) { res.push({ type: "unknown", rule: "need:" + n.k, msg: `Can't check ${keyLabel(n.k).toLowerCase()}: it isn't set up for this firearm.` }); return; }
       if (meets(n, f)) return;
       const bridges = bridgeFor(n, f, plat, picked, 3);
       const msg = n.why || `Needs ${n.in.map(v => valLabel(n.k, v)).join(" or ")}; this build has ${valLabel(n.k, f[n.k])}.`;
-      res.push({ type: n.soft ? "warn" : bridges.length ? "fix" : "no", msg, bridges });
+      res.push({ type: n.soft ? "warn" : bridges.length ? "fix" : "no", rule: "need:" + n.k, key: n.k, msg, bridges });
     });
     p.occ.forEach(t => items.forEach(y => {
       if (y.part === p || !y.part.occ.includes(t)) return;
-      res.push({ type: "conflict", msg: `Clashes with ${pname(y.part)}: both take the ${t}.`, other: y.part.id });
+      res.push({ type: "conflict", rule: "occ", msg: `Clashes with ${pname(y.part)}: both take the ${t}.`, other: y.part.id });
     }));
     byPart[p.id] = { status: worst(res), issues: res };
     res.forEach(r => {
@@ -920,7 +1019,7 @@ function makePlan(plat, f, ordered, b) {
   const steps = [{ key: "safety", lvl: 1, mins: 2, text: SAFETY_STEP, tools: [], src: "Before you start" }];
   ordered.forEach(x => x.part.steps.forEach((s, i) => {
     if (s.cond && !meets(s.cond, f)) return;
-    steps.push({ key: `${x.part.id}:${i}`, lvl: s.lvl || 1, mins: s.mins || 0, text: fillText(s.text, f, plat), tools: s.tools || [], src: pname(x.part) });
+    steps.push({ key: `${x.part.id}:${i}`, lvl: s.lvl || 1, mins: s.mins || 0, text: fillText(s.text, f, plat), tools: s.tools || [], src: pname(x.part), part: x.part.id });
   }));
   if (ordered.length) {
     steps.push({ key: "function", lvl: 1, mins: 5, text: FUNCTION_CHECK[plat.type] || FUNCTION_CHECK.Pistol, tools: [], src: "When you're done" });
@@ -1087,7 +1186,7 @@ function renderBuild() {
         const r = cur === pt.id ? ev.byPart[pt.id] : checkPart(build, pt, active.id);
         const first = r.issues.find(i => i.type !== "unknown") || r.issues[0];
         return `<div class="opt ${r.status === "no" || r.status === "conflict" ? "nofit" : ""}" role="button" tabindex="0" data-id="${esc(pt.id)}" aria-pressed="${cur === pt.id}">
-          <div class="brand">${esc(pt.brand)} ${pt.verified ? `<span class="badge ok">Verified</span>` : ""}</div>
+          <div class="brand">${esc(pt.brand)} ${srcBadge(pt, partRuleKeys(pt))}</div>
           <div class="name">${esc(pt.name)}</div>
           <div class="p">${priceHtml(pt)}</div>
           <div class="fitline">${fitChip(r)}${first && r.status !== "fix" ? `<div class="why">${esc(first.msg)}</div>` : ""}</div>
@@ -1156,16 +1255,44 @@ function renderFitCheck(ev) {
     return `<div class="issue"><span class="ic ${i.type}">${ic}</span><div>
       <div><strong>${esc(pname(i.part))}</strong></div>
       <div class="muted" style="font-size:14px">${esc(i.msg)}</div>
+      ${issueSources(i, ev.plat)}
       ${i.bridges?.length ? `<div class="fixes">${bridgeButtons(i)}</div>` : ""}
       ${i.type === "conflict" ? `<div class="fixes"><button class="btn small" data-drop="${esc(i.part.id)}">Remove ${esc(shortName(i.part))}</button></div>` : ""}
     </div></div>`;
   }).join("") : "") +
-    `<p class="faint" style="font-size:13px;margin:10px 0 0">${ev.issues.length ? "Everything else" : "Everything"} checks out against a ${esc(ev.plat.name)}${cfg ? ` (${esc(cfg)})` : ""} and the other parts in this build. Rules come from the starter data and are unverified.</p>`;
+    `<p class="faint" style="font-size:13px;margin:10px 0 0">${ev.issues.length ? "Everything else" : "Everything"} checks out against a ${esc(ev.plat.name)}${cfg ? ` (${esc(cfg)})` : ""} and the other parts in this build.</p>` + buildCoverage(ev);
   $$("#fitBody [data-add]").forEach(b => b.addEventListener("click", () => applyParts(b.dataset.add.split(","))));
+  $$("#fitBody [data-open]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); openPart(a.dataset.open); }));
+  $$("#fitBody [data-platsrc]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); openPlatform(a.dataset.platsrc); }));
   $$("#fitBody [data-drop]").forEach(b => b.addEventListener("click", () => {
     const id = b.dataset.drop; Object.keys(build.picks).forEach(k => { if (build.picks[k] === id) delete build.picks[k]; });
     build.extras = build.extras.filter(x => x !== id); persistDraft(); renderBuild();
   }));
+}
+
+function issueSources(i, pl) {
+  const own = i.rule ? coverage(i.part, [i.rule])[i.rule].srcs : [];
+  const plat = i.key ? platKeysFor(pl, i.key).flatMap(k => coverage(pl, [k])[k].srcs) : [];
+  const all = [...own, ...plat];
+  return `<div class="srcline">${all.length ? `Source: ${srcLinks(all)}` : `<span class="faint">No source for this rule yet.</span>`}</div>`;
+}
+function buildCoverage(ev) {
+  const rows = [
+    ...ev.items.map(x => ({ name: pname(x.part), obj: x.part, keys: partRuleKeys(x.part), id: x.part.id })),
+    { name: ev.plat.name + " setup", obj: ev.plat, keys: platRuleKeys(ev.plat), plat: true },
+  ];
+  let total = 0, ok = 0; const missing = [], disputed = [];
+  rows.forEach(r => {
+    const c = coverage(r.obj, r.keys);
+    Object.values(c).forEach(x => { total++; if (x.status === "ok") ok++; });
+    const st = sourceStatus(r.obj, r.keys);
+    if (st === "disputed") disputed.push(r); else if (st !== "sourced") missing.push(r);
+  });
+  const link = r => `<a href="#" ${r.plat ? `data-platsrc="${esc(ev.plat.id)}"` : `data-open="${esc(r.id)}"`}>${esc(r.name)}</a>`;
+  return `<div class="coverage"><div class="covbar"><span style="width:${total ? Math.round(ok / total * 100) : 0}%"></span></div>
+    <div style="font-size:13.5px"><strong>${ok} of ${total}</strong> rules behind this check have a source.</div>
+    ${disputed.length ? `<div style="font-size:13px" class="bad-t">A source contradicts: ${disputed.map(link).join(", ")}</div>` : ""}
+    ${missing.length ? `<div class="faint" style="font-size:13px">Still need sources: ${missing.map(link).join(", ")}</div>` : ""}</div>`;
 }
 
 function renderPlan(ev) {
@@ -1184,10 +1311,15 @@ function renderPlan(ev) {
     ${pl.tools.length ? `<div class="tools"><div class="sw-label" style="margin:0 0 6px">Tools</div>${pl.tools.map(t => `<span class="chip">${esc(t)}</span>`).join("")}</div>` : ""}
     <ol class="steps">${pl.steps.map((s, i) => `<li class="${done[s.key] ? "done" : ""}">
       <input type="checkbox" data-step="${esc(s.key)}" ${done[s.key] ? "checked" : ""} aria-label="Step ${i + 1} done">
-      <div><div class="txt">${esc(s.text)}</div><div class="src">${i + 1}. ${esc(s.src)}${s.mins ? ` · ~${esc(dur(s.mins))}` : ""}</div></div>
+      <div><div class="txt">${esc(s.text)}</div><div class="src">${i + 1}. ${esc(s.src)}${s.mins ? ` · ~${esc(dur(s.mins))}` : ""}${s.part ? ` · ${stepSource(s.part)}` : ""}</div></div>
       <span class="lvl l${s.lvl}">${esc(LEVELS[s.lvl])}</span></li>`).join("")}</ol>
     <p class="faint" style="font-size:12.5px;margin:10px 0 0">A checklist, not a manual: follow each maker's instructions and torque specs. If a step is beyond you, a gunsmith can do it.</p>`;
   $$("#planBody [data-step]").forEach(c => c.addEventListener("change", () => { build.done[c.dataset.step] = c.checked; if (!c.checked) delete build.done[c.dataset.step]; persistDraft(); renderPlan(evaluate(build)); }));
+}
+function stepSource(id) {
+  const p = partById(id); if (!p) return "";
+  const c = coverage(p, ["steps"]).steps.srcs;
+  return c.length ? srcLinks(c) : `<span class="faint">steps unsourced</span>`;
 }
 $("#planCopy").addEventListener("click", async () => {
   const ev = evaluate(build); const pl = ev.plan;
@@ -1219,7 +1351,7 @@ $("#bSave").addEventListener("click", () => saveBuild(false));
 $("#bSaveAs").addEventListener("click", () => saveBuild(true));
 
 /* ================= Catalog ================= */
-const cState = { q: "", platform: "", cat: "", brand: "", sort: "name", priced: false };
+const cState = { q: "", platform: "", cat: "", brand: "", sort: "name", priced: false, src: "" };
 function renderCatalog() {
   renderPlatformSelect($("#cPlatform"), cState.platform, "All firearms");
   const cats = [...new Set(db.parts.map(p => p.category))].sort();
@@ -1228,7 +1360,7 @@ function renderCatalog() {
   const brands = [...new Set(db.parts.map(p => p.brand))].filter(Boolean).sort((a, b) => a.localeCompare(b));
   $("#cBrand").innerHTML = `<option value="">All brands</option>` + brands.map(c => `<option>${esc(c)}</option>`).join("");
   $("#cBrand").value = cState.brand;
-  $("#cSort").value = cState.sort; $("#cQ").value = cState.q; $("#cPriced").checked = cState.priced;
+  $("#cSort").value = cState.sort; $("#cQ").value = cState.q; $("#cPriced").checked = cState.priced; $("#cSrc").value = cState.src;
   renderCatalogRows();
 }
 function renderCatalogRows() {
@@ -1238,6 +1370,7 @@ function renderCatalogRows() {
     if (cState.cat && p.category !== cState.cat) return false;
     if (cState.brand && p.brand !== cState.brand) return false;
     if (cState.priced && !p.prices.length) return false;
+    if (cState.src && sourceStatus(p, partRuleKeys(p)) !== cState.src) return false;
     if (toks.length) {
       const hay = [p.brand, p.name, p.category, p.mount, p.notes, ...p.fits.map(f => platformById(f)?.name || "")].join(" ").toLowerCase();
       if (!toks.every(t => hay.includes(t))) return false;
@@ -1253,13 +1386,14 @@ function renderCatalogRows() {
     "price-desc": (a, b) => (pv(b) ?? -1) - (pv(a) ?? -1) || byName(a, b),
     "recent": (a, b) => lastDate(b).localeCompare(lastDate(a)) || byName(a, b),
   }[cState.sort]);
-  $("#cCount").textContent = `Showing ${list.length} of ${db.parts.length} parts · ${db.parts.reduce((n, p) => n + p.prices.length, 0)} price entries`;
+  const nSrc = db.parts.filter(p => sourceStatus(p, partRuleKeys(p)) === "sourced").length;
+  $("#cCount").textContent = `Showing ${list.length} of ${db.parts.length} parts · ${nSrc} fully sourced · ${db.parts.reduce((n, p) => n + p.prices.length, 0)} price entries`;
   $("#cRows").innerHTML = list.length ? list.map(p => {
     const fits = p.fits.map(f => platformById(f)).filter(Boolean);
     const nRet = latestByRetailer(p).length;
     const hard = p.needs.filter(n => !n.soft).length;
     return `<tr data-id="${esc(p.id)}">
-      <td><div class="pb">${esc(p.brand)}</div><div class="pn">${esc(p.name)} ${p.verified ? `<span class="badge ok">Verified</span>` : ""}</div>${p.mount ? `<div class="faint" style="font-size:12.5px">${esc(p.mount)}</div>` : ""}${hard ? `<div class="faint" style="font-size:12.5px">${hard} fit rule${hard === 1 ? "" : "s"}${p.steps.length ? ` · ${p.steps.length} install step${p.steps.length === 1 ? "" : "s"}` : ""}</div>` : ""}</td>
+      <td><div class="pb">${esc(p.brand)}</div><div class="pn">${esc(p.name)}</div><div style="margin:2px 0">${srcBadge(p, partRuleKeys(p))}${p.verified ? ` <span class="badge ok">Checked by me</span>` : ""}</div>${p.mount ? `<div class="faint" style="font-size:12.5px">${esc(p.mount)}</div>` : ""}${hard ? `<div class="faint" style="font-size:12.5px">${hard} fit rule${hard === 1 ? "" : "s"}${p.steps.length ? ` · ${p.steps.length} install step${p.steps.length === 1 ? "" : "s"}` : ""}</div>` : ""}</td>
       <td class="cat">${esc(p.category)}</td>
       <td>${fits.slice(0, 3).map(f => `<span class="chip" data-plat="${esc(f.id)}">${esc(f.name)}</span>`).join("")}${fits.length > 3 ? `<span class="faint" style="font-size:12.5px">+${fits.length - 3} more</span>` : ""}</td>
       <td class="num">${priceHtml(p)}${nRet > 1 ? `<div class="faint" style="font-size:12px">${nRet} retailers</div>` : ""}</td>
@@ -1277,11 +1411,94 @@ $("#cCat").addEventListener("change", e => { cState.cat = e.target.value; render
 $("#cBrand").addEventListener("change", e => { cState.brand = e.target.value; renderCatalogRows(); });
 $("#cSort").addEventListener("change", e => { cState.sort = e.target.value; renderCatalogRows(); });
 $("#cPriced").addEventListener("change", e => { cState.priced = e.target.checked; renderCatalogRows(); });
+$("#cSrc").addEventListener("change", e => { cState.src = e.target.value; renderCatalogRows(); });
 $("#cAdd").addEventListener("click", () => openEdit(null, cState.platform ? { fits: [cState.platform] } : {}));
 
 /* ================= Part detail (prices, fit rules, steps) ================= */
+function partRuleDesc(p, key) {
+  const [t, k] = key.split(":");
+  if (t === "fits") return p.fits.map(f => platformById(f)?.name).filter(Boolean).join(", ") || "none set";
+  if (t === "need") { const n = p.needs.find(n => n.k === k); return n ? needText(n) : ""; }
+  if (t === "give") return esc(valLabel(k, p.gives[k]));
+  if (t === "occ") return esc(p.occ.join(", ")) + ": clashes with other parts that do";
+  if (t === "steps") return `${p.steps.length} step${p.steps.length === 1 ? "" : "s"}, listed below`;
+  return "";
+}
+function rulesHtml(obj, keys, descFn, pl) {
+  const cov = coverage(obj, keys);
+  return `<div class="rules"><h4>Rules &amp; their sources</h4>${keys.length ? `<ul class="rlist">${keys.map(k => {
+    const c = cov[k]; const ic = c.status === "ok" ? "✓" : c.status === "disputed" ? "✕" : "–";
+    return `<li><span class="rs ${c.status}">${ic}</span><div><strong>${esc(ruleLabel(k, pl))}.</strong> ${k === "fits" ? esc(descFn(k)) : descFn(k)}
+      <div class="srcline">${c.srcs.length ? srcLinks(c.srcs) : `<span class="faint">Needs a source.</span>`}</div></div></li>`;
+  }).join("")}</ul>` : `<p class="muted" style="margin:0">No rules.</p>`}</div>`;
+}
+function sourcesHtml(obj, keys, pl) {
+  const list = obj.sources || [];
+  return `<div class="sources"><h4>Sources (${list.length})</h4>
+    ${list.map(s => `<div class="src">
+      <div class="src-top"><a href="${esc(safeUrl(s.url))}" target="_blank" rel="noopener">${esc(s.title || hostOf(s.url))}</a>
+        <span class="badge">${esc(SRC_KIND[s.kind] || "Other")}</span>
+        ${s.verdict && s.verdict !== "confirmed" ? `<span class="fit ${s.verdict === "contradicted" ? "no" : "fix"}">${esc(VERDICTS[s.verdict])}</span>` : ""}
+        <button class="x" data-srcdel="${esc(s.id)}" aria-label="Remove source">×</button></div>
+      ${s.quote ? `<blockquote>“${esc(s.quote)}”</blockquote>` : ""}
+      ${s.note ? `<div class="src-note">${esc(s.note)}</div>` : ""}
+      <div class="faint" style="font-size:12.5px">${esc(s.publisher || hostOf(s.url))}${s.checked ? ` · checked ${esc(s.checked)}` : ""} · backs: ${(s.covers || []).map(k => esc(ruleLabel(k, pl).toLowerCase())).join(", ") || "nothing yet"}</div>
+    </div>`).join("")}
+    <details class="addsrc"><summary class="btn small">+ Add a source</summary>
+      <form class="srcform" autocomplete="off">
+        <label class="f wide">Link<input type="url" name="url" required placeholder="https://maker.com/product-page"></label>
+        <label class="f">Publisher<input type="text" name="publisher" placeholder="e.g. Trijicon"></label>
+        <label class="f">Type<select name="kind">${Object.entries(SRC_KIND).map(([k, v]) => `<option value="${k}">${v}</option>`).join("")}</select></label>
+        <label class="f wide">Page title<input type="text" name="title"></label>
+        <label class="f wide">Quote (copy the exact words)<textarea name="quote" rows="2"></textarea></label>
+        <label class="f">It<select name="verdict">${Object.entries(VERDICTS).map(([k, v]) => `<option value="${k}">${v.toLowerCase()} the rules</option>`).join("")}</select></label>
+        <label class="f">Checked on<input type="date" name="checked" value="${today()}"></label>
+        <div class="wide"><div class="f" style="margin-bottom:4px">Which rules does it back?</div><div class="cks">${keys.map(k => `<label><input type="checkbox" name="covers" value="${esc(k)}"> ${esc(ruleLabel(k, pl))}</label>`).join("")}</div></div>
+        <div class="wide"><button class="btn dark" type="submit">Save source</button></div>
+      </form></details></div>`;
+}
+function bindSources(dlg, obj, rerender) {
+  $$("[data-srcdel]", dlg).forEach(b => b.onclick = () => {
+    if (!confirm("Remove this source?")) return;
+    obj.sources = obj.sources.filter(x => x.id !== b.dataset.srcdel); save(); rerender(); renderView();
+  });
+  const form = $(".srcform", dlg); if (!form) return;
+  form.onsubmit = e => {
+    e.preventDefault();
+    const f = new FormData(form); const v = k => String(f.get(k) || "").trim();
+    const covers = f.getAll("covers").map(String);
+    if (!safeUrl(v("url"))) { alert("Add a link that starts with http:// or https://"); return; }
+    if (!covers.length) { alert("Tick at least one rule this source backs."); return; }
+    obj.sources = obj.sources || [];
+    obj.sources.push({ id: uid(), url: v("url"), publisher: v("publisher") || hostOf(v("url")), title: v("title"), kind: v("kind"), quote: v("quote"), verdict: v("verdict"), checked: v("checked") || today(), covers });
+    save(); rerender(); renderView(); toast("Source saved");
+  };
+}
+function platRuleDesc(pl, key) {
+  const [t, k] = key.split(":");
+  if (t === "base") return esc(valLabel(k, pl.base[k]));
+  if (t === "option") { const o = pl.options.find(o => o.id === k); return o ? esc(o.choices.map(c => c.label).join(" / ")) : ""; }
+  return "";
+}
+function openPlatform(id) {
+  const pl = platformById(id); if (!pl) return;
+  const keys = platRuleKeys(pl);
+  const dlg = $("#dlgPart");
+  dlg.innerHTML = `<div class="dlg-head"><div style="flex:1">
+      <div class="faint" style="font:700 12px var(--cond);letter-spacing:.06em;text-transform:uppercase">${esc(pl.type)} setup</div>
+      <h2>${esc(pl.name)}</h2><div style="margin-top:6px">${srcBadge(pl, keys)} <span class="muted" style="font-size:13px">${esc(pl.covers || "")}</span></div></div>
+      <button class="x" data-close aria-label="Close">×</button></div>
+    <div class="dlg-body">
+      <p class="muted" style="margin:0;font-size:14px">These facts about the firearm drive the fit check: which optic cut, which rail, and so on.</p>
+      ${rulesHtml(pl, keys, k => platRuleDesc(pl, k), pl)}
+      ${sourcesHtml(pl, keys, pl)}
+    </div>`;
+  dlg.querySelector("[data-close]").onclick = () => dlg.close();
+  bindSources(dlg, pl, () => openPlatform(id));
+  if (!dlg.open) dlg.showModal();
+}
 function needText(n) {
-  return `${n.soft ? "Recommended" : "Needs"}: ${n.in.map(v => valLabel(n.k, v)).join(" or ")}${n.why ? ` <span class="faint">(${esc(n.why)})</span>` : ""}`;
+  return `${n.soft ? "Recommended" : "Needs"}: ${esc(n.in.map(v => valLabel(n.k, v)).join(" or "))}${n.why ? ` <span class="faint">(${esc(n.why)})</span>` : ""}`;
 }
 function openPart(id) {
   const p = partById(id); if (!p) return;
@@ -1306,7 +1523,7 @@ function openPart(id) {
         <div class="pb faint" style="font:700 12px var(--cond);letter-spacing:.06em;text-transform:uppercase">${esc(p.brand)} · ${esc(p.category)}</div>
         <h2>${esc(p.name)}</h2>
         <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          ${p.verified ? `<span class="badge ok">Fitment verified</span>` : `<span class="badge">Unverified</span>`}
+          ${srcBadge(p, partRuleKeys(p))}${p.verified ? `<span class="badge ok">Checked by me</span>` : ""}
           ${p.mount ? `<span class="muted" style="font-size:13px">${esc(p.mount)}</span>` : ""}
           ${p.est != null && p.est !== "" ? `<span class="muted" style="font-size:13px">Est. street price ~${money(p.est)}</span>` : ""}
         </div>
@@ -1316,18 +1533,12 @@ function openPart(id) {
     <div class="dlg-body">
       ${p.notes ? `<div>${esc(p.notes)}</div>` : ""}
       <div><h4>Fits</h4>${fits.length ? fits.map(f => `<span class="chip" data-plat="${esc(f.id)}">${esc(f.name)}</span>`).join("") : `<span class="faint">No firearms set.</span>`}</div>
-      <div class="rules">
-        <h4>Fit rules</h4>
-        ${p.needs.length || gives.length || p.occ.length ? `<ul>
-          ${p.needs.map(n => `<li><strong>${esc(keyLabel(n.k))}.</strong> ${needText(n)}</li>`).join("")}
-          ${gives.map(([k, v]) => `<li><strong>Changes ${esc(keyLabel(k).toLowerCase())}</strong> to ${esc(valLabel(k, v))}</li>`).join("")}
-          ${p.occ.length ? `<li><strong>Takes the place of.</strong> ${esc(p.occ.join(", "))}: clashes with other parts that do</li>` : ""}
-        </ul>` : `<p class="muted" style="margin:0">No rules beyond the firearm list.</p>`}
-      </div>
+      ${rulesHtml(p, partRuleKeys(p), key => partRuleDesc(p, key))}
       <div>
         <h4>Install steps</h4>
         ${p.steps.length ? `<ol class="psteps">${p.steps.map(s => `<li><span class="lvl l${s.lvl || 1}">${esc(LEVELS[s.lvl || 1])}</span> ${esc(s.text)}${s.cond ? ` <span class="faint">(only with ${esc(s.cond.in.map(v => valLabel(s.cond.k, v)).join(" or "))})</span>` : ""}${s.tools?.length ? `<div class="faint" style="font-size:12.5px">Tools: ${esc(s.tools.join(", "))}</div>` : ""}</li>`).join("")}</ol>` : `<p class="muted" style="margin:0">Drop-in; no install steps.</p>`}
       </div>
+      ${sourcesHtml(p, partRuleKeys(p))}
       <div>
         <h4>Retailer prices</h4>
         ${latest.length ? `<table class="prices"><thead><tr><th>Retailer</th><th>Price</th><th>Change</th><th>Checked</th><th></th><th></th></tr></thead><tbody>${latest.map(e => row(e, true)).join("")}</tbody></table>`
@@ -1349,7 +1560,7 @@ function openPart(id) {
       <datalist id="retailerList">${[...new Set([...RETAILERS, ...db.parts.flatMap(x => x.prices.map(e => e.retailer))])].map(r => `<option value="${esc(r)}">`).join("")}</datalist>
       <div class="dlg-foot">
         <button class="btn danger" data-delete>Delete part</button>
-        <button class="btn" data-verify>${p.verified ? "Mark unverified" : "Mark fitment verified"}</button>
+        <button class="btn" data-verify>${p.verified ? "Unmark “checked by me”" : "I've checked this myself"}</button>
         <button class="btn" data-edit>Edit part</button>
       </div>
     </div>`;
@@ -1357,6 +1568,7 @@ function openPart(id) {
   $$("[data-plat]", dlg).forEach(c => c.onclick = () => { dlg.close(); cState.platform = c.dataset.plat; setView("catalog"); });
   $$("[data-del]", dlg).forEach(b => b.onclick = () => { p.prices = p.prices.filter(e => e.id !== b.dataset.del); save(); openPart(id); renderView(); });
   dlg.querySelector("[data-verify]").onclick = () => { p.verified = !p.verified; save(); openPart(id); renderView(); };
+  bindSources(dlg, p, () => openPart(id));
   dlg.querySelector("[data-edit]").onclick = () => { dlg.close(); openEdit(id); };
   dlg.querySelector("[data-delete]").onclick = () => {
     if (!confirm(`Delete “${p.brand} ${p.name}” and its prices?`)) return;
@@ -1376,7 +1588,7 @@ function openPart(id) {
 
 /* ================= Add / edit part ================= */
 function openEdit(id, preset = {}) {
-  const p = id ? partById(id) : { id: null, brand: "", name: "", category: preset.category || "", fits: preset.fits || [], est: "", mount: "", notes: "", url: "", verified: false, needs: [], gives: {}, occ: [], steps: [] };
+  const p = id ? partById(id) : { id: null, brand: "", name: "", category: preset.category || "", fits: preset.fits || [], est: "", mount: "", notes: "", url: "", verified: false, needs: [], gives: {}, occ: [], steps: [], sources: [] };
   const dlg = $("#dlgEdit");
   const cats = [...new Set([...db.parts.map(x => x.category), ...Object.values(SLOTS).flat().flatMap(s => s.cats || [])])].sort();
   const brands = [...new Set(db.parts.map(x => x.brand))].filter(Boolean).sort();
@@ -1404,7 +1616,7 @@ function openEdit(id, preset = {}) {
               Keys: ${Object.keys(KEYS).map(k => `<code>${esc(k)}</code>`).join(" ")}.</p>
             <textarea name="rules" rows="12" spellcheck="false" style="font:12.5px/1.4 ui-monospace,Menlo,Consolas,monospace">${esc(rules)}</textarea>
           </details>
-          <label class="full" style="display:flex;gap:6px;align-items:center;font-size:14px"><input type="checkbox" name="verified" ${p.verified ? "checked" : ""}> I've checked this fitment against the maker's list</label>
+          <label class="full" style="display:flex;gap:6px;align-items:center;font-size:14px"><input type="checkbox" name="verified" ${p.verified ? "checked" : ""}> I've checked this part myself</label>
         </div>
         <p class="faint" style="font-size:12.5px;margin:0">Parts show up in the builder under the matching slot: Pistol optic, Rifle optic, Sights, Trigger, Weapon light, Magazine, Controls, Holster, Stock, Grip, Charging handle, Handguard, Muzzle device, Forend, Shell carrier. Other categories (plates, mounts, shop work…) are offered as fixes and land in "Adapters &amp; add-ons".</p>
         <div class="dlg-foot"><button class="btn" type="button" data-close>Cancel</button><button class="btn primary" type="submit">${id ? "Save changes" : "Add part"}</button></div>
@@ -1435,7 +1647,7 @@ function openEdit(id, preset = {}) {
     if (id) { target = partById(id); Object.assign(target, data); target.seed = false; }
     else {
       let nid = slug(data.brand + "-" + data.name); while (partById(nid)) nid += "-" + uid().slice(0, 3);
-      target = { id: nid, ...data, seed: false, prices: [] }; db.parts.push(target);
+      target = { id: nid, ...data, seed: false, prices: [], sources: [] }; db.parts.push(target);
     }
     save(); dlg.close(); renderView(); toast(id ? "Part updated" : "Part added");
     if (!id) openPart(target.id);
@@ -1452,11 +1664,13 @@ function renderFirearms() {
     return `<h2 class="sec">${t}s</h2><div class="grid">${ps.map(p => `<div class="card">
       <h3>${esc(p.name)}</h3><div class="muted" style="font-size:14px">${esc(p.covers || "")}</div>
       <div class="faint" style="font-size:13px">${counts[p.id] || 0} parts in catalog${p.options.length ? ` · options: ${esc(p.options.map(o => o.label).join(", "))}` : ""}${!Object.keys(p.base).length && !p.options.length ? " · no fit setup yet" : ""}</div>
-      <div class="row"><button class="btn small primary" data-build="${esc(p.id)}">Build one</button><button class="btn small" data-parts="${esc(p.id)}">See parts</button><button class="btn small danger" data-del="${esc(p.id)}">Remove</button></div>
+      <div>${srcBadge(p, platRuleKeys(p))}</div>
+      <div class="row"><button class="btn small primary" data-build="${esc(p.id)}">Build one</button><button class="btn small" data-parts="${esc(p.id)}">See parts</button><button class="btn small" data-psrc="${esc(p.id)}">Setup &amp; sources</button><button class="btn small danger" data-del="${esc(p.id)}">Remove</button></div>
     </div>`).join("")}</div>`;
   }).join("");
   $$("#fList [data-build]").forEach(b => b.onclick = () => { build = newBuild(b.dataset.build); slotIdx = 0; persistDraft(); setView("build"); });
   $$("#fList [data-parts]").forEach(b => b.onclick = () => { cState.platform = b.dataset.parts; setView("catalog"); });
+  $$("#fList [data-psrc]").forEach(b => b.onclick = () => openPlatform(b.dataset.psrc));
   $$("#fList [data-del]").forEach(b => b.onclick = () => {
     const p = platformById(b.dataset.del); const n = counts[p.id] || 0;
     if (!confirm(`Remove ${p.name}?${n ? ` It's listed as a fit on ${n} parts; those links will be removed.` : ""}`)) return;
@@ -1471,7 +1685,7 @@ $("#fAdd").addEventListener("click", () => {
   const name = $("#fName").value.trim(); if (!name) { $("#fName").focus(); return; }
   let id = slug(name); while (platformById(id)) id += "-" + uid().slice(0, 3);
   const src = platformById($("#fCopy").value);
-  const np = { id, name, type: src ? src.type : $("#fType").value, covers: $("#fCovers").value.trim(), base: src ? clone(src.base) : {}, options: src ? clone(src.options) : [] };
+  const np = { id, name, type: src ? src.type : $("#fType").value, covers: $("#fCovers").value.trim(), base: src ? clone(src.base) : {}, options: src ? clone(src.options) : [], sources: [] };
   db.platforms.push(np);
   if (src && $("#fCopyFits").checked) db.parts.forEach(p => { if (p.fits.includes(src.id)) p.fits.push(id); });
   $("#fName").value = ""; $("#fCovers").value = "";
@@ -1516,9 +1730,9 @@ $("#dataMenu").addEventListener("click", e => {
   $("#dataMenu").open = false;
   if (act === "export-json") download(`parts-bin-${today()}.json`, JSON.stringify({ ...db, draft: undefined }, null, 2), "application/json");
   if (act === "export-csv") {
-    const rows = [["brand", "name", "category", "mount", "fits", "est_price", "best_price", "best_retailer", "verified", "retailer", "price", "date", "in_stock", "url"]];
+    const rows = [["brand", "name", "category", "mount", "fits", "est_price", "best_price", "best_retailer", "source_status", "sources", "checked_by_me", "retailer", "price", "date", "in_stock", "url"]];
     db.parts.forEach(p => {
-      const b = bestPrice(p); const base = [p.brand, p.name, p.category, p.mount, p.fits.map(f => platformById(f)?.name || f).join("; "), p.est ?? "", b?.price ?? "", b?.retailer ?? "", p.verified ? "yes" : "no"];
+      const b = bestPrice(p); const base = [p.brand, p.name, p.category, p.mount, p.fits.map(f => platformById(f)?.name || f).join("; "), p.est ?? "", b?.price ?? "", b?.retailer ?? "", sourceStatus(p, partRuleKeys(p)), p.sources.map(x => x.url).join(" "), p.verified ? "yes" : "no"];
       if (!p.prices.length) rows.push([...base, "", "", "", "", p.url]);
       p.prices.forEach(e => rows.push([...base, e.retailer, e.price, e.date, e.inStock === false ? "no" : "yes", e.url || p.url]));
     });
