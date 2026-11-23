@@ -222,6 +222,18 @@
   .fit.no, .fit.conflict { color: var(--bad); background: color-mix(in srgb, var(--bad) 12%, transparent); }
   .fit.unknown { color: var(--ink-2); background: var(--panel-2); }
   .opt .fitline { grid-column: 1 / -1; margin-top: 4px; }
+  .opt.has-img { grid-template-columns: 64px 1fr auto; column-gap: 12px; }
+  .opt.has-img .brand, .opt.has-img .name { grid-column: 2; }
+  .opt.has-img .p { grid-column: 3; }
+  .opt.has-img .fitline, .opt.has-img .meta, .opt.has-img .more { grid-column: 2 / -1; }
+  .opt-img, .cat-img { width: 64px; height: 48px; border-radius: 8px; object-fit: contain; background: #fff; border: 1px solid var(--line); grid-column: 1; grid-row: 1 / span 3; align-self: start; }
+  .opt-img.ph, .cat-img.ph { display: grid; place-items: center; background: var(--panel-2); color: var(--ink-3); font: 700 10px var(--cond); letter-spacing: .06em; text-transform: uppercase; }
+  .pcell { display: flex; gap: 12px; align-items: flex-start; }
+  .cat-img { flex: none; }
+  .dlg-photo { margin: 0; display: grid; gap: 4px; justify-items: center; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+  .dlg-photo img { max-height: 220px; width: auto; max-width: 100%; object-fit: contain; }
+  .dlg-photo figcaption { font-size: 12px; color: #6b6e74; justify-self: end; }
+  .dlg-photo figcaption a { color: inherit; }
   .opt .brand .fit { text-transform: none; letter-spacing: 0; font: 600 11px/1.2 var(--font); padding: 2px 6px; margin-left: 4px; vertical-align: 1px; }
   .opt .why { font-size: 12.5px; color: var(--ink-2); margin-top: 3px; }
   .opt.nofit { opacity: .72; }
@@ -3351,6 +3363,16 @@ function rearSvg(plat, b, iface) {
 }
 let stageView = "side";
 
+/* ================= Photos =================
+   Product photos are the makers' own images, shrunk to thumbnails in img/ and credited in the part
+   details. Parts without one show a placeholder; any part can point at its own photo link instead. */
+const PHOTO_CREDIT = {"aimpoint-micro-t-2":["ar15discounts.com","https://ar15discounts.com/products/aimpoint-micro-t-2-2-moa-ar15-ready-lrp-mount-39mm-spacer/"],"alg-defense-akt-enhanced-trigger":["rifleconfigurator.com","https://www.rifleconfigurator.com/catalog/triggers/alg-akt-el-ak-trigger"],"b5-systems-bravo-stock":["b5systems.com","https://b5systems.com/collection/ar/bravo-stock/"],"bcm-gunfighter-charging-handle-mk2-medium-latch":["bravocompanyusa.com","https://bravocompanyusa.com/bcm-asymmetric-mk2-charging-handle-medium-latch-5-56mm-223/"],"bcm-gunfighter-mod-3-grip":["bravocompanyusa.com","https://bravocompanyusa.com/bcm-grip-mod-3-black/"],"c-h-precision-glock-mos-rmr-plate-gl-rsh":["chpws.com","https://chpws.com/product/glock-mos-v4-mil-leo-to-trijicon-rmr-sro-holosun-407c-507c-508c-508t/"],"c-h-precision-hellcat-osp-to-407k-507k-plate":["chpws.com","https://chpws.com/product/springfield-hellcat-to-holosun-407k-507k-adapter-plate/"],"c-h-precision-m-p-c-o-r-e-rmr-plate":["chpws.com","https://chpws.com/product/sw-core-2-0-1-975/"],"c-h-precision-p320-rmr-filler-plate":["chpws.com","https://chpws.com/product/sig-p320-w-r1p-dpp-cut-w-rmr-holosun-holes-filler-plate-for-rmr-sro-holosun/"],"egw-cz-p-10-c-optic-plate-rmr":["egwguns.com","https://egwguns.com/cz-p-10c-optic-mounts-rmr-407k-507k-eps-carry-509t/"],"eotech-exps3":["eotechinc.com","https://www.eotechinc.com/products/eotech-hws-exps3"],"geissele-ssa-e-two-stage-trigger":["opticsplanet.com","https://www.opticsplanet.com/geissele-ssa-e-super-semi-automatic-enhanced-trigger-large-pin.html"],"holosun-507c-x2":["holosun.com","https://www.holosun.com/products/hs507c-x2"],"holosun-507k-x2":["holosun.com","https://www.holosun.com/products/hs507k-x2"],"holosun-eps-carry":["holosun.com","https://www.holosun.com/products/eps-carry-rd-2"],"holosun-hs510c":["holosun.com","https://www.holosun.com/products/hs510c"],"magpul-hunter-x-22-stock":["magpul.com","https://magpul.com/hunterx-22stock-ruger10-22.html"],"magpul-m-lok-aluminum-rail-section-5-slot":["magpul.com","https://magpul.com/catalogsearch/result/?q=M-LOK+aluminum+rail+5+slots"],"magpul-moe-ak-grip":["magpul.com","https://magpul.com/moeakgrip-ak-47-ak-74.html"],"magpul-moe-forend-remington-870":["magpul.com","https://magpul.com/moe-m-lok-forend-remington-870.html"],"magpul-moe-k2-grip":["magpul.com","https://magpul.com/moe-k2-grip-ar15-m4.html"],"magpul-moe-sl-carbine-stock":["magpul.com","https://magpul.com/moe-sl-carbine-stock-mil-spec.html"],"magpul-pmag-17-gl9":["magpul.com","https://magpul.com/pmag-17-gl9-glock-17.html"],"magpul-pmag-30-ak-akm-moe":["magpul.com","https://magpul.com/pmag-30-ak-akm-moe.html"],"magpul-pmag-30-ar-m4-gen-m3":["magpul.com","https://magpul.com/pmag-30-ar-m4-gen-m3.html"],"magpul-sga-stock-mossberg-500-590":["magpul.com","https://magpul.com/sgastock-mossberg500-590-590a1.html"],"magpul-sga-stock-remington-870":["magpul.com","https://magpul.com/sga-stock-remington-870.html"],"magpul-zhukov-s-folding-stock":["magpul.com","https://magpul.com/zhukov-sfoldingstock-ak47-ak74.html"],"mesa-tactical-sureshell-side-saddle-6-shell":["mesatactical.com","https://mesatactical.com/sureshell-saddle-mount-carrier-and-rail-for-rem-870-12-ga/"],"overwatch-precision-tac-trigger-glock":["overwatchprecision.com","https://overwatchprecision.com/tac-trigger-for-glock/"],"safariland-578-gls-pro-fit":["safariland.com","https://safariland.com/products/model-578-gls-pro-fit-holster-with-paddle-57800#gbaid824739"],"safariland-6390rds-als":["safariland.com","https://safariland.com/products/model-6390rds-als-mid-ride-level-i-retention-duty-holster-model_6390rds"],"shield-arms-steel-magazine-catch-glock-43x-48":["opticsplanet.com","https://www.opticsplanet.com/shield-arms-magazine-catch-release-fits-glock-43x-48-steel.html"],"streamlight-tlr-1-hl":["streamlight.com","https://www.streamlight.com/products/detail/tlr-1-hl"],"streamlight-tlr-7-sub":["streamlight.com","https://www.streamlight.com/products/detail/tlr-7-sub"],"surefire-warcomp-5-56":["surefire.com","https://www.surefire.com/warcomp-flash-hider/"],"surefire-x300u-a":["surefire.com","https://www.surefire.com/x300u-a-weaponlight/"],"tech-sights-tsr200-aperture-sight":["tech-sights.com","https://www.tech-sights.com/ruger-products/"],"timney-ar-15-competition-trigger":["timneytriggers.com","https://timneytriggers.com/ar-15-competition-trigger/"],"vedder-lighttuck-iwb":["vedderholsters.com","https://www.vedderholsters.com/holsters/lighttuck/"],"vortex-sport-cantilever-30-mm-mount":["opticsplanet.com","https://www.opticsplanet.com/v/cm-202-vortex-cantilever-ring-mount-for.html"],"vortex-strike-eagle-1-8x24":["vortexoptics.com","https://vortexoptics.com/vortex-strike-eagle-1-8x24-ar-bdc3.html"],"xs-sights-dxt2-big-dot-glock":["xssights.com","https://xssights.com/products/dxt2-big-dot-night-sights-fits-glock.html"]};
+function photoOf(p) { return safeUrl(p.photo) || (PHOTO_CREDIT[p.id] ? `img/${p.id}.jpg` : ""); }
+function thumbHtml(p, cls) {
+  const u = photoOf(p);
+  return u ? `<img class="${cls}" src="${esc(u)}" alt="" loading="lazy" decoding="async">` : `<div class="${cls} ph" aria-hidden="true">${esc((p.category || "Part").split(" ").pop())}</div>`;
+}
+
 /* ================= Tabs ================= */
 let view = "build";
 function setView(v) {
@@ -3582,7 +3604,8 @@ function renderParts() {
       (opts.length ? opts.map(pt => {
         const r = cur === pt.id ? ev.byPart[pt.id] : checkPart(build, pt, active.id);
         const first = r.issues.find(i => i.type !== "unknown") || r.issues[0];
-        return `<div class="opt ${r.status === "no" || r.status === "conflict" ? "nofit" : ""}" role="button" tabindex="0" data-id="${esc(pt.id)}" aria-pressed="${cur === pt.id}">
+        return `<div class="opt has-img ${r.status === "no" || r.status === "conflict" ? "nofit" : ""}" role="button" tabindex="0" data-id="${esc(pt.id)}" aria-pressed="${cur === pt.id}">
+          ${thumbHtml(pt, "opt-img")}
           <div class="brand">${esc(pt.brand)} ${srcBadge(pt, partRuleKeys(pt))}</div>
           <div class="name">${esc(pt.name)}</div>
           <div class="p">${priceHtml(pt)}</div>
@@ -3802,7 +3825,7 @@ function renderCatalogRows() {
     const nRet = latestByRetailer(p).length;
     const hard = p.needs.filter(n => !n.soft).length;
     return `<tr data-id="${esc(p.id)}">
-      <td><div class="pb">${esc(p.brand)}</div><div class="pn">${esc(p.name)}</div><div style="margin:2px 0">${srcBadge(p, partRuleKeys(p))}${p.verified ? ` <span class="badge ok">Checked by me</span>` : ""}</div>${p.mount ? `<div class="faint" style="font-size:12.5px">${esc(p.mount)}</div>` : ""}${hard ? `<div class="faint" style="font-size:12.5px">${hard} fit rule${hard === 1 ? "" : "s"}${p.steps.length ? ` · ${p.steps.length} install step${p.steps.length === 1 ? "" : "s"}` : ""}</div>` : ""}</td>
+      <td><div class="pcell">${thumbHtml(p, "cat-img")}<div><div class="pb">${esc(p.brand)}</div><div class="pn">${esc(p.name)}</div><div style="margin:2px 0">${srcBadge(p, partRuleKeys(p))}${p.verified ? ` <span class="badge ok">Checked by me</span>` : ""}</div>${p.mount ? `<div class="faint" style="font-size:12.5px">${esc(p.mount)}</div>` : ""}${hard ? `<div class="faint" style="font-size:12.5px">${hard} fit rule${hard === 1 ? "" : "s"}${p.steps.length ? ` · ${p.steps.length} install step${p.steps.length === 1 ? "" : "s"}` : ""}</div>` : ""}</div></div></td>
       <td class="cat">${esc(p.category)}</td>
       <td>${fits.slice(0, 3).map(f => `<span class="chip" data-plat="${esc(f.id)}">${esc(f.name)}</span>`).join("")}${fits.length > 3 ? `<span class="faint" style="font-size:12.5px">+${fits.length - 3} more</span>` : ""}</td>
       <td class="num">${priceHtml(p)}${nRet > 1 ? `<div class="faint" style="font-size:12px">${nRet} retailers</div>` : ""}</td>
@@ -3943,6 +3966,7 @@ function openPart(id) {
       <button class="x" data-close aria-label="Close">×</button>
     </div>
     <div class="dlg-body">
+      ${photoOf(p) ? `<figure class="dlg-photo"><img src="${esc(photoOf(p))}" alt="${esc(p.brand + " " + p.name)}"><figcaption>${PHOTO_CREDIT[p.id] && !p.photo ? `Photo: <a href="${esc(safeUrl(PHOTO_CREDIT[p.id][1]))}" target="_blank" rel="noopener">${esc(PHOTO_CREDIT[p.id][0])} ↗</a>` : "Photo from your link"}</figcaption></figure>` : ""}
       ${p.notes ? `<div>${esc(p.notes)}</div>` : ""}
       <div><h4>Fits</h4>${fits.length ? fits.map(f => `<span class="chip" data-plat="${esc(f.id)}">${esc(f.name)}</span>`).join("") : `<span class="faint">No firearms set.</span>`}</div>
       ${rulesHtml(p, partRuleKeys(p), key => partRuleDesc(p, key))}
@@ -4020,6 +4044,7 @@ function openEdit(id, preset = {}) {
           <label class="f">Mount / footprint<input type="text" name="mount" value="${esc(p.mount)}" placeholder="e.g. RMR footprint"></label>
           <label class="f">Est. street price ($)<input type="number" name="est" min="0" step="0.01" value="${p.est ?? ""}"></label>
           <label class="f">Product page<input type="url" name="url" value="${esc(p.url)}" placeholder="https://"></label>
+          <label class="f full">Photo link (optional)<input type="url" name="photo" value="${esc(p.photo || "")}" placeholder="https:// link to a product image"></label>
           <label class="f full">Notes<textarea name="notes" rows="2">${esc(p.notes)}</textarea></label>
           <div class="full"><div class="f" style="margin-bottom:4px">Fits</div><div class="fits-box">${groups}</div></div>
           <details class="full adv"><summary>Fit rules &amp; install steps (advanced)</summary>
@@ -4049,7 +4074,7 @@ function openEdit(id, preset = {}) {
     } catch (err) { toast("The fit rules aren't valid JSON in the expected shape. Check the format note above them."); return; }
     const estRaw = v("est");
     const data = {
-      brand: v("brand"), name: v("name"), category: v("category") || "Other", mount: v("mount"), notes: v("notes"), url: v("url"),
+      brand: v("brand"), name: v("name"), category: v("category") || "Other", mount: v("mount"), notes: v("notes"), url: v("url"), photo: v("photo"),
       est: estRaw === "" ? null : Number(estRaw), fits: f.getAll("fits").map(String), verified: f.get("verified") === "on",
       needs: (r.needs || []).map(n => ({ ...n, in: n.in.map(String) })), gives: r.gives && typeof r.gives === "object" ? r.gives : {},
       occ: Array.isArray(r.occupies) ? r.occupies.map(String) : [], steps: r.steps || [],
