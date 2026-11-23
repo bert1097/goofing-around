@@ -20,6 +20,7 @@
     --accent-soft: #fff0e9;
     --good: #1f8a4c;
     --bad: #c23a2b;
+    --warn: #a86400;
     --stage-a: #ffffff;
     --stage-b: #e9e7e2;
     --steel: #2b2c2f;
@@ -42,6 +43,7 @@
       --accent-soft: #3a2217;
       --good: #4cc483;
       --bad: #ff7a66;
+      --warn: #f0a640;
       --stage-a: #2a2b2f;
       --stage-b: #17181a;
       --steel: #0e0f10;
@@ -180,6 +182,51 @@
   .summary .none { color: var(--ink-3); }
   .summary .actions { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 0; justify-content: flex-end; }
 
+  .cfg { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+  .cfg:empty { display: none; }
+  .cfg .f { flex: 1 1 150px; max-width: 280px; }
+  .fit { display: inline-block; font: 600 12px/1.2 var(--font); padding: 4px 8px; border-radius: 999px; white-space: normal; }
+  .fit.ok { color: var(--good); background: color-mix(in srgb, var(--good) 12%, transparent); }
+  .fit.fix, .fit.warn { color: var(--warn); background: color-mix(in srgb, var(--warn) 13%, transparent); }
+  .fit.no, .fit.conflict { color: var(--bad); background: color-mix(in srgb, var(--bad) 12%, transparent); }
+  .fit.unknown { color: var(--ink-2); background: var(--panel-2); }
+  .opt .fitline { grid-column: 1 / -1; margin-top: 4px; }
+  .opt .why { font-size: 12.5px; color: var(--ink-2); margin-top: 3px; }
+  .opt.nofit { opacity: .72; }
+  svg .pin.warn circle { stroke: var(--warn); stroke-width: 3; }
+  svg .pin.bad circle { stroke: var(--bad); stroke-width: 3; }
+  .strip button.warn .n { background: var(--warn); border-color: var(--warn); color: #fff; }
+  .strip button.bad .n { background: var(--bad); border-color: var(--bad); color: #fff; }
+  .summary .subhead { font: 700 12px var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); padding: 14px 0 2px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; align-items: start; }
+  .panel { background: var(--panel); border-radius: 20px; box-shadow: var(--shadow); padding: 14px 16px 16px; }
+  .panel-head { display: flex; align-items: center; gap: 10px; justify-content: space-between; margin-bottom: 8px; }
+  .panel-head h3 { margin: 0; font-size: 18px; letter-spacing: -.01em; }
+  .issue { display: grid; grid-template-columns: 24px 1fr; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .issue .ic { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 800; color: #fff; }
+  .ic.no, .ic.conflict { background: var(--bad); } .ic.fix, .ic.warn { background: var(--warn); } .ic.unknown { background: var(--ink-3); }
+  .issue .fixes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .plan-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .meta-box { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; flex: 1 1 110px; }
+  .meta-box span { display: block; font: 700 11px var(--cond); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .meta-box b { font-size: 15px; }
+  .tools { margin-bottom: 6px; } .tools .chip { cursor: default; }
+  ol.steps { list-style: none; padding: 0; margin: 0; }
+  ol.steps li { display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  ol.steps li:last-child { border-bottom: 0; }
+  ol.steps input { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--accent); }
+  ol.steps li.done .txt { text-decoration: line-through; color: var(--ink-3); }
+  ol.steps .src { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+  .lvl { display: inline-block; font: 700 11px/1 var(--cond); letter-spacing: .04em; text-transform: uppercase; padding: 4px 6px; border-radius: 5px; white-space: nowrap; }
+  .lvl.l1 { color: var(--good); background: color-mix(in srgb, var(--good) 12%, transparent); }
+  .lvl.l2 { color: var(--ink-2); background: var(--panel-2); border: 1px solid var(--line); }
+  .lvl.l3 { color: var(--warn); background: color-mix(in srgb, var(--warn) 13%, transparent); }
+  .lvl.l4 { color: var(--bad); background: color-mix(in srgb, var(--bad) 12%, transparent); }
+  .lvl-text.l3 { color: var(--warn); } .lvl-text.l4 { color: var(--bad); }
+  .rules ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; }
+  ol.psteps { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 14px; }
+  details.adv summary { cursor: pointer; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+
   /* ---------- Catalog ---------- */
   .toolbar { display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
   .count-row { display: flex; align-items: center; gap: 10px; margin: 4px 0 10px; font-size: 14px; color: var(--ink-2); flex-wrap: wrap; }
@@ -200,7 +247,7 @@
   .card h3 { margin: 0; font-size: 17px; }
   .card .row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
   h2.sec { font-size: 13px; font: 700 13px var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin: 22px 0 10px; }
-  .addbox { background: var(--panel); border-radius: 16px; box-shadow: var(--shadow); padding: 14px; display: grid; grid-template-columns: 2fr 1fr 2fr auto; gap: 8px; align-items: end; }
+  .addbox { background: var(--panel); border-radius: 16px; box-shadow: var(--shadow); padding: 14px; display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 10px; align-items: end; }
   .dots { display: flex; gap: 4px; }
   .dots span { width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 0 1px var(--line); }
 
@@ -235,6 +282,7 @@
     .toolbar .q { grid-column: 1 / -1; }
     .addbox { grid-template-columns: 1fr 1fr; }
     .addbox .full { grid-column: 1 / -1; }
+    .cols { grid-template-columns: 1fr; }
   }
   @media (max-width: 640px) {
     .logo span { display: none; }
@@ -297,6 +345,7 @@
         <div class="amt" id="bTotal">$0</div>
         <div class="sub" id="bTotalSub">Pick parts to start</div>
       </div>
+      <div class="cfg" id="bConfig"></div>
     </div>
     <div class="build-main">
       <div class="stage" id="stage">
@@ -326,6 +375,10 @@
         <button class="btn" id="bSaveAs" hidden>Save as new</button>
         <button class="btn primary" id="bSave">Save build</button>
       </div>
+    </div>
+    <div class="cols">
+      <section class="panel"><div class="panel-head"><h3>Fit check</h3><span id="fitSummary"></span></div><div id="fitBody"></div></section>
+      <section class="panel"><div class="panel-head"><h3>Install plan</h3><button class="btn small" id="planCopy" hidden>Copy plan</button></div><div id="planBody"></div></section>
     </div>
   </section>
 
@@ -360,6 +413,8 @@
       <label class="f">Firearm or platform<input type="text" id="fName" placeholder="e.g. Glock 45"></label>
       <label class="f">Type<select id="fType"><option>Pistol</option><option>Rifle</option><option>Shotgun</option></select></label>
       <label class="f full">Covers<input type="text" id="fCovers" placeholder="e.g. Gen 5, incl. MOS"></label>
+      <label class="f full">Fit setup<select id="fCopy"></select></label>
+      <label class="full" style="display:flex;gap:6px;align-items:center;font-size:14px;align-self:center"><input type="checkbox" id="fCopyFits"> Also copy which parts fit</label>
       <button class="btn dark" id="fAdd">Add firearm</button>
     </div>
     <div id="fList"></div>
@@ -377,101 +432,215 @@
 <script>
 "use strict";
 
+/* =====================================================================
+   How fitment works
+   ---------------------------------------------------------------------
+   A firearm resolves to a set of INTERFACES (key -> value), from its
+   base values plus the configuration options you pick (Gen 5, MOS slide,
+   quad rail ...). A part can:
+     needs  - [{k, in:[values], soft?, why?}]  interface values it requires
+     gives  - {k: value}                       interfaces it adds or changes
+     occ    - ["forend", ...]                  space it takes (two = clash)
+     steps  - [{lvl 1-4, mins, text, tools[], cond?}]  install steps
+   The fit check tests each part against the firearm plus every OTHER part
+   in the build, and searches the catalog for parts that bridge a gap.
+   ===================================================================== */
+
+/* ================= Interface vocabulary ================= */
+const KEYS = {
+  optic: { label: "Optic mounting", vals: { none: "no optic cut", plate: "an optic cut that takes adapter plates", RMR: "the RMR footprint", RMSc: "the RMSc / K footprint" } },
+  light_mount: { label: "Light mount", vals: { none: "no accessory rail", picatinny: "a Picatinny / full-size pistol rail", "mlok-only": "M-LOK slots only", "slim-rail": "the Glock slimline rail", "p365-rail": "the SIG P365 rail", "1913-short": "a short 1913 rail" } },
+  sights_height: { label: "Sight height", vals: { standard: "standard-height sights", cowitness: "suppressor-height sights" } },
+  mag_catch: { label: "Magazine catch", vals: { polymer: "the factory polymer catch", steel: "a steel catch" } },
+  gen: { label: "Generation", vals: { 3: "Gen 3", 4: "Gen 4", 5: "Gen 5" } },
+  top_rail: { label: "Top rail", vals: { picatinny: "a flat-top Picatinny rail", carry: "an A2 carry handle", none: "no top rail" } },
+  fore_rail: { label: "Handguard", vals: { none: "a polymer handguard", picatinny: "a quad rail", mlok: "an M-LOK handguard" } },
+  gas_block: { label: "Gas block", vals: { fsb: "a front sight base", lowpro: "a low-profile gas block" } },
+  barrel: { label: "Barrel length", vals: { "16": "a 16\" or longer barrel", "14.5": "a 14.5\" barrel" } },
+  thread: { label: "Muzzle thread", vals: { "1/2-28": "1/2-28 threads", none: "an unthreaded barrel" } },
+  trigger_pins: { label: "Trigger pin size", vals: { small: "small-pin (.154\")", large: "large-pin (.169\")" } },
+  buffer_tube: { label: "Buffer tube", vals: { milspec: "a mil-spec buffer tube", commercial: "a commercial buffer tube" } },
+  scope_mount: { label: "Optic mount", vals: { none: "no optic mount", micro: "a Micro red-dot mount", "30mm": "a 30 mm scope mount" } },
+  receiver: { label: "Receiver", vals: { stamped: "a stamped receiver", milled: "a milled receiver" } },
+  origin: { label: "Origin", vals: { us: "US-made", imported: "imported" } },
+  action: { label: "Model", vals: { carbine: "the standard carbine", takedown: "the Takedown" } },
+  light: { label: "Weapon light", vals: { none: "no light" } },
+};
+const keyLabel = k => KEYS[k]?.label || k;
+const valLabel = (k, v) => KEYS[k]?.vals?.[v] ?? String(v);
+const N = (k, vals, o = {}) => ({ k, in: [].concat(vals).map(String), ...o });
+const S = (lvl, mins, text, tools = [], cond) => ({ lvl, mins, text, tools, ...(cond ? { cond } : {}) });
+const LEVELS = { 1: "DIY", 2: "Basic tools", 3: "Armorer tools", 4: "Gunsmith / shop" };
+
 /* ================= Starter data =================
-   Drafted from general knowledge. Fitment and prices are UNVERIFIED estimates. */
+   Drafted from general knowledge. Fitment, rules, steps and prices are UNVERIFIED. */
+const OPT = (id, label, choices, def = 0) => ({ id, label, choices: choices.map(([l, set]) => ({ label: l, set })), def });
+const GLOCK_GEN = OPT("gen", "Generation", [["Gen 3", { gen: "3" }], ["Gen 4", { gen: "4" }], ["Gen 5", { gen: "5" }]], 2);
+const slideOpt = (cut, cutLabel) => OPT("slide", "Slide", [["Standard (no optic cut)", { optic: "none" }], [cutLabel, { optic: cut }]], 1);
+const PB = { sights_height: "standard", mag_catch: "polymer", light: "none" };
+
 const SEED_PLATFORMS = [
-  ["glock-17", "Glock 17", "Pistol", "Gen 3–5, incl. MOS"],
-  ["glock-19", "Glock 19", "Pistol", "Gen 3–5, incl. MOS"],
-  ["glock-26", "Glock 26", "Pistol", "Gen 3–5, incl. MOS"],
-  ["glock-43x-48", "Glock 43X / 48", "Pistol", "Slimline, incl. MOS and Rail"],
-  ["sig-p365", "SIG P365 / P365X", "Pistol", "Micro-compact 9mm"],
-  ["sig-p365xl", "SIG P365XL", "Pistol", "Incl. Spectre Comp"],
-  ["sig-p365-macro", "SIG P365-XMACRO", "Pistol", "Incl. Comp and TACOPS"],
-  ["sig-p320", "SIG P320 / M17 / M18", "Pistol", "Full-size, carry and compact"],
-  ["sw-mp2", "S&W M&P 2.0", "Pistol", "Full-size and compact 9mm"],
-  ["sw-shield-plus", "S&W M&P Shield Plus", "Pistol", "Incl. Optics Ready"],
-  ["spr-hellcat", "Springfield Hellcat", "Pistol", "Incl. OSP and Pro"],
-  ["cz-p10c", "CZ P-10 C", "Pistol", "Incl. Optics Ready"],
-  ["ar15", "AR-15", "Rifle", "Mil-spec receivers, 5.56 / .223"],
-  ["ak", "AK-47 / AKM", "Rifle", "Stamped receivers, 7.62x39"],
-  ["ruger-1022", "Ruger 10/22", "Rifle", "Carbine and Takedown, .22 LR"],
-  ["rem-870", "Remington 870", "Shotgun", "12 gauge"],
-  ["moss-500", "Mossberg 500 / 590", "Shotgun", "12 gauge"],
+  { id: "glock-17", name: "Glock 17", type: "Pistol", covers: "Gen 3–5, incl. MOS", base: { ...PB, family: "glock-dbl", light_mount: "picatinny" }, options: [GLOCK_GEN, slideOpt("plate", "MOS (optic plates)")] },
+  { id: "glock-19", name: "Glock 19", type: "Pistol", covers: "Gen 3–5, incl. MOS", base: { ...PB, family: "glock-dbl", light_mount: "picatinny" }, options: [GLOCK_GEN, slideOpt("plate", "MOS (optic plates)")] },
+  { id: "glock-26", name: "Glock 26", type: "Pistol", covers: "Gen 3–5, incl. MOS", base: { ...PB, family: "glock-dbl", light_mount: "none" }, options: [GLOCK_GEN, slideOpt("plate", "MOS (optic plates)")] },
+  { id: "glock-43x-48", name: "Glock 43X / 48", type: "Pistol", covers: "Slimline, incl. MOS and Rail", base: { ...PB, family: "glock-slim", gen: "5" }, options: [slideOpt("RMSc", "MOS (RMSc cut)"), OPT("frame", "Frame", [["Standard (no rail)", { light_mount: "none" }], ["Rail", { light_mount: "slim-rail" }]])] },
+  { id: "sig-p365", name: "SIG P365 / P365X", type: "Pistol", covers: "Micro-compact 9mm", base: { ...PB, family: "p365", light_mount: "none" }, options: [OPT("slide", "Model", [["P365 (no optic cut)", { optic: "none" }], ["P365X / optic-ready", { optic: "RMSc" }]], 1)] },
+  { id: "sig-p365xl", name: "SIG P365XL", type: "Pistol", covers: "Incl. Spectre Comp", base: { ...PB, family: "p365", optic: "RMSc", light_mount: "p365-rail" }, options: [] },
+  { id: "sig-p365-macro", name: "SIG P365-XMACRO", type: "Pistol", covers: "Incl. Comp and TACOPS", base: { ...PB, family: "p365", optic: "RMSc", light_mount: "p365-rail" }, options: [] },
+  { id: "sig-p320", name: "SIG P320 / M17 / M18", type: "Pistol", covers: "Full-size, carry and compact", base: { ...PB, family: "p320", light_mount: "picatinny" }, options: [slideOpt("plate", "Optic-ready (plates)")] },
+  { id: "sw-mp2", name: "S&W M&P 2.0", type: "Pistol", covers: "Full-size and compact 9mm", base: { ...PB, family: "mp2", light_mount: "picatinny" }, options: [slideOpt("plate", "Optics Ready (plates)")] },
+  { id: "sw-shield-plus", name: "S&W M&P Shield Plus", type: "Pistol", covers: "Incl. Optics Ready", base: { ...PB, family: "shield-plus", light_mount: "none" }, options: [slideOpt("RMSc", "Optics Ready (RMSc cut)")] },
+  { id: "spr-hellcat", name: "Springfield Hellcat", type: "Pistol", covers: "Incl. OSP and Pro", base: { ...PB, family: "hellcat", light_mount: "1913-short" }, options: [slideOpt("RMSc", "OSP (RMSc cut)")] },
+  { id: "cz-p10c", name: "CZ P-10 C", type: "Pistol", covers: "Incl. Optics Ready", base: { ...PB, family: "p10", light_mount: "picatinny" }, options: [slideOpt("plate", "Optics Ready (plates)")] },
+  { id: "ar15", name: "AR-15", type: "Rifle", covers: "5.56 / .223", base: { scope_mount: "none", light: "none" }, options: [
+    OPT("upper", "Upper", [["Flat-top", { top_rail: "picatinny" }], ["A2 carry handle", { top_rail: "carry" }]]),
+    OPT("handguard", "Handguard", [["Polymer M4 + front sight base", { fore_rail: "none", light_mount: "none", gas_block: "fsb" }], ["Quad rail + front sight base", { fore_rail: "picatinny", light_mount: "picatinny", gas_block: "fsb" }], ["M-LOK free-float + low-profile gas block", { fore_rail: "mlok", light_mount: "mlok-only", gas_block: "lowpro" }]]),
+    OPT("barrel", "Barrel", [["16\"", { barrel: "16" }], ["14.5\" (pinned & welded)", { barrel: "14.5" }]]),
+    OPT("thread", "Muzzle", [["1/2-28 threads", { thread: "1/2-28" }], ["Unthreaded", { thread: "none" }]]),
+    OPT("pins", "Trigger pins", [["Small (mil-spec)", { trigger_pins: "small" }], ["Large", { trigger_pins: "large" }]]),
+    OPT("tube", "Buffer tube", [["Mil-spec", { buffer_tube: "milspec" }], ["Commercial", { buffer_tube: "commercial" }]]),
+  ] },
+  { id: "ak", name: "AK-47 / AKM", type: "Rifle", covers: "7.62x39", base: { light_mount: "none", top_rail: "none", light: "none" }, options: [
+    OPT("receiver", "Receiver", [["Stamped", { receiver: "stamped" }], ["Milled", { receiver: "milled" }]]),
+    OPT("origin", "Made", [["US-made", { origin: "us" }], ["Imported", { origin: "imported" }]], 1),
+  ] },
+  { id: "ruger-1022", name: "Ruger 10/22", type: "Rifle", covers: ".22 LR", base: { light: "none" }, options: [OPT("model", "Model", [["Carbine", { action: "carbine" }], ["Takedown", { action: "takedown" }]])] },
+  { id: "rem-870", name: "Remington 870", type: "Shotgun", covers: "12 gauge", base: { family: "rem-870", light: "none" }, options: [] },
+  { id: "moss-500", name: "Mossberg 500 / 590", type: "Shotgun", covers: "12 gauge", base: { family: "moss-500", light: "none" }, options: [] },
 ];
 const G_FULL = ["glock-17", "glock-19", "glock-26"];
 const RMR_PISTOLS = ["glock-17", "glock-19", "sig-p320", "sw-mp2", "cz-p10c"];
 const K_PISTOLS = ["glock-43x-48", "sig-p365", "sig-p365xl", "sig-p365-macro", "sw-shield-plus", "spr-hellcat"];
 const RAIL_FULL = ["glock-17", "glock-19", "sig-p320", "sw-mp2", "cz-p10c"];
-const ALL_PISTOLS = SEED_PLATFORMS.filter(p => p[2] === "Pistol").map(p => p[0]);
+const ALL_PISTOLS = SEED_PLATFORMS.filter(p => p.type === "Pistol").map(p => p.id);
 
-// brand, name, category, fits, estimated street price, mount/footprint, notes
+/* ---- reusable install steps ---- */
+const ST = {
+  glockTrigger: [S(2, 25, "Field strip, push out the frame pins and lift out the trigger housing.", ["3/32\" punch"]), S(2, 25, "Install the new trigger (the {gen} version) per the maker's instructions and reassemble.")],
+  pistolOptic: [S(2, 10, "Remove the slide's cover plate and degrease the screw holes.", ["Torx / hex drivers"]), S(2, 20, "Mount the optic with the correct-length screws, blue thread locker and the maker's torque spec, then add witness marks.", ["Inch-pound torque driver", "Blue thread locker"])],
+  pistolSights: [S(2, 30, "Push out the rear sight with a sight pusher (or have a shop do it) and center the new one.", ["Sight pusher"]), S(2, 15, "Swap the front sight; Glock fronts use a screw from inside the slide.", ["3/16\" front-sight driver"])],
+  plate: [S(2, 15, "Remove the cover plate and install the adapter plate with its screws, torqued to spec.", ["Torx / hex drivers", "Inch-pound torque driver"])],
+  mill: [S(4, 0, "Ship the bare slide (not the serialized frame) to a milling shop. Check your state's rules on shipping parts first."), S(4, 0, "Expect a few weeks of turnaround; many shops can refinish the slide or fit taller sights at the same time.")],
+  pistolLight: [S(1, 5, "Slide the light onto the rail, seat the cross-bolt or rail key in a slot and tighten.")],
+  holster: [S(1, 0, "Check it's the version made for a {model} with {light}."), S(1, 10, "With the gun unloaded, check fit and retention, then practice drawing with an unloaded gun.")],
+  arTrigger: [S(2, 30, "Remove the hammer and trigger pins and lift out the factory fire-control group.", ["Punch set", "Slave pin (helpful)"]), S(2, 30, "Install the new trigger per the maker's instructions and check that the safety works.")],
+  arGrip: [S(2, 10, "Remove the grip screw and ease the grip off; it holds the safety-selector detent and spring, which can launch.", ["Hex key or screwdriver"]), S(1, 5, "Fit the new grip, guiding the detent spring into its hole, and tighten.")],
+  arStock: [S(1, 5, "Hold the adjustment lever down, slide the old stock off the buffer tube and the new one on.")],
+  charging: [S(1, 5, "With the upper off, pull the bolt carrier and charging handle and drop in the new handle.")],
+  mk16: [
+    S(3, 20, "Remove the muzzle device, handguard, gas block, gas tube, factory barrel nut and delta ring.", ["Upper receiver vise block", "Bench vise", "AR armorer's wrench"]),
+    S(4, 0, "A pinned-and-welded muzzle device must be cut off by a gunsmith before the barrel nut can come off, then re-pinned.", [], N("barrel", "14.5")),
+    S(3, 30, "Install the new barrel nut, torqued to the maker's spec and timed for the gas tube.", ["Torque wrench", "Barrel nut grease"]),
+    S(3, 20, "Reinstall the gas tube and low-profile gas block, check gas-block alignment, then mount the handguard."),
+  ],
+  gasBlock: [S(3, 30, "Drive the taper pins out of the front sight base (small end first) and slide it off. Many owners have a gunsmith do this.", ["Taper pin punches", "Barrel support block"]), S(3, 15, "Fit the low-profile gas block on the .750\" journal and lock it with set screws and high-temp thread locker, or pin it.")],
+  muzzle: [
+    S(3, 15, "Remove the factory flash hider and crush washer (a pinned-and-welded one has to be cut off by a gunsmith first).", ["Upper receiver vise block", "Bench vise", "Wrench for the flash hider"]),
+    S(3, 15, "Time the new device with a crush or peel washer and torque it to the maker's spec."),
+    S(4, 0, "On a 14.5\" barrel, have a gunsmith pin and weld the device so the barrel measures at least 16\". A shorter barrel without it is a short-barreled rifle under the NFA.", [], N("barrel", "14.5")),
+  ],
+  railSection: [S(1, 5, "Bolt the rail section into the M-LOK slots where the light should sit.", ["Hex key"])],
+  rifleLight: [S(1, 5, "Clamp the light to the rail and route any pressure switch.")],
+  rifleOptic: [S(1, 10, "Mount on the top rail, far enough forward for a full field of view, and torque the mount to spec.", ["Inch-pound torque wrench"])],
+  scopeMount: [S(2, 15, "Torque the mount to the rail, then the ring caps to spec; level the reticle on a magnified optic.", ["Inch-pound torque wrench"])],
+  bufferTube: [S(3, 30, "Unstake and remove the castle nut, fit the mil-spec tube, end plate, buffer retainer and spring, then torque and stake the castle nut.", ["Castle nut wrench", "Staking tool"])],
+  ak922: S(1, 0, "This counts as a US-made part toward 922(r) on an imported AK; keep your parts count compliant.", [], N("origin", "imported")),
+  sga: [S(2, 15, "Remove the buttpad and the long stock bolt, then fit the SGA with its hardware.", ["Socket set", "Long socket extension"])],
+  forend870: [S(2, 20, "Remove the magazine cap and barrel, unscrew the forend tube nut and swap the forend.", ["Forend tube nut wrench"])],
+};
+
+function P(brand, name, category, fits, est, mount, notes, x = {}) {
+  return { brand, name, category, fits: [...fits], est, mount, notes, needs: x.needs || [], gives: x.gives || {}, occ: x.occ || [], steps: x.steps || [], since: x.since || 1 };
+}
+const RMR_NEEDS = [N("optic", "RMR"), N("sights_height", "cowitness", { soft: true, why: "Factory-height sights sit below most RMR-size optic windows. Suppressor-height sights let you co-witness." })];
 const SEED_PARTS = [
-  ["Apex Tactical", "Action Enhancement Trigger Kit (Glock)", "Trigger", G_FULL, 150, "", "Separate SKUs for Gen 3/4 and Gen 5."],
-  ["Overwatch Precision", "TAC Trigger (Glock)", "Trigger", G_FULL, 170, "", "Gen-specific SKUs."],
-  ["Apex Tactical", "Action Enhancement Kit (M&P 2.0)", "Trigger", ["sw-mp2"], 150, "", ""],
-  ["Geissele", "SSA-E two-stage trigger", "Trigger", ["ar15"], 240, "Small-pin lower", "For .154\" pin receivers."],
-  ["Timney", "AR-15 Competition Trigger", "Trigger", ["ar15"], 230, "Small-pin lower", "Drop-in cassette."],
-  ["LaRue Tactical", "MBT-2S two-stage trigger", "Trigger", ["ar15"], 110, "Small-pin lower", ""],
-  ["ALG Defense", "AKT enhanced trigger", "Trigger", ["ak"], 80, "", ""],
-  ["Ruger", "BX-Trigger", "Trigger", ["ruger-1022"], 90, "", "Complete drop-in trigger group."],
+  P("Apex Tactical", "Action Enhancement Trigger Kit (Glock)", "Trigger", G_FULL, 150, "", "Separate SKUs for Gen 3/4 and Gen 5.", { steps: ST.glockTrigger }),
+  P("Overwatch Precision", "TAC Trigger (Glock)", "Trigger", G_FULL, 170, "", "Gen-specific SKUs.", { steps: ST.glockTrigger }),
+  P("Apex Tactical", "Action Enhancement Kit (M&P 2.0)", "Trigger", ["sw-mp2"], 150, "", "", { steps: [S(2, 45, "Detail strip the frame (sear housing block and trigger pin) and install the kit per Apex's instructions.", ["Punch set"])] }),
+  P("Geissele", "SSA-E two-stage trigger", "Trigger", ["ar15"], 240, "Small-pin lower", "For .154\" pin receivers.", { needs: [N("trigger_pins", "small", { why: "Built for small-pin (.154\") receivers; this lower is large-pin. Look for a large-pin version." })], steps: ST.arTrigger }),
+  P("Timney", "AR-15 Competition Trigger", "Trigger", ["ar15"], 230, "Small-pin lower", "Drop-in cassette.", { needs: [N("trigger_pins", "small", { why: "Built for small-pin (.154\") receivers; this lower is large-pin." })], steps: [S(2, 20, "Remove the factory hammer, trigger and pins; drop in the cassette and snug the set screws per Timney's instructions.", ["Punch set", "Hex keys"])] }),
+  P("LaRue Tactical", "MBT-2S two-stage trigger", "Trigger", ["ar15"], 110, "Small-pin lower", "", { needs: [N("trigger_pins", "small", { why: "Built for small-pin (.154\") receivers; this lower is large-pin." })], steps: ST.arTrigger }),
+  P("ALG Defense", "AKT enhanced trigger", "Trigger", ["ak"], 80, "", "", { steps: [S(2, 30, "Pull the retaining wire and pins and remove the factory trigger, hammer and disconnector; install the ALG group per the maker's instructions.", ["Needle-nose pliers", "Punch"]), ST.ak922] }),
+  P("Ruger", "BX-Trigger", "Trigger", ["ruger-1022"], 90, "", "Complete drop-in trigger group.", { steps: [S(1, 15, "Take the action out of the stock, push out the two trigger-group pins and drop in the BX-Trigger.", ["Punch"])] }),
 
-  ["Trijicon", "RMR Type 2", "Pistol optic", RMR_PISTOLS, 550, "RMR footprint", "Needs an optic-ready slide; Glock MOS, P320 and M&P OR use an adapter plate."],
-  ["Holosun", "507C X2", "Pistol optic", RMR_PISTOLS, 330, "RMR footprint", "Needs an optic-ready slide; plate may be required."],
-  ["Trijicon", "SRO", "Pistol optic", RMR_PISTOLS, 650, "RMR footprint", "Large window; sits taller than an RMR."],
-  ["Holosun", "507K X2", "Pistol optic", K_PISTOLS, 300, "RMSc / K footprint", "Needs an optic-cut slide (43X/48 MOS, P365X/XL/Macro, Shield Plus OR, Hellcat OSP)."],
-  ["Holosun", "EPS Carry", "Pistol optic", K_PISTOLS, 360, "RMSc / K footprint", "Enclosed emitter."],
-  ["Shield Sights", "RMSc", "Pistol optic", K_PISTOLS, 330, "RMSc / K footprint", ""],
+  P("Trijicon", "RMR Type 2", "Pistol optic", RMR_PISTOLS, 550, "RMR footprint", "Needs an RMR-cut slide or an adapter plate.", { needs: RMR_NEEDS, steps: ST.pistolOptic }),
+  P("Holosun", "507C X2", "Pistol optic", RMR_PISTOLS, 330, "RMR footprint", "Needs an RMR-cut slide or an adapter plate.", { needs: RMR_NEEDS, steps: ST.pistolOptic }),
+  P("Trijicon", "SRO", "Pistol optic", RMR_PISTOLS, 650, "RMR footprint", "Large window; sits taller than an RMR.", { needs: RMR_NEEDS, steps: ST.pistolOptic }),
+  P("Holosun", "507K X2", "Pistol optic", K_PISTOLS, 300, "RMSc / K footprint", "", { needs: [N("optic", "RMSc")], steps: ST.pistolOptic }),
+  P("Holosun", "EPS Carry", "Pistol optic", K_PISTOLS, 360, "RMSc / K footprint", "Enclosed emitter.", { needs: [N("optic", "RMSc")], steps: ST.pistolOptic }),
+  P("Shield Sights", "RMSc", "Pistol optic", K_PISTOLS, 330, "RMSc / K footprint", "", { needs: [N("optic", "RMSc")], steps: ST.pistolOptic }),
 
-  ["Aimpoint", "Micro T-2", "Rifle optic", ["ar15"], 900, "Picatinny (with mount)", "Mount height sold separately."],
-  ["EOTech", "EXPS3", "Rifle optic", ["ar15"], 750, "Picatinny", "Holographic."],
-  ["Holosun", "HS510C", "Rifle optic", ["ar15"], 380, "Picatinny", "Open reflex."],
-  ["Vortex", "Strike Eagle 1-8x24", "Rifle optic", ["ar15"], 450, "LPVO, 30 mm tube", "Needs a 30 mm scope mount."],
+  P("C&H Precision", "Optic adapter plate (RMR)", "Adapter plate", [...G_FULL, "sig-p320", "sw-mp2", "cz-p10c"], 40, "Plate system → RMR", "Made per slide; order the one for your model.", { needs: [N("optic", "plate")], gives: { optic: "RMR" }, occ: ["optic plate"], steps: ST.plate, since: 2 }),
+  P("Slide milling shop", "RMR optic cut", "Service", [...G_FULL, "sig-p320", "sw-mp2", "cz-p10c"], 175, "No cut → RMR", "Price varies by shop.", { needs: [N("optic", "none", { why: "This slide already has an optic cut." })], gives: { optic: "RMR" }, occ: ["optic cut"], steps: ST.mill, since: 2 }),
+  P("Slide milling shop", "RMSc optic cut", "Service", K_PISTOLS, 150, "No cut → RMSc", "Price varies by shop.", { needs: [N("optic", "none", { why: "This slide already has an optic cut." })], gives: { optic: "RMSc" }, occ: ["optic cut"], steps: ST.mill, since: 2 }),
 
-  ["Trijicon", "HD XR night sights (Glock)", "Sights", G_FULL, 150, "", "Standard height; too short to co-witness with most optics."],
-  ["XS Sights", "DXT2 Big Dot (Glock)", "Sights", G_FULL, 120, "", "Model-specific SKUs."],
-  ["Tech Sights", "TSR200 aperture sight", "Sights", ["ruger-1022"], 80, "", "Replaces factory sights; no gunsmithing."],
+  P("Aimpoint", "Micro T-2", "Rifle optic", ["ar15"], 900, "Micro footprint", "Mount sold separately.", { needs: [N("top_rail", "picatinny"), N("scope_mount", "micro", { why: "The Micro T-2 needs a Micro mount to sit at AR height." })], steps: ST.rifleOptic }),
+  P("EOTech", "EXPS3", "Rifle optic", ["ar15"], 750, "Picatinny", "Holographic; built-in mount.", { needs: [N("top_rail", "picatinny")], steps: ST.rifleOptic }),
+  P("Holosun", "HS510C", "Rifle optic", ["ar15"], 380, "Picatinny", "Open reflex; built-in mount.", { needs: [N("top_rail", "picatinny")], steps: ST.rifleOptic }),
+  P("Vortex", "Strike Eagle 1-8x24", "Rifle optic", ["ar15"], 450, "30 mm tube", "Needs a 30 mm scope mount.", { needs: [N("top_rail", "picatinny"), N("scope_mount", "30mm", { why: "A 1-8x scope needs a 30 mm mount." })], steps: ST.rifleOptic }),
+  P("Unity Tactical", "FAST Micro mount", "Optic mount", ["ar15"], 140, "Micro footprint", "", { needs: [N("top_rail", "picatinny")], gives: { scope_mount: "micro" }, occ: ["optic mount"], steps: ST.scopeMount, since: 2 }),
+  P("Vortex", "Sport cantilever 30 mm mount", "Optic mount", ["ar15"], 90, "30 mm", "", { needs: [N("top_rail", "picatinny")], gives: { scope_mount: "30mm" }, occ: ["optic mount"], steps: ST.scopeMount, since: 2 }),
 
-  ["Streamlight", "TLR-1 HL", "Weapon light", [...RAIL_FULL, "ar15"], 150, "Picatinny / Glock rail", "Rifles need a rail section."],
-  ["SureFire", "X300U-A", "Weapon light", [...RAIL_FULL, "ar15"], 300, "Picatinny / Glock rail", "Rifles need a rail section."],
-  ["Streamlight", "TLR-7A", "Weapon light", RAIL_FULL, 140, "Picatinny / Glock rail", "Compact; stays behind the muzzle on full-size pistols."],
-  ["Streamlight", "TLR-7 Sub", "Weapon light", ["glock-43x-48", "sig-p365xl", "sig-p365-macro", "spr-hellcat"], 140, "Model-specific rail", "Rail-specific SKUs; 43X/48 need the Rail models."],
-  ["Streamlight", "TL-Racker forend light", "Weapon light", ["rem-870", "moss-500"], 160, "Forend replacement", "Model-specific SKUs."],
+  P("Trijicon", "HD XR night sights (Glock)", "Sights", G_FULL, 150, "", "Standard height; too short to co-witness with most optics.", { gives: { sights_height: "standard" }, steps: ST.pistolSights }),
+  P("XS Sights", "DXT2 Big Dot (Glock)", "Sights", G_FULL, 120, "", "Model-specific SKUs.", { gives: { sights_height: "standard" }, steps: ST.pistolSights }),
+  P("Trijicon", "Suppressor night sights (Glock)", "Sights", G_FULL, 170, "", "Tall enough to co-witness through most pistol optics.", { gives: { sights_height: "cowitness" }, steps: ST.pistolSights, since: 2 }),
+  P("Tech Sights", "TSR200 aperture sight", "Sights", ["ruger-1022"], 80, "", "Uses existing mounting points; no drilling.", { steps: [S(2, 30, "Mount the rear aperture on the receiver and drift the new front sight into the dovetail.", ["Hex keys", "Brass punch"])] }),
 
-  ["Magpul", "PMAG 30 AR/M4 Gen M3", "Magazine", ["ar15"], 16, "", ""],
-  ["Magpul", "PMAG 17 GL9", "Magazine", G_FULL, 16, "", "Sticks out below G19 and G26 grips."],
-  ["Shield Arms", "S15 15-round magazine", "Magazine", ["glock-43x-48"], 45, "", "Maker recommends their steel mag catch."],
-  ["Magpul", "PMAG 30 AK/AKM MOE", "Magazine", ["ak"], 18, "", ""],
-  ["Ruger", "BX-25 25-round magazine", "Magazine", ["ruger-1022"], 30, "", ""],
+  P("Streamlight", "TLR-1 HL", "Weapon light", [...RAIL_FULL, "ar15"], 150, "Picatinny / Glock rail", "", { needs: [N("light_mount", "picatinny")], gives: { light: "a TLR-1 HL" }, steps: ST.pistolLight }),
+  P("SureFire", "X300U-A", "Weapon light", [...RAIL_FULL, "ar15"], 300, "Picatinny / Glock rail", "", { needs: [N("light_mount", "picatinny")], gives: { light: "an X300U-A" }, steps: ST.pistolLight }),
+  P("Streamlight", "TLR-7A", "Weapon light", RAIL_FULL, 140, "Picatinny / Glock rail", "Compact; stays behind the muzzle on full-size pistols.", { needs: [N("light_mount", "picatinny")], gives: { light: "a TLR-7A" }, steps: ST.pistolLight }),
+  P("Streamlight", "TLR-7 Sub", "Weapon light", ["glock-43x-48", "sig-p365xl", "sig-p365-macro", "spr-hellcat"], 140, "Model-specific rail", "Rail-specific SKUs.", { needs: [N("light_mount", ["slim-rail", "p365-rail", "1913-short"])], gives: { light: "a TLR-7 Sub" }, steps: [S(1, 0, "Order the TLR-7 Sub version for {light_mount}."), ...ST.pistolLight] }),
+  P("Streamlight", "TL-Racker forend light", "Weapon light", ["rem-870", "moss-500"], 160, "Forend replacement", "Model-specific SKUs.", { gives: { light: "a TL-Racker" }, occ: ["forend"], steps: [...ST.forend870, S(1, 5, "Route the switch wiring and test both switches.")] }),
+  P("Magpul", "M-LOK aluminum rail section (5 slot)", "Rail section", ["ar15"], 25, "M-LOK → Picatinny", "", { needs: [N("fore_rail", "mlok")], gives: { light_mount: "picatinny" }, steps: ST.railSection, since: 2 }),
 
-  ["Magpul", "MOE SL carbine stock", "Stock", ["ar15"], 65, "Mil-spec buffer tube", ""],
-  ["B5 Systems", "Bravo stock", "Stock", ["ar15"], 60, "Mil-spec buffer tube", ""],
-  ["Magpul", "Zhukov-S folding stock", "Stock", ["ak"], 130, "", "Stamped receivers only."],
-  ["Magpul", "Hunter X-22 stock", "Stock", ["ruger-1022"], 140, "", "Separate Takedown version."],
-  ["Magpul", "SGA stock (Remington 870)", "Stock", ["rem-870"], 110, "", ""],
-  ["Magpul", "SGA stock (Mossberg 500/590)", "Stock", ["moss-500"], 110, "", ""],
+  P("Magpul", "PMAG 30 AR/M4 Gen M3", "Magazine", ["ar15"], 16, "", ""),
+  P("Magpul", "PMAG 17 GL9", "Magazine", G_FULL, 16, "", "Sticks out below G19 and G26 grips."),
+  P("Shield Arms", "S15 15-round magazine", "Magazine", ["glock-43x-48"], 45, "", "", { needs: [N("mag_catch", "steel", { soft: true, why: "Shield Arms recommends a steel mag catch; the factory polymer catch can wear against their metal magazines." })] }),
+  P("Shield Arms", "Steel magazine catch (Glock 43X/48)", "Mag catch", ["glock-43x-48"], 30, "", "", { gives: { mag_catch: "steel" }, steps: [S(2, 15, "Pry the mag catch spring aside with a small screwdriver, swap in the steel catch and reseat the spring.", ["Small flat screwdriver"])], since: 2 }),
+  P("Magpul", "PMAG 30 AK/AKM MOE", "Magazine", ["ak"], 18, "", ""),
+  P("Ruger", "BX-25 25-round magazine", "Magazine", ["ruger-1022"], 30, "", ""),
 
-  ["Magpul", "MOE-K2 grip", "Grip", ["ar15"], 25, "", ""],
-  ["BCM", "Gunfighter Mod 3 grip", "Grip", ["ar15"], 25, "", ""],
-  ["Magpul", "MOE AK grip", "Grip", ["ak"], 22, "", ""],
+  P("Magpul", "MOE SL carbine stock", "Stock", ["ar15"], 65, "Mil-spec buffer tube", "", { needs: [N("buffer_tube", "milspec")], steps: ST.arStock }),
+  P("B5 Systems", "Bravo stock", "Stock", ["ar15"], 60, "Mil-spec buffer tube", "", { needs: [N("buffer_tube", "milspec")], steps: ST.arStock }),
+  P("Aero Precision", "Mil-spec carbine buffer tube kit", "Buffer tube", ["ar15"], 60, "", "", { gives: { buffer_tube: "milspec" }, steps: ST.bufferTube, since: 2 }),
+  P("Magpul", "Zhukov-S folding stock", "Stock", ["ak"], 130, "", "Stamped receivers only.", { needs: [N("receiver", "stamped", { why: "Made for stamped receivers; it won't fit a milled one." })], steps: [S(2, 30, "Remove the factory stock from the rear trunnion and install the Zhukov-S per Magpul's instructions.", ["Screwdrivers", "Hex keys"]), ST.ak922] }),
+  P("Magpul", "Hunter X-22 stock", "Stock", ["ruger-1022"], 140, "", "", { needs: [N("action", "carbine", { why: "Takedown rifles need the separate X-22 Takedown version." })], steps: [S(1, 10, "Remove the takedown screw and barrel band, lift out the action and drop it into the new stock.", ["Screwdriver"])] }),
+  P("Magpul", "SGA stock (Remington 870)", "Stock", ["rem-870"], 110, "", "", { steps: ST.sga }),
+  P("Magpul", "SGA stock (Mossberg 500/590)", "Stock", ["moss-500"], 110, "", "", { steps: ST.sga }),
 
-  ["BCM", "Gunfighter Charging Handle Mod 4", "Charging handle", ["ar15"], 60, "", ""],
-  ["Radian Weapons", "Raptor ambidextrous charging handle", "Charging handle", ["ar15"], 95, "", ""],
+  P("Magpul", "MOE-K2 grip", "Grip", ["ar15"], 25, "", "", { steps: ST.arGrip }),
+  P("BCM", "Gunfighter Mod 3 grip", "Grip", ["ar15"], 25, "", "", { steps: ST.arGrip }),
+  P("Magpul", "MOE AK grip", "Grip", ["ak"], 22, "", "", { steps: [S(1, 10, "Remove the grip screw from inside the grip and swap grips.", ["Screwdriver"]), ST.ak922] }),
 
-  ["Geissele", "Super Modular Rail MK16 13.5\"", "Handguard", ["ar15"], 330, "M-LOK", "Replaces the barrel nut; not a drop-in."],
-  ["Magpul", "MOE forend (Remington 870)", "Forend", ["rem-870"], 35, "", ""],
+  P("BCM", "Gunfighter Charging Handle Mod 4", "Charging handle", ["ar15"], 60, "", "", { steps: ST.charging }),
+  P("Radian Weapons", "Raptor ambidextrous charging handle", "Charging handle", ["ar15"], 95, "", "", { steps: ST.charging }),
 
-  ["SureFire", "WarComp 5.56", "Muzzle device", ["ar15"], 200, "1/2-28 thread", "Pin-and-weld on barrels under 16\"."],
+  P("Geissele", "Super Modular Rail MK16 13.5\"", "Handguard", ["ar15"], 330, "M-LOK", "Replaces the barrel nut; not a drop-in.", { needs: [N("gas_block", "lowpro", { why: "A free-float handguard won't clear a front sight base; it needs a low-profile gas block." })], gives: { fore_rail: "mlok", light_mount: "mlok-only" }, steps: ST.mk16 }),
+  P("Aero Precision", ".750 low-profile gas block", "Gas block", ["ar15"], 35, ".750\" journal", "", { gives: { gas_block: "lowpro" }, steps: ST.gasBlock, since: 2 }),
+  P("Magpul", "MOE forend (Remington 870)", "Forend", ["rem-870"], 35, "", "", { occ: ["forend"], steps: ST.forend870 }),
 
-  ["Mesa Tactical", "SureShell side saddle (6 shell)", "Shell carrier", ["rem-870", "moss-500"], 60, "", "Model-specific SKUs."],
+  P("SureFire", "WarComp 5.56", "Muzzle device", ["ar15"], 200, "1/2-28 thread", "", { needs: [N("thread", "1/2-28", { why: "Needs a 1/2-28 threaded barrel." })], steps: ST.muzzle }),
 
-  ["Tango Down", "Vickers Tactical slide stop (Glock)", "Controls", G_FULL, 20, "", "Gen-specific."],
+  P("Mesa Tactical", "SureShell side saddle (6 shell)", "Shell carrier", ["rem-870", "moss-500"], 60, "", "Model-specific SKUs.", { steps: [S(2, 15, "870: swap the trigger-group pins for the threaded pins provided. 500/590: use the receiver screw holes.", ["Hex keys"])] }),
 
-  ["Safariland", "578 GLS Pro-Fit", "Holster", ALL_PISTOLS, 45, "", "Size-numbered: pick the size for your model."],
-  ["Vedder", "LightTuck IWB", "Holster", ALL_PISTOLS, 70, "", "Made per model and light."],
-  ["Safariland", "6390RDS ALS", "Holster", ["glock-17", "glock-19", "sig-p320", "sw-mp2"], 160, "", "Model- and light-specific; optic-ready."],
+  P("Tango Down", "Vickers Tactical slide stop (Glock)", "Controls", G_FULL, 20, "", "Gen-specific.", { steps: [S(2, 20, "Field strip and swap the slide stop (the {gen} version).", ["3/32\" punch"])] }),
+
+  P("Safariland", "578 GLS Pro-Fit", "Holster", ALL_PISTOLS, 45, "", "Size-numbered: pick the size for your model.", { needs: [N("light", "none", { why: "Not made for a mounted light. Pick a light-bearing holster or drop the light." })], steps: ST.holster }),
+  P("Vedder", "LightTuck IWB", "Holster", ALL_PISTOLS, 70, "", "Made per model and light.", { steps: ST.holster }),
+  P("Safariland", "6390RDS ALS", "Holster", ["glock-17", "glock-19", "sig-p320", "sw-mp2"], 160, "", "Model- and light-specific; optic-ready.", { steps: ST.holster }),
 ];
 
 const RETAILERS = ["Brownells", "MidwayUSA", "OpticsPlanet", "Primary Arms", "Palmetto State Armory", "GunMag Warehouse", "Rainier Arms", "EuroOptic", "Sportsman's Warehouse", "Bass Pro / Cabela's", "Manufacturer direct"];
+
+// install order: lower runs first
+const PHASE = { "Service": 0, "Gas block": 1, "Handguard": 2, "Sights": 3, "Muzzle device": 3, "Adapter plate": 4, "Rail section": 4, "Forend": 4, "Trigger": 5, "Controls": 5, "Mag catch": 5, "Charging handle": 5, "Grip": 6, "Buffer tube": 6, "Stock": 7, "Shell carrier": 7, "Pistol optic": 8, "Optic mount": 8, "Rifle optic": 9, "Weapon light": 10, "Magazine": 11, "Holster": 12 };
+const phaseOf = p => PHASE[p.category] ?? 6;
+const SAFETY_STEP = "Unload completely: remove the magazine, lock the action open, look and feel to confirm the chamber is empty, and move all ammunition out of the room.";
+const FUNCTION_CHECK = {
+  Pistol: "Function check, unloaded: the trigger should only fire with the slide fully forward; hold the trigger back, cycle the slide and release slowly to feel the reset; any safety should block the trigger; the slide should lock back on an empty magazine.",
+  Rifle: "Function check, unloaded: on safe the hammer must not fall; on fire it falls; hold the trigger back, cycle the action and release slowly to hear the reset; the bolt should lock back on an empty magazine.",
+  Shotgun: "Function check, unloaded: the safety should block the trigger, the action should cycle smoothly, and the action release should work with the hammer cocked.",
+};
 
 /* ================= Customizer slots ================= */
 const SLOTS = {
@@ -520,8 +689,8 @@ const FINISHES = [
 ];
 
 /* ================= Silhouettes (generic, not any specific model) =================
-   Each slot is a <g data-slot>. "base" groups are always drawn and outline when picked;
-   "acc" groups only appear when picked (or as a ghost while that slot is open). */
+   "base" groups are always drawn and outline when picked; "acc" groups only appear when
+   picked (or as a ghost while that slot is open); [data-if="key:value"] follows the config. */
 const SVGS = {
   Pistol: { vb: "0 0 640 340", pins: { optic: [240, 34], sights: [494, 58], trigger: [312, 240], light: [440, 226], magazine: [272, 306], controls: [258, 126], holster: [584, 120], finish: [380, 76] }, art: `
     <g class="acc slot" data-slot="holster"><path class="tint" d="M300 78 L548 78 L552 184 L372 236 L300 214 Z" fill="#3a3833" stroke-linejoin="round"/><path class="deco" d="M318 92 L536 92" stroke="#57534b" stroke-width="2" stroke-dasharray="3 5"/></g>
@@ -530,6 +699,7 @@ const SVGS = {
       <g opacity=".22" stroke="#000" stroke-width="1.5"><path d="M180 210 L166 296 M192 210 L178 296 M204 210 L190 296 M216 210 L202 296 M228 210 L214 296 M240 210 L226 296"/></g></g>
     <g class="base"><rect class="fin-a" x="150" y="96" width="360" height="52" rx="6"/><rect class="cut" x="300" y="101" width="62" height="14" rx="2"/>
       <g stroke="rgba(0,0,0,.35)" stroke-width="3"><path d="M166 104 V140 M176 104 V140 M186 104 V140 M196 104 V140 M206 104 V140"/></g></g>
+    <g data-if="optic:plate"><rect x="212" y="92" width="58" height="5" rx="1" fill="rgba(0,0,0,.35)"/></g>
     <g class="base slot" data-slot="controls"><rect class="steel2 tint" x="236" y="146" width="44" height="8" rx="3"/></g>
     <g class="base slot" data-slot="trigger"><path class="steel2 tint" d="M298 178 Q290 194 297 206 L304 206 Q299 192 307 178 Z"/></g>
     <g class="base slot" data-slot="magazine"><rect class="steel2 tint" x="158" y="304" width="84" height="12" rx="3"/></g>
@@ -543,10 +713,13 @@ const SVGS = {
     <g class="base slot" data-slot="stock"><path class="fin-b tint" d="M40 112 L176 118 L176 160 L62 180 Q40 182 40 166 Z"/><rect class="steel2" x="170" y="118" width="42" height="18"/></g>
     <g class="base slot" data-slot="handguard"><rect class="fin-a tint" x="384" y="104" width="242" height="40" rx="4"/><g fill="rgba(0,0,0,.35)"><rect x="410" y="128" width="22" height="7" rx="3"/><rect x="450" y="128" width="22" height="7" rx="3"/><rect x="490" y="128" width="22" height="7" rx="3"/><rect x="530" y="128" width="22" height="7" rx="3"/><rect x="570" y="128" width="22" height="7" rx="3"/></g></g>
     <g class="base"><rect class="steel" x="626" y="117" width="122" height="12"/></g>
+    <g data-if="gas_block:fsb"><path class="steel2" d="M636 129 L640 84 L656 84 L662 129 Z"/><rect class="steel2" x="645" y="74" width="5" height="12"/></g>
     <g class="base slot" data-slot="muzzle"><rect class="steel2 tint" x="746" y="113" width="34" height="20" rx="2"/></g>
     <g class="acc slot" data-slot="muzzle"><rect class="tint" x="744" y="110" width="44" height="26" rx="3" fill="#1c1d1f"/><g class="deco" fill="#55575c"><rect x="752" y="114" width="5" height="8"/><rect x="762" y="114" width="5" height="8"/><rect x="772" y="114" width="5" height="8"/></g></g>
     <g class="base"><rect class="fin-b" x="206" y="138" width="176" height="26" rx="2"/><path d="M276 164 L276 188 L334 188 L342 164" fill="none" stroke="var(--fin-b, #2a2b2e)" stroke-width="6"/></g>
     <g class="base"><rect class="fin-a" x="206" y="102" width="180" height="38" rx="3"/><rect class="cut" x="290" y="112" width="58" height="14" rx="2"/></g>
+    <g data-if="top_rail:carry"><path class="fin-a" fill-rule="evenodd" d="M214 102 L222 66 L372 66 L380 102 Z M236 96 L240 78 L356 78 L362 96 Z"/></g>
+    <g data-if="light_mount:picatinny"><rect x="560" y="140" width="60" height="6" fill="#1c1d1f"/></g>
     <g class="base slot" data-slot="charging"><rect class="steel2 tint" x="196" y="104" width="14" height="10" rx="2"/></g>
     <g class="acc slot" data-slot="charging"><path class="tint" d="M188 100 L214 100 L214 116 L188 116 Z M180 104 L222 104 L222 112 L180 112 Z" fill="#1c1d1f"/></g>
     <g class="base slot" data-slot="trigger"><path class="steel2 tint" d="M302 164 Q296 178 302 188 L308 188 Q304 176 310 164 Z"/></g>
@@ -554,7 +727,7 @@ const SVGS = {
     <g class="base slot" data-slot="magazine"><path class="steel tint" d="M344 162 L388 162 L394 210 Q398 240 382 248 L352 250 Q340 220 344 162 Z"/></g>
     <g class="acc slot" data-slot="sights"><path class="tint" d="M214 102 L214 84 L234 84 L234 102 Z M600 104 L606 82 L616 82 L620 104 Z" fill="#141516"/><circle class="deco" cx="224" cy="91" r="4" fill="none" stroke="#8a8d93" stroke-width="2"/></g>
     <g class="acc slot" data-slot="optic"><rect class="deco" x="252" y="88" width="60" height="16" rx="2" fill="#2a2b2e"/><rect class="tint" x="238" y="56" width="88" height="34" rx="14" fill="#1d1f22"/><rect class="deco" x="322" y="60" width="6" height="26" rx="2" fill="#7ab8d9" opacity=".7"/></g>
-    <g class="acc slot" data-slot="light"><rect class="tint" x="560" y="144" width="62" height="20" rx="5" fill="#1b1c1e"/><rect class="deco" x="618" y="145" width="6" height="18" rx="2" fill="#fff6c8"/></g>
+    <g class="acc slot" data-slot="light"><rect class="tint" x="560" y="146" width="62" height="20" rx="5" fill="#1b1c1e"/><rect class="deco" x="618" y="147" width="6" height="18" rx="2" fill="#fff6c8"/></g>
   `},
   Shotgun: { vb: "0 0 820 280", pins: { optic: [282, 52], shells: [356, 190], forend: [505, 186], light: [672, 192], trigger: [290, 210], stock: [110, 92], finish: [600, 72] }, art: `
     <g class="base slot" data-slot="stock"><path class="fin-b tint" d="M40 122 L222 110 L222 152 Q172 158 142 178 L62 190 Q40 192 40 172 Z"/></g>
@@ -571,6 +744,7 @@ const SVGS = {
 /* ================= State ================= */
 const STORE_KEY = "partsbin.v1";
 const BANNER_KEY = "partsbin.banner";
+const DATA_VERSION = 2;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -579,34 +753,50 @@ const today = () => { const d = new Date(); return new Date(d.getTime() - d.getT
 const money = n => n == null || isNaN(n) ? "—" : "$" + Number(n).toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
 const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60) || "x";
 const uid = () => Math.random().toString(36).slice(2, 9);
+const clone = o => JSON.parse(JSON.stringify(o));
+const pname = p => `${p.brand} ${p.name}`.trim();
+const dur = m => m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? ` ${m % 60} min` : ""}`;
 
-function seedDb() {
+function seedParts() {
   const used = new Set();
-  const parts = SEED_PARTS.map(([brand, name, category, fits, est, mount, notes]) => {
-    let id = slug(brand + "-" + name); while (used.has(id)) id += "-2"; used.add(id);
-    return { id, brand, name, category, fits: [...fits], est, mount, notes, url: "", verified: false, seed: true, prices: [] };
+  return SEED_PARTS.map(p => {
+    let id = slug(p.brand + "-" + p.name); while (used.has(id)) id += "-2"; used.add(id);
+    return { id, ...clone(p), url: "", verified: false, seed: true, prices: [] };
   });
-  return {
-    version: 1,
-    platforms: SEED_PLATFORMS.map(([id, name, type, covers]) => ({ id, name, type, covers })),
-    parts,
-    builds: [],
-    draft: null,
-  };
+}
+function seedDb() {
+  return { version: DATA_VERSION, platforms: clone(SEED_PLATFORMS), parts: seedParts(), builds: [], draft: null };
 }
 function validDb(d) {
   return d && Array.isArray(d.platforms) && Array.isArray(d.parts) &&
     d.platforms.every(p => p && typeof p.id === "string" && typeof p.name === "string") &&
     d.parts.every(p => p && typeof p.id === "string" && typeof p.name === "string" && Array.isArray(p.fits));
 }
-function normalize(d) {
-  d.builds = Array.isArray(d.builds) ? d.builds : [];
-  d.parts.forEach(p => { p.prices = Array.isArray(p.prices) ? p.prices : []; p.brand = p.brand || ""; p.category = p.category || "Other"; });
-  d.platforms.forEach(p => { if (!SLOTS[p.type]) p.type = "Pistol"; });
+// Bring older saves up to date: add fit rules and new starter parts without touching the user's edits.
+function upgrade(d) {
+  if ((d.version || 1) >= DATA_VERSION) return d;
+  const sp = seedParts();
+  d.platforms.forEach(p => { const s = SEED_PLATFORMS.find(x => x.id === p.id); if (s) { if (!p.base) p.base = clone(s.base); if (!p.options) p.options = clone(s.options); } });
+  d.parts.forEach(p => { const s = sp.find(x => x.id === p.id); if (s) ["needs", "gives", "occ", "steps"].forEach(k => { if (p[k] === undefined) p[k] = clone(s[k]); }); });
+  sp.filter(s => s.since >= 2 && !d.parts.some(p => p.id === s.id)).forEach(s => d.parts.push(s));
+  d.version = DATA_VERSION;
   return d;
 }
+function normalize(d) {
+  d.builds = Array.isArray(d.builds) ? d.builds : [];
+  d.parts.forEach(p => {
+    p.prices = Array.isArray(p.prices) ? p.prices : []; p.brand = p.brand || ""; p.category = p.category || "Other";
+    p.needs = Array.isArray(p.needs) ? p.needs.filter(n => n && n.k && Array.isArray(n.in)) : [];
+    p.gives = p.gives && typeof p.gives === "object" ? p.gives : {};
+    p.occ = Array.isArray(p.occ) ? p.occ : []; p.steps = Array.isArray(p.steps) ? p.steps.filter(s => s && s.text) : [];
+  });
+  d.platforms.forEach(p => { if (!SLOTS[p.type]) p.type = "Pistol"; p.base = p.base || {}; p.options = Array.isArray(p.options) ? p.options : []; });
+  [...d.builds, d.draft].filter(Boolean).forEach(fixBuild);
+  return d;
+}
+function fixBuild(b) { b.picks = b.picks || {}; b.extras = Array.isArray(b.extras) ? b.extras : []; b.config = b.config || {}; b.done = b.done || {}; b.finish = b.finish || { a: FINISHES[0][1], b: FINISHES[0][1] }; return b; }
 function load() {
-  try { const s = localStorage.getItem(STORE_KEY); if (s) { const d = JSON.parse(s); if (validDb(d)) return normalize(d); } } catch (e) {}
+  try { const s = localStorage.getItem(STORE_KEY); if (s) { const d = JSON.parse(s); if (validDb(d)) return normalize(upgrade(d)); } } catch (e) {}
   return seedDb();
 }
 let db = load();
@@ -647,6 +837,119 @@ function changeFor(part, entry) {
   return d > 0 ? `<span class="up">▲ ${money(d)}</span>` : `<span class="down">▼ ${money(-d)}</span>`;
 }
 
+/* ================= Fit engine ================= */
+function resolveIface(plat, config) {
+  const f = { light: "none", ...(plat.base || {}) };
+  (plat.options || []).forEach(o => { const i = config?.[o.id] ?? o.def ?? 0; Object.assign(f, (o.choices[i] || o.choices[0] || { set: {} }).set); });
+  return f;
+}
+function configSummary(plat, config) {
+  return (plat.options || []).map(o => (o.choices[config?.[o.id] ?? o.def ?? 0] || o.choices[0])?.label).filter(Boolean).join(" · ");
+}
+const meets = (n, f) => n.k in f && n.in.includes(String(f[n.k]));
+const RANK = ["no", "conflict", "fix", "warn", "unknown"];
+const worst = res => RANK.find(t => res.some(r => r.type === t)) || "ok";
+
+// Parts from the catalog that would satisfy `need`, chaining up to `depth` deep (e.g. gas block -> handguard -> rail section).
+function bridgeFor(need, iface, plat, exclude, depth) {
+  const out = [];
+  for (const c of db.parts) {
+    if (exclude.has(c.id) || !c.fits.includes(plat.id) || !(need.k in c.gives) || !need.in.includes(String(c.gives[need.k]))) continue;
+    const chain = [], local = { ...iface }; let ok = true;
+    for (const u of c.needs.filter(u => !u.soft)) {
+      if (meets(u, local)) continue;
+      if (depth <= 1 || !(u.k in local)) { ok = false; break; }
+      const sub = bridgeFor(u, local, plat, new Set([...exclude, c.id, ...chain.map(x => x.id)]), depth - 1)[0];
+      if (!sub) { ok = false; break; }
+      chain.push(...sub.parts); sub.parts.forEach(sp => Object.assign(local, sp.gives));
+    }
+    if (ok) { const parts = [...chain, c]; out.push({ parts, cost: parts.reduce((s, x) => s + (priceOf(x)?.amount || 0), 0) }); }
+  }
+  return out.sort((a, b) => a.parts.length - b.parts.length || a.cost - b.cost).slice(0, 3);
+}
+
+function buildItems(b, plat) {
+  const slots = slotsFor(plat);
+  return [
+    ...slots.filter(s => !s.finish && b.picks[s.id]).map(s => ({ part: partById(b.picks[s.id]), slot: s.id })),
+    ...(b.extras || []).map(id => ({ part: partById(id), slot: null })),
+  ].filter(x => x.part);
+}
+
+function evaluate(b) {
+  const plat = platformById(b.platform);
+  const base = resolveIface(plat, b.config);
+  const items = buildItems(b, plat);
+  const ordered = [...items].sort((x, y) => phaseOf(x.part) - phaseOf(y.part));
+  const ifaceWithout = skip => { const f = { ...base }; ordered.forEach(x => { if (x.part !== skip) Object.assign(f, x.part.gives); }); return f; };
+  const final = ifaceWithout(null);
+  const picked = new Set(items.map(x => x.part.id));
+  const byPart = {}, issues = [], seenClash = new Set();
+  items.forEach(x => {
+    const p = x.part, f = ifaceWithout(p), res = [];
+    p.needs.forEach(n => {
+      if (!(n.k in f)) { res.push({ type: "unknown", msg: `Can't check ${keyLabel(n.k).toLowerCase()}: it isn't set up for this firearm.` }); return; }
+      if (meets(n, f)) return;
+      const bridges = bridgeFor(n, f, plat, picked, 3);
+      const msg = n.why || `Needs ${n.in.map(v => valLabel(n.k, v)).join(" or ")}; this build has ${valLabel(n.k, f[n.k])}.`;
+      res.push({ type: n.soft ? "warn" : bridges.length ? "fix" : "no", msg, bridges });
+    });
+    p.occ.forEach(t => items.forEach(y => {
+      if (y.part === p || !y.part.occ.includes(t)) return;
+      res.push({ type: "conflict", msg: `Clashes with ${pname(y.part)}: both take the ${t}.`, other: y.part.id });
+    }));
+    byPart[p.id] = { status: worst(res), issues: res };
+    res.forEach(r => {
+      if (r.type === "conflict") { const key = [p.id, r.other].sort().join("|"); if (seenClash.has(key)) return; seenClash.add(key); }
+      issues.push({ ...r, part: p });
+    });
+  });
+  // extras nothing depends on any more
+  const orphans = (b.extras || []).filter(id => {
+    const e = partById(id); if (!e) return false;
+    return !items.some(x => x.part.id !== id && x.part.needs.some(n => n.k in e.gives && n.in.includes(String(e.gives[n.k]))));
+  });
+  issues.sort((x, y) => RANK.indexOf(x.type) - RANK.indexOf(y.type));
+  return { plat, base, final, items, byPart, issues, orphans, plan: makePlan(plat, final, ordered, b) };
+}
+
+function fillText(t, f, plat) {
+  return t.replace(/\{(\w+)\}/g, (m, k) => k === "model" ? plat.name : k === "light" ? (f.light === "none" ? "no light" : f.light) : k in f ? valLabel(k, f[k]) : m);
+}
+function makePlan(plat, f, ordered, b) {
+  const steps = [{ key: "safety", lvl: 1, mins: 2, text: SAFETY_STEP, tools: [], src: "Before you start" }];
+  ordered.forEach(x => x.part.steps.forEach((s, i) => {
+    if (s.cond && !meets(s.cond, f)) return;
+    steps.push({ key: `${x.part.id}:${i}`, lvl: s.lvl || 1, mins: s.mins || 0, text: fillText(s.text, f, plat), tools: s.tools || [], src: pname(x.part) });
+  }));
+  if (ordered.length) {
+    steps.push({ key: "function", lvl: 1, mins: 5, text: FUNCTION_CHECK[plat.type] || FUNCTION_CHECK.Pistol, tools: [], src: "When you're done" });
+    if (ordered.some(x => /optic/i.test(x.part.category))) steps.push({ key: "zero", lvl: 1, mins: 45, text: "Zero the optic at the range.", tools: [], src: "When you're done" });
+    if (steps.some(s => s.lvl >= 2)) steps.push({ key: "recheck", lvl: 1, mins: 10, text: "After the first range trip, re-check every screw you touched and any witness marks.", tools: [], src: "When you're done" });
+  }
+  const lvl = Math.max(1, ...steps.map(s => s.lvl));
+  const tools = [...new Set(steps.flatMap(s => s.tools))];
+  const mins = steps.reduce((n, s) => n + s.mins, 0);
+  return { steps, lvl, tools, mins, shop: steps.some(s => s.lvl >= 4) };
+}
+function checkPart(b, part, slotId) {
+  const hb = { ...b, picks: { ...b.picks, [slotId]: part.id }, extras: (b.extras || []).filter(id => id !== part.id) };
+  return evaluate(hb).byPart[part.id] || { status: "ok", issues: [] };
+}
+function shortName(p) { return p.name.replace(/\s*\(.*?\)\s*/g, " ").trim(); }
+function fitChip(r) {
+  const fix = r.issues.find(i => i.type === "fix");
+  const t = {
+    ok: "✓ Fits",
+    fix: fix ? `＋ Needs ${fix.bridges[0].parts.map(shortName).join(" + ")}` : "＋ Needs parts",
+    warn: "! Works, with a note",
+    no: "✕ Won't fit",
+    conflict: "✕ Clashes",
+    unknown: "? Can't check",
+  }[r.status];
+  return `<span class="fit ${r.status}">${esc(t)}</span>`;
+}
+
 /* ================= Tabs ================= */
 let view = "build";
 function setView(v) {
@@ -667,9 +970,9 @@ $$("nav.tabs button").forEach(b => b.addEventListener("click", () => setView(b.d
 /* ================= Build (customizer) ================= */
 function newBuild(platformId) {
   const p = platformById(platformId) || db.platforms[0];
-  return { id: null, name: "", platform: p ? p.id : "", picks: {}, finish: { a: FINISHES[0][1], b: FINISHES[0][1] } };
+  return fixBuild({ id: null, name: "", platform: p ? p.id : "", picks: {}, extras: [], config: {}, done: {} });
 }
-let build = db.draft && platformById(db.draft.platform) ? db.draft : newBuild("glock-19");
+let build = db.draft && platformById(db.draft.platform) ? fixBuild(db.draft) : newBuild("glock-19");
 let slotIdx = 0;
 let shownPicks = null; // picks drawn last render, so only a newly chosen part animates in
 
@@ -681,6 +984,20 @@ function optionsFor(slot, platformId) {
 }
 function persistDraft() { db.draft = build; save(); }
 
+// Add parts that fix a gap: slot parts go in their slot, the rest into "adapters & add-ons".
+function applyParts(ids) {
+  const plat = platformById(build.platform); const slots = slotsFor(plat);
+  ids.map(partById).filter(Boolean).forEach(p => {
+    Object.keys(build.picks).forEach(k => { const q = partById(build.picks[k]); if (q && q.id !== p.id && q.occ.some(t => p.occ.includes(t))) delete build.picks[k]; });
+    build.extras = build.extras.filter(id => { const q = partById(id); return !(q && q.id !== p.id && q.occ.some(t => p.occ.includes(t))); });
+    const slot = slots.find(s => s.cats?.includes(p.category));
+    if (slot) build.picks[slot.id] = p.id;
+    else if (!build.extras.includes(p.id)) build.extras.push(p.id);
+  });
+  persistDraft(); renderBuild();
+  toast(`Added ${ids.map(id => shortName(partById(id))).join(" + ")}`);
+}
+
 function renderPlatformSelect(sel, value, allLabel) {
   const types = ["Pistol", "Rifle", "Shotgun"];
   sel.innerHTML = (allLabel ? `<option value="">${esc(allLabel)}</option>` : "") + types.map(t => {
@@ -690,17 +1007,26 @@ function renderPlatformSelect(sel, value, allLabel) {
   sel.value = value || "";
 }
 
+function bridgeButtons(issue) {
+  return (issue.bridges || []).slice(0, 2).map(br =>
+    `<button class="btn small ${issue.type === "fix" ? "primary" : ""}" data-add="${esc(br.parts.map(p => p.id).join(","))}">Add ${esc(br.parts.map(shortName).join(" + "))} · ~${money(br.cost)}</button>`).join("");
+}
+
 function renderBuild() {
   const plat = platformById(build.platform) || db.platforms[0];
   if (!plat) { $("#svgHost").innerHTML = `<div class="empty-slot">Add a firearm on the Firearms tab to start a build.</div>`; return; }
   build.platform = plat.id;
   const slots = slotsFor(plat);
   slotIdx = Math.max(0, Math.min(slotIdx, slots.length - 1));
-  // drop picks that no longer fit / exist
   Object.keys(build.picks).forEach(k => { const pt = partById(build.picks[k]); if (!pt || !pt.fits.includes(plat.id) || !slots.some(s => s.id === k)) delete build.picks[k]; });
+  build.extras = build.extras.filter(id => partById(id)?.fits.includes(plat.id));
+  const ev = evaluate(build);
 
   renderPlatformSelect($("#bPlatform"), plat.id);
   $("#bName").value = build.name;
+  $("#bConfig").innerHTML = plat.options.map(o => `<label class="f">${esc(o.label)}<select data-opt="${esc(o.id)}">${o.choices.map((c, i) => `<option value="${i}">${esc(c.label)}</option>`).join("")}</select></label>`).join("");
+  plat.options.forEach(o => { $(`#bConfig [data-opt="${o.id}"]`).value = String(build.config[o.id] ?? o.def ?? 0); });
+  $$("#bConfig select").forEach(s => s.addEventListener("change", () => { build.config[s.dataset.opt] = +s.value; persistDraft(); renderBuild(); }));
   $("#stageType").textContent = plat.type;
   $("#stageName").textContent = build.name || plat.name;
 
@@ -708,24 +1034,24 @@ function renderBuild() {
   const art = SVGS[plat.type] || SVGS.Pistol;
   const pins = slots.map((s, i) => {
     const [x, y] = art.pins[s.id] || [20 + i * 30, 20];
-    const done = s.finish ? false : !!build.picks[s.id];
+    const pid = build.picks[s.id];
+    const st = pid ? ev.byPart[pid]?.status : null;
     const empty = !s.finish && !optionsFor(s, plat.id).length;
-    const cls = ["pin", i === slotIdx ? "active" : "", done ? "done" : "", empty ? "empty" : ""].join(" ");
+    const cls = ["pin", i === slotIdx ? "active" : "", pid ? "done" : "", empty ? "empty" : "", st === "no" || st === "conflict" ? "bad" : st === "fix" || st === "warn" ? "warn" : ""].join(" ");
     return `<g class="${cls}" data-i="${i}" role="button" tabindex="0" aria-label="${esc(s.label)}"><circle cx="${x}" cy="${y}" r="13"/><text x="${x}" y="${y}">${s.finish ? "✦" : i + 1}</text></g>`;
   }).join("");
   $("#svgHost").innerHTML = `<svg viewBox="${art.vb}" style="--fin-a:${esc(build.finish.a)};--fin-b:${esc(build.finish.b)}" aria-label="${esc(plat.name)} build preview">
     <defs><linearGradient id="beam" x1="0" x2="1"><stop offset="0" stop-color="#fff6c8" stop-opacity=".55"/><stop offset="1" stop-color="#fff6c8" stop-opacity="0"/></linearGradient></defs>
     ${art.art}${pins}</svg>`;
   const svg = $("#svgHost svg");
+  $$("[data-if]", svg).forEach(g => { const [k, v] = g.dataset.if.split(":"); g.style.display = String(ev.final[k]) === v ? "" : "none"; });
   const active = slots[slotIdx];
   $$(".slot", svg).forEach(g => {
     const id = g.dataset.slot; const picked = !!build.picks[id];
     if (g.classList.contains("acc")) {
-      // accessory: show when picked; ghost when its slot is open and empty
-      const isMagExtra = id === "magazine"; // mag accessory = extended base pad
       g.classList.toggle("on", picked);
       g.classList.toggle("fresh", picked && !!shownPicks && shownPicks[id] !== build.picks[id]);
-      g.classList.toggle("ghost", !picked && active.id === id && !isMagExtra);
+      g.classList.toggle("ghost", !picked && active.id === id && id !== "magazine");
     } else {
       g.classList.toggle("picked", picked);
       g.classList.toggle("active", active.id === id && !picked);
@@ -737,7 +1063,6 @@ function renderBuild() {
     g.addEventListener("click", go);
     g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
   });
-
   shownPicks = { ...build.picks };
 
   // picker
@@ -748,7 +1073,7 @@ function renderBuild() {
   const box = $("#pkOptions");
   if (active.finish) {
     const [la, lb] = FINISH_LABELS[plat.type] || FINISH_LABELS.Pistol;
-    const sw = (key) => FINISHES.map(([n, c]) => `<button class="sw" data-k="${key}" data-c="${c}" title="${esc(n)}" aria-label="${esc(n)}" aria-pressed="${build.finish[key] === c}" style="background:${c}"></button>`).join("");
+    const sw = key => FINISHES.map(([n, c]) => `<button class="sw" data-k="${key}" data-c="${c}" title="${esc(n)}" aria-label="${esc(n)}" aria-pressed="${build.finish[key] === c}" style="background:${c}"></button>`).join("");
     const nm = c => (FINISHES.find(f => f[1] === c) || ["Custom"])[0];
     box.innerHTML = `<div class="sw-label">${esc(la)} · ${esc(nm(build.finish.a))}</div><div class="swatches">${sw("a")}</div>
       <div class="sw-label">${esc(lb)} · ${esc(nm(build.finish.b))}</div><div class="swatches">${sw("b")}</div>
@@ -758,13 +1083,18 @@ function renderBuild() {
     const opts = optionsFor(active, plat.id);
     const cur = build.picks[active.id] || "";
     box.innerHTML = `<button class="opt" data-id="" aria-pressed="${!cur}"><div class="brand">Keep</div><div class="name">Factory / none</div><div class="p"><span class="faint">$0</span></div></button>` +
-      (opts.length ? opts.map(pt => `<div class="opt" role="button" tabindex="0" data-id="${esc(pt.id)}" aria-pressed="${cur === pt.id}">
+      (opts.length ? opts.map(pt => {
+        const r = cur === pt.id ? ev.byPart[pt.id] : checkPart(build, pt, active.id);
+        const first = r.issues.find(i => i.type !== "unknown") || r.issues[0];
+        return `<div class="opt ${r.status === "no" || r.status === "conflict" ? "nofit" : ""}" role="button" tabindex="0" data-id="${esc(pt.id)}" aria-pressed="${cur === pt.id}">
           <div class="brand">${esc(pt.brand)} ${pt.verified ? `<span class="badge ok">Verified</span>` : ""}</div>
           <div class="name">${esc(pt.name)}</div>
           <div class="p">${priceHtml(pt)}</div>
+          <div class="fitline">${fitChip(r)}${first && r.status !== "fix" ? `<div class="why">${esc(first.msg)}</div>` : ""}</div>
           ${(pt.mount || pt.notes) ? `<div class="meta">${esc([pt.mount, pt.notes].filter(Boolean).join(" · "))}</div>` : ""}
-          <button class="more" data-more="${esc(pt.id)}">Prices &amp; details</button>
-        </div>`).join("")
+          <button class="more" data-more="${esc(pt.id)}">Prices, fit rules &amp; steps</button>
+        </div>`;
+      }).join("")
         : `<div class="empty-slot">Nothing in the catalog fits a ${esc(plat.name)} here yet.<br><button class="btn small" id="pkAddPart" style="margin-top:10px">+ Add a ${esc(active.label.toLowerCase())}</button></div>`);
     $$(".opt", box).forEach(el => {
       const pick = () => { if (el.dataset.id) build.picks[active.id] = el.dataset.id; else delete build.picks[active.id]; persistDraft(); renderBuild(); };
@@ -777,30 +1107,94 @@ function renderBuild() {
 
   // strip
   $("#strip").innerHTML = slots.map((s, i) => {
-    const done = !s.finish && !!build.picks[s.id];
+    const pid = build.picks[s.id]; const st = pid ? ev.byPart[pid]?.status : null;
     const empty = !s.finish && !optionsFor(s, plat.id).length;
-    return `<button data-i="${i}" class="${done ? "done" : ""} ${empty ? "empty" : ""}" aria-current="${i === slotIdx}"><span class="n">${s.finish ? "✦" : done ? "✓" : i + 1}</span>${esc(s.label)}</button>`;
+    const mark = st === "no" || st === "conflict" ? "bad" : st === "fix" || st === "warn" ? "warn" : "";
+    return `<button data-i="${i}" class="${pid ? "done" : ""} ${empty ? "empty" : ""} ${mark}" aria-current="${i === slotIdx}"><span class="n">${s.finish ? "✦" : pid ? (mark ? "!" : "✓") : i + 1}</span>${esc(s.label)}</button>`;
   }).join("");
   $$("#strip button").forEach(b => b.addEventListener("click", () => { slotIdx = +b.dataset.i; renderBuild(); }));
-  const cur = $(`#strip button[aria-current="true"]`); if (cur) cur.scrollIntoView({ block: "nearest", inline: "nearest" });
+  const curBtn = $(`#strip button[aria-current="true"]`); if (curBtn) curBtn.scrollIntoView({ block: "nearest", inline: "nearest" });
 
-  // summary + total
+  // parts list + total
   let total = 0, estCount = 0, n = 0;
-  const rows = slots.filter(s => !s.finish).map(s => {
-    const pt = partById(build.picks[s.id]);
-    if (!pt) return `<div class="row"><div class="slotname">${esc(s.label)}</div><div class="none">Factory</div><div></div></div>`;
+  const rowFor = (label, pt, removable) => {
     const pr = priceOf(pt); n++;
     if (pr) { total += pr.amount; if (pr.est) estCount++; } else estCount++;
-    return `<div class="row"><div class="slotname">${esc(s.label)}</div><div><a href="#" data-open="${esc(pt.id)}"><strong>${esc(pt.brand)}</strong> ${esc(pt.name)}</a></div><div style="text-align:right">${priceHtml(pt)}</div></div>`;
+    const st = ev.byPart[pt.id];
+    const orphan = ev.orphans.includes(pt.id);
+    return `<div class="row"><div class="slotname">${esc(label)}</div>
+      <div><a href="#" data-open="${esc(pt.id)}"><strong>${esc(pt.brand)}</strong> ${esc(pt.name)}</a> ${st && st.status !== "ok" ? fitChip(st) : ""}${orphan ? ` <span class="faint" style="font-size:12.5px">Nothing in this build needs it now.</span>` : ""}</div>
+      <div style="text-align:right;display:flex;gap:6px;align-items:baseline;justify-content:flex-end"><div>${priceHtml(pt)}</div>${removable ? `<button class="x" data-rm="${esc(pt.id)}" aria-label="Remove">×</button>` : ""}</div></div>`;
+  };
+  const rows = slots.filter(s => !s.finish).map(s => {
+    const pt = partById(build.picks[s.id]);
+    return pt ? rowFor(s.label, pt, false) : `<div class="row"><div class="slotname">${esc(s.label)}</div><div class="none">Factory</div><div></div></div>`;
   });
-  $("#sumRows").innerHTML = rows.join("");
+  const extraRows = build.extras.map(partById).filter(Boolean).map(pt => rowFor(pt.category, pt, true));
+  $("#sumRows").innerHTML = rows.join("") + (extraRows.length ? `<div class="subhead">Adapters, add-ons &amp; shop work</div>${extraRows.join("")}` : "");
   $$("#sumRows [data-open]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); openPart(a.dataset.open); }));
+  $$("#sumRows [data-rm]").forEach(b => b.addEventListener("click", () => { build.extras = build.extras.filter(id => id !== b.dataset.rm); persistDraft(); renderBuild(); }));
   $("#bTotal").textContent = (estCount ? "~" : "") + money(total);
   $("#bTotalSub").textContent = !n ? "Pick parts to start" :
     `${n} part${n === 1 ? "" : "s"} · ${estCount ? `${n - estCount} from retailer prices, ${estCount} estimated` : "all from retailer prices"}`;
   $("#bSave").textContent = build.id ? "Update build" : "Save build";
   $("#bSaveAs").hidden = !build.id;
+
+  renderFitCheck(ev);
+  renderPlan(ev);
 }
+
+function renderFitCheck(ev) {
+  const box = $("#fitBody");
+  const counts = { bad: ev.issues.filter(i => i.type === "no" || i.type === "conflict").length, fix: ev.issues.filter(i => i.type === "fix").length, warn: ev.issues.filter(i => i.type === "warn" || i.type === "unknown").length };
+  $("#fitSummary").innerHTML = !ev.items.length ? "" :
+    counts.bad ? `<span class="fit no">✕ ${counts.bad} won't work</span>` : counts.fix ? `<span class="fit fix">＋ ${counts.fix} need${counts.fix === 1 ? "s" : ""} parts</span>` : counts.warn ? `<span class="fit warn">! ${counts.warn} note${counts.warn === 1 ? "" : "s"}</span>` : `<span class="fit ok">✓ All good</span>`;
+  if (!ev.items.length) { box.innerHTML = `<p class="muted" style="margin:0">Pick parts and this checks them against your ${esc(ev.plat.name)} and each other.</p>`; return; }
+  const cfg = configSummary(ev.plat, build.config);
+  box.innerHTML = (ev.issues.length ? ev.issues.map(i => {
+    const ic = { no: "✕", conflict: "✕", fix: "＋", warn: "!", unknown: "?" }[i.type];
+    return `<div class="issue"><span class="ic ${i.type}">${ic}</span><div>
+      <div><strong>${esc(pname(i.part))}</strong></div>
+      <div class="muted" style="font-size:14px">${esc(i.msg)}</div>
+      ${i.bridges?.length ? `<div class="fixes">${bridgeButtons(i)}</div>` : ""}
+      ${i.type === "conflict" ? `<div class="fixes"><button class="btn small" data-drop="${esc(i.part.id)}">Remove ${esc(shortName(i.part))}</button></div>` : ""}
+    </div></div>`;
+  }).join("") : "") +
+    `<p class="faint" style="font-size:13px;margin:10px 0 0">${ev.issues.length ? "Everything else" : "Everything"} checks out against a ${esc(ev.plat.name)}${cfg ? ` (${esc(cfg)})` : ""} and the other parts in this build. Rules come from the starter data and are unverified.</p>`;
+  $$("#fitBody [data-add]").forEach(b => b.addEventListener("click", () => applyParts(b.dataset.add.split(","))));
+  $$("#fitBody [data-drop]").forEach(b => b.addEventListener("click", () => {
+    const id = b.dataset.drop; Object.keys(build.picks).forEach(k => { if (build.picks[k] === id) delete build.picks[k]; });
+    build.extras = build.extras.filter(x => x !== id); persistDraft(); renderBuild();
+  }));
+}
+
+function renderPlan(ev) {
+  const pl = ev.plan;
+  const box = $("#planBody");
+  if (!ev.items.length) { box.innerHTML = `<p class="muted" style="margin:0">Your step-by-step install plan shows up here: what to do, in what order, with which tools.</p>`; $("#planCopy").hidden = true; return; }
+  $("#planCopy").hidden = false;
+  const done = build.done || {};
+  const nDone = pl.steps.filter(s => done[s.key]).length;
+  box.innerHTML = `
+    <div class="plan-meta">
+      <div class="meta-box"><span>Difficulty</span><b class="lvl-text l${pl.lvl}">${esc(LEVELS[pl.lvl])}</b></div>
+      <div class="meta-box"><span>Hands-on time</span><b>~${esc(dur(pl.mins))}${pl.shop ? " + shop time" : ""}</b></div>
+      <div class="meta-box"><span>Progress</span><b>${nDone} of ${pl.steps.length}</b></div>
+    </div>
+    ${pl.tools.length ? `<div class="tools"><div class="sw-label" style="margin:0 0 6px">Tools</div>${pl.tools.map(t => `<span class="chip">${esc(t)}</span>`).join("")}</div>` : ""}
+    <ol class="steps">${pl.steps.map((s, i) => `<li class="${done[s.key] ? "done" : ""}">
+      <input type="checkbox" data-step="${esc(s.key)}" ${done[s.key] ? "checked" : ""} aria-label="Step ${i + 1} done">
+      <div><div class="txt">${esc(s.text)}</div><div class="src">${i + 1}. ${esc(s.src)}${s.mins ? ` · ~${esc(dur(s.mins))}` : ""}</div></div>
+      <span class="lvl l${s.lvl}">${esc(LEVELS[s.lvl])}</span></li>`).join("")}</ol>
+    <p class="faint" style="font-size:12.5px;margin:10px 0 0">A checklist, not a manual: follow each maker's instructions and torque specs. If a step is beyond you, a gunsmith can do it.</p>`;
+  $$("#planBody [data-step]").forEach(c => c.addEventListener("change", () => { build.done[c.dataset.step] = c.checked; if (!c.checked) delete build.done[c.dataset.step]; persistDraft(); renderPlan(evaluate(build)); }));
+}
+$("#planCopy").addEventListener("click", async () => {
+  const ev = evaluate(build); const pl = ev.plan;
+  const text = [`${build.name || ev.plat.name} install plan (${configSummary(ev.plat, build.config) || ev.plat.name})`, `Difficulty: ${LEVELS[pl.lvl]} · ~${dur(pl.mins)}${pl.shop ? " + shop time" : ""}`, pl.tools.length ? `Tools: ${pl.tools.join(", ")}` : "", "",
+    ...pl.steps.map((s, i) => `${i + 1}. [${LEVELS[s.lvl]}] ${s.text} (${s.src})`)].filter((l, i) => l || i === 3).join("\n");
+  try { await navigator.clipboard.writeText(text); toast("Install plan copied"); } catch (e) { download("install-plan.txt", text, "text/plain"); }
+});
 
 $("#bPlatform").addEventListener("change", e => {
   const fin = build.finish;
@@ -810,15 +1204,15 @@ $("#bPlatform").addEventListener("change", e => {
 $("#bName").addEventListener("input", e => { build.name = e.target.value; $("#stageName").textContent = build.name || platformById(build.platform)?.name || ""; persistDraft(); });
 $("#pkPrev").addEventListener("click", () => { slotIdx--; renderBuild(); });
 $("#pkNext").addEventListener("click", () => { slotIdx++; renderBuild(); });
-$("#bClear").addEventListener("click", () => { build = newBuild(build.platform); slotIdx = 0; persistDraft(); renderBuild(); });
+$("#bClear").addEventListener("click", () => { const cfg = build.config; build = newBuild(build.platform); build.config = cfg; slotIdx = 0; persistDraft(); renderBuild(); });
 function saveBuild(asNew) {
   const plat = platformById(build.platform);
   if (!build.name.trim()) build.name = `${plat ? plat.name : "My"} build`;
-  const copy = JSON.parse(JSON.stringify(build));
+  const copy = clone(build);
   if (asNew || !copy.id) { copy.id = uid(); if (asNew) copy.name = copy.name + " (copy)"; db.builds.unshift(copy); }
   else { const i = db.builds.findIndex(b => b.id === copy.id); if (i >= 0) db.builds[i] = copy; else db.builds.unshift(copy); }
   copy.saved = today();
-  build = JSON.parse(JSON.stringify(copy));
+  build = clone(copy);
   persistDraft(); renderBuild(); toast(`Saved “${copy.name}”`);
 }
 $("#bSave").addEventListener("click", () => saveBuild(false));
@@ -863,8 +1257,9 @@ function renderCatalogRows() {
   $("#cRows").innerHTML = list.length ? list.map(p => {
     const fits = p.fits.map(f => platformById(f)).filter(Boolean);
     const nRet = latestByRetailer(p).length;
+    const hard = p.needs.filter(n => !n.soft).length;
     return `<tr data-id="${esc(p.id)}">
-      <td><div class="pb">${esc(p.brand)}</div><div class="pn">${esc(p.name)} ${p.verified ? `<span class="badge ok">Verified</span>` : ""}</div>${p.mount ? `<div class="faint" style="font-size:12.5px">${esc(p.mount)}</div>` : ""}</td>
+      <td><div class="pb">${esc(p.brand)}</div><div class="pn">${esc(p.name)} ${p.verified ? `<span class="badge ok">Verified</span>` : ""}</div>${p.mount ? `<div class="faint" style="font-size:12.5px">${esc(p.mount)}</div>` : ""}${hard ? `<div class="faint" style="font-size:12.5px">${hard} fit rule${hard === 1 ? "" : "s"}${p.steps.length ? ` · ${p.steps.length} install step${p.steps.length === 1 ? "" : "s"}` : ""}</div>` : ""}</td>
       <td class="cat">${esc(p.category)}</td>
       <td>${fits.slice(0, 3).map(f => `<span class="chip" data-plat="${esc(f.id)}">${esc(f.name)}</span>`).join("")}${fits.length > 3 ? `<span class="faint" style="font-size:12.5px">+${fits.length - 3} more</span>` : ""}</td>
       <td class="num">${priceHtml(p)}${nRet > 1 ? `<div class="faint" style="font-size:12px">${nRet} retailers</div>` : ""}</td>
@@ -884,11 +1279,12 @@ $("#cSort").addEventListener("change", e => { cState.sort = e.target.value; rend
 $("#cPriced").addEventListener("change", e => { cState.priced = e.target.checked; renderCatalogRows(); });
 $("#cAdd").addEventListener("click", () => openEdit(null, cState.platform ? { fits: [cState.platform] } : {}));
 
-/* ================= Part detail (prices) ================= */
-let openPartId = null;
+/* ================= Part detail (prices, fit rules, steps) ================= */
+function needText(n) {
+  return `${n.soft ? "Recommended" : "Needs"}: ${n.in.map(v => valLabel(n.k, v)).join(" or ")}${n.why ? ` <span class="faint">(${esc(n.why)})</span>` : ""}`;
+}
 function openPart(id) {
   const p = partById(id); if (!p) return;
-  openPartId = id;
   const dlg = $("#dlgPart");
   const latest = latestByRetailer(p);
   const best = bestPrice(p);
@@ -896,6 +1292,7 @@ function openPart(id) {
   const fits = p.fits.map(f => platformById(f)).filter(Boolean);
   const url = safeUrl(p.url);
   const shop = "https://www.google.com/search?tbm=shop&q=" + encodeURIComponent(`${p.brand} ${p.name}`);
+  const gives = Object.entries(p.gives).filter(([k]) => k !== "light");
   const row = (e, isLatest) => `<tr class="${isLatest && e === best ? "best" : ""}">
       <td>${esc(e.retailer)}${e.inStock === false ? ` <span class="badge">Out of stock</span>` : ""}</td>
       <td class="price">${money(e.price)}</td>
@@ -919,6 +1316,18 @@ function openPart(id) {
     <div class="dlg-body">
       ${p.notes ? `<div>${esc(p.notes)}</div>` : ""}
       <div><h4>Fits</h4>${fits.length ? fits.map(f => `<span class="chip" data-plat="${esc(f.id)}">${esc(f.name)}</span>`).join("") : `<span class="faint">No firearms set.</span>`}</div>
+      <div class="rules">
+        <h4>Fit rules</h4>
+        ${p.needs.length || gives.length || p.occ.length ? `<ul>
+          ${p.needs.map(n => `<li><strong>${esc(keyLabel(n.k))}.</strong> ${needText(n)}</li>`).join("")}
+          ${gives.map(([k, v]) => `<li><strong>Changes ${esc(keyLabel(k).toLowerCase())}</strong> to ${esc(valLabel(k, v))}</li>`).join("")}
+          ${p.occ.length ? `<li><strong>Takes the place of.</strong> ${esc(p.occ.join(", "))}: clashes with other parts that do</li>` : ""}
+        </ul>` : `<p class="muted" style="margin:0">No rules beyond the firearm list.</p>`}
+      </div>
+      <div>
+        <h4>Install steps</h4>
+        ${p.steps.length ? `<ol class="psteps">${p.steps.map(s => `<li><span class="lvl l${s.lvl || 1}">${esc(LEVELS[s.lvl || 1])}</span> ${esc(s.text)}${s.cond ? ` <span class="faint">(only with ${esc(s.cond.in.map(v => valLabel(s.cond.k, v)).join(" or "))})</span>` : ""}${s.tools?.length ? `<div class="faint" style="font-size:12.5px">Tools: ${esc(s.tools.join(", "))}</div>` : ""}</li>`).join("")}</ol>` : `<p class="muted" style="margin:0">Drop-in; no install steps.</p>`}
+      </div>
       <div>
         <h4>Retailer prices</h4>
         ${latest.length ? `<table class="prices"><thead><tr><th>Retailer</th><th>Price</th><th>Change</th><th>Checked</th><th></th><th></th></tr></thead><tbody>${latest.map(e => row(e, true)).join("")}</tbody></table>`
@@ -967,7 +1376,7 @@ function openPart(id) {
 
 /* ================= Add / edit part ================= */
 function openEdit(id, preset = {}) {
-  const p = id ? partById(id) : { id: null, brand: "", name: "", category: preset.category || "", fits: preset.fits || [], est: "", mount: "", notes: "", url: "", verified: false };
+  const p = id ? partById(id) : { id: null, brand: "", name: "", category: preset.category || "", fits: preset.fits || [], est: "", mount: "", notes: "", url: "", verified: false, needs: [], gives: {}, occ: [], steps: [] };
   const dlg = $("#dlgEdit");
   const cats = [...new Set([...db.parts.map(x => x.category), ...Object.values(SLOTS).flat().flatMap(s => s.cats || [])])].sort();
   const brands = [...new Set(db.parts.map(x => x.brand))].filter(Boolean).sort();
@@ -975,6 +1384,7 @@ function openEdit(id, preset = {}) {
     const ps = db.platforms.filter(x => x.type === t); if (!ps.length) return "";
     return `<div><div class="grp">${t}s</div><div class="cks">${ps.map(x => `<label><input type="checkbox" name="fits" value="${esc(x.id)}" ${p.fits.includes(x.id) ? "checked" : ""}> ${esc(x.name)}</label>`).join("")}</div></div>`;
   }).join("");
+  const rules = JSON.stringify({ needs: p.needs, gives: p.gives, occupies: p.occ, steps: p.steps }, null, 2);
   dlg.innerHTML = `
     <form method="dialog" id="editForm" autocomplete="off">
       <div class="dlg-head"><div style="flex:1"><h2>${id ? "Edit part" : "Add a part"}</h2></div><button class="x" type="button" data-close aria-label="Close">×</button></div>
@@ -988,9 +1398,15 @@ function openEdit(id, preset = {}) {
           <label class="f">Product page<input type="url" name="url" value="${esc(p.url)}" placeholder="https://"></label>
           <label class="f full">Notes<textarea name="notes" rows="2">${esc(p.notes)}</textarea></label>
           <div class="full"><div class="f" style="margin-bottom:4px">Fits</div><div class="fits-box">${groups}</div></div>
+          <details class="full adv"><summary>Fit rules &amp; install steps (advanced)</summary>
+            <p class="faint" style="font-size:12.5px;margin:6px 0">
+              <code>needs</code>: [{"k": key, "in": [values], "soft": true?, "why": text?]. <code>gives</code>: {key: value}. <code>occupies</code>: ["forend"]. <code>steps</code>: [{"lvl": 1-4, "mins": n, "text": "...", "tools": [...]}]; use {model}, {gen}, {light} in step text.
+              Keys: ${Object.keys(KEYS).map(k => `<code>${esc(k)}</code>`).join(" ")}.</p>
+            <textarea name="rules" rows="12" spellcheck="false" style="font:12.5px/1.4 ui-monospace,Menlo,Consolas,monospace">${esc(rules)}</textarea>
+          </details>
           <label class="full" style="display:flex;gap:6px;align-items:center;font-size:14px"><input type="checkbox" name="verified" ${p.verified ? "checked" : ""}> I've checked this fitment against the maker's list</label>
         </div>
-        <p class="faint" style="font-size:12.5px;margin:0">Parts show up in the builder under the matching slot: Pistol optic, Rifle optic, Sights, Trigger, Weapon light, Magazine, Controls, Holster, Stock, Grip, Charging handle, Handguard, Muzzle device, Forend, Shell carrier. Other categories appear in the catalog only.</p>
+        <p class="faint" style="font-size:12.5px;margin:0">Parts show up in the builder under the matching slot: Pistol optic, Rifle optic, Sights, Trigger, Weapon light, Magazine, Controls, Holster, Stock, Grip, Charging handle, Handguard, Muzzle device, Forend, Shell carrier. Other categories (plates, mounts, shop work…) are offered as fixes and land in "Adapters &amp; add-ons".</p>
         <div class="dlg-foot"><button class="btn" type="button" data-close>Cancel</button><button class="btn primary" type="submit">${id ? "Save changes" : "Add part"}</button></div>
       </div>
       <datalist id="catList">${cats.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
@@ -1001,8 +1417,19 @@ function openEdit(id, preset = {}) {
     e.preventDefault();
     const f = new FormData(e.target);
     const v = k => String(f.get(k) || "").trim();
+    let r;
+    try {
+      r = JSON.parse(v("rules") || "{}");
+      if (r.needs && !(Array.isArray(r.needs) && r.needs.every(n => n && typeof n.k === "string" && Array.isArray(n.in)))) throw new Error("needs");
+      if (r.steps && !(Array.isArray(r.steps) && r.steps.every(s => s && typeof s.text === "string"))) throw new Error("steps");
+    } catch (err) { alert("The fit rules aren't valid JSON in the expected shape. Check the format note above them."); return; }
     const estRaw = v("est");
-    const data = { brand: v("brand"), name: v("name"), category: v("category") || "Other", mount: v("mount"), notes: v("notes"), url: v("url"), est: estRaw === "" ? null : Number(estRaw), fits: f.getAll("fits").map(String), verified: f.get("verified") === "on" };
+    const data = {
+      brand: v("brand"), name: v("name"), category: v("category") || "Other", mount: v("mount"), notes: v("notes"), url: v("url"),
+      est: estRaw === "" ? null : Number(estRaw), fits: f.getAll("fits").map(String), verified: f.get("verified") === "on",
+      needs: (r.needs || []).map(n => ({ ...n, in: n.in.map(String) })), gives: r.gives && typeof r.gives === "object" ? r.gives : {},
+      occ: Array.isArray(r.occupies) ? r.occupies.map(String) : [], steps: r.steps || [],
+    };
     if (!data.brand || !data.name) return;
     let target;
     if (id) { target = partById(id); Object.assign(target, data); target.seed = false; }
@@ -1019,11 +1446,12 @@ function openEdit(id, preset = {}) {
 /* ================= Firearms ================= */
 function renderFirearms() {
   const counts = {}; db.parts.forEach(p => p.fits.forEach(f => counts[f] = (counts[f] || 0) + 1));
+  $("#fCopy").innerHTML = `<option value="">Start blank</option>` + db.platforms.map(p => `<option value="${esc(p.id)}">Copy setup from ${esc(p.name)}</option>`).join("");
   $("#fList").innerHTML = ["Pistol", "Rifle", "Shotgun"].map(t => {
     const ps = db.platforms.filter(p => p.type === t); if (!ps.length) return "";
     return `<h2 class="sec">${t}s</h2><div class="grid">${ps.map(p => `<div class="card">
       <h3>${esc(p.name)}</h3><div class="muted" style="font-size:14px">${esc(p.covers || "")}</div>
-      <div class="faint" style="font-size:13px">${counts[p.id] || 0} parts in catalog</div>
+      <div class="faint" style="font-size:13px">${counts[p.id] || 0} parts in catalog${p.options.length ? ` · options: ${esc(p.options.map(o => o.label).join(", "))}` : ""}${!Object.keys(p.base).length && !p.options.length ? " · no fit setup yet" : ""}</div>
       <div class="row"><button class="btn small primary" data-build="${esc(p.id)}">Build one</button><button class="btn small" data-parts="${esc(p.id)}">See parts</button><button class="btn small danger" data-del="${esc(p.id)}">Remove</button></div>
     </div>`).join("")}</div>`;
   }).join("");
@@ -1042,32 +1470,36 @@ function renderFirearms() {
 $("#fAdd").addEventListener("click", () => {
   const name = $("#fName").value.trim(); if (!name) { $("#fName").focus(); return; }
   let id = slug(name); while (platformById(id)) id += "-" + uid().slice(0, 3);
-  db.platforms.push({ id, name, type: $("#fType").value, covers: $("#fCovers").value.trim() });
+  const src = platformById($("#fCopy").value);
+  const np = { id, name, type: src ? src.type : $("#fType").value, covers: $("#fCovers").value.trim(), base: src ? clone(src.base) : {}, options: src ? clone(src.options) : [] };
+  db.platforms.push(np);
+  if (src && $("#fCopyFits").checked) db.parts.forEach(p => { if (p.fits.includes(src.id)) p.fits.push(id); });
   $("#fName").value = ""; $("#fCovers").value = "";
-  save(); renderFirearms(); toast(`Added ${name}`);
+  save(); renderFirearms(); toast(`Added ${name}${src && $("#fCopyFits").checked ? `; review its parts, since they were copied from ${src.name}` : ""}`);
 });
+$("#fCopy").addEventListener("change", e => { const s = platformById(e.target.value); if (s) $("#fType").value = s.type; $("#fType").disabled = !!s; });
 
 /* ================= Saved builds ================= */
-function buildTotal(b) {
-  let total = 0, est = 0, n = 0;
-  Object.values(b.picks).forEach(id => { const pt = partById(id); if (!pt) return; n++; const pr = priceOf(pt); if (pr) { total += pr.amount; if (pr.est) est++; } else est++; });
-  return { total, est, n };
-}
 function renderBuilds() {
   if (!db.builds.length) { $("#buildList").innerHTML = `<div class="card" style="text-align:center;padding:30px"><h3>No saved builds yet</h3><p class="muted">Spec one out on the Build tab and hit Save.</p><div><button class="btn primary" id="goBuild">Start a build</button></div></div>`; $("#goBuild").onclick = () => setView("build"); return; }
   $("#buildList").innerHTML = `<div class="grid">${db.builds.map(b => {
-    const p = platformById(b.platform); const t = buildTotal(b);
-    const parts = Object.values(b.picks).map(partById).filter(Boolean);
+    const p = platformById(b.platform); if (!p) return "";
+    fixBuild(b);
+    const ev = evaluate(b);
+    let total = 0, est = 0;
+    ev.items.forEach(x => { const pr = priceOf(x.part); if (pr) { total += pr.amount; if (pr.est) est++; } else est++; });
+    const bad = ev.issues.filter(i => i.type === "no" || i.type === "conflict").length, fix = ev.issues.filter(i => i.type === "fix").length;
     return `<div class="card">
       <div class="dots"><span style="background:${esc(b.finish?.a)}"></span><span style="background:${esc(b.finish?.b)}"></span></div>
-      <h3>${esc(b.name)}</h3><div class="muted" style="font-size:14px">${esc(p?.name || "Unknown firearm")} · saved ${esc(b.saved || "")}</div>
-      <div style="font-size:22px;font-weight:800">${t.est ? "~" : ""}${money(t.total)}</div>
-      <div class="faint" style="font-size:13px">${parts.length ? parts.map(x => esc(x.brand + " " + x.name)).join(" · ") : "Factory parts only"}</div>
+      <h3>${esc(b.name)}</h3><div class="muted" style="font-size:14px">${esc(p.name)}${configSummary(p, b.config) ? ` · ${esc(configSummary(p, b.config))}` : ""}</div>
+      <div style="font-size:22px;font-weight:800">${est ? "~" : ""}${money(total)}</div>
+      <div>${bad ? `<span class="fit no">✕ ${bad} won't work</span>` : fix ? `<span class="fit fix">＋ ${fix} need parts</span>` : `<span class="fit ok">✓ Fits together</span>`} <span class="lvl l${ev.plan.lvl}">${esc(LEVELS[ev.plan.lvl])}</span></div>
+      <div class="faint" style="font-size:13px">${ev.items.length ? ev.items.map(x => esc(pname(x.part))).join(" · ") : "Factory parts only"}</div>
       <div class="row"><button class="btn small primary" data-open="${esc(b.id)}">Open</button><button class="btn small" data-dup="${esc(b.id)}">Duplicate</button><button class="btn small danger" data-del="${esc(b.id)}">Delete</button></div>
     </div>`;
   }).join("")}</div>`;
-  $$("#buildList [data-open]").forEach(x => x.onclick = () => { build = JSON.parse(JSON.stringify(db.builds.find(b => b.id === x.dataset.open))); slotIdx = 0; persistDraft(); setView("build"); });
-  $$("#buildList [data-dup]").forEach(x => x.onclick = () => { const b = JSON.parse(JSON.stringify(db.builds.find(b => b.id === x.dataset.dup))); b.id = uid(); b.name += " (copy)"; b.saved = today(); db.builds.unshift(b); save(); renderBuilds(); });
+  $$("#buildList [data-open]").forEach(x => x.onclick = () => { build = fixBuild(clone(db.builds.find(b => b.id === x.dataset.open))); slotIdx = 0; persistDraft(); setView("build"); });
+  $$("#buildList [data-dup]").forEach(x => x.onclick = () => { const b = clone(db.builds.find(b => b.id === x.dataset.dup)); b.id = uid(); b.name += " (copy)"; b.saved = today(); b.done = {}; db.builds.unshift(b); save(); renderBuilds(); });
   $$("#buildList [data-del]").forEach(x => x.onclick = () => { const b = db.builds.find(b => b.id === x.dataset.del); if (!confirm(`Delete “${b.name}”?`)) return; db.builds = db.builds.filter(y => y.id !== b.id); if (build.id === b.id) build.id = null; save(); renderBuilds(); });
 }
 
@@ -1104,7 +1536,7 @@ $("#importFile").addEventListener("change", async e => {
     const d = JSON.parse(await file.text());
     if (!validDb(d)) throw new Error("bad shape");
     if (!confirm(`Import ${d.parts.length} parts and ${d.platforms.length} firearms? This replaces what's here now.`)) return;
-    db = normalize(d); db.draft = null; build = newBuild(db.platforms[0]?.id); slotIdx = 0; save(); renderView(); toast("Imported");
+    db = normalize(upgrade(d)); db.draft = null; build = newBuild(db.platforms[0]?.id); slotIdx = 0; save(); renderView(); toast("Imported");
   } catch (err) { alert("That file isn't a Parts Bin export."); }
 });
 
@@ -1112,7 +1544,7 @@ $("#importFile").addEventListener("change", async e => {
 let toastT;
 function toast(msg) {
   let t = $(".toast"); if (!t) { t = document.createElement("div"); t.className = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); }
-  t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, 2200);
+  t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, 2400);
 }
 document.addEventListener("click", e => { const m = $("#dataMenu"); if (m.open && !m.contains(e.target)) m.open = false; });
 [$("#dlgPart"), $("#dlgEdit")].forEach(d => d.addEventListener("click", e => { if (e.target === d) d.close(); }));

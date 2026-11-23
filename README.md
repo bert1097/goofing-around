@@ -68,23 +68,38 @@ depth-chart spots and jersey numbers may be off.
 `parts-bin/index.html` is a single-file aftermarket firearm parts catalog with a
 product-customizer front end, the way sneaker sites let you build your own shoe.
 
-- **Build**: pick a firearm and it appears on a studio stage as a generic
-  silhouette. Numbered hotspots walk you through each slot (optic, sights,
-  trigger, light, magazine, stock, handguard, muzzle and so on). Each slot only
-  offers parts listed as fitting that firearm, and your picks show up on the
-  drawing. A Finish step recolors the slide and frame (or upper and lower). The
+- **Build**: pick a firearm and set it up (Gen 3/4/5, MOS or standard slide,
+  rail or no rail; for an AR the upper, handguard, barrel length, thread,
+  trigger pins and buffer tube). It appears on a studio stage as a generic
+  silhouette. Numbered hotspots walk you through each slot, and your picks
+  show up on the drawing. A Finish step recolors the slide and frame. The
   running total uses the best retailer price you've logged, or the estimate.
-  Save as many builds as you like.
+- **Fit check**: every part is checked against the firearm *and* the other
+  parts in the build. Firearms resolve to interfaces (optic cut, light mount,
+  gas block, buffer tube...); parts say what they need, what they provide and
+  what space they take. When something doesn't fit, the app searches the
+  catalog for the parts that bridge the gap, chaining up to three deep (a light
+  on a polymer handguard → low-profile gas block + M-LOK handguard + rail
+  section), and adds them in one click. It also flags clashes (two forend
+  replacements), soft "works, but" notes (co-witness sight height, steel mag
+  catch) and parts nothing needs any more.
+- **Install plan**: the steps from every part, in a sensible order (shop work,
+  then gas and barrel work, internals, optics, lights, holster), starting with
+  an unload check and ending with a function check and zero. It shows the
+  overall difficulty (DIY → gunsmith), tools, hands-on time, and checkboxes to
+  track progress, and flags legal points like pinning a muzzle device on a
+  14.5" barrel or 922(r) on imported AKs. Copy it as text.
 - **Catalog**: search and filter every part by firearm, category and brand, and
   sort by price. Open a part to log what retailers charge (with date, link and
   stock). It shows the best current price, the change since your last check at
   that store, and the older history.
-- **Firearms**: add your own platforms; the builder picks the pistol, rifle or
-  shotgun layout from the type.
+- **Firearms**: add your own platforms, optionally copying another one's fit
+  setup (and which parts fit) as a starting point.
 - **Data**: everything saves in the browser. Export to JSON (full backup) or
   CSV (parts and prices), import a JSON backup, or reset to the starter data.
 
-The starter data (about 50 parts across 17 platforms) was drafted from general
-knowledge. Fitment and estimated prices are **unverified**: check the maker's
+The starter data (60 parts across 17 platforms, with fit rules and install
+steps) was drafted from general knowledge. Fitment, rules, steps and estimated
+prices are **unverified**: check the maker's
 fitment list before buying, and tick *Verified* on a part once you have. No
 retailer prices are included; those are yours to log.
