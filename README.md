@@ -60,3 +60,63 @@ seconds). There's also a random late-game deficit mode.
 
 Situations and lineups are approximations from public game accounts; a few
 depth-chart spots and jersey numbers may be off.
+
+---
+
+# Parts Bin
+
+`parts-bin/index.html` is a single-file aftermarket firearm parts catalog with a
+product-customizer front end, the way sneaker sites let you build your own shoe.
+
+- **Build**: pick a firearm and set it up (Gen 3/4/5, MOS or standard slide,
+  rail or no rail; for an AR the upper, handguard, barrel length, thread,
+  trigger pins and buffer tube). It appears on a studio stage as a generic
+  silhouette. Numbered hotspots walk you through each slot, and your picks
+  show up on the drawing. A Finish step recolors the slide and frame. The
+  running total uses the best retailer price you've logged, or the estimate.
+- **Fit check**: every part is checked against the firearm *and* the other
+  parts in the build. Firearms resolve to interfaces (optic cut, light mount,
+  gas block, buffer tube...); parts say what they need, what they provide and
+  what space they take. When something doesn't fit, the app searches the
+  catalog for the parts that bridge the gap, chaining up to three deep (a light
+  on a polymer handguard → low-profile gas block + M-LOK handguard + rail
+  section), and adds them in one click. It also flags clashes (two forend
+  replacements), soft "works, but" notes (co-witness sight height, steel mag
+  catch) and parts nothing needs any more.
+- **Install plan**: the steps from every part, in a sensible order (shop work,
+  then gas and barrel work, internals, optics, lights, holster), starting with
+  an unload check and ending with a function check and zero. It shows the
+  overall difficulty (DIY → gunsmith), tools, hands-on time, and checkboxes to
+  track progress, and flags legal points like pinning a muzzle device on a
+  14.5" barrel or 922(r) on imported AKs. Copy it as text.
+- **Catalog**: search and filter every part by firearm, category and brand, and
+  sort by price. Open a part to log what retailers charge (with date, link and
+  stock). It shows the best current price, the change since your last check at
+  that store, and the older history.
+- **Firearms**: add your own platforms, optionally copying another one's fit
+  setup (and which parts fit) as a starting point.
+- **Data**: everything saves in the browser. Back up to JSON or copy parts and
+  prices as CSV (both shown for copying, since artifact pages can't download),
+  restore by pasting a backup or choosing a file, or reset to the starter data.
+
+The page also runs as a claude.ai artifact: `python3 parts-bin/build-artifact.py out.html`
+strips the document wrapper the viewer adds itself.
+
+- **Sources**: every rule (which firearms a part fits, each need, what it
+  provides, what it replaces, its install steps) and every firearm setup fact
+  can cite sources: link, publisher, type (maker / retailer / reference), a
+  verbatim quote, the date checked, and whether it supports, partly supports or
+  contradicts the rule. A part is *Sourced* only when every rule has a
+  supporting source; *Disputed* if any source contradicts it. The fit check
+  and install plan show the source next to each verdict and step, a coverage
+  bar shows how much of a build's check is backed, and the catalog can filter
+  to Unsourced parts as a to-do list.
+
+The starter data (64 parts across 17 platforms) was drafted from general
+knowledge, then checked against maker, retailer and reference pages. That pass
+corrected about 40 rules: the RMSc vs. Holosun K footprint, separate RMR plates
+for each optic system, the P320's ROMEO1PRO cut, SIG and Hellcat rails, the
+S15's required steel mag catch, large-pin and commercial-tube versions, and
+more. It attached 119 sources. About 60% of rules are sourced so far; install
+steps are the main gap. The raw findings and the generator live in
+`parts-bin/research/`. No retailer prices are included; those are yours to log.

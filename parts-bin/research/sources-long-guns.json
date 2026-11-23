@@ -1,0 +1,316 @@
+[
+ {
+  "part": "alg-defense-akt-enhanced-trigger",
+  "covers": [
+   "fits",
+   "need:action"
+  ],
+  "verdict": "partly",
+  "url": "https://www.primaryarms.com/alg-defense-ak-trigger-enhanced-lightning-bow",
+  "publisher": "Primary Arms",
+  "kind": "retailer",
+  "title": "ALG Defense AK Trigger Enhanced with Lightning Bow",
+  "quote": "Designed for AK47 and AK74 variants ... Some models have a rear trigger guard rivet that may interfere with trigger function",
+  "note": "Scope it to semi-auto AK-47/AK-74 variants (7.62x39 / 5.45x39), and add 'most' plus a fitting caveat: ALG does not guarantee fit and some rifles need the trigger-guard rivet shaved. It is a single-stage trigger. Retailer listing titles call it single-hook, but no page I loaded says so. The manufacturer page (geissele.com/akt-el.html; ALG is now part of Geissele) returned 403. Search snippets show $125.00 there, unverified. Primary Arms lists it at $120.75 and says it counts as 3 parts toward 922(r).",
+  "msrp": null
+ },
+ {
+  "part": "alg-defense-akt-enhanced-trigger",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://www.rifleconfigurator.com/catalog/triggers/alg-akt-el-ak-trigger",
+  "publisher": "Rifle Configurator",
+  "kind": "reference",
+  "title": "ALG AKT-EL AK Trigger",
+  "quote": "Not compatible with 12 gauge, .308, or 7.62x54R variants",
+  "note": "Exclude AK-pattern variants in 12 ga (e.g. Saiga-12), .308 and 7.62x54R. The page lists it for 'Most AK47 and AK74 variant platforms'.",
+  "msrp": null
+ },
+ {
+  "part": "magpul-zhukov-s-folding-stock",
+  "covers": [
+   "fits",
+   "need:receiver"
+  ],
+  "verdict": "partly",
+  "url": "https://magpul.com/zhukov-sfoldingstock-ak47-ak74.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "ZHUKOV-S® Stock, Model MAG585",
+  "quote": "Not compatible with Yugo pattern AKs or the Norinco Type 56S / MAK-90 due to differences in the trunnion’s tang.",
+  "note": "'Stamped only, not milled' is right, but the rule is too broad. Magpul says it fits 'Most stamped receiver AK-47/AKM/AK-74 pattern rifles with fixed stock, single tang trunnion' and is 'Not compatible with traditional milled-receiver rifles.' Add these exclusions: Yugo M70-pattern (Magpul sells a separate Zhukov-S Yugo version), Norinco Type 56S/MAK-90, and receivers without a single-tang trunnion. It also fits AK-74. It counts as one 922(r) part.",
+  "msrp": 109.95
+ },
+ {
+  "part": "magpul-moe-ak-grip",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://magpul.com/moeakgrip-ak-47-ak-74.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "MOE® AK Grip – AK47/AK74, Model MAG523",
+  "quote": "Fits most Kalashnikov-pattern firearms, including stamped and milled receiver versions",
+  "note": "Fits stamped and milled receivers, including ones with grip reinforcement plates, and AK-74 too. Magpul says 'some custom fitting of the grip may be necessary.' It counts as one US 922(r) part.",
+  "msrp": 21.95
+ },
+ {
+  "part": "magpul-pmag-30-ak-akm-moe",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://magpul.com/pmag-30-ak-akm-moe.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "PMAG® 30 AK/AKM MOE®, Model MAG572",
+  "quote": "Compatible with a wide range of AK/AKM-pattern firearms chambered in 7.62x39mm",
+  "note": "Magpul says 'Magazine counts as three parts for 922(r) compliance.' It is US-made, model MAG572. The page lists no rifle-specific exclusions.",
+  "msrp": 15.95
+ },
+ {
+  "part": "platform:ak",
+  "covers": [
+   "option:origin"
+  ],
+  "verdict": "partly",
+  "url": "https://www.law.cornell.edu/cfr/text/27/478.39",
+  "publisher": "Cornell LII (text of 27 CFR 478.39)",
+  "kind": "reference",
+  "title": "27 CFR § 478.39 - Assembly of semiautomatic rifles or shotguns",
+  "quote": "No person shall assemble a semiautomatic rifle or any shotgun using more than 10 of the imported parts listed in paragraph (c) of this section if the assembled firearm is prohibited from importation under section 925(d)(3)",
+  "note": "Reword the rule. The limit is on IMPORTED parts: no more than 10 of the 20 listed parts may be foreign-made. US-made replacements do not 'count toward the limit'; swapping one in lowers the imported-part count. The (c) list includes Buttstocks, Pistol grips, Forearms/handguards, Trigger housings, Triggers, Hammers, Sears, Disconnectors, Magazine bodies, Followers, Floorplates and Muzzle attachments. The rule applies only when the assembled rifle is a non-sporting configuration that could not be imported (e.g. pistol grip, folding stock, detachable large-capacity magazine). The ATF eRegulations page (regulations.atf.gov/478-39) was down, and eCFR redirected to a bot check, so I cited LII's copy of the CFR text.",
+  "msrp": null
+ },
+ {
+  "part": "platform:ak",
+  "covers": [
+   "option:origin"
+  ],
+  "verdict": "confirmed",
+  "url": "https://magpul.com/zhukov-sfoldingstock-ak47-ak74.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "ZHUKOV-S® Stock, Model MAG585",
+  "quote": "Counts as one part for 922(r) compliance.",
+  "note": "Example part counts from the makers: the stock and grip count as 1 each, and the PMAG 30 AK/AKM counts as 3 (body, follower, floorplate). Primary Arms says the ALG trigger counts as 3.",
+  "msrp": null
+ },
+ {
+  "part": "ruger-bx-trigger",
+  "covers": [
+   "fits",
+   "steps"
+  ],
+  "verdict": "confirmed",
+  "url": "https://shopruger.com/Ruger-BX-Trigger/productinfo/90462",
+  "publisher": "Ruger (ShopRuger)",
+  "kind": "manufacturer",
+  "title": "Ruger® BX-Trigger®",
+  "quote": "is sold as a complete assembly that drops in to replace the existing trigger assembly",
+  "note": "Ruger says it is 'compatible with all Ruger® 10/22® rifles and 22 Charger® pistols', so add the 22 Charger. Pull is about 2.75 lb. Ruger will not ship it to California. The current ShopRuger price is $109.95; the 2014 launch price was $89.95.",
+  "msrp": 109.95
+ },
+ {
+  "part": "ruger-bx-25-25-round-magazine",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://shopruger.com/BX-25-Magazine/productinfo/90361/",
+  "publisher": "Ruger (ShopRuger)",
+  "kind": "manufacturer",
+  "title": "BX-25® Magazine",
+  "quote": "BX-25® magazines will work with any factory original 10/22® Rifle, SR-22® Rifle, 22 Charger® Pistol, .22 LR Ruger American Rimfire® Rifle and .22 LR Ruger 77/22® Rifle.",
+  "note": "Also fits the SR-22, 22 Charger, .22 LR American Rimfire and .22 LR 77/22. Ruger will not sell it into some states and DC (e.g. CA, NY, IL).",
+  "msrp": 38.95
+ },
+ {
+  "part": "tech-sights-tsr200-aperture-sight",
+  "covers": [
+   "fits",
+   "steps"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.tech-sights.com/ruger-products",
+  "publisher": "Tech-Sights",
+  "kind": "manufacturer",
+  "title": "Ruger 10/22 Aperture Sights",
+  "quote": "Rear Sight Base mounts solidly to the rear of the receiver utilizing the existing tapped scope base holes.",
+  "note": "No drilling is needed, but note three limits. The rear sight takes the receiver's scope-base holes, so you cannot fit a receiver scope base at the same time. Bull-barrel 10/22s with no front-sight dovetail need the separate '.920 Barrel Dovetail Adaptor' ($19.50). Tech-Sights says 'The TSR100 & TSR200 will not seat properly on the Brownells BRN-22 receivers.' The page lists the TSR200 at $69.00.",
+  "msrp": 69.0
+ },
+ {
+  "part": "tech-sights-tsr200-aperture-sight",
+  "covers": [
+   "steps"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.tech-sights.com/wp-content/uploads/2016/01/instruc-sheet-Rugers-3-14-rev-G.pdf",
+  "publisher": "Tech-Sights",
+  "kind": "manufacturer",
+  "title": "Instructions for the TSR100 & TSR200 Sight (Rev. G)",
+  "quote": "Use a brass punch to tap on the base of the front sight. Drive the front sight blade out of the dovetail slot from left to right.",
+  "note": "Install steps: drive the factory front sight out of the barrel dovetail and tap the Tech-Sights front tower into the same dovetail. Fit the rear assembly with the two supplied 6-48 screws into the existing receiver holes (the receiver is aluminum, so do not over-tighten). No drilling.",
+  "msrp": null
+ },
+ {
+  "part": "magpul-hunter-x-22-stock",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://magpul.com/hunterx-22stock-ruger10-22.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "Hunter X-22 Stock – Ruger® 10/22®",
+  "quote": "Drop-in design compatible with all factory Ruger® 10/22® .22 LR receivers.",
+  "note": "Barrel limit: the reversible barrel tray 'fits both factory pencil profile barrels and bull barrels up to 0.92\" diameter.' Factory receivers only; aftermarket receivers are not claimed. The Takedown version is a separate product (next entry).",
+  "msrp": 144.95
+ },
+ {
+  "part": "magpul-hunter-x-22-stock",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://magpul.com/hunterx-22takedownstock-ruger10-22takedown.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "Hunter X-22 Takedown Stock – Ruger® 10/22 Takedown®",
+  "quote": "Factory Ruger® 10/22 Takedown® .22 LR receivers",
+  "note": "Confirms a separate Takedown version at $149.95, with the same barrel limit (pencil, or bull up to 0.92\"). Magpul also sells an X-22 Backpacker stock for Takedowns.",
+  "msrp": 149.95
+ },
+ {
+  "part": "magpul-sga-stock-remington-870",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://magpul.com/sga-stock-remington-870.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "SGA® Stock – Remington® 870, Model MAG460",
+  "quote": "A true drop-in replacement stock for Remington 870 12-gauge shotguns that provides easy, fast installation using simple tools",
+  "note": "Fit is 12 gauge only; the page lists no 20 ga. The page names no exclusions. The 870 TAC-14 is a 'firearm' sold with a bird's-head grip, not a shotgun; legal caveat, not verified on this page: fitting a shoulder stock to its 14\" barrel would create an NFA short-barreled shotgun.",
+  "msrp": 124.95
+ },
+ {
+  "part": "magpul-sga-stock-mossberg-500-590",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://magpul.com/sgastock-mossberg500-590-590a1.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "SGA® Stock – Mossberg® 500/590/590A1",
+  "quote": "Mossberg® 500/590/590A1 12-gauge",
+  "note": "Widen the rule: Magpul also lists the Maverick 88 ('for Mossberg 500/590/590A1 and Maverick 88 shotguns'). Fit is 12 gauge only. The page names no exclusions. Same NFA caveat as the 870 entry, not verified on this page: a stock on a 590 Shockwave (14\" barrel 'firearm') makes an NFA short-barreled shotgun.",
+  "msrp": 124.95
+ },
+ {
+  "part": "magpul-moe-forend-remington-870",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://magpul.com/moe-m-lok-forend-remington-870.html",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "MOE® M-LOK® Forend – Remington® 870",
+  "quote": "Compatible with Remington 870 12ga shotguns. NOTE: Not compatible with the Remington 870 Super Mag. Not compatible with heat shields.",
+  "note": "Narrow the rule to 870 12 ga, and exclude the 870 Super Mag and use with barrel heat shields. Model MAG496 ships with the required installation wrench.",
+  "msrp": 29.95
+ },
+ {
+  "part": "magpul-moe-forend-remington-870",
+  "covers": [
+   "steps"
+  ],
+  "verdict": "confirmed",
+  "url": "https://magpul.com/media/wysiwyg/Instructions/MAG496_MOE_M-LOK_SGA_Forend_Remington_INSRT.pdf",
+  "publisher": "Magpul",
+  "kind": "manufacturer",
+  "title": "MOE M-LOK Forend Installation Instructions (MAG496)",
+  "quote": "Remove magazine cap, barrel, forend tube nut (castle nut), and forend per manufacturer instructions.",
+  "note": "Confirms forend-tube (castle) nut removal. Magpul then says to 'thread the castle nut onto the forend tube and hand tighten' with the Castle Nut Wrench and warns 'DO NOT OVER TIGHTEN.' The PDF is image-only; I read the rendered page.",
+  "msrp": null
+ },
+ {
+  "part": "mesa-tactical-sureshell-side-saddle-6-shell",
+  "covers": [
+   "fits",
+   "steps"
+  ],
+  "verdict": "partly",
+  "url": "https://mesatactical.com/sureshell-saddle-mount-carrier-and-rail-for-rem-870-12-ga/",
+  "publisher": "Mesa Tactical",
+  "kind": "manufacturer",
+  "title": "SureShell® Saddle Mount Carrier and Rail for Rem 870 (12-GA)",
+  "quote": "Mounts via trigger pin holes",
+  "note": "Mesa's own page contradicts itself: the bullets say 'Mounts via trigger pin holes' and 'No gunsmithing is required', but the summary says it 'mounts by using the drilled and tapped holes on top of the shotgun's receiver.' The 6-shell versions are SKU 91630 (aluminum) and 94830 (polymer), $119.95-$152.95. Mesa sells several 870 6-shell carriers (side-mount, saddle-mount, long-rail), so the DB should name which one it means.",
+  "msrp": 119.95
+ },
+ {
+  "part": "mesa-tactical-sureshell-side-saddle-6-shell",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://mesatactical.com/sureshell-side-mount-carrier-for-remington-870-1100-11-87-12-ga/",
+  "publisher": "Mesa Tactical",
+  "kind": "manufacturer",
+  "title": "SureShell® Side Mount Carrier For Remington 870/1100/11-87 (12-GA )",
+  "quote": "All required attachment hardware is included and every SureShell carrier is proudly made in the USA.",
+  "note": "The 870 side-mount version (6-shell: SKU 90210 aluminum, 94740 polymer) also fits the Remington 1100 and 11-87 in 12 ga. Its page does not say how it mounts; the trigger-pin method is confirmed only on the saddle-mount page and in retailer copy. The range price is $59.95-$99.95 across 4/6/8-shell SKUs. Mesa sells separate 870 20 ga and TAC-14 carriers.",
+  "msrp": null
+ },
+ {
+  "part": "mesa-tactical-sureshell-side-saddle-6-shell",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "partly",
+  "url": "https://mesatactical.com/sureshell-side-mount-carrier-for-moss-500-590a1-mav88-12-ga/",
+  "publisher": "Mesa Tactical",
+  "kind": "manufacturer",
+  "title": "SureShell® Side Mount Carrier For Moss 500/590A1/Mav88 (12-GA)",
+  "quote": "Note: This product is not compatible with the Mossberg 590R due to design changes.",
+  "note": "The Mossberg version exists (6-shell: SKU 90390 aluminum, 94750 polymer) and also fits the Maverick 88. Exclude the Mossberg 590R. It is 12 ga only; Mesa lists 500/590 20 ga parts separately. Price $79.95-$109.95.",
+  "msrp": 79.95
+ },
+ {
+  "part": "streamlight-tl-racker-forend-light",
+  "covers": [
+   "fits",
+   "steps"
+  ],
+  "verdict": "partly",
+  "url": "https://www.streamlight.com/docs/default-source/fact-sheet/333.pdf",
+  "publisher": "Streamlight",
+  "kind": "manufacturer",
+  "title": "TL-Racker® Product Fact Sheet (Document #333, Rev 3, 9/19/2024)",
+  "quote": "*Note: The TL-Racker will not fit Mossberg® FLEX models regardless of action slide length or Remington® 870 Super Magnum models.",
+  "note": "It replaces the factory forend ('Unscrew the action slide nut to replace the forend (wrench included)'). Add these limits: 12 ga only; the Mossberg version is for the 7 3/4\" action slide; Mossberg FLEX and 870 Super Magnum/Express Supermag are excluded. There is a separate 590 Shockwave model (69602), and the fact sheet also lists the 870 TAC-14. Item numbers: 69600 Mossberg 500/590, 69601 Remington 870, orange 69610/69611. No MSRP found.",
+  "msrp": null
+ },
+ {
+  "part": "streamlight-tl-racker-forend-light",
+  "covers": [
+   "fits"
+  ],
+  "verdict": "confirmed",
+  "url": "https://www.streamlight.com/products/detail/tl-racker",
+  "publisher": "Streamlight",
+  "kind": "manufacturer",
+  "title": "TL-Racker® | Shotgun Forend Light | Streamlight®",
+  "quote": "Remington® model compatible with most 12 gauge 870s with the exception of the Remington 870 Express Supermag",
+  "note": "The Mossberg line on the same page reads 'Mossberg® model compatible with 12 Gauge — 7 3/4\" Action slide 500® and 590® series'.",
+  "msrp": null
+ }
+]
