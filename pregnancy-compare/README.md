@@ -16,7 +16,7 @@ The page only shows what was logged. It doesn't interpret anything.
 
 Tap **Use your own data** in the banner. For each pregnancy, enter the first day of the last period and pick the Flo export and/or the Fitbit files. The page has step-by-step instructions for getting both.
 
-Files are read in the browser with `FileReader` and kept in memory only. Nothing is uploaded, saved or sent anywhere, so the person who shared the page can't see them. Reloading or closing the page forgets them. The only thing stored on the device is the light/dark/auto theme choice.
+Files are read in the browser on her phone or computer with `FileReader` and kept in memory only. Nothing is uploaded, saved or sent anywhere, so the person who shared the page can't see them. Reloading or closing the page forgets them. The only thing stored on the device is the light/dark/auto theme choice.
 
 ## Run it
 

@@ -129,7 +129,7 @@ function useModel(m) {
   const own = m.kind === 'own';
   document.body.classList.toggle('is-own', own);
   $('#banner').innerHTML = own
-    ? 'Your data. It stays on this device and is gone when you close the page. <a href="#data">Change</a>'
+    ? 'Your data. It stays on this phone or computer and is gone when you close the page. <a href="#data">Change</a>'
     : 'Sample data. Everything here is invented. <a href="#data">Use your own data</a>';
   lastMainWeek = null;
   if (location.hash) location.hash = ''; else route();

@@ -14,7 +14,7 @@ export function renderDataView(model) {
   $('#app').innerHTML = `
   <nav class="wnav"><a href="#" data-back="0">‹ Back to weeks</a></nav>
   <section class="panel privacy">
-    <h2>Private to this device</h2>
+    <h2>Private to this phone or computer</h2>
     <p>Files you pick here are read by your browser and never leave this phone or computer. Nothing is uploaded or saved, and nobody else (including whoever shared this page) can see them. Close or reload the page and they're gone.</p>
   </section>
 
@@ -46,7 +46,7 @@ export function renderDataView(model) {
       <summary>Flo</summary>
       <ol>
         <li>In the Flo app, open your profile, then Settings, and look for the option to request or download your data. If you can't find it, ask Flo support for a copy of your data.</li>
-        <li>Flo sends the export by email. Save the file to your phone (Files app) and pick it above.</li>
+        <li>Flo sends the export by email. Save the file to your phone (Files app) or computer and pick it above.</li>
       </ol>
       <p class="fine">We haven't seen a real Flo export yet, so it may not load as-is. This page reads JSON shaped like <code>{"days":[{"date":"2026-09-22","tags":[{"category":"Mood","name":"Happy"}],"note":"…"}]}</code>, or a CSV with columns <code>date,tags,note</code> where tags are separated by semicolons.</p>
     </details>
