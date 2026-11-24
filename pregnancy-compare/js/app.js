@@ -52,7 +52,7 @@ function renderMain() {
   let html = `<p class="legend"><span class="mk mk-only">◆</span> logged in only one pregnancy that week &nbsp; <span class="mk mk-gap">▲</span> ${GAP}+ days apart</p>`;
   for (let w = FIRST_WEEK; w <= LAST_WEEK; w++) {
     const a = weekSummary(P1, w), b = weekSummary(P2, w);
-    html += `<a class="week ${w === currentWeek ? 'is-current' : ''}" id="w${w}" href="#week/${w}">
+    html += `<a class="week ${w === currentWeek ? 'is-current' : ''}" id="w${w}" href="#week-${w}">
       <div class="week-label">Week ${w}${w === currentWeek ? ' <em>current</em>' : ''}<span class="more">Days ›</span></div>
       <div class="pair"><div class="cell">${cellHtml(a, b)}</div><div class="cell">${cellHtml(b, a)}</div></div>
       <div class="pair devrow"><div>${devHtml(a)}</div><div>${devHtml(b)}</div></div>
@@ -85,7 +85,7 @@ function renderWeek(w) {
   $('#colheads').innerHTML = `<span>${P1.label}</span><span>${P2.label}</span>`;
   const nav = `<nav class="wnav">
     <a href="#" data-back="${w}">‹ All weeks</a>
-    <span>${w > FIRST_WEEK ? `<a href="#week/${w - 1}">‹ Wk ${w - 1}</a>` : ''}${w < LAST_WEEK ? `<a href="#week/${w + 1}">Wk ${w + 1} ›</a>` : ''}</span>
+    <span>${w > FIRST_WEEK ? `<a href="#week-${w - 1}">‹ Wk ${w - 1}</a>` : ''}${w < LAST_WEEK ? `<a href="#week-${w + 1}">Wk ${w + 1} ›</a>` : ''}</span>
   </nav>`;
   let html = nav;
   for (let d = 1; d <= 7; d++) {
@@ -97,7 +97,7 @@ function renderWeek(w) {
 
 let lastMainWeek = null;
 function route() {
-  const m = location.hash.match(/^#week\/(\d+)$/);
+  const m = location.hash.match(/^#week-(\d+)$/);
   const w = m && Math.min(LAST_WEEK, Math.max(FIRST_WEEK, +m[1]));
   if (w) { renderWeek(w); $('#jump').value = w; lastMainWeek = w; return; }
   renderMain();
@@ -122,12 +122,12 @@ async function init() {
   for (let w = FIRST_WEEK; w <= LAST_WEEK; w++) sel.add(new Option(w === currentWeek ? `${w} (now)` : String(w), w));
   sel.addEventListener('change', () => {
     const w = +sel.value;
-    if (location.hash.startsWith('#week/')) location.hash = `#week/${w}`;
+    if (location.hash.startsWith('#week-')) location.hash = `#week-${w}`;
     else { lastMainWeek = w; scrollToWeek(w); }
   });
   document.addEventListener('click', (ev) => {
     const back = ev.target.closest('[data-back]');
-    if (back) { ev.preventDefault(); lastMainWeek = +back.dataset.back; history.pushState(null, '', location.pathname); route(); }
+    if (back) { ev.preventDefault(); lastMainWeek = +back.dataset.back; if (location.hash) location.hash = ''; else route(); }
   });
   window.addEventListener('hashchange', route);
   route();
