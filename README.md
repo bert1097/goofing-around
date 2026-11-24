@@ -60,3 +60,10 @@ seconds). There's also a random late-game deficit mode.
 
 Situations and lineups are approximations from public game accounts; a few
 depth-chart spots and jersey numbers may be off.
+
+---
+
+# Week by Week
+
+`pregnancy-compare/` is a proof-of-concept page that lines up two pregnancies
+week by week, using invented sample data only. See `pregnancy-compare/README.md`.

@@ -1,0 +1,835 @@
+{
+ "_comment": "INVENTED SAMPLE DATA. Loosely modelled on Fitbit Google Takeout files; field names need checking.",
+ "sleep": [
+  {
+   "dateOfSleep": "2026-09-21",
+   "minutesAsleep": 457
+  },
+  {
+   "dateOfSleep": "2026-09-22",
+   "minutesAsleep": 402
+  },
+  {
+   "dateOfSleep": "2026-09-23",
+   "minutesAsleep": 388
+  },
+  {
+   "dateOfSleep": "2026-09-24",
+   "minutesAsleep": 434
+  },
+  {
+   "dateOfSleep": "2026-09-25",
+   "minutesAsleep": 466
+  },
+  {
+   "dateOfSleep": "2026-09-26",
+   "minutesAsleep": 447
+  },
+  {
+   "dateOfSleep": "2026-09-27",
+   "minutesAsleep": 441
+  },
+  {
+   "dateOfSleep": "2026-09-28",
+   "minutesAsleep": 429
+  },
+  {
+   "dateOfSleep": "2026-09-29",
+   "minutesAsleep": 435
+  },
+  {
+   "dateOfSleep": "2026-10-01",
+   "minutesAsleep": 422
+  },
+  {
+   "dateOfSleep": "2026-10-02",
+   "minutesAsleep": 387
+  },
+  {
+   "dateOfSleep": "2026-10-05",
+   "minutesAsleep": 386
+  },
+  {
+   "dateOfSleep": "2026-10-06",
+   "minutesAsleep": 417
+  },
+  {
+   "dateOfSleep": "2026-10-08",
+   "minutesAsleep": 357
+  },
+  {
+   "dateOfSleep": "2026-10-09",
+   "minutesAsleep": 369
+  },
+  {
+   "dateOfSleep": "2026-10-10",
+   "minutesAsleep": 383
+  },
+  {
+   "dateOfSleep": "2026-10-11",
+   "minutesAsleep": 369
+  },
+  {
+   "dateOfSleep": "2026-10-12",
+   "minutesAsleep": 369
+  },
+  {
+   "dateOfSleep": "2026-10-13",
+   "minutesAsleep": 365
+  },
+  {
+   "dateOfSleep": "2026-10-14",
+   "minutesAsleep": 381
+  },
+  {
+   "dateOfSleep": "2026-10-15",
+   "minutesAsleep": 345
+  },
+  {
+   "dateOfSleep": "2026-10-16",
+   "minutesAsleep": 401
+  },
+  {
+   "dateOfSleep": "2026-10-17",
+   "minutesAsleep": 344
+  },
+  {
+   "dateOfSleep": "2026-10-18",
+   "minutesAsleep": 410
+  },
+  {
+   "dateOfSleep": "2026-10-19",
+   "minutesAsleep": 365
+  },
+  {
+   "dateOfSleep": "2026-10-20",
+   "minutesAsleep": 359
+  },
+  {
+   "dateOfSleep": "2026-10-21",
+   "minutesAsleep": 347
+  },
+  {
+   "dateOfSleep": "2026-10-22",
+   "minutesAsleep": 342
+  },
+  {
+   "dateOfSleep": "2026-10-23",
+   "minutesAsleep": 344
+  },
+  {
+   "dateOfSleep": "2026-10-24",
+   "minutesAsleep": 324
+  },
+  {
+   "dateOfSleep": "2026-10-25",
+   "minutesAsleep": 338
+  },
+  {
+   "dateOfSleep": "2026-10-26",
+   "minutesAsleep": 331
+  },
+  {
+   "dateOfSleep": "2026-10-27",
+   "minutesAsleep": 352
+  },
+  {
+   "dateOfSleep": "2026-10-28",
+   "minutesAsleep": 354
+  },
+  {
+   "dateOfSleep": "2026-10-29",
+   "minutesAsleep": 346
+  },
+  {
+   "dateOfSleep": "2026-10-30",
+   "minutesAsleep": 369
+  },
+  {
+   "dateOfSleep": "2026-10-31",
+   "minutesAsleep": 335
+  },
+  {
+   "dateOfSleep": "2026-11-01",
+   "minutesAsleep": 347
+  },
+  {
+   "dateOfSleep": "2026-11-02",
+   "minutesAsleep": 399
+  },
+  {
+   "dateOfSleep": "2026-11-03",
+   "minutesAsleep": 378
+  },
+  {
+   "dateOfSleep": "2026-11-04",
+   "minutesAsleep": 387
+  },
+  {
+   "dateOfSleep": "2026-11-05",
+   "minutesAsleep": 342
+  },
+  {
+   "dateOfSleep": "2026-11-06",
+   "minutesAsleep": 345
+  },
+  {
+   "dateOfSleep": "2026-11-07",
+   "minutesAsleep": 382
+  },
+  {
+   "dateOfSleep": "2026-11-08",
+   "minutesAsleep": 407
+  },
+  {
+   "dateOfSleep": "2026-11-09",
+   "minutesAsleep": 414
+  },
+  {
+   "dateOfSleep": "2026-11-10",
+   "minutesAsleep": 396
+  },
+  {
+   "dateOfSleep": "2026-11-11",
+   "minutesAsleep": 368
+  },
+  {
+   "dateOfSleep": "2026-11-12",
+   "minutesAsleep": 390
+  },
+  {
+   "dateOfSleep": "2026-11-14",
+   "minutesAsleep": 411
+  },
+  {
+   "dateOfSleep": "2026-11-15",
+   "minutesAsleep": 351
+  },
+  {
+   "dateOfSleep": "2026-11-16",
+   "minutesAsleep": 403
+  },
+  {
+   "dateOfSleep": "2026-11-17",
+   "minutesAsleep": 413
+  },
+  {
+   "dateOfSleep": "2026-11-18",
+   "minutesAsleep": 356
+  },
+  {
+   "dateOfSleep": "2026-11-19",
+   "minutesAsleep": 374
+  },
+  {
+   "dateOfSleep": "2026-11-20",
+   "minutesAsleep": 434
+  },
+  {
+   "dateOfSleep": "2026-11-21",
+   "minutesAsleep": 386
+  },
+  {
+   "dateOfSleep": "2026-11-22",
+   "minutesAsleep": 405
+  },
+  {
+   "dateOfSleep": "2026-11-23",
+   "minutesAsleep": 383
+  }
+ ],
+ "restingHeartRate": [
+  {
+   "dateTime": "2026-09-21",
+   "value": {
+    "value": 63
+   }
+  },
+  {
+   "dateTime": "2026-09-22",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-09-23",
+   "value": {
+    "value": 65
+   }
+  },
+  {
+   "dateTime": "2026-09-24",
+   "value": {
+    "value": 64
+   }
+  },
+  {
+   "dateTime": "2026-09-25",
+   "value": {
+    "value": 64
+   }
+  },
+  {
+   "dateTime": "2026-09-26",
+   "value": {
+    "value": 65
+   }
+  },
+  {
+   "dateTime": "2026-09-27",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-09-28",
+   "value": {
+    "value": 65
+   }
+  },
+  {
+   "dateTime": "2026-09-29",
+   "value": {
+    "value": 63
+   }
+  },
+  {
+   "dateTime": "2026-10-01",
+   "value": {
+    "value": 64
+   }
+  },
+  {
+   "dateTime": "2026-10-02",
+   "value": {
+    "value": 67
+   }
+  },
+  {
+   "dateTime": "2026-10-05",
+   "value": {
+    "value": 63
+   }
+  },
+  {
+   "dateTime": "2026-10-06",
+   "value": {
+    "value": 65
+   }
+  },
+  {
+   "dateTime": "2026-10-08",
+   "value": {
+    "value": 67
+   }
+  },
+  {
+   "dateTime": "2026-10-09",
+   "value": {
+    "value": 67
+   }
+  },
+  {
+   "dateTime": "2026-10-10",
+   "value": {
+    "value": 65
+   }
+  },
+  {
+   "dateTime": "2026-10-11",
+   "value": {
+    "value": 67
+   }
+  },
+  {
+   "dateTime": "2026-10-12",
+   "value": {
+    "value": 67
+   }
+  },
+  {
+   "dateTime": "2026-10-13",
+   "value": {
+    "value": 65
+   }
+  },
+  {
+   "dateTime": "2026-10-14",
+   "value": {
+    "value": 67
+   }
+  },
+  {
+   "dateTime": "2026-10-15",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-10-16",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-10-17",
+   "value": {
+    "value": 65
+   }
+  },
+  {
+   "dateTime": "2026-10-18",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-10-19",
+   "value": {
+    "value": 65
+   }
+  },
+  {
+   "dateTime": "2026-10-20",
+   "value": {
+    "value": 65
+   }
+  },
+  {
+   "dateTime": "2026-10-21",
+   "value": {
+    "value": 65
+   }
+  },
+  {
+   "dateTime": "2026-10-22",
+   "value": {
+    "value": 68
+   }
+  },
+  {
+   "dateTime": "2026-10-23",
+   "value": {
+    "value": 68
+   }
+  },
+  {
+   "dateTime": "2026-10-24",
+   "value": {
+    "value": 68
+   }
+  },
+  {
+   "dateTime": "2026-10-25",
+   "value": {
+    "value": 65
+   }
+  },
+  {
+   "dateTime": "2026-10-26",
+   "value": {
+    "value": 68
+   }
+  },
+  {
+   "dateTime": "2026-10-27",
+   "value": {
+    "value": 65
+   }
+  },
+  {
+   "dateTime": "2026-10-28",
+   "value": {
+    "value": 67
+   }
+  },
+  {
+   "dateTime": "2026-10-29",
+   "value": {
+    "value": 68
+   }
+  },
+  {
+   "dateTime": "2026-10-30",
+   "value": {
+    "value": 68
+   }
+  },
+  {
+   "dateTime": "2026-10-31",
+   "value": {
+    "value": 67
+   }
+  },
+  {
+   "dateTime": "2026-11-01",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-11-02",
+   "value": {
+    "value": 68
+   }
+  },
+  {
+   "dateTime": "2026-11-03",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-11-04",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-11-05",
+   "value": {
+    "value": 67
+   }
+  },
+  {
+   "dateTime": "2026-11-06",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-11-07",
+   "value": {
+    "value": 68
+   }
+  },
+  {
+   "dateTime": "2026-11-08",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-11-09",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-11-10",
+   "value": {
+    "value": 67
+   }
+  },
+  {
+   "dateTime": "2026-11-11",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-11-12",
+   "value": {
+    "value": 69
+   }
+  },
+  {
+   "dateTime": "2026-11-14",
+   "value": {
+    "value": 69
+   }
+  },
+  {
+   "dateTime": "2026-11-15",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-11-16",
+   "value": {
+    "value": 68
+   }
+  },
+  {
+   "dateTime": "2026-11-17",
+   "value": {
+    "value": 69
+   }
+  },
+  {
+   "dateTime": "2026-11-18",
+   "value": {
+    "value": 67
+   }
+  },
+  {
+   "dateTime": "2026-11-19",
+   "value": {
+    "value": 70
+   }
+  },
+  {
+   "dateTime": "2026-11-20",
+   "value": {
+    "value": 68
+   }
+  },
+  {
+   "dateTime": "2026-11-21",
+   "value": {
+    "value": 66
+   }
+  },
+  {
+   "dateTime": "2026-11-22",
+   "value": {
+    "value": 67
+   }
+  },
+  {
+   "dateTime": "2026-11-23",
+   "value": {
+    "value": 68
+   }
+  }
+ ],
+ "steps": [
+  {
+   "dateTime": "2026-09-21",
+   "value": "7615"
+  },
+  {
+   "dateTime": "2026-09-22",
+   "value": "9216"
+  },
+  {
+   "dateTime": "2026-09-23",
+   "value": "8393"
+  },
+  {
+   "dateTime": "2026-09-24",
+   "value": "6481"
+  },
+  {
+   "dateTime": "2026-09-25",
+   "value": "8346"
+  },
+  {
+   "dateTime": "2026-09-26",
+   "value": "6104"
+  },
+  {
+   "dateTime": "2026-09-27",
+   "value": "5457"
+  },
+  {
+   "dateTime": "2026-09-28",
+   "value": "7708"
+  },
+  {
+   "dateTime": "2026-09-29",
+   "value": "5055"
+  },
+  {
+   "dateTime": "2026-10-01",
+   "value": "5946"
+  },
+  {
+   "dateTime": "2026-10-02",
+   "value": "7417"
+  },
+  {
+   "dateTime": "2026-10-05",
+   "value": "8067"
+  },
+  {
+   "dateTime": "2026-10-06",
+   "value": "6483"
+  },
+  {
+   "dateTime": "2026-10-08",
+   "value": "4357"
+  },
+  {
+   "dateTime": "2026-10-09",
+   "value": "7526"
+  },
+  {
+   "dateTime": "2026-10-10",
+   "value": "6700"
+  },
+  {
+   "dateTime": "2026-10-11",
+   "value": "5557"
+  },
+  {
+   "dateTime": "2026-10-12",
+   "value": "4269"
+  },
+  {
+   "dateTime": "2026-10-13",
+   "value": "6213"
+  },
+  {
+   "dateTime": "2026-10-14",
+   "value": "4176"
+  },
+  {
+   "dateTime": "2026-10-15",
+   "value": "5635"
+  },
+  {
+   "dateTime": "2026-10-16",
+   "value": "5657"
+  },
+  {
+   "dateTime": "2026-10-17",
+   "value": "4998"
+  },
+  {
+   "dateTime": "2026-10-18",
+   "value": "3950"
+  },
+  {
+   "dateTime": "2026-10-19",
+   "value": "3512"
+  },
+  {
+   "dateTime": "2026-10-20",
+   "value": "6431"
+  },
+  {
+   "dateTime": "2026-10-21",
+   "value": "3689"
+  },
+  {
+   "dateTime": "2026-10-22",
+   "value": "4994"
+  },
+  {
+   "dateTime": "2026-10-23",
+   "value": "4841"
+  },
+  {
+   "dateTime": "2026-10-24",
+   "value": "4689"
+  },
+  {
+   "dateTime": "2026-10-25",
+   "value": "4847"
+  },
+  {
+   "dateTime": "2026-10-26",
+   "value": "4598"
+  },
+  {
+   "dateTime": "2026-10-27",
+   "value": "6281"
+  },
+  {
+   "dateTime": "2026-10-28",
+   "value": "3228"
+  },
+  {
+   "dateTime": "2026-10-29",
+   "value": "6420"
+  },
+  {
+   "dateTime": "2026-10-30",
+   "value": "3126"
+  },
+  {
+   "dateTime": "2026-10-31",
+   "value": "3748"
+  },
+  {
+   "dateTime": "2026-11-01",
+   "value": "5280"
+  },
+  {
+   "dateTime": "2026-11-02",
+   "value": "4972"
+  },
+  {
+   "dateTime": "2026-11-03",
+   "value": "6741"
+  },
+  {
+   "dateTime": "2026-11-04",
+   "value": "3900"
+  },
+  {
+   "dateTime": "2026-11-05",
+   "value": "6764"
+  },
+  {
+   "dateTime": "2026-11-06",
+   "value": "4700"
+  },
+  {
+   "dateTime": "2026-11-07",
+   "value": "5182"
+  },
+  {
+   "dateTime": "2026-11-08",
+   "value": "5407"
+  },
+  {
+   "dateTime": "2026-11-09",
+   "value": "5045"
+  },
+  {
+   "dateTime": "2026-11-10",
+   "value": "5681"
+  },
+  {
+   "dateTime": "2026-11-11",
+   "value": "7502"
+  },
+  {
+   "dateTime": "2026-11-12",
+   "value": "6815"
+  },
+  {
+   "dateTime": "2026-11-14",
+   "value": "4215"
+  },
+  {
+   "dateTime": "2026-11-15",
+   "value": "7415"
+  },
+  {
+   "dateTime": "2026-11-16",
+   "value": "7598"
+  },
+  {
+   "dateTime": "2026-11-17",
+   "value": "7625"
+  },
+  {
+   "dateTime": "2026-11-18",
+   "value": "4932"
+  },
+  {
+   "dateTime": "2026-11-19",
+   "value": "4770"
+  },
+  {
+   "dateTime": "2026-11-20",
+   "value": "6258"
+  },
+  {
+   "dateTime": "2026-11-21",
+   "value": "7546"
+  },
+  {
+   "dateTime": "2026-11-22",
+   "value": "5397"
+  },
+  {
+   "dateTime": "2026-11-23",
+   "value": "5516"
+  }
+ ]
+}

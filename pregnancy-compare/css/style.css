@@ -1,0 +1,64 @@
+:root {
+  --bg: #f6f5f1; --card: #ffffff; --ink: #2b2f33; --muted: #6f767d; --line: #e3e1da;
+  --accent: #3d6b73; --current: #eef4f2;
+  --only: #b5533c; --gap: #8a6d1f;
+  --sym: #e8eef6; --dig: #eaf2ea; --app: #f4efe4; --swe: #eee9f3; --mood: #f6ece9; --oth: #ececec; --act: #e6f1f2;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+a { color: inherit; text-decoration: none; }
+
+.banner { margin: -8px -12px 8px; background: #4a5a63; color: #fff; text-align: center; font-size: 12px; font-weight: 600; padding: 5px 12px; padding-top: max(5px, env(safe-area-inset-top)); letter-spacing: .02em; }
+
+.top { position: sticky; top: 0; z-index: 5; background: rgba(246,245,241,.96); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); padding: 8px 12px 6px; }
+.top-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+h1 { font-size: 18px; margin: 0; font-weight: 650; }
+.jump { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.jump select { font-size: 16px; padding: 4px 6px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--ink); }
+.colheads { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; font-size: 13px; font-weight: 650; color: var(--accent); }
+.colheads small { display: block; font-weight: 400; color: var(--muted); font-size: 11px; }
+
+main { padding: 8px 8px 40px; max-width: 760px; margin: 0 auto; }
+.legend { font-size: 12px; color: var(--muted); margin: 4px 4px 10px; }
+.loading { text-align: center; color: var(--muted); }
+
+.week { display: block; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 8px; margin-bottom: 8px; }
+.week.is-current { background: var(--current); border-color: #b9cfc9; }
+.week:active { opacity: .85; }
+.week-label { font-weight: 650; font-size: 14px; display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
+.week-label em { font-style: normal; font-size: 11px; font-weight: 600; color: #fff; background: var(--accent); border-radius: 6px; padding: 1px 6px; }
+.week-label .more { margin-left: auto; font-size: 12px; font-weight: 500; color: var(--accent); }
+
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pair > * { min-width: 0; }
+.cell + .cell, .devrow > div + div { border-left: 1px solid var(--line); padding-left: 8px; }
+.logged { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+.empty { font-size: 12px; color: var(--muted); font-style: italic; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 3px; }
+.chip { font-size: 11.5px; line-height: 1.25; padding: 2px 6px; border-radius: 6px; background: var(--oth); border: 1px solid transparent; }
+.chip b { font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.c-sym { background: var(--sym); } .c-dig { background: var(--dig); } .c-app { background: var(--app); }
+.c-swe { background: var(--swe); } .c-mood { background: var(--mood); } .c-oth { background: var(--oth); } .c-act { background: var(--act); }
+.chip.is-only { border-color: var(--only); }
+.chip.is-gap { border-color: var(--gap); border-style: dashed; }
+.mk { font-size: 9px; margin-right: 3px; vertical-align: 1px; }
+.mk-only { color: var(--only); } .mk-gap { color: var(--gap); }
+
+.devrow { margin-top: 8px; padding-top: 6px; border-top: 1px dashed var(--line); }
+.dev { margin: 0; display: grid; grid-template-columns: repeat(3, auto); justify-content: start; column-gap: 10px; font-size: 11px; }
+.dev dt { color: var(--muted); font-size: 10px; }
+.dev dd { margin: 0; font-variant-numeric: tabular-nums; font-weight: 600; }
+
+.wnav { display: flex; justify-content: space-between; align-items: center; margin: 4px 4px 10px; font-size: 14px; color: var(--accent); font-weight: 600; }
+.wnav span { display: flex; gap: 14px; }
+.wnav a { padding: 6px 0; }
+.day { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 8px; margin-bottom: 8px; }
+.day h2 { font-size: 13px; margin: 0 0 6px; color: var(--accent); }
+.date { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+.note { font-size: 12.5px; margin: 6px 0 0; font-style: italic; }
+.extra { font-size: 11px; color: var(--muted); margin-top: 5px; }
+.dev-line { border-top: 1px dashed var(--line); padding-top: 4px; }
+
+@media (min-width: 600px) { .chip { font-size: 12.5px; } .dev { font-size: 12px; } }

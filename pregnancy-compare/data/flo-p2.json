@@ -1,0 +1,1419 @@
+{
+ "_comment": "INVENTED SAMPLE DATA. Shape is a guess at a Flo export, not a real file.",
+ "lastPeriodDate": "2026-08-24",
+ "days": [
+  {
+   "date": "2026-09-22",
+   "pregnancyWeek": 4,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Anxious"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2026-09-23",
+   "pregnancyWeek": 4,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2026-09-24",
+   "pregnancyWeek": 4,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Anxious"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2026-09-25",
+   "pregnancyWeek": 4,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2026-09-26",
+   "pregnancyWeek": 4,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2026-09-27",
+   "pregnancyWeek": 4,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2026-09-28",
+   "pregnancyWeek": 5,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2026-09-29",
+   "pregnancyWeek": 5,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ]
+  },
+  {
+   "date": "2026-09-30",
+   "pregnancyWeek": 5,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    }
+   ],
+   "note": "Positive test! Queasy already."
+  },
+  {
+   "date": "2026-10-02",
+   "pregnancyWeek": 5,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Bloating"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2026-10-03",
+   "pregnancyWeek": 5,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2026-10-04",
+   "pregnancyWeek": 5,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-05",
+   "pregnancyWeek": 6,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Appetite",
+     "name": "Decreased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "weightKg": 63.2
+  },
+  {
+   "date": "2026-10-06",
+   "pregnancyWeek": 6,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2026-10-07",
+   "pregnancyWeek": 6,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-08",
+   "pregnancyWeek": 6,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2026-10-09",
+   "pregnancyWeek": 6,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-10",
+   "pregnancyWeek": 6,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Appetite",
+     "name": "Decreased appetite"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2026-10-12",
+   "pregnancyWeek": 7,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Insomnia"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    }
+   ],
+   "weightKg": 62.9
+  },
+  {
+   "date": "2026-10-15",
+   "pregnancyWeek": 7,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ],
+   "waterGlasses": 5
+  },
+  {
+   "date": "2026-10-16",
+   "pregnancyWeek": 7,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Insomnia"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2026-10-17",
+   "pregnancyWeek": 7,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2026-10-18",
+   "pregnancyWeek": 7,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 5
+  },
+  {
+   "date": "2026-10-19",
+   "pregnancyWeek": 8,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Bloating"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Other",
+     "name": "Stress"
+    }
+   ],
+   "weightKg": 63.4,
+   "waterGlasses": 4
+  },
+  {
+   "date": "2026-10-20",
+   "pregnancyWeek": 8,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Bloating"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-21",
+   "pregnancyWeek": 8,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Bloating"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Mood",
+     "name": "Irritated"
+    },
+    {
+     "category": "Mood",
+     "name": "Mood swings"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ],
+   "note": "Could only keep down toast.",
+   "waterGlasses": 6
+  },
+  {
+   "date": "2026-10-22",
+   "pregnancyWeek": 8,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Appetite",
+     "name": "Decreased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-23",
+   "pregnancyWeek": 8,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Appetite",
+     "name": "Decreased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-24",
+   "pregnancyWeek": 8,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Appetite",
+     "name": "Decreased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ],
+   "waterGlasses": 5
+  },
+  {
+   "date": "2026-10-25",
+   "pregnancyWeek": 8,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2026-10-26",
+   "pregnancyWeek": 9,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Appetite",
+     "name": "Decreased appetite"
+    }
+   ],
+   "weightKg": 63.9
+  },
+  {
+   "date": "2026-10-28",
+   "pregnancyWeek": 9,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Insomnia"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Appetite",
+     "name": "Decreased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Mood swings"
+    }
+   ],
+   "note": "Up at 3am again."
+  },
+  {
+   "date": "2026-10-29",
+   "pregnancyWeek": 9,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Headache"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Appetite",
+     "name": "Decreased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ]
+  },
+  {
+   "date": "2026-10-30",
+   "pregnancyWeek": 9,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Bloating"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Insomnia"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Headache"
+    },
+    {
+     "category": "Appetite",
+     "name": "Decreased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Mood",
+     "name": "Irritated"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2026-11-02",
+   "pregnancyWeek": 10,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Bloating"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Headache"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "weightKg": 64.6
+  },
+  {
+   "date": "2026-11-03",
+   "pregnancyWeek": 10,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Bloating"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Mood swings"
+    },
+    {
+     "category": "Other",
+     "name": "Stress"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2026-11-04",
+   "pregnancyWeek": 10,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Irritated"
+    }
+   ],
+   "note": "First scan.",
+   "waterGlasses": 5
+  },
+  {
+   "date": "2026-11-05",
+   "pregnancyWeek": 10,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Bloating"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Insomnia"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2026-11-06",
+   "pregnancyWeek": 10,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Insomnia"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Appetite",
+     "name": "Decreased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Mood",
+     "name": "Mood swings"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-07",
+   "pregnancyWeek": 10,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Insomnia"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Headache"
+    },
+    {
+     "category": "Appetite",
+     "name": "Decreased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Mood swings"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-08",
+   "pregnancyWeek": 10,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Headache"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Mood swings"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2026-11-09",
+   "pregnancyWeek": 11,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2026-11-10",
+   "pregnancyWeek": 11,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Bloating"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Insomnia"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Bleeding gums"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Appetite",
+     "name": "Decreased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2026-11-11",
+   "pregnancyWeek": 11,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "note": "Bleeding gums when brushing."
+  },
+  {
+   "date": "2026-11-12",
+   "pregnancyWeek": 11,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 5
+  },
+  {
+   "date": "2026-11-13",
+   "pregnancyWeek": 11,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Insomnia"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Bleeding gums"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Other",
+     "name": "Stress"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2026-11-14",
+   "pregnancyWeek": 11,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Bleeding gums"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2026-11-15",
+   "pregnancyWeek": 11,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2026-11-16",
+   "pregnancyWeek": 12,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Insomnia"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Bleeding gums"
+    }
+   ],
+   "weightKg": 64.5
+  },
+  {
+   "date": "2026-11-17",
+   "pregnancyWeek": 12,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Sleepiness"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Bleeding gums"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2026-11-20",
+   "pregnancyWeek": 12,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Calm"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2026-11-21",
+   "pregnancyWeek": 12,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-22",
+   "pregnancyWeek": 12,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Insomnia"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Irritated"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-24",
+   "pregnancyWeek": 13,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Insomnia"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ]
+  }
+ ]
+}

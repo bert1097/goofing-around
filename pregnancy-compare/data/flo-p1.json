@@ -1,0 +1,3031 @@
+{
+ "_comment": "INVENTED SAMPLE DATA. Shape is a guess at a Flo export, not a real file.",
+ "lastPeriodDate": "2021-03-01",
+ "days": [
+  {
+   "date": "2021-03-29",
+   "pregnancyWeek": 4,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Mood",
+     "name": "Anxious"
+    }
+   ],
+   "weightKg": 61.8,
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-03-30",
+   "pregnancyWeek": 4,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2021-03-31",
+   "pregnancyWeek": 4,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Calm"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-04-01",
+   "pregnancyWeek": 4,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-04-03",
+   "pregnancyWeek": 4,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-04-07",
+   "pregnancyWeek": 5,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    }
+   ]
+  },
+  {
+   "date": "2021-04-08",
+   "pregnancyWeek": 5,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-04-09",
+   "pregnancyWeek": 5,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Anxious"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-04-10",
+   "pregnancyWeek": 5,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-04-11",
+   "pregnancyWeek": 5,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-04-12",
+   "pregnancyWeek": 6,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    }
+   ],
+   "weightKg": 63.3
+  },
+  {
+   "date": "2021-04-13",
+   "pregnancyWeek": 6,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-04-14",
+   "pregnancyWeek": 6,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    }
+   ],
+   "waterGlasses": 5
+  },
+  {
+   "date": "2021-04-15",
+   "pregnancyWeek": 6,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ]
+  },
+  {
+   "date": "2021-04-16",
+   "pregnancyWeek": 6,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Mood",
+     "name": "Anxious"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-04-18",
+   "pregnancyWeek": 6,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    }
+   ]
+  },
+  {
+   "date": "2021-04-19",
+   "pregnancyWeek": 7,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Mood",
+     "name": "Anxious"
+    }
+   ],
+   "weightKg": 63.2
+  },
+  {
+   "date": "2021-04-27",
+   "pregnancyWeek": 8,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-04-28",
+   "pregnancyWeek": 8,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "note": "Crackers before getting up helps.",
+   "waterGlasses": 8
+  },
+  {
+   "date": "2021-04-29",
+   "pregnancyWeek": 8,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-05-01",
+   "pregnancyWeek": 8,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Anxious"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-05-03",
+   "pregnancyWeek": 9,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "weightKg": 64.2,
+   "waterGlasses": 8
+  },
+  {
+   "date": "2021-05-04",
+   "pregnancyWeek": 9,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    }
+   ]
+  },
+  {
+   "date": "2021-05-05",
+   "pregnancyWeek": 9,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-05-06",
+   "pregnancyWeek": 9,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Vomiting"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Anxious"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-05-09",
+   "pregnancyWeek": 9,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Headache"
+    }
+   ]
+  },
+  {
+   "date": "2021-05-10",
+   "pregnancyWeek": 10,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    }
+   ],
+   "weightKg": 64
+  },
+  {
+   "date": "2021-05-11",
+   "pregnancyWeek": 10,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-05-14",
+   "pregnancyWeek": 10,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ]
+  },
+  {
+   "date": "2021-05-15",
+   "pregnancyWeek": 10,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-05-16",
+   "pregnancyWeek": 10,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Appetite",
+     "name": "Food aversions"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-05-21",
+   "pregnancyWeek": 11,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-05-22",
+   "pregnancyWeek": 11,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-05-23",
+   "pregnancyWeek": 11,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    }
+   ]
+  },
+  {
+   "date": "2021-05-24",
+   "pregnancyWeek": 12,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2021-05-25",
+   "pregnancyWeek": 12,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Headache"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    }
+   ]
+  },
+  {
+   "date": "2021-05-26",
+   "pregnancyWeek": 12,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Tender breasts"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "note": "Nausea easing off a bit."
+  },
+  {
+   "date": "2021-05-27",
+   "pregnancyWeek": 12,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Nausea"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-05-29",
+   "pregnancyWeek": 12,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    }
+   ]
+  },
+  {
+   "date": "2021-05-31",
+   "pregnancyWeek": 13,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Low energy"
+    }
+   ],
+   "weightKg": 65.2,
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-06-01",
+   "pregnancyWeek": 13,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ]
+  },
+  {
+   "date": "2021-06-03",
+   "pregnancyWeek": 13,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-06-05",
+   "pregnancyWeek": 13,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-06-06",
+   "pregnancyWeek": 13,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ]
+  },
+  {
+   "date": "2021-06-07",
+   "pregnancyWeek": 14,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Cravings"
+    }
+   ],
+   "weightKg": 65.1,
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-06-08",
+   "pregnancyWeek": 14,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Headache"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-06-10",
+   "pregnancyWeek": 14,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2021-06-11",
+   "pregnancyWeek": 14,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    }
+   ]
+  },
+  {
+   "date": "2021-06-12",
+   "pregnancyWeek": 14,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-06-13",
+   "pregnancyWeek": 14,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Headache"
+    }
+   ]
+  },
+  {
+   "date": "2021-06-14",
+   "pregnancyWeek": 15,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    }
+   ],
+   "weightKg": 65.5,
+   "waterGlasses": 5
+  },
+  {
+   "date": "2021-06-17",
+   "pregnancyWeek": 15,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Cravings"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ]
+  },
+  {
+   "date": "2021-06-18",
+   "pregnancyWeek": 15,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-06-19",
+   "pregnancyWeek": 15,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    }
+   ]
+  },
+  {
+   "date": "2021-06-21",
+   "pregnancyWeek": 16,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Cravings"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "weightKg": 65.8,
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-06-25",
+   "pregnancyWeek": 16,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    }
+   ]
+  },
+  {
+   "date": "2021-06-26",
+   "pregnancyWeek": 16,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Cravings"
+    },
+    {
+     "category": "Swelling",
+     "name": "Nasal congestion"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-06-28",
+   "pregnancyWeek": 17,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "weightKg": 66.6,
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-07-01",
+   "pregnancyWeek": 17,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Cravings"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2021-07-04",
+   "pregnancyWeek": 17,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ]
+  },
+  {
+   "date": "2021-07-05",
+   "pregnancyWeek": 18,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ]
+  },
+  {
+   "date": "2021-07-06",
+   "pregnancyWeek": 18,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-07-07",
+   "pregnancyWeek": 18,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Cravings"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    }
+   ],
+   "note": "Felt the first flutters?",
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-07-09",
+   "pregnancyWeek": 18,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-07-13",
+   "pregnancyWeek": 19,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-07-14",
+   "pregnancyWeek": 19,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-07-15",
+   "pregnancyWeek": 19,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    },
+    {
+     "category": "Swelling",
+     "name": "Nasal congestion"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ]
+  },
+  {
+   "date": "2021-07-19",
+   "pregnancyWeek": 20,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2021-07-22",
+   "pregnancyWeek": 20,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    }
+   ]
+  },
+  {
+   "date": "2021-07-23",
+   "pregnancyWeek": 20,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-07-24",
+   "pregnancyWeek": 20,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-07-25",
+   "pregnancyWeek": 20,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Swelling",
+     "name": "Nasal congestion"
+    }
+   ]
+  },
+  {
+   "date": "2021-08-01",
+   "pregnancyWeek": 21,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-08-03",
+   "pregnancyWeek": 22,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-08-04",
+   "pregnancyWeek": 22,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-08-05",
+   "pregnancyWeek": 22,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Cravings"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ]
+  },
+  {
+   "date": "2021-08-06",
+   "pregnancyWeek": 22,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ]
+  },
+  {
+   "date": "2021-08-07",
+   "pregnancyWeek": 22,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ]
+  },
+  {
+   "date": "2021-08-08",
+   "pregnancyWeek": 22,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 5
+  },
+  {
+   "date": "2021-08-09",
+   "pregnancyWeek": 23,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Cravings"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ],
+   "weightKg": 67.9
+  },
+  {
+   "date": "2021-08-10",
+   "pregnancyWeek": 23,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Swelling",
+     "name": "Nasal congestion"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ]
+  },
+  {
+   "date": "2021-08-12",
+   "pregnancyWeek": 23,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Cravings"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-08-16",
+   "pregnancyWeek": 24,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Leg cramps"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Swimming"
+    }
+   ],
+   "weightKg": 69,
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-08-17",
+   "pregnancyWeek": 24,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ]
+  },
+  {
+   "date": "2021-08-18",
+   "pregnancyWeek": 24,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "note": "Heartburn after spicy dinner."
+  },
+  {
+   "date": "2021-08-19",
+   "pregnancyWeek": 24,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Swelling",
+     "name": "Nasal congestion"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-08-20",
+   "pregnancyWeek": 24,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-08-21",
+   "pregnancyWeek": 24,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Constipation"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-08-22",
+   "pregnancyWeek": 24,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Swimming"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-08-24",
+   "pregnancyWeek": 25,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Cravings"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ]
+  },
+  {
+   "date": "2021-08-25",
+   "pregnancyWeek": 25,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2021-08-26",
+   "pregnancyWeek": 25,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Everything is fine"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-08-31",
+   "pregnancyWeek": 26,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    }
+   ]
+  },
+  {
+   "date": "2021-09-01",
+   "pregnancyWeek": 26,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    }
+   ]
+  },
+  {
+   "date": "2021-09-02",
+   "pregnancyWeek": 26,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ],
+   "waterGlasses": 5
+  },
+  {
+   "date": "2021-09-03",
+   "pregnancyWeek": 26,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-09-05",
+   "pregnancyWeek": 26,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2021-09-09",
+   "pregnancyWeek": 27,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Other",
+     "name": "Travel"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-09-10",
+   "pregnancyWeek": 27,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    },
+    {
+     "category": "Other",
+     "name": "Travel"
+    }
+   ]
+  },
+  {
+   "date": "2021-09-15",
+   "pregnancyWeek": 28,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ]
+  },
+  {
+   "date": "2021-09-16",
+   "pregnancyWeek": 28,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-09-20",
+   "pregnancyWeek": 29,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Leg cramps"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Swimming"
+    }
+   ],
+   "weightKg": 70.7
+  },
+  {
+   "date": "2021-09-23",
+   "pregnancyWeek": 29,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Swimming"
+    }
+   ]
+  },
+  {
+   "date": "2021-09-26",
+   "pregnancyWeek": 29,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    }
+   ]
+  },
+  {
+   "date": "2021-09-28",
+   "pregnancyWeek": 30,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-09-29",
+   "pregnancyWeek": 30,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ]
+  },
+  {
+   "date": "2021-10-01",
+   "pregnancyWeek": 30,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Leg cramps"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2021-10-02",
+   "pregnancyWeek": 30,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Calm"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-10-03",
+   "pregnancyWeek": 30,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Appetite",
+     "name": "Increased appetite"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-10-05",
+   "pregnancyWeek": 31,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    }
+   ],
+   "waterGlasses": 5
+  },
+  {
+   "date": "2021-10-06",
+   "pregnancyWeek": 31,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ],
+   "note": "Ankles puffy after a long day standing.",
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-10-07",
+   "pregnancyWeek": 31,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-10-08",
+   "pregnancyWeek": 31,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-10-10",
+   "pregnancyWeek": 31,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2021-10-12",
+   "pregnancyWeek": 32,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-10-13",
+   "pregnancyWeek": 32,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Swimming"
+    }
+   ]
+  },
+  {
+   "date": "2021-10-14",
+   "pregnancyWeek": 32,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Didn't exercise"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-10-17",
+   "pregnancyWeek": 32,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Leg cramps"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Swimming"
+    }
+   ],
+   "waterGlasses": 7
+  },
+  {
+   "date": "2021-10-18",
+   "pregnancyWeek": 33,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Swelling",
+     "name": "Limbs swelling"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "weightKg": 71.9
+  },
+  {
+   "date": "2021-10-19",
+   "pregnancyWeek": 33,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    }
+   ],
+   "waterGlasses": 5
+  },
+  {
+   "date": "2021-10-22",
+   "pregnancyWeek": 33,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    }
+   ]
+  },
+  {
+   "date": "2021-10-23",
+   "pregnancyWeek": 33,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ]
+  },
+  {
+   "date": "2021-10-25",
+   "pregnancyWeek": 34,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Leg cramps"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-10-26",
+   "pregnancyWeek": 34,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-10-27",
+   "pregnancyWeek": 34,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Swelling",
+     "name": "Limbs swelling"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 5
+  },
+  {
+   "date": "2021-10-29",
+   "pregnancyWeek": 34,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Leg cramps"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-10-30",
+   "pregnancyWeek": 34,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2021-11-01",
+   "pregnancyWeek": 35,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Insomnia"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Yoga"
+    }
+   ],
+   "weightKg": 72.1
+  },
+  {
+   "date": "2021-11-03",
+   "pregnancyWeek": 35,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "note": "Packed the hospital bag.",
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-11-04",
+   "pregnancyWeek": 35,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    }
+   ]
+  },
+  {
+   "date": "2021-11-05",
+   "pregnancyWeek": 35,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    }
+   ]
+  },
+  {
+   "date": "2021-11-06",
+   "pregnancyWeek": 35,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-11-08",
+   "pregnancyWeek": 36,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Swelling",
+     "name": "Limbs swelling"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 8
+  },
+  {
+   "date": "2021-11-12",
+   "pregnancyWeek": 36,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-11-14",
+   "pregnancyWeek": 36,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Swelling",
+     "name": "Limbs swelling"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-11-15",
+   "pregnancyWeek": 37,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Swelling",
+     "name": "Limbs swelling"
+    }
+   ],
+   "weightKg": 73.2
+  },
+  {
+   "date": "2021-11-16",
+   "pregnancyWeek": 37,
+   "pregnancyDay": 2,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-11-18",
+   "pregnancyWeek": 37,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Swelling",
+     "name": "Limbs swelling"
+    },
+    {
+     "category": "Mood",
+     "name": "Anxious"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-11-21",
+   "pregnancyWeek": 37,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Swelling",
+     "name": "Limbs swelling"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-11-22",
+   "pregnancyWeek": 38,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ]
+  },
+  {
+   "date": "2021-11-24",
+   "pregnancyWeek": 38,
+   "pregnancyDay": 3,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "note": "Hard to get comfortable at night."
+  },
+  {
+   "date": "2021-11-27",
+   "pregnancyWeek": 38,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Normal digestion"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Anxious"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 5
+  },
+  {
+   "date": "2021-11-28",
+   "pregnancyWeek": 38,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    }
+   ],
+   "waterGlasses": 6
+  },
+  {
+   "date": "2021-11-29",
+   "pregnancyWeek": 39,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Mood",
+     "name": "Calm"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    },
+    {
+     "category": "Mood",
+     "name": "Anxious"
+    }
+   ],
+   "weightKg": 73.4,
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-12-02",
+   "pregnancyWeek": 39,
+   "pregnancyDay": 4,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Mood",
+     "name": "Energetic"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ]
+  },
+  {
+   "date": "2021-12-03",
+   "pregnancyWeek": 39,
+   "pregnancyDay": 5,
+   "tags": [
+    {
+     "category": "Swelling",
+     "name": "Limbs swelling"
+    },
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-12-04",
+   "pregnancyWeek": 39,
+   "pregnancyDay": 6,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Fatigue"
+    },
+    {
+     "category": "Symptoms",
+     "name": "Backache"
+    },
+    {
+     "category": "Mood",
+     "name": "Anxious"
+    }
+   ]
+  },
+  {
+   "date": "2021-12-05",
+   "pregnancyWeek": 39,
+   "pregnancyDay": 7,
+   "tags": [
+    {
+     "category": "Symptoms",
+     "name": "Frequent urination"
+    },
+    {
+     "category": "Physical activity",
+     "name": "Walking"
+    }
+   ],
+   "waterGlasses": 4
+  },
+  {
+   "date": "2021-12-06",
+   "pregnancyWeek": 40,
+   "pregnancyDay": 1,
+   "tags": [
+    {
+     "category": "Mood",
+     "name": "Happy"
+    }
+   ],
+   "weightKg": 73.7
+  }
+ ]
+}
