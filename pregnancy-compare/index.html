@@ -9,12 +9,15 @@
 </head>
 <body>
 <header class="top">
-  <div class="banner" role="note">Sample data. Everything here is invented.</div>
+  <div class="banner" id="banner" role="note">Sample data. Everything here is invented.</div>
   <div class="top-row">
     <h1 id="title">Week by week</h1>
-    <label class="jump">Jump to week
-      <select id="jump"></select>
-    </label>
+    <div class="tools">
+      <label class="jump">Week
+        <select id="jump" aria-label="Jump to week"></select>
+      </label>
+      <button type="button" id="theme" class="theme">Auto</button>
+    </div>
   </div>
   <div class="colheads" id="colheads"></div>
 </header>

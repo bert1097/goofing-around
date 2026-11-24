@@ -12,6 +12,12 @@ Apps like Flo let you log symptoms daily, but you can't line up the same week ac
 
 The page only shows what was logged. It doesn't interpret anything.
 
+## Using your own data
+
+Tap **Use your own data** in the banner. For each pregnancy, enter the first day of the last period and pick the Flo export and/or the Fitbit files. The page has step-by-step instructions for getting both.
+
+Files are read in the browser with `FileReader` and kept in memory only. Nothing is uploaded, saved or sent anywhere, so the person who shared the page can't see them. Reloading or closing the page forgets them. The only thing stored on the device is the light/dark/auto theme choice.
+
 ## Run it
 
 It loads JSON with `fetch`, so it needs a local web server (opening the file directly won't work):
@@ -28,6 +34,7 @@ Then open http://localhost:8000. Plain HTML/CSS/JS: no build step, backend, acco
 index.html, css/style.css, js/app.js   UI
 js/model.js            normalizes both sources into pregnancy + week + day
 js/adapters/flo.js     Flo export   -> [{ date, tags, note, weightKg, waterGlasses }]
+js/data.js             "Your data" screen: reads picked files in the browser
 js/adapters/fitbit.js  Fitbit data  -> { date: { sleepHours, restingHr, steps } }
 data/flo-p1.json, flo-p2.json, fitbit-p1.json, fitbit-p2.json   invented sample data
 scripts/generate-sample-data.js       regenerates the sample files (node)

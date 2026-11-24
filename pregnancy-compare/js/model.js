@@ -28,12 +28,16 @@ async function getJson(url) {
   return r.json();
 }
 
-export async function loadModel() {
+// sources: { p1: { lmp?, flo?, fitbit: [{name, json}] }, p2: {...} }
+// Works the same for the bundled sample files and for files the viewer picks.
+export function buildModel(sources, kind) {
   const pregnancies = {};
   for (const p of PREGNANCIES) {
-    const [floRaw, fitRaw] = await Promise.all([getJson(p.flo), getJson(p.fitbit)]);
-    const lmp = floRaw.lastPeriodDate;
-    const logs = adaptFlo(floRaw), device = adaptFitbit(fitRaw);
+    const src = sources[p.id] || {};
+    const lmp = src.lmp || src.flo?.lastPeriodDate;
+    if (!lmp) throw new Error(`${p.label}: add the first day of the last period.`);
+    const logs = src.flo ? adaptFlo(src.flo) : [];
+    const device = adaptFitbit(src.fitbit || []);
     const days = {};
     const slot = (date) => {
       const { week, day } = weekDay(lmp, date);
@@ -41,11 +45,20 @@ export async function loadModel() {
     };
     for (const l of logs) Object.assign(slot(l.date), l, { logged: true });
     for (const [date, m] of Object.entries(device)) slot(date).device = m;
-    const dates = [...logs.map((l) => l.date), ...Object.keys(device)].sort();
-    const last = weekDay(lmp, dates[dates.length - 1]);
-    pregnancies[p.id] = { ...p, lmp, days, lastWeek: last.week, lastDay: last.day };
+    const dates = [...logs.map((l) => l.date), ...Object.keys(device)].filter((d) => d >= lmp).sort();
+    const last = dates.length ? weekDay(lmp, dates[dates.length - 1]) : { week: 0, day: 0 };
+    pregnancies[p.id] = { ...p, lmp, days, lastWeek: last.week, lastDay: last.day, hasData: dates.length > 0 };
   }
-  return { pregnancies };
+  return { pregnancies, kind };
+}
+
+export async function loadSample() {
+  const sources = {};
+  for (const p of PREGNANCIES) {
+    const [flo, fit] = await Promise.all([getJson(p.flo), getJson(p.fitbit)]);
+    sources[p.id] = { flo, fitbit: [{ name: p.fitbit, json: fit }] };
+  }
+  return buildModel(sources, 'sample');
 }
 
 // Weekly summary for one pregnancy.
@@ -64,8 +77,9 @@ export function weekSummary(preg, week) {
   }
   const avg = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
   return {
+    hasData: preg.hasData,
     reached: week <= preg.lastWeek,
-    partial: week === preg.lastWeek && preg.lastDay < 7 ? preg.lastDay : null,
+    partial: preg.current && week === preg.lastWeek && preg.lastDay < 7 ? preg.lastDay : null,
     loggedDays, tagCounts,
     device: { sleepHours: avg(dev.sleepHours), restingHr: avg(dev.restingHr), steps: avg(dev.steps) },
   };

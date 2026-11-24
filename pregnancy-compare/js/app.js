@@ -1,4 +1,5 @@
-import { loadModel, weekSummary, dateFor, FIRST_WEEK, LAST_WEEK, PREGNANCIES } from './model.js';
+import { renderDataView, wireDataView } from './data.js';
+import { loadSample, buildModel, weekSummary, dateFor, FIRST_WEEK, LAST_WEEK, PREGNANCIES } from './model.js';
 
 const CATEGORY_ORDER = ['Symptoms', 'Digestion and stool', 'Appetite', 'Swelling', 'Mood', 'Other', 'Physical activity'];
 const CAT_CLASS = { Symptoms: 'c-sym', 'Digestion and stool': 'c-dig', Appetite: 'c-app', Swelling: 'c-swe', Mood: 'c-mood', Other: 'c-oth', 'Physical activity': 'c-act' };
@@ -22,6 +23,7 @@ function chip(key, text, mark) {
 }
 
 function cellHtml(s, other) {
+  if (!s.hasData) return '<div class="empty">No data added</div>';
   if (!s.reached) return '<div class="empty">Not reached yet</div>';
   const compare = other.reached && other.loggedDays > 0 && s.loggedDays > 0;
   const keys = sortTags([...s.tagCounts.keys()]);
@@ -47,7 +49,7 @@ function devHtml(s) {
 
 function renderMain() {
   $('#title').textContent = 'Week by week';
-  $('#colheads').innerHTML = `<span>${P1.label}<small>complete</small></span><span>${P2.label}<small>now: week ${P2.lastWeek}, day ${P2.lastDay}</small></span>`;
+  $('#colheads').innerHTML = `<span>${P1.label}<small>${P1.hasData ? 'complete' : 'no data added'}</small></span><span>${P2.label}<small>${P2.hasData ? `now: week ${P2.lastWeek}, day ${P2.lastDay}` : 'no data added'}</small></span>`;
   $('#colheads').hidden = false;
   let html = `<p class="legend"><span class="mk mk-only">◆</span> logged in only one pregnancy that week &nbsp; <span class="mk mk-gap">▲</span> ${GAP}+ days apart</p>`;
   for (let w = FIRST_WEEK; w <= LAST_WEEK; w++) {
@@ -65,6 +67,7 @@ function dayCell(preg, week, day) {
   const e = preg.days[`${week}-${day}`];
   const date = dateFor(preg.lmp, week, day);
   const reached = week < preg.lastWeek || (week === preg.lastWeek && day <= preg.lastDay);
+  if (!preg.hasData) return '<div class="empty">No data added</div>';
   if (!reached) return '<div class="empty">Not reached yet</div>';
   let h = `<div class="date">${fmtDate(date)}</div>`;
   if (!e || !e.logged) h += '<div class="empty">Not logged</div>';
@@ -97,6 +100,8 @@ function renderWeek(w) {
 
 let lastMainWeek = null;
 function route() {
+  if (location.hash === '#data') { renderDataView(model); return; }
+  if (!model) return;
   const m = location.hash.match(/^#week-(\d+)$/);
   const w = m && Math.min(LAST_WEEK, Math.max(FIRST_WEEK, +m[1]));
   if (w) { renderWeek(w); $('#jump').value = w; lastMainWeek = w; return; }
@@ -113,23 +118,59 @@ function scrollToWeek(w, smooth = true) {
   window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: smooth ? 'smooth' : 'auto' });
 }
 
-async function init() {
-  try { model = await loadModel(); }
-  catch (e) { $('#app').innerHTML = `<p class="empty">${esc(e.message)}. Open this page through a local web server (see README).</p>`; return; }
+// Swap in a model (sample or the viewer's own files) and redraw.
+function useModel(m) {
+  model = m;
   [P1, P2] = PREGNANCIES.map((p) => model.pregnancies[p.id]);
-  currentWeek = P2.lastWeek;
+  currentWeek = Math.min(LAST_WEEK, Math.max(FIRST_WEEK, P2.lastWeek || FIRST_WEEK));
   const sel = $('#jump');
+  sel.innerHTML = '';
   for (let w = FIRST_WEEK; w <= LAST_WEEK; w++) sel.add(new Option(w === currentWeek ? `${w} (now)` : String(w), w));
+  const own = m.kind === 'own';
+  document.body.classList.toggle('is-own', own);
+  $('#banner').innerHTML = own
+    ? 'Your data. It stays on this device and is gone when you close the page. <a href="#data">Change</a>'
+    : 'Sample data. Everything here is invented. <a href="#data">Use your own data</a>';
+  lastMainWeek = null;
+  if (location.hash) location.hash = ''; else route();
+}
+
+// Theme: System -> Light -> Dark. Remembered on this device only.
+const THEMES = ['system', 'light', 'dark'];
+function applyTheme(t) {
+  if (t === 'system') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', t);
+  const b = $('#theme');
+  b.textContent = { system: 'Auto', light: 'Light', dark: 'Dark' }[t];
+  b.setAttribute('aria-label', `Color theme: ${b.textContent}. Tap to change.`);
+  b.dataset.theme = t;
+}
+
+async function init() {
+  let saved = 'system';
+  try { saved = localStorage.getItem('theme') || 'system'; } catch {}
+  applyTheme(THEMES.includes(saved) ? saved : 'system');
+  $('#theme').addEventListener('click', () => {
+    const next = THEMES[(THEMES.indexOf($('#theme').dataset.theme) + 1) % THEMES.length];
+    applyTheme(next);
+    try { localStorage.setItem('theme', next); } catch {}
+  });
+  const sel = $('#jump');
   sel.addEventListener('change', () => {
     const w = +sel.value;
-    if (location.hash.startsWith('#week-')) location.hash = `#week-${w}`;
+    if (location.hash.startsWith('#week-') || location.hash === '#data') location.hash = `#week-${w}`;
     else { lastMainWeek = w; scrollToWeek(w); }
   });
   document.addEventListener('click', (ev) => {
     const back = ev.target.closest('[data-back]');
-    if (back) { ev.preventDefault(); lastMainWeek = +back.dataset.back; if (location.hash) location.hash = ''; else route(); }
+    if (back) { ev.preventDefault(); lastMainWeek = +back.dataset.back || null; if (location.hash) location.hash = ''; else route(); }
   });
   window.addEventListener('hashchange', route);
-  route();
+  wireDataView({
+    onLoad: (sources) => useModel(buildModel(sources, 'own')),
+    onSample: async () => useModel(await loadSample()),
+  });
+  try { useModel(await loadSample()); }
+  catch (e) { $('#app').innerHTML = `<p class="empty">${esc(e.message)}. Open this page through a local web server (see README).</p>`; }
 }
 init();
