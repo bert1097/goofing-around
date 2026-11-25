@@ -4,27 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Garage Bin</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23ff5a1f%22/%3E%3Ctext x=%2232%22 y=%2243%22 text-anchor=%22middle%22 font-family=%22Arial,Helvetica,sans-serif%22 font-size=%2228%22 font-weight=%22800%22 fill=%22%23fff%22%3EGB%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%231f5fd6%22/%3E%3Ctext x=%2232%22 y=%2243%22 text-anchor=%22middle%22 font-family=%22Arial,Helvetica,sans-serif%22 font-size=%2228%22 font-weight=%22800%22 fill=%22%23fff%22%3EGB%3C/text%3E%3C/svg%3E">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Archivo+Narrow:wght@500;600;700&display=swap">
 <style>
   /* Layout: a product-customizer studio (stage + option rail + slot strip) over a plain parts database */
   :root {
-    --bg: #f3f2ef;
+    --bg: #f0f3f8;
     --panel: #ffffff;
-    --panel-2: #f8f7f4;
+    --panel-2: #f6f8fb;
     --ink: #17181a;
     --ink-2: #55585e;
     --ink-3: #8a8d93;
-    --line: #e2e0db;
-    --accent: #ff5a1f;
+    --line: #dce2eb;
+    --accent: #1f5fd6;
     --accent-ink: #ffffff;
-    --accent-soft: #fff0e9;
+    --accent-soft: #e8effc;
     --good: #1f8a4c;
     --bad: #c23a2b;
     --warn: #a86400;
     --stage-a: #ffffff;
-    --stage-b: #e9e7e2;
+    --stage-b: #e2e8f2;
     --gun-edge: rgba(0,0,0,0);
     --steel: #2b2c2f;
     --steel-2: #1c1d1f;
@@ -36,20 +36,20 @@
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #121315;
-      --panel: #1b1c1f;
-      --panel-2: #222326;
+      --bg: #0f1218;
+      --panel: #171b23;
+      --panel-2: #1d222c;
       --ink: #f1f0ed;
       --ink-2: #b4b6bb;
       --ink-3: #7c7f85;
-      --line: #2e3034;
-      --accent-soft: #3a2217;
+      --line: #2a303b;
+      --accent: #5b93f5; --accent-soft: #16233d;
       --good: #4cc483;
       --bad: #ff7a66;
       --warn: #f0a640;
-      --stage-a: #45474d;
+      --stage-a: #3d4452;
       --gun-edge: rgba(255,255,255,.28);
-      --stage-b: #26272b;
+      --stage-b: #1e2430;
       --steel: #0e0f10;
       --steel-2: #050506;
       --cut: #3a3c40;
@@ -58,20 +58,20 @@
     }
   }
   :root[data-theme="dark"] {
-    --bg: #121315;
-      --panel: #1b1c1f;
-      --panel-2: #222326;
+    --bg: #0f1218;
+      --panel: #171b23;
+      --panel-2: #1d222c;
       --ink: #f1f0ed;
       --ink-2: #b4b6bb;
       --ink-3: #7c7f85;
-      --line: #2e3034;
-      --accent-soft: #3a2217;
+      --line: #2a303b;
+      --accent: #5b93f5; --accent-soft: #16233d;
       --good: #4cc483;
       --bad: #ff7a66;
       --warn: #f0a640;
-      --stage-a: #45474d;
+      --stage-a: #3d4452;
       --gun-edge: rgba(255,255,255,.28);
-      --stage-b: #26272b;
+      --stage-b: #1e2430;
       --steel: #0e0f10;
       --steel-2: #050506;
       --cut: #3a3c40;
