@@ -60,3 +60,27 @@ seconds). There's also a random late-game deficit mode.
 
 Situations and lineups are approximations from public game accounts; a few
 depth-chart spots and jersey numbers may be off.
+
+---
+
+# Garage Bin
+
+`garage/index.html` is the car version of Parts Bin, built on the same engine.
+Open it in a browser.
+
+- **Build**: pick a car, truck or SUV and set it up: trim, generation, engine,
+  transmission, bed length, and whether it's registered in California. The car
+  is drawn from side and rear. Ride height, wheel diameter and tire size follow
+  your picks, and so do the wing, big brakes, light bar, rack, bed cover and steps.
+- **Fit check**: bolt pattern, wheel diameter, tune, transmission, tire
+  clearance, gearing and bed length. It suggests the missing parts: a downpipe
+  needs a tune, a big brake kit on 16s needs 18" wheels, 35s need a lift and
+  lower gears, and a light bar needs a bumper or roof rack. Lowering springs
+  warn about camber. A clutch on an automatic won't fit.
+- **Install plan**: jack-stand safety first, then a shop/DIY rating for each
+  step. It ends with an alignment and a lug re-torque, and includes CARB and
+  emissions notes for intakes and downpipes.
+- Catalog, price log, sources, saved builds and backups work as they do in Parts Bin.
+
+The starter data (11 vehicles, about 70 parts) was drafted from general
+knowledge and is entirely **unsourced**. Check fitment with the maker before you buy.
