@@ -178,3 +178,11 @@ legend small { font-weight: 400; color: var(--muted); }
   body.n3 .wk .size { flex-direction: row; align-items: center; gap: 6px; }
   body.n3 .wk .fruit { width: 32px; height: 32px; }
 }
+
+/* Drawings sit on a soft plate so dark seeds and outlines read in both themes. */
+:root { --plate: #ebe7dc; --fruit-line: rgba(58, 47, 40, .35); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --plate: #cdc6b5; --fruit-line: rgba(58, 47, 40, .35); } }
+:root[data-theme="dark"] { --plate: #cdc6b5; --fruit-line: rgba(58, 47, 40, .35); }
+.fruit { background: var(--plate); border-radius: 50%; padding: 3px; box-sizing: border-box; }
+.fruit .ol { stroke: var(--fruit-line); }
+.week.is-current .fruit { background: var(--card); }

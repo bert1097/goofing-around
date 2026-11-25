@@ -12,7 +12,7 @@ export const SIZE_BY_WEEK = {
 
 // Little hand-drawn-style pictures for each week's comparison, as inline SVG (48x48).
 // Simple shapes on purpose: playful, not botanical.
-const O = 'stroke="#3a2f28" stroke-opacity=".35" stroke-width="1.2"';
+const O = 'class="ol" stroke-width="1.2"';
 const leaf = (x, y, r = 0, c = '#5c9a4a') => `<path d="M${x} ${y} q6 -7 12 -3 q-5 6 -12 3z" fill="${c}" ${O} transform="rotate(${r} ${x} ${y})"/>`;
 const stem = (x, y, h = 6) => `<path d="M${x} ${y} q1 -${h / 2} 3 -${h}" stroke="#6b4a2b" stroke-width="2" fill="none" stroke-linecap="round"/>`;
 const shine = (x, y) => `<ellipse cx="${x}" cy="${y}" rx="3" ry="1.6" fill="#fff" opacity=".45" transform="rotate(-30 ${x} ${y})"/>`;
@@ -22,8 +22,8 @@ const oval = (rx, ry, c, rot = 0) => `<ellipse cx="24" cy="26" rx="${rx}" ry="${
 const pear = (c, s = 1) => `<path transform="translate(24 26) scale(${s}) translate(-24 -26)" d="M24 10 c5 0 6 6 7 9 c5 4 8 9 8 14 c0 7 -7 10 -15 10 s-15 -3 -15 -10 c0 -5 3 -10 8 -14 c1 -3 2 -9 7 -9z" fill="${c}" ${O}/>`;
 
 const DRAW = {
-  4: () => dots([[22, 26], [26, 24], [25, 28]], '#4a4a52', 1.6),
-  5: () => `<path d="M24 19 q5 7 0 14 q-5 -7 0 -14z" fill="#e8d6a8" ${O}/>`,
+  4: () => [[21, 25], [26, 23], [25, 28.5]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.2" fill="#5b5866" stroke="#c9c4d6" stroke-width=".8"/>`).join(''),
+  5: () => `<path d="M24 19 q5 7 0 14 q-5 -7 0 -14z" fill="#d4ad62" ${O}/>`,
   6: () => oval(7, 5, '#c9813f'),
   7: () => round(9, '#4f6fb5') + `<path d="M21 18 l3 2 l3 -2" stroke="#2f4580" stroke-width="1.5" fill="none"/>` + shine(20, 23),
   8: () => round(11, '#d9485f') + dots([[19, 22], [24, 20], [29, 23], [18, 28], [23, 27], [28, 29], [21, 33], [27, 34]], '#a92c45', 1.4) + leaf(22, 15, -20),
