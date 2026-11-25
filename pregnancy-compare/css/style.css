@@ -118,3 +118,53 @@ code { font-size: 12px; background: var(--bg); padding: 1px 4px; border-radius: 
 .chip { box-shadow: inset 3px 0 0 var(--dot, transparent); padding-left: 8px; }
 .chip.c-sym { --dot: var(--sym-dot); } .chip.c-dig { --dot: var(--dig-dot); } .chip.c-app { --dot: var(--app-dot); }
 .chip.c-swe { --dot: var(--swe-dot); } .chip.c-mood { --dot: var(--mood-dot); } .chip.c-oth { --dot: var(--oth-dot); } .chip.c-act { --dot: var(--act-dot); }
+
+/* ---- Week column layout: Week | Pregnancy 1 | Pregnancy 2 | (Pregnancy 3) ---- */
+:root { --wkcol: 70px; }
+.top-inner { max-width: 760px; margin: 0 auto; }
+main { max-width: 760px; }
+@media (min-width: 700px) { :root { --wkcol: 120px; } main, .top-inner { max-width: 1120px; } }
+.colheads { grid-template-columns: var(--wkcol) repeat(var(--n, 2), minmax(0, 1fr)); }
+.wk-head { color: var(--muted); font-weight: 600; }
+.row { display: grid; grid-template-columns: var(--wkcol) repeat(var(--n, 2), minmax(0, 1fr)); gap: 8px; }
+.row > * { min-width: 0; }
+.row > .cell { border-left: 1px solid var(--line); padding-left: 8px; }
+.wk { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.wk-num { font-size: 22px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.wk-num small { display: block; font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 2px; }
+.wk em { font-style: normal; font-size: 10px; font-weight: 700; color: var(--card); background: var(--accent); border-radius: 6px; padding: 1px 6px; text-transform: uppercase; letter-spacing: .04em; }
+.wk .size { font-size: 11.5px; line-height: 1.25; color: var(--ink); }
+.wk .more { margin-top: auto; font-size: 12px; font-weight: 600; color: var(--accent); }
+.wk-dev { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; padding-top: 2px; }
+.devrow { margin-top: 8px; padding-top: 6px; border-top: 1px dashed var(--line); }
+.size-banner { margin: 0 4px 10px; font-size: 14px; }
+.day h2 { display: none; }
+
+/* Header: clear button to add your own data. */
+.top-row { flex-wrap: wrap; row-gap: 6px; }
+.btn { display: inline-flex; align-items: center; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--accent); white-space: nowrap; }
+.btn.primary { background: var(--accent); color: var(--card); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.banner { font-weight: 500; }
+legend small { font-weight: 400; color: var(--muted); }
+@media (max-width: 420px) {
+  .top-row h1 { flex: 1 0 100%; }
+  .tools { width: 100%; }
+  .tools .btn { margin-left: auto; }
+}
+
+/* Watch stats stack when a column is narrow. */
+.dev { grid-template-columns: repeat(auto-fit, minmax(52px, auto)); row-gap: 4px; }
+
+/* Phone with 3 pregnancies: week info becomes a strip above the columns. */
+@media (max-width: 560px) {
+  body.n3 .row, body.n3 .colheads { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  body.n3 .wk-head { display: none; }
+  body.n3 .row > .wk { grid-column: 1 / -1; flex-direction: row; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; }
+  body.n3 .wk-num small { display: inline; margin-right: 4px; }
+  body.n3 .wk .more { margin-left: auto; margin-top: 0; }
+  body.n3 .wk-dev { display: none; }
+  body.n3 .row > .cell:nth-child(2) { border-left: 0; padding-left: 0; }
+  body.n3 .devrow .cell:nth-child(2) { border-left: 0; padding-left: 0; }
+  body.n3 .chip { font-size: 11px; padding: 2px 5px 2px 7px; }
+}

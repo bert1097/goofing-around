@@ -3005,15 +3005,14 @@
    "pregnancyDay": 7,
    "tags": [
     {
-     "category": "Symptoms",
-     "name": "Frequent urination"
+     "category": "Digestion and stool",
+     "name": "Heartburn"
     },
     {
-     "category": "Physical activity",
-     "name": "Walking"
+     "category": "Symptoms",
+     "name": "Fatigue"
     }
-   ],
-   "waterGlasses": 4
+   ]
   },
   {
    "date": "2021-12-06",
@@ -3021,11 +3020,16 @@
    "pregnancyDay": 1,
    "tags": [
     {
+     "category": "Digestion and stool",
+     "name": "Heartburn"
+    },
+    {
      "category": "Mood",
-     "name": "Happy"
+     "name": "Calm"
     }
    ],
-   "weightKg": 73.7
+   "weightKg": 74.3,
+   "waterGlasses": 8
   }
  ]
 }

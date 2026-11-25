@@ -7,7 +7,8 @@ export const FIRST_WEEK = 4, LAST_WEEK = 40;
 
 export const PREGNANCIES = [
   { id: 'p1', label: 'Pregnancy 1', short: 'P1', flo: 'data/flo-p1.json', fitbit: 'data/fitbit-p1.json' },
-  { id: 'p2', label: 'Pregnancy 2', short: 'P2', flo: 'data/flo-p2.json', fitbit: 'data/fitbit-p2.json', current: true },
+  { id: 'p2', label: 'Pregnancy 2', short: 'P2', flo: 'data/flo-p2.json', fitbit: 'data/fitbit-p2.json' },
+  { id: 'p3', label: 'Pregnancy 3', short: 'P3', flo: 'data/flo-p3.json', fitbit: 'data/fitbit-p3.json' },
 ];
 
 const DAY = 86400000;
@@ -33,7 +34,8 @@ async function getJson(url) {
 export function buildModel(sources, kind) {
   const pregnancies = {};
   for (const p of PREGNANCIES) {
-    const src = sources[p.id] || {};
+    const src = sources[p.id];
+    if (!src || (!src.flo && !(src.fitbit || []).length)) continue; // pregnancy not added
     const lmp = src.lmp || src.flo?.lastPeriodDate;
     if (!lmp) throw new Error(`${p.label}: add the first day of the last period.`);
     const logs = src.flo ? adaptFlo(src.flo) : [];
@@ -49,12 +51,17 @@ export function buildModel(sources, kind) {
     const last = dates.length ? weekDay(lmp, dates[dates.length - 1]) : { week: 0, day: 0 };
     pregnancies[p.id] = { ...p, lmp, days, lastWeek: last.week, lastDay: last.day, hasData: dates.length > 0 };
   }
-  return { pregnancies, kind };
+  const order = Object.values(pregnancies);
+  if (!order.length) throw new Error('Pick at least one Flo or Fitbit file.');
+  // The pregnancy with the most recent last period is the current one.
+  const current = order.reduce((a, b) => (b.lmp > a.lmp ? b : a));
+  current.current = true;
+  return { pregnancies, order, current, kind };
 }
 
 export async function loadSample() {
   const sources = {};
-  for (const p of PREGNANCIES) {
+  for (const p of PREGNANCIES.filter((x) => x.flo)) {
     const [flo, fit] = await Promise.all([getJson(p.flo), getJson(p.fitbit)]);
     sources[p.id] = { flo, fitbit: [{ name: p.fitbit, json: fit }] };
   }

@@ -21,10 +21,10 @@ export function renderDataView(model) {
   <form id="dataform" class="panel">
     ${PREGNANCIES.map((p) => `
     <fieldset>
-      <legend>${p.label}${p.current ? ' (current)' : ''}</legend>
+      <legend>${p.label} <small>(optional)</small></legend>
       <label class="field">First day of last period
         <input type="date" id="lmp-${p.id}">
-        <small>Weeks are counted from this date, the way Flo does.</small>
+        <small>Weeks are counted from this date, the way Flo does. Leave a pregnancy blank to skip it.</small>
       </label>
       <label class="field">Flo export
         <input type="file" id="flo-${p.id}" accept=".json,.csv,application/json,text/csv">
@@ -114,6 +114,7 @@ async function collect() {
     const src = { lmp: $(`#lmp-${p.id}`).value || null, flo: null, fitbit: [] };
     if (floFile) { src.flo = parseFlo(await readText(floFile), floFile.name); any = true; }
     for (const f of fitFiles) { src.fitbit.push({ name: f.name, json: parseJson(await readText(f), f.name) }); any = true; }
+    if (!src.flo && !src.fitbit.length) continue; // leave this pregnancy out
     if (!src.lmp && !src.flo?.lastPeriodDate) throw new Error(`${p.label}: add the first day of the last period.`);
     sources[p.id] = src;
   }

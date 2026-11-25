@@ -1,5 +1,6 @@
 import { renderDataView, wireDataView } from './data.js';
-import { loadSample, buildModel, weekSummary, dateFor, FIRST_WEEK, LAST_WEEK, PREGNANCIES } from './model.js';
+import { loadSample, buildModel, weekSummary, dateFor, FIRST_WEEK, LAST_WEEK } from './model.js';
+import { SIZE_BY_WEEK } from './sizes.js';
 
 const CATEGORY_ORDER = ['Symptoms', 'Digestion and stool', 'Appetite', 'Swelling', 'Mood', 'Other', 'Physical activity'];
 const CAT_CLASS = { Symptoms: 'c-sym', 'Digestion and stool': 'c-dig', Appetite: 'c-app', Swelling: 'c-swe', Mood: 'c-mood', Other: 'c-oth', 'Physical activity': 'c-act' };
@@ -15,7 +16,7 @@ const sortTags = (keys) => keys.sort((a, b) => {
 
 const CAT_LABEL = { Symptoms: 'Symptoms', 'Digestion and stool': 'Digestion', Appetite: 'Appetite', Swelling: 'Swelling', Mood: 'Mood', Other: 'Other', 'Physical activity': 'Activity' };
 
-let model, P1, P2, currentWeek;
+let model, COLS = [], CUR, currentWeek;
 
 // Category filter: which categories are shown. All on by default; remembered on this phone or computer.
 const shown = new Set(CATEGORY_ORDER);
@@ -47,17 +48,20 @@ function chip(key, text, mark) {
   return `<span class="chip ${CAT_CLASS[cat] || ''} ${mark ? 'is-' + mark : ''}">${m}${esc(name)}${text ? ` <b>${text}</b>` : ''}</span>`;
 }
 
-function cellHtml(s, other) {
+function cellHtml(s, others) {
   if (!s.hasData) return '<div class="empty">No data added</div>';
   if (!s.reached) return '<div class="empty">Not reached yet</div>';
-  const compare = other.reached && other.loggedDays > 0 && s.loggedDays > 0;
+  // Compare only with pregnancies that have something logged this week.
+  const peers = s.loggedDays > 0 ? others.filter((o) => o.reached && o.loggedDays > 0) : [];
   const keys = sortTags([...s.tagCounts.keys()].filter(isShown));
   const denom = s.partial || 7;
   const head = `<div class="logged">${s.loggedDays} of ${denom} days logged${s.partial ? ' (so far)' : ''}</div>`;
   if (!keys.length) return head + `<div class="empty">${s.tagCounts.size ? 'Nothing in the categories shown' : 'Nothing logged'}</div>`;
   return head + groupedChips(keys, (k) => {
-    const n = s.tagCounts.get(k), o = other.tagCounts.get(k) || 0;
-    const mark = !compare ? null : o === 0 ? 'only' : Math.abs(n - o) >= GAP ? 'gap' : null;
+    const n = s.tagCounts.get(k), counts = peers.map((o) => o.tagCounts.get(k) || 0);
+    const mark = !peers.length ? null
+      : counts.every((o) => o === 0) ? 'only'
+      : counts.some((o) => o > 0 && Math.abs(n - o) >= GAP) ? 'gap' : null;
     return chip(k, `${n}/${denom}`, mark);
   });
 }
@@ -72,21 +76,38 @@ function devHtml(s) {
   </dl>`;
 }
 
+function colHeads(withStatus) {
+  $('#colheads').style.setProperty('--n', COLS.length);
+  $('#colheads').innerHTML = '<span class="wk-head">Week</span>' + COLS.map((p) => `<span>${p.label}${withStatus
+    ? `<small>${!p.hasData ? 'no data added' : p.current ? `now: week ${p.lastWeek}, day ${p.lastDay}` : 'complete'}</small>` : ''}</span>`).join('');
+  $('#colheads').hidden = false;
+}
+
 function renderMain() {
   $('#title').textContent = 'Week by week';
-  $('#colheads').innerHTML = `<span>${P1.label}<small>${P1.hasData ? 'complete' : 'no data added'}</small></span><span>${P2.label}<small>${P2.hasData ? `now: week ${P2.lastWeek}, day ${P2.lastDay}` : 'no data added'}</small></span>`;
-  $('#colheads').hidden = false;
+  colHeads(true);
+  const n = COLS.length;
   let html = `<p class="legend"><span class="mk mk-only">◆</span> logged in only one pregnancy that week &nbsp; <span class="mk mk-gap">▲</span> ${GAP}+ days apart</p>`;
   for (let w = FIRST_WEEK; w <= LAST_WEEK; w++) {
-    const a = weekSummary(P1, w), b = weekSummary(P2, w);
-    html += `<a class="week ${w === currentWeek ? 'is-current' : ''}" id="w${w}" href="#week-${w}">
-      <div class="week-label">Week ${w}${w === currentWeek ? ' <em>current</em>' : ''}<span class="more">Days ›</span></div>
-      <div class="pair"><div class="cell">${cellHtml(a, b)}</div><div class="cell">${cellHtml(b, a)}</div></div>
-      <div class="pair devrow"><div>${devHtml(a)}</div><div>${devHtml(b)}</div></div>
+    const sums = COLS.map((p) => weekSummary(p, w));
+    const cur = w === currentWeek;
+    html += `<a class="week ${cur ? 'is-current' : ''}" id="w${w}" href="#week-${w}" style="--n:${n}">
+      <div class="row">
+        <div class="wk">
+          <span class="wk-num"><small>Week</small>${w}</span>
+          ${cur ? '<em>now</em>' : ''}
+          <span class="size">Size of ${articled(SIZE_BY_WEEK[w])}</span>
+          <span class="more">Days ›</span>
+        </div>
+        ${sums.map((s, i) => `<div class="cell">${cellHtml(s, sums.filter((_, j) => j !== i))}</div>`).join('')}
+      </div>
+      <div class="row devrow"><div class="wk wk-dev">Watch</div>${sums.map((s) => `<div class="cell">${devHtml(s)}</div>`).join('')}</div>
     </a>`;
   }
   $('#app').innerHTML = html;
 }
+
+const articled = (s) => (/^[aeiou]/i.test(s) ? 'an ' : 'a ') + s;
 
 function dayCell(preg, week, day) {
   const e = preg.days[`${week}-${day}`];
@@ -110,14 +131,15 @@ function dayCell(preg, week, day) {
 
 function renderWeek(w, keepScroll = false) {
   $('#title').textContent = `Week ${w}`;
-  $('#colheads').innerHTML = `<span>${P1.label}</span><span>${P2.label}</span>`;
+  colHeads(false);
+  $('#colheads').querySelector('.wk-head').textContent = 'Day';
   const nav = `<nav class="wnav">
     <a href="#" data-back="${w}">‹ All weeks</a>
     <span>${w > FIRST_WEEK ? `<a href="#week-${w - 1}">‹ Wk ${w - 1}</a>` : ''}${w < LAST_WEEK ? `<a href="#week-${w + 1}">Wk ${w + 1} ›</a>` : ''}</span>
   </nav>`;
-  let html = nav;
+  let html = nav + `<p class="size-banner">Week ${w}: about the size of ${articled(SIZE_BY_WEEK[w])}</p>`;
   for (let d = 1; d <= 7; d++) {
-    html += `<section class="day"><h2>Day ${d}</h2><div class="pair"><div class="cell">${dayCell(P1, w, d)}</div><div class="cell">${dayCell(P2, w, d)}</div></div></section>`;
+    html += `<section class="day" style="--n:${COLS.length}"><div class="row"><div class="wk"><span class="wk-num"><small>Day</small>${d}</span></div>${COLS.map((p) => `<div class="cell">${dayCell(p, w, d)}</div>`).join('')}</div></section>`;
   }
   $('#app').innerHTML = html + nav;
   if (!keepScroll) window.scrollTo(0, 0);
@@ -158,16 +180,19 @@ function redraw() {
 // Swap in a model (sample or the viewer's own files) and redraw.
 function useModel(m) {
   model = m;
-  [P1, P2] = PREGNANCIES.map((p) => model.pregnancies[p.id]);
-  currentWeek = Math.min(LAST_WEEK, Math.max(FIRST_WEEK, P2.lastWeek || FIRST_WEEK));
+  COLS = model.order; CUR = model.current;
+  document.body.style.setProperty('--n', COLS.length);
+  document.body.classList.toggle('n3', COLS.length >= 3);
+  currentWeek = Math.min(LAST_WEEK, Math.max(FIRST_WEEK, CUR.lastWeek || FIRST_WEEK));
   const sel = $('#jump');
   sel.innerHTML = '';
   for (let w = FIRST_WEEK; w <= LAST_WEEK; w++) sel.add(new Option(w === currentWeek ? `${w} (now)` : String(w), w));
   const own = m.kind === 'own';
   document.body.classList.toggle('is-own', own);
-  $('#banner').innerHTML = own
-    ? 'Your data. It stays on this phone or computer and is gone when you close the page. <a href="#data">Change</a>'
-    : 'Sample data. Everything here is invented. <a href="#data">Use your own data</a>';
+  $('#banner').textContent = own
+    ? 'Your data. It stays on this phone or computer and is gone when you close the page.'
+    : 'Sample data. Everything here is invented.';
+  $('#addbtn').textContent = own ? 'Change data' : 'Add your data';
   lastMainWeek = null;
   if (location.hash) location.hash = ''; else route();
 }

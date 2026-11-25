@@ -16,6 +16,28 @@ const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 const ramp = (w, s, p, e, m) => (w < s || w > e ? 0 : w <= p ? m * (w - s + 1) / (p - s + 1) : m * (e - w) / (e - p));
 
 const PROFILES = {
+  // Middle pregnancy: light nausea, strong swelling and backache late, best sleep.
+  p2: (w) => ({
+    'Digestion and stool|Nausea': ramp(w, 7, 9, 12, 0.3),
+    'Digestion and stool|Constipation': ramp(w, 8, 16, 28, 0.35),
+    'Digestion and stool|Heartburn': ramp(w, 30, 36, 41, 0.25),
+    'Digestion and stool|Normal digestion': 0.3,
+    'Symptoms|Fatigue': ramp(w, 6, 10, 14, 0.4) + ramp(w, 32, 39, 41, 0.45),
+    'Symptoms|Tender breasts': ramp(w, 4, 6, 10, 0.4),
+    'Symptoms|Backache': ramp(w, 18, 30, 41, 0.6),
+    'Symptoms|Leg cramps': ramp(w, 20, 28, 36, 0.35),
+    'Symptoms|Acne': ramp(w, 6, 10, 16, 0.3),
+    'Symptoms|Everything is fine': w > 12 && w < 28 ? 0.4 : 0.1,
+    'Appetite|Increased appetite': ramp(w, 10, 18, 30, 0.5),
+    'Symptoms|Cravings': ramp(w, 10, 16, 24, 0.35),
+    'Swelling|Limbs swelling': ramp(w, 24, 34, 41, 0.7),
+    'Swelling|Face swelling': ramp(w, 34, 38, 41, 0.25),
+    'Mood|Calm': 0.35, 'Mood|Happy': 0.35, 'Mood|Energetic': w > 12 && w < 26 ? 0.3 : 0.05,
+    'Mood|Anxious': ramp(w, 36, 39, 41, 0.3),
+    'Physical activity|Walking': 0.5, 'Physical activity|Swimming': w > 16 && w < 36 ? 0.2 : 0,
+    'Physical activity|Yoga': w > 10 && w < 38 ? 0.25 : 0.05,
+    "Physical activity|Didn't exercise": 0.12,
+  }),
   p1: (w) => ({
     'Digestion and stool|Nausea': ramp(w, 6, 9, 14, 0.55),
     'Digestion and stool|Vomiting': ramp(w, 8, 9, 11, 0.12),
@@ -43,7 +65,7 @@ const PROFILES = {
     'Physical activity|Swimming': w > 20 && w < 34 ? 0.1 : 0,
     "Physical activity|Didn't exercise": ramp(w, 6, 9, 14, 0.3) + 0.1,
   }),
-  p2: (w) => ({
+  p3: (w) => ({
     'Digestion and stool|Nausea': ramp(w, 4, 7, 16, 0.9),
     'Digestion and stool|Vomiting': ramp(w, 5, 8, 14, 0.4),
     'Digestion and stool|Bloating': ramp(w, 4, 8, 14, 0.3),
@@ -69,18 +91,20 @@ const PROFILES = {
 
 const NOTES = {
   p1: { 8: 'Crackers before getting up helps.', 10: 'First ultrasound today.', 12: 'Nausea easing off a bit.', 18: 'Felt the first flutters?', 20: 'Anatomy scan.', 24: 'Heartburn after spicy dinner.', 27: 'Weekend trip to the lake.', 31: 'Ankles puffy after a long day standing.', 35: 'Packed the hospital bag.', 38: 'Hard to get comfortable at night.', 40: 'Still waiting!' },
-  p2: { 5: 'Positive test! Queasy already.', 7: 'Nausea way worse than last time.', 8: 'Could only keep down toast.', 9: 'Up at 3am again.', 10: 'First scan.', 11: 'Bleeding gums when brushing.', 12: 'Slightly better in the afternoons.', 13: 'Told the family.' },
+  p2: { 9: 'Barely any nausea this time.', 12: 'First scan.', 16: 'Breakouts on my chin.', 20: 'Anatomy scan.', 26: 'Back sore after work.', 30: 'Started swimming again.', 34: 'Rings off, too tight.', 39: 'Any day now.' },
+  p3: { 5: 'Positive test! Queasy already.', 7: 'Nausea way worse than last time.', 8: 'Could only keep down toast.', 9: 'Up at 3am again.', 10: 'First scan.', 11: 'Bleeding gums when brushing.', 12: 'Slightly better in the afternoons.', 13: 'Told the family.' },
 };
-const TRAVEL = { p1: [27], p2: [] };
+const TRAVEL = { p1: [27], p2: [22], p3: [] };
 
 function genFlo(id, lmp, endOffset, logRate) {
   const days = [];
   let skipUntil = -1;
   for (let off = 28; off <= endOffset; off++) {
     const week = Math.floor(off / 7), dayOfWeek = (off % 7) + 1;
-    if (off < skipUntil) continue;
-    if (chance(0.03)) { skipUntil = off + 2 + Math.floor(rand() * 4); continue; } // multi-day gap
-    if (!chance(logRate)) continue;
+    const recent = off >= endOffset - 1; // always log the last couple of days
+    if (!recent && off < skipUntil) continue;
+    if (!recent && chance(0.03)) { skipUntil = off + 2 + Math.floor(rand() * 4); continue; } // multi-day gap
+    if (!recent && !chance(logRate)) continue;
     const tags = [];
     for (const [k, p] of Object.entries(PROFILES[id](week))) if (chance(clamp(p, 0, 0.95))) {
       const [category, name] = k.split('|'); tags.push({ category, name });
@@ -107,11 +131,12 @@ function genFitbit(id, lmp, endOffset) {
     const w = off / 7, date = addDays(lmp, off);
     if (chance(0.05)) continue; // watch not worn / not synced
     const sleepH = id === 'p1' ? 7.6 - (w > 32 ? (w - 32) * 0.12 : 0) - ramp(w, 6, 9, 14, 0.4)
-                               : 7.1 - ramp(w, 5, 9, 16, 1.1);
+                 : id === 'p2' ? 7.8 - (w > 34 ? (w - 34) * 0.15 : 0)
+                 : 7.1 - ramp(w, 5, 9, 16, 1.1);
     sleep.push({ dateOfSleep: date, minutesAsleep: Math.round((sleepH + (rand() - 0.5) * 1.4) * 60) });
-    const rhr = (id === 'p1' ? 61 : 63) + w * 0.38 + (rand() - 0.5) * 4;
+    const rhr = ({ p1: 61, p2: 60, p3: 63 }[id]) + w * 0.38 + (rand() - 0.5) * 4;
     restingHeartRate.push({ dateTime: date, value: { value: Math.round(rhr) } });
-    const base = id === 'p1' ? 8200 - (w > 30 ? (w - 30) * 300 : 0) : 7400 - ramp(w, 5, 9, 16, 2600);
+    const base = id === 'p1' ? 8200 - (w > 30 ? (w - 30) * 300 : 0) : id === 'p2' ? 9000 - (w > 32 ? (w - 32) * 350 : 0) : 7400 - ramp(w, 5, 9, 16, 2600);
     steps.push({ dateTime: date, value: String(Math.max(800, Math.round(base + (rand() - 0.5) * 4000))) });
   }
   return { _comment: 'INVENTED SAMPLE DATA. Loosely modelled on Fitbit Google Takeout files; field names need checking.', sleep, restingHeartRate, steps };
@@ -120,7 +145,8 @@ function genFitbit(id, lmp, endOffset) {
 const out = path.join(__dirname, '..', 'data');
 const P = [
   { id: 'p1', lmp: '2021-03-01', end: 280, rate: 0.72 },
-  { id: 'p2', lmp: '2026-08-24', end: 13 * 7 + 1, rate: 0.82 }, // through week 13 day 2
+  { id: 'p2', lmp: '2023-06-05', end: 279, rate: 0.6 },
+  { id: 'p3', lmp: '2026-08-24', end: 13 * 7 + 1, rate: 0.82 }, // current: through week 13 day 2
 ];
 for (const p of P) {
   fs.writeFileSync(path.join(out, `flo-${p.id}.json`), JSON.stringify(genFlo(p.id, p.lmp, p.end, p.rate), null, 1));
