@@ -877,6 +877,7 @@ const SEED_PARTS = [
 
   // ---- brakes ----
   P("StopTech", "ST-40 front big brake kit", "Brakes", ["civic", "wrx", "gti", "bmw3", "gr86", "mustang"], 2400, "4-piston, 332 mm rotors", "", { needs: [N("wheel", ["18", "19", "20"], { why: "The bigger calipers need at least 18\" wheels with enough spoke clearance." })], gives: { brakes: "bbk" }, steps: ST.bbk }),
+  P("KNS Brakes", "Rear caliper conversion bracket V2 (Subaru)", "Brakes", ["wrx"], null, "Mounts Brembo or FHI rear calipers", "For a rear brake upgrade on the VA WRX. Pick the bracket for your caliper. KNS and DBA rotors are dual-drilled for 5x100 or 5x114.", { needs: [N("gen", "va", { why: "KNS lists the V2 bracket for the 2015–2021 WRX (VA). The 2022+ VB isn't on its fitment list." })], steps: [S(3, 90, "Remove the rear calipers and brackets, fit the KNS bracket and the upgrade caliper per the KNS V2 installation guide, and torque to spec.", ["Floor jack", "Jack stands", "Socket set", "Torque wrench"]), S(3, 40, "Bleed the brakes and bed in the pads.", ["Brake bleeder kit", "DOT 4 fluid"])] }),
   P("Hawk", "HPS 5.0 brake pads (front)", "Brakes", ALL_CARS, 90, "", "A step up from stock for spirited street driving.", { steps: ST.pads }),
   P("Power Stop", "Z36 Truck & Tow brake kit (front)", "Brakes", ALL_4X4, 400, "Pads + rotors", "Helps with heavier wheels and tires.", { steps: ST.pads }),
 
@@ -933,10 +934,12 @@ const SEED_PARTS = [
   P("Mopar", "Rock rails (JL)", "Rock sliders", ["wrangler"], 500, "", "Rubicon has these from the factory.", { occ: ["steps"], steps: ST.steps }),
 ];
 
-const SEED_SOURCES = {};
+const SEED_SOURCES = {
+  "kns-brakes-rear-caliper-conversion-bracket-v2-subaru": [{ url: "https://www.knsbrakes.com/kns-bracket", publisher: "KNS Brakes", title: "KNS Rear Caliper Conversion Brackets for Subaru", kind: "manufacturer", quote: "Conversion Bracket Version 2 (V2) FITMENT: - Subaru Forester 2009-2013 - Subaru Legacy 2010-2013 - Subaru BRZ/FRS 2013-2021 - Subaru WRX 2015-2021", checked: "2026-11-25", verdict: "confirmed", covers: ["fits", "need:gen"] }],
+};
 const SEED_REMOVED = [];
 
-const RETAILERS = ["Tire Rack", "Summit Racing", "FCP Euro", "ECS Tuning", "AmericanMuscle", "ExtremeTerrain", "RealTruck", "4 Wheel Parts", "Turn 14 / Vivid Racing", "RockAuto", "Manufacturer direct"];
+const RETAILERS = ["Tire Rack", "Summit Racing", "FCP Euro", "ECS Tuning", "AmericanMuscle", "ExtremeTerrain", "RealTruck", "4 Wheel Parts", "Turn 14 / Vivid Racing", "RockAuto", "KNS Brakes", "Manufacturer direct"];
 
 // install order: lower runs first
 const PHASE = { "Downpipe": 1, "Exhaust": 2, "Intake": 2, "Clutch": 3, "Shifter": 3, "Drivetrain": 3, "Suspension": 4, "Alignment": 4, "Brakes": 5, "Bumper": 5, "Roof rack": 6, "Lighting": 7, "Running boards": 6, "Rock sliders": 6, "Bed cover": 6, "Aero": 6, "Wheels": 8, "Tires": 8, "Tune": 9 };
