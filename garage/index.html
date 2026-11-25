@@ -320,6 +320,7 @@
   .gun:hover { border-color: var(--ink-3); }
   .gun[aria-current="true"] { border-color: var(--accent); }
   .gun .thumb { border-radius: 12px; background: radial-gradient(120% 90% at 50% 35%, var(--stage-a), var(--stage-b)); aspect-ratio: 16 / 9; display: grid; place-items: center; overflow: hidden; }
+  .gun .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .gun .thumb svg { width: 88%; height: auto; filter: drop-shadow(0 0 1.5px var(--gun-edge)); }
   .gun .nm { font-weight: 800; font-size: 16px; padding: 0 4px; }
   .gun .meta { font-size: 13px; color: var(--ink-2); padding: 0 4px 4px; display: flex; flex-wrap: wrap; gap: 4px 10px; }
@@ -1432,6 +1433,7 @@ let stageView = "side";
 /* ================= Photos =================
    Brake photos come from KNS Brakes' own pages (some are representative, as KNS notes), credited in the part details. Other parts show a placeholder; any part can point at its own photo link. */
 const PHOTO_CREDIT = {"dba-5000-t3-replacement-rotor-rings-front": ["knsbrakes.com", "https://www.knsbrakes.com/tech-info"], "chevrolet-camaro-1le-zl1-brembo-6-piston-front-upgrade": ["knsbrakes.com", "https://www.knsbrakes.com/tech-info"], "girodisc-two-piece-front-rotors": ["knsbrakes.com", "https://www.knsbrakes.com/tech-info"], "hawk-hp-pads-front-wrx-2002-03": ["knsbrakes.com", "https://www.knsbrakes.com/tech-info"], "kns-brakes-rear-caliper-conversion-bracket-v2-subaru": ["knsbrakes.com", "https://www.knsbrakes.com/kns-bracket"], "kns-brakes-rear-caliper-conversion-bracket-v1-subaru": ["knsbrakes.com", "https://www.knsbrakes.com/kns-bracket"], "kns-brakes-replacement-front-rotors-c6-z06": ["knsbrakes.com", "https://www.knsbrakes.com/tech-info"], "subaru-oversized-parking-brake-shoes": ["knsbrakes.com", "https://www.knsbrakes.com/kns-bracket"], "subaru-sti-brembo-4-piston-front-calipers": ["knsbrakes.com", "https://www.knsbrakes.com/tech-info"], "kns-brakes-adaptor-rear-rotors-v1": ["knsbrakes.com", "https://www.knsbrakes.com/kns-bracket"], "hawk-hp-pads-front-wrx-2004-05": ["knsbrakes.com", "https://www.knsbrakes.com/tech-info"], "subaru-sti-brembo-2-piston-rear-calipers": ["knsbrakes.com", "https://www.knsbrakes.com/kns-bracket"], "dba-4000-t3-rear-rotors-sti-size-pair": ["knsbrakes.com", "https://www.knsbrakes.com/kns-bracket"]};
+const CAR_PHOTO = {}; // id -> [author, license, Commons page]
 function photoOf(p) { return safeUrl(p.photo) || (PHOTO_CREDIT[p.id] ? `img/${p.id}.jpg` : ""); }
 function thumbHtml(p, cls) {
   const u = photoOf(p);
@@ -1547,7 +1549,7 @@ function renderPick() {
   const q = pState.q.trim().toLowerCase();
   const counts = {}; db.parts.forEach(p => p.fits.forEach(f => counts[f] = (counts[f] || 0) + 1));
   const card = p => `<button type="button" class="gun" data-gun="${esc(p.id)}" ${p.id === build.platform && (Object.keys(build.picks).length || build.extras.length) ? 'aria-current="true"' : ""}>
-      <div class="thumb">${gunSvg(p, null, resolveIface(p, {}), "", true)}</div>
+      <div class="thumb">${CAR_PHOTO[p.id] ? `<img src="img/cars/${esc(p.id)}.jpg" alt="${esc(p.name)}" loading="lazy">` : gunSvg(p, null, resolveIface(p, {}), "", true)}</div>
       <div class="nm">${esc(p.name)}</div>
       <div class="meta"><span>${esc(p.covers || p.type)}</span><span>${counts[p.id] || 0} parts fit</span>${p.id === build.platform && (Object.keys(build.picks).length || build.extras.length) ? `<span style="color:var(--accent);font-weight:600">Current build</span>` : ""}</div>
     </button>`;
@@ -1988,7 +1990,7 @@ function openPlatform(id) {
       <div class="faint" style="font:700 12px var(--cond);letter-spacing:.06em;text-transform:uppercase">${esc(pl.type)} setup</div>
       <h2>${esc(pl.name)}</h2><div style="margin-top:6px">${srcBadge(pl, keys)} <span class="muted" style="font-size:13px">${esc(pl.covers || "")}</span></div></div>
       <button class="x" data-close aria-label="Close">×</button></div>
-    <div class="dlg-body">
+    <div class="dlg-body">${CAR_PHOTO[pl.id] ? `<figure class="dlg-photo"><img src="img/cars/${esc(pl.id)}.jpg" alt="${esc(pl.name)}"><figcaption>Photo: ${esc(CAR_PHOTO[pl.id][0])}, <a href="${esc(safeUrl(CAR_PHOTO[pl.id][2]))}" target="_blank" rel="noopener">${esc(CAR_PHOTO[pl.id][1])}</a> via Wikimedia Commons</figcaption></figure>` : ""}
       <p class="muted" style="margin:0;font-size:14px">These facts about the vehicle drive the fit check: bolt pattern, wheel size, transmission, and so on.</p>
       ${rulesHtml(pl, keys, k => platRuleDesc(pl, k), pl)}
       ${sourcesHtml(pl, keys, pl)}
