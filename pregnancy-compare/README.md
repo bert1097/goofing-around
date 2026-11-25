@@ -9,7 +9,7 @@ Apps like Flo let you log symptoms daily, but you can't line up the same week ac
 - A color key at the top doubles as a filter: tap a category to show only it, tap others to add them, tap All to reset. Each category sits on its own line inside a week.
 - A smaller row underneath shows average sleep, resting heart rate and steps from the watch.
 - Tap a week for a day-by-day view of both pregnancies, with notes.
-- The week column shows the popular "size of a lemon" comparison for that week, with a little drawing. It's general reference (`js/sizes.js`), not about anyone's data.
+- The week column shows the popular "size of a lemon" comparison for that week, with a little drawing, plus one line on what is developing that week. Both are general reference (`js/sizes.js`), not about anyone's data.
 - Opens at week 4; the week picker jumps around.
 
 The page only shows what was logged. It doesn't interpret anything.
@@ -53,3 +53,5 @@ Both formats are unverified; the sample files use our best guess.
 - **Fitbit (Google Takeout)**: the field names (`dateOfSleep`, `minutesAsleep`, `dateTime`, `value`) need checking against a real Takeout. Takeout splits data into many per-period files, so they'd need merging into one per pregnancy (or teach `fitbit.js` to read several).
 
 Real exports should stay off GitHub: keep them local, and add them to `.gitignore` before copying them into `data/`.
+
+The weekly development notes in `js/sizes.js` were written from widely published week-by-week guides and have **not** been reviewed by a medical professional. Have them checked and sourced before this goes beyond a demo.

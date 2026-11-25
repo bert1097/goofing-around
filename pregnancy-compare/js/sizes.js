@@ -65,3 +65,46 @@ export function sizeDrawing(week) {
   const d = DRAW[week];
   return d ? `<svg class="fruit" viewBox="0 0 48 48" aria-hidden="true" focusable="false">${d()}</svg>` : '';
 }
+
+// One short, general development milestone per week, written from widely published
+// week-by-week guides. NOT REVIEWED by a medical professional yet: have it checked
+// (and sourced) before relying on it. Timings are approximate and vary.
+export const DEVELOPING_BY_WEEK = {
+  4: 'Settling into the lining of the uterus',
+  5: 'Heart and brain begin to form',
+  6: 'Tiny buds for arms and legs appear',
+  7: 'Brain is growing quickly',
+  8: 'Fingers and toes start to form',
+  9: 'Main organs are in place and growing',
+  10: 'Now called a fetus',
+  11: 'Tooth buds and nail beds begin',
+  12: 'Fingers can open and close',
+  13: 'Fingerprints are forming',
+  14: 'Can make faces, like squinting',
+  15: 'Can sense light through closed eyelids',
+  16: 'Eyes can make small movements',
+  17: 'Fat begins to build up under the skin',
+  18: 'Ears are in place and may pick up sounds',
+  19: 'A protective coating (vernix) covers the skin',
+  20: 'Halfway there; practicing swallowing',
+  21: 'Movements are getting stronger',
+  22: 'Eyebrows and lips are more defined',
+  23: 'May respond to sounds and voices',
+  24: 'Lungs are developing branches',
+  25: 'Hands can make small fists',
+  26: 'Eyes begin to open',
+  27: 'Regular sleep and wake cycles',
+  28: 'Can blink',
+  29: 'Muscles and lungs keep maturing',
+  30: 'Bone marrow starts making red blood cells',
+  31: 'Filling out as fat builds up',
+  32: 'Practicing breathing movements',
+  33: 'Bones are hardening (the skull stays soft)',
+  34: 'Nervous system is maturing',
+  35: 'Kidneys are fully developed',
+  36: 'Fine body hair (lanugo) is shedding',
+  37: 'Practicing sucking and gripping',
+  38: 'Organs are ready for life outside',
+  39: 'Considered full term',
+  40: 'Due date week',
+};

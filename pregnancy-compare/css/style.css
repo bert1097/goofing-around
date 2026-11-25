@@ -206,3 +206,9 @@ legend { background: var(--card); padding: 0 6px; margin-left: -6px; border-radi
 .howto details:first-of-type { border-top: 0; }
 .howto summary { color: var(--accent); }
 .privacy { background: var(--current); }
+
+/* What's developing */
+.dev-note { font-size: 11px; line-height: 1.3; color: var(--muted); }
+.size-banner .dev-note { display: block; font-size: 13px; margin-top: 2px; }
+.ref-note { margin: -4px 4px 10px; }
+@media (max-width: 560px) { body.n3 .wk .dev-note { flex: 1 0 100%; order: 5; } }

@@ -1,6 +1,6 @@
 import { renderDataView, wireDataView } from './data.js';
 import { loadSample, buildModel, weekSummary, dateFor, FIRST_WEEK, LAST_WEEK } from './model.js';
-import { SIZE_BY_WEEK, sizeDrawing } from './sizes.js';
+import { SIZE_BY_WEEK, DEVELOPING_BY_WEEK, sizeDrawing } from './sizes.js';
 
 const CATEGORY_ORDER = ['Symptoms', 'Digestion and stool', 'Appetite', 'Swelling', 'Mood', 'Other', 'Physical activity'];
 const CAT_CLASS = { Symptoms: 'c-sym', 'Digestion and stool': 'c-dig', Appetite: 'c-app', Swelling: 'c-swe', Mood: 'c-mood', Other: 'c-oth', 'Physical activity': 'c-act' };
@@ -87,7 +87,7 @@ function renderMain() {
   $('#title').textContent = 'Week by week';
   colHeads(true);
   const n = COLS.length;
-  let html = `<p class="legend"><span class="mk mk-only">◆</span> logged in only one pregnancy that week &nbsp; <span class="mk mk-gap">▲</span> ${GAP}+ days apart</p>`;
+  let html = `<p class="legend"><span class="mk mk-only">◆</span> logged in only one pregnancy that week &nbsp; <span class="mk mk-gap">▲</span> ${GAP}+ days apart</p><p class="legend">The week column's size and development notes are general information, not about any pregnancy shown, and haven't been reviewed by a medical professional.</p>`;
   for (let w = FIRST_WEEK; w <= LAST_WEEK; w++) {
     const sums = COLS.map((p) => weekSummary(p, w));
     html += `<a class="week" id="w${w}" href="#week-${w}" style="--n:${n}">
@@ -95,6 +95,7 @@ function renderMain() {
         <div class="wk">
           <span class="wk-num"><small>Week</small>${w}</span>
           <span class="size">${sizeDrawing(w)}<span>Size of ${articled(SIZE_BY_WEEK[w])}</span></span>
+          <span class="dev-note">${esc(DEVELOPING_BY_WEEK[w])}</span>
           <span class="more">Days ›</span>
         </div>
         ${sums.map((s, i) => `<div class="cell">${cellHtml(s, sums.filter((_, j) => j !== i))}</div>`).join('')}
@@ -135,7 +136,7 @@ function renderWeek(w, keepScroll = false) {
     <a href="#" data-back="${w}">‹ All weeks</a>
     <span>${w > FIRST_WEEK ? `<a href="#week-${w - 1}">‹ Wk ${w - 1}</a>` : ''}${w < LAST_WEEK ? `<a href="#week-${w + 1}">Wk ${w + 1} ›</a>` : ''}</span>
   </nav>`;
-  let html = nav + `<p class="size-banner">${sizeDrawing(w)}<span>Week ${w}: about the size of ${articled(SIZE_BY_WEEK[w])}</span></p>`;
+  let html = nav + `<p class="size-banner">${sizeDrawing(w)}<span>Week ${w}: about the size of ${articled(SIZE_BY_WEEK[w])}<small class="dev-note">${esc(DEVELOPING_BY_WEEK[w])}</small></span></p><p class="fine ref-note">Size and development notes are general week-by-week information, not about any pregnancy shown here, and haven't been reviewed by a medical professional.</p>`;
   for (let d = 1; d <= 7; d++) {
     html += `<section class="day" style="--n:${COLS.length}"><div class="row"><div class="wk"><span class="wk-num"><small>Day</small>${d}</span></div>${COLS.map((p) => `<div class="cell">${dayCell(p, w, d)}</div>`).join('')}</div></section>`;
   }
