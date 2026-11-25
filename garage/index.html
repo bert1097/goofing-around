@@ -662,12 +662,12 @@
 
 /* ================= Interface vocabulary ================= */
 const KEYS = {
-  bolt: { label: "Bolt pattern", vals: { "4x100": "4x100", "5x100": "5x100", "5x112": "5x112", "5x114.3": "5x114.3", "5x127": "5x127", "6x135": "6x135", "6x139.7": "6x139.7" } },
+  bolt: { label: "Bolt pattern", vals: { "4x100": "4x100", "5x100": "5x100", "5x112": "5x112", "5x114.3": "5x114.3", "5x127": "5x127", "6x135": "6x135", "6x139.7": "6x139.7", "5x120": "5x120", "5x120.65": "5x120.65 (5x4.75)" } },
   wheel: { label: "Wheel diameter", vals: { 16: "16\" wheels", 17: "17\" wheels", 18: "18\" wheels", 19: "19\" wheels", 20: "20\" wheels" } },
   engine: { label: "Engine", vals: { turbo: "a turbocharged engine", na: "a naturally aspirated engine", v8: "a V8" } },
   trans: { label: "Transmission", vals: { manual: "a manual", auto: "an automatic / CVT", dct: "a dual-clutch (DSG)" } },
   drive: { label: "Drivetrain", vals: { fwd: "front-wheel drive", rwd: "rear-wheel drive", awd: "all-wheel drive", "4wd": "four-wheel drive" } },
-  gen: { label: "Generation", vals: { va: "VA (2015–21)", vb: "VB (2022+)", mk7: "Mk7 / 7.5", mk8: "Mk8", "13": "13th gen (2015–20)", "14": "14th gen (2021+)" } },
+  gen: { label: "Generation", vals: { "gd02": "2002–03 (bugeye)", "gd04": "2004–05", c5: "C5 (1997–2004)", c6: "C6 (2005–13)", va: "VA (2015–21)", vb: "VB (2022+)", mk7: "Mk7 / 7.5", mk8: "Mk8", "13": "13th gen (2015–20)", "14": "14th gen (2021+)" } },
   bed: { label: "Bed length", vals: { "5": "a 5' bed", "5.5": "a 5.5' bed", "6": "a 6' bed", "6.5": "a 6.5' bed" } },
   region: { label: "Registered in", vals: { federal: "a federal-emissions state", california: "California (CARB rules)" } },
   ride: { label: "Ride height", vals: { stock: "factory ride height", lowered: "lowering springs", coilover: "coilovers", leveled: "a leveling kit", lifted: "a lift kit" } },
@@ -678,6 +678,11 @@ const KEYS = {
   tires: { label: "Tire size", vals: { stock: "factory-size tires", 33: "33\" tires", 35: "35\" tires" } },
   gearing: { label: "Axle gearing", vals: { stock: "factory axle gears", low: "4.10 or lower gears" } },
   light_mount: { label: "Light mount", vals: { none: "nowhere to mount a light bar", bar: "a light-bar mount" } },
+  fcal: { label: "Front calipers", vals: { oem: "the factory front calipers", "brembo-sti": "Subaru STI Brembo 4-piston fronts", bbk: "an aftermarket big brake kit", "kns-kit": "the KNS front kit", brembo4: "GM Brembo 4-piston fronts", brembo6: "GM Brembo 6-piston fronts", z51: "C8 Z51 Brembo fronts" } },
+  rcal: { label: "Rear calipers", vals: { oem: "the factory rear calipers", "brembo-sti": "Subaru STI Brembo 2-piston rears" } },
+  rear_bracket: { label: "Rear caliper bracket", vals: { none: "factory rear brackets", v1: "a KNS V1 conversion bracket", v2: "a KNS V2 conversion bracket" } },
+  pbrake: { label: "Parking brake", vals: { small: "the factory parking brake shoes", ok: "parking brake shoes that fit STI-size rotors", oversize: "oversized parking brake shoes" } },
+  hat: { label: "Rotor hats", vals: { none: "one-piece rotors", "oem-2pc": "OEM two-piece rotors (aluminum hats)" } },
   light: { label: "Light", vals: { none: "no light" } },
 };
 const keyLabel = k => KEYS[k]?.label || k;
@@ -692,7 +697,7 @@ const LEVELS = { 1: "DIY", 2: "Basic tools", 3: "Jack stands & specialty tools",
    A part or vehicle counts as Sourced only when every one of its rules has a supporting source. */
 const SRC_KIND = { manufacturer: "Maker", retailer: "Retailer", reference: "Reference", other: "Other" };
 const VERDICTS = { confirmed: "Supports", partly: "Partly supports", contradicted: "Contradicts" };
-const DEFAULT_BASE_KEYS = ["light", "ride", "camber", "brakes", "tune", "tires", "gearing", "light_mount", "clearance"];
+const DEFAULT_BASE_KEYS = ["fcal", "rcal", "rear_bracket", "hat", "light", "ride", "camber", "brakes", "tune", "tires", "gearing", "light_mount", "clearance"];
 const uniq = a => a.filter((x, i) => a.indexOf(x) === i);
 function partRuleKeys(p) {
   return uniq(["fits", ...p.needs.map(n => "need:" + n.k), ...Object.keys(p.gives).filter(k => k !== "light").map(k => "give:" + k), ...(p.occ.length ? ["occ"] : []), ...(p.steps.length ? ["steps"] : [])]);
@@ -746,7 +751,7 @@ function srcLinks(srcs) {
 const OPT = (id, label, choices, def = 0) => ({ id, label, choices: choices.map(([l, set]) => ({ label: l, set })), def });
 const REGION = OPT("region", "Registered in", [["Federal (49-state)", { region: "federal" }], ["California (CARB)", { region: "california" }]]);
 const TRANS = (auto = "Automatic / CVT", autoVal = "auto") => OPT("trans", "Transmission", [["Manual", { trans: "manual" }], [auto, { trans: autoVal }]]);
-const CB = { ride: "stock", camber: "fixed", brakes: "stock", tune: "stock" };
+const CB = { ride: "stock", camber: "fixed", brakes: "stock", tune: "stock", fcal: "oem", rcal: "oem", rear_bracket: "none", pbrake: "ok", hat: "none" };
 const TB = { ride: "stock", tune: "stock", tires: "stock", gearing: "stock", light_mount: "none", clearance: "31" };
 
 const SEED_PLATFORMS = [
@@ -756,6 +761,11 @@ const SEED_PLATFORMS = [
   { id: "wrx", name: "Subaru WRX", type: "Car", art: "wrx", covers: "VA 2015–21 and VB 2022+", base: { ...CB, bolt: "5x114.3", engine: "turbo", drive: "awd" }, options: [
     OPT("gen", "Generation", [["VA (2015–21, 17\" wheels)", { gen: "va", wheel: "17" }], ["VB (2022+, 18\" wheels)", { gen: "vb", wheel: "18" }]], 1),
     TRANS("CVT"), REGION] },
+  { id: "sti", name: "Subaru WRX STI", type: "Car", art: "wrx", covers: "2015–2021", base: { ...CB, bolt: "5x114.3", engine: "turbo", drive: "awd", wheel: "18", trans: "manual", fcal: "brembo-sti", rcal: "brembo-sti" }, options: [REGION] },
+  { id: "gd-wrx", name: "Subaru Impreza WRX", type: "Car", art: "wrx", covers: "GD, 2002–2005", base: { ...CB, bolt: "5x100", engine: "turbo", drive: "awd", wheel: "16", pbrake: "small" }, options: [
+    OPT("gen", "Years", [["2002–03 (bugeye)", { gen: "gd02" }], ["2004–05", { gen: "gd04" }]]), TRANS("4-speed auto"), REGION] },
+  { id: "brz1", name: "Subaru BRZ / Scion FR-S / Toyota 86", type: "Car", art: "sport", covers: "1st gen, 2013–2021", base: { ...CB, bolt: "5x100", engine: "na", drive: "rwd", gen: "va" }, options: [
+    OPT("trim", "Wheels", [["16\"", { wheel: "16" }], ["17\"", { wheel: "17" }]], 1), TRANS(), REGION] },
   { id: "gr86", name: "Toyota GR86 / Subaru BRZ", type: "Car", art: "sport", covers: "2022+", base: { ...CB, bolt: "5x100", engine: "na", drive: "rwd" }, options: [
     OPT("trim", "Trim", [["Base (17\" wheels)", { wheel: "17" }], ["Premium / Limited (18\" wheels)", { wheel: "18" }]], 1), TRANS(), REGION] },
   { id: "miata", name: "Mazda MX-5 Miata", type: "Car", art: "roadster", covers: "ND, 2016+", base: { ...CB, camber: "adjustable", bolt: "4x100", engine: "na", drive: "rwd" }, options: [
@@ -767,6 +777,16 @@ const SEED_PLATFORMS = [
     OPT("gen", "Generation", [["Mk7 / 7.5", { gen: "mk7" }], ["Mk8", { gen: "mk8" }]]), TRANS("DSG", "dct"), REGION] },
   { id: "bmw3", name: "BMW 3 Series", type: "Car", art: "sedan", covers: "G20 330i / M340i, 2019+", base: { ...CB, bolt: "5x112", engine: "turbo", drive: "rwd", trans: "auto" }, options: [
     OPT("wheels", "Wheels", [["18\"", { wheel: "18" }], ["19\"", { wheel: "19" }]]), REGION] },
+
+  { id: "vette-c56", name: "Chevrolet Corvette C5 / C6", type: "Car", art: "vette", covers: "Base and Z51, 1997–2013", base: { ...CB, bolt: "5x120.65", engine: "v8", drive: "rwd" }, options: [
+    OPT("gen", "Generation", [["C5 (1997–2004)", { gen: "c5", wheel: "17" }], ["C6 (2005–13)", { gen: "c6", wheel: "18" }]], 1), TRANS(), REGION] },
+  { id: "vette-c6z", name: "Chevrolet Corvette C6 Z06", type: "Car", art: "vette", covers: "2006–2013", base: { ...CB, bolt: "5x120.65", engine: "v8", drive: "rwd", trans: "manual", wheel: "19", fcal: "brembo6" }, options: [REGION] },
+  { id: "vette-c7", name: "Chevrolet Corvette C7", type: "Car", art: "vette", covers: "2014–2019", base: { ...CB, bolt: "5x120.65", engine: "v8", drive: "rwd" }, options: [
+    OPT("pkg", "Model", [["Stingray", { wheel: "19", fcal: "brembo4" }], ["Stingray Z51", { wheel: "19", fcal: "brembo4", hat: "oem-2pc" }], ["Z06", { wheel: "20", fcal: "brembo6", hat: "oem-2pc" }]], 1), TRANS(), REGION] },
+  { id: "vette-c8", name: "Chevrolet Corvette C8", type: "Car", art: "vette", covers: "Stingray, 2020+", base: { ...CB, bolt: "5x120", engine: "v8", drive: "rwd", trans: "dct", wheel: "20" }, options: [
+    OPT("pkg", "Package", [["Base brakes", { fcal: "oem" }], ["Z51", { fcal: "z51" }]]), REGION] },
+  { id: "camaro", name: "Chevrolet Camaro", type: "Car", art: "fastback", covers: "6th gen, 2016–2024", base: { ...CB, bolt: "5x120", drive: "rwd" }, options: [
+    OPT("trim", "Trim", [["LT (2.0T / V6, 18\")", { engine: "turbo", wheel: "18", fcal: "oem" }], ["SS (20\", Brembo 4-piston)", { engine: "v8", wheel: "20", fcal: "brembo4" }], ["SS 1LE / ZL1 (Brembo 6-piston)", { engine: "v8", wheel: "20", fcal: "brembo6" }]], 1), TRANS(), REGION] },
 
   { id: "f150", name: "Ford F-150", type: "Truck", art: "truck", covers: "13th gen 2015–20 and 14th gen 2021+", base: { ...TB, bolt: "6x135", drive: "4wd" }, options: [
     OPT("gen", "Generation", [["13th gen (2015–20)", { gen: "13" }], ["14th gen (2021+)", { gen: "14" }]], 1),
@@ -784,6 +804,7 @@ const SEED_PLATFORMS = [
 ];
 const ALL_CARS = SEED_PLATFORMS.filter(p => p.type === "Car").map(p => p.id);
 const ALL_4X4 = SEED_PLATFORMS.filter(p => p.type !== "Car").map(p => p.id);
+const ALL_CARS_BRAKE = ALL_CARS;
 const STRUT_CARS = ALL_CARS.filter(id => id !== "miata");
 
 /* ---- reusable install steps ---- */
@@ -803,7 +824,7 @@ const ST = {
   bbk: [S(3, 60, "Lift the car, remove the wheels, factory calipers, brackets and rotors.", ["Floor jack", "Jack stands", "Socket set", "Brake line wrench"]),
     S(3, 60, "Mount the new rotors, brackets and calipers with the included lines, torqued to spec.", ["Torque wrench", "Thread locker"]),
     S(3, 40, "Bleed the brakes with fresh fluid, then bed in the pads.", ["Brake bleeder kit", "DOT 4 fluid"])],
-  pads: [S(2, 60, "Swap the pads (and inspect the rotors) one axle at a time, then bed them in.", ["Floor jack", "Jack stands", "C-clamp or piston tool"])],
+  pads: [S(2, 60, "Swap the pads (and inspect the rotors) one axle at a time.", ["Floor jack", "Jack stands", "C-clamp or piston tool"]), S(1, 20, "Bed in the pads: a series of firm stops from speed without coming to a full stop, then drive gently to cool. Skipping this is the usual cause of judder.")],
   intake: [S(2, 45, "Remove the factory airbox and intake tube, move the MAF sensor if the kit says so, and install the new intake.", ["Screwdriver", "Socket set"])],
   catback: [S(3, 90, "Lift the car, unbolt the factory muffler and pipes behind the catalytic converter (penetrating oil helps), and hang the new system.", ["Jack stands", "Socket set", "Penetrating oil", "Exhaust hanger pliers"]),
     S(2, 20, "Align the tips, tighten the clamps and check for leaks once it's warm.")],
@@ -876,9 +897,32 @@ const SEED_PARTS = [
   P("Yukon Gear & Axle", "4.88 ring & pinion set, front and rear", "Drivetrain", ["wrangler", "tacoma", "4runner"], 1400, "Both axles + install kits", "Pick the ratio for your tire size; 4.88 suits 35s.", { gives: { gearing: "low" }, steps: ST.gears }),
 
   // ---- brakes ----
-  P("StopTech", "ST-40 front big brake kit", "Brakes", ["civic", "wrx", "gti", "bmw3", "gr86", "mustang"], 2400, "4-piston, 332 mm rotors", "", { needs: [N("wheel", ["18", "19", "20"], { why: "The bigger calipers need at least 18\" wheels with enough spoke clearance." })], gives: { brakes: "bbk" }, steps: ST.bbk }),
-  P("KNS Brakes", "Rear caliper conversion bracket V2 (Subaru)", "Brakes", ["wrx"], null, "Mounts Brembo or FHI rear calipers", "For a rear brake upgrade on the VA WRX. Pick the bracket for your caliper. KNS and DBA rotors are dual-drilled for 5x100 or 5x114.", { needs: [N("gen", "va", { why: "KNS lists the V2 bracket for the 2015–2021 WRX (VA). The 2022+ VB isn't on its fitment list." })], steps: [S(3, 90, "Remove the rear calipers and brackets, fit the KNS bracket and the upgrade caliper per the KNS V2 installation guide, and torque to spec.", ["Floor jack", "Jack stands", "Socket set", "Torque wrench"]), S(3, 40, "Bleed the brakes and bed in the pads.", ["Brake bleeder kit", "DOT 4 fluid"])] }),
-  P("Hawk", "HPS 5.0 brake pads (front)", "Brakes", ALL_CARS, 90, "", "A step up from stock for spirited street driving.", { steps: ST.pads }),
+  P("StopTech", "ST-40 front big brake kit", "Front brakes", ["civic", "wrx", "gti", "bmw3", "gr86", "mustang"], 2400, "4-piston, 332 mm rotors", "", { needs: [N("wheel", ["18", "19", "20"], { why: "The bigger calipers need at least 18\" wheels with enough spoke clearance." })], gives: { brakes: "bbk", fcal: "bbk" }, occ: ["front-calipers"], steps: ST.bbk }),
+  P("KNS Brakes", "Rear caliper conversion bracket V2 (Subaru)", "Brake brackets", ["wrx", "brz1"], null, "Mounts Brembo or FHI rear calipers", "For a rear brake upgrade on the VA WRX. Pick the bracket for your caliper. KNS and DBA rotors are dual-drilled for 5x100 or 5x114.", { needs: [N("gen", "va", { why: "KNS lists the V2 bracket for the 2015–2021 WRX (VA). The 2022+ VB isn't on its fitment list." })], gives: { rear_bracket: "v2" }, steps: [S(3, 90, "Remove the rear calipers and brackets, fit the KNS bracket and the upgrade caliper per the KNS V2 installation guide, and torque to spec.", ["Floor jack", "Jack stands", "Socket set", "Torque wrench"]), S(3, 40, "Bleed the brakes and bed in the pads.", ["Brake bleeder kit", "DOT 4 fluid"])] }),
+  P("KNS Brakes", "Rear caliper conversion bracket V1 (Subaru)", "Brake brackets", ["gd-wrx"], null, "Mounts Brembo or FHI rear calipers", "For GC/GD Impreza and WRX through 2005, SF/SG Forester and 2003–09 Legacy (Legacy may need unique lines and clearancing; not for SpecB aluminum rear knuckles).", { gives: { rear_bracket: "v1" }, steps: [S(3, 90, "Remove the rear calipers and brackets, fit the KNS V1 bracket and the upgrade caliper per the KNS V1 installation guide, and torque to spec.", ["Floor jack", "Jack stands", "Socket set", "Torque wrench"]), S(3, 40, "Bleed the brakes and bed in the pads.", ["Brake bleeder kit", "DOT 4 fluid"])] }),
+  P("Subaru", "STI Brembo 2-piston rear calipers", "Rear brakes", ["gd-wrx", "wrx", "brz1"], 600, "Used / take-off pair", "The classic Subaru rear upgrade. Needs a conversion bracket on cars that didn't come with them.", { needs: [N("rear_bracket", ["v1", "v2"], { why: "These calipers don't bolt to the factory rear brackets. A KNS conversion bracket adapts them." })], gives: { rcal: "brembo-sti" }, occ: ["rear-calipers"], steps: [S(3, 30, "Inspect used calipers before fitting: seals, pistons and bleeder threads. Rebuild if in doubt.", ["Rebuild kit"])] }),
+  P("Subaru", "STI Brembo 4-piston front calipers", "Front brakes", ["gd-wrx", "wrx"], 900, "Used / take-off pair", "Bolt-on swap on these cars; check that your wheels clear the calipers.", { needs: [N("wheel", ["17", "18", "19"], { soft: true, why: "STI Brembos don't clear many 16\" wheels. Check spoke clearance or go to 17s." })], gives: { fcal: "brembo-sti" }, occ: ["front-calipers"], steps: [...ST.bbk.slice(0, 1), S(3, 60, "Mount the calipers with matching STI-size rotors and stainless lines, torqued to spec.", ["Torque wrench"]), ST.bbk[2]] }),
+  P("KNS Brakes", "Front brake kit (C5/C6 base Corvette)", "Front brakes", ["vette-c56"], null, "Caliper + rotor upgrade", "KNS's own kit for base C5 and C6 Corvettes. Price and parts list on request.", { gives: { fcal: "kns-kit" }, occ: ["front-calipers"], steps: [S(3, 120, "Install per the KNS C5/C6 brake kit installation guide.", ["Floor jack", "Jack stands", "Socket set", "Torque wrench"]), ST.bbk[2]] }),
+  P("Chevrolet", "Z51 Brembo brake upgrade (C8)", "Front brakes", ["vette-c8"], 3200, "OEM Z51 calipers, rotors, pads", "Moves a base C8 to the larger Z51 brakes, all four corners.", { needs: [N("fcal", "oem", { why: "This car already has Z51 brakes." })], gives: { fcal: "z51" }, occ: ["front-calipers", "rear-calipers"], steps: [S(3, 180, "Swap calipers, rotors and pads at all four corners per the KNS C8 Z51 install guide.", ["Floor jack", "Jack stands", "Socket set", "Torque wrench"]), ST.bbk[2]] }),
+  P("Chevrolet", "Camaro SS Brembo 4-piston front upgrade", "Front brakes", ["camaro"], 1400, "OEM SS calipers + rotors", "A common upgrade for LT Camaros.", { needs: [N("fcal", "oem", { why: "This car already has Brembo fronts." }), N("wheel", ["19", "20"], { why: "SS front brakes need 19\" or 20\" wheels to clear." })], gives: { fcal: "brembo4" }, occ: ["front-calipers"], steps: ST.bbk }),
+  P("Chevrolet", "Camaro 1LE / ZL1 Brembo 6-piston front upgrade", "Front brakes", ["camaro"], 2400, "OEM 6-piston calipers + 2-piece rotors", "", { needs: [N("wheel", "20", { why: "The 6-piston fronts need 20\" wheels." })], gives: { fcal: "brembo6" }, occ: ["front-calipers"], steps: ST.bbk }),
+
+  P("DBA", "4000 T3 front rotors, pair", "Front rotors", ["gd-wrx", "wrx", "sti", "brz1", "gr86", "civic", "mustang", "camaro", "vette-c56"], 320, "One-piece, slotted", "Sold per car and per caliper size. DBA Subaru rotors are dual-drilled for 5x100 or 5x114.", { occ: ["front-rotors"], steps: [S(2, 60, "Swap rotors with the pads, clean the hub face so the rotor sits flat, and torque the caliper bolts.", ["Floor jack", "Jack stands", "Socket set", "Wire brush"]), S(1, 20, "Bed in the pads on the new rotors.")] }),
+  P("DBA", "4000 T3 rear rotors, STI size, pair", "Rear rotors", ["gd-wrx", "wrx", "brz1", "sti"], 260, "Dual-drilled 5x100 / 5x114.3", "For STI Brembo rear calipers.", { needs: [N("rcal", "brembo-sti", { why: "Sized for STI Brembo rear calipers." }), N("pbrake", ["ok", "oversize"], { why: "On V1 cars, STI-size rear rotors need the oversized parking brake shoe for the parking brake to work." })], occ: ["rear-rotors"], steps: [S(2, 60, "Swap the rear rotors, adjust the parking brake shoes, and torque the caliper bolts.", ["Floor jack", "Jack stands", "Socket set"])] }),
+  P("KNS Brakes", "Adaptor rear rotors (V1)", "Rear rotors", ["gd-wrx"], null, "Works with the OEM parking brake", "KNS / DBA adaptor rotor for the V1 bracket setup: no parking brake changes.", { needs: [N("rear_bracket", "v1", { why: "Made for the KNS V1 bracket setup." })], occ: ["rear-rotors"], steps: [S(2, 60, "Swap the rear rotors and torque the caliper bolts.", ["Floor jack", "Jack stands", "Socket set"])] }),
+  P("Subaru", "Oversized parking brake shoes", "Parking brake", ["gd-wrx"], 90, "Pair", "Needed when STI-size rear rotors go on a V1 car.", { gives: { pbrake: "oversize" }, steps: [S(3, 60, "Pull the rear rotors, swap the parking brake shoes, and adjust them before fitting the new rotors.", ["Brake spring tool"])] }),
+  P("KNS Brakes", "Replacement front rotors (C6 Z06)", "Front rotors", ["vette-c6z"], null, "One-piece", "KNS's alternative to GM rotors for the C6 Z06.", { occ: ["front-rotors"], steps: [S(2, 60, "Swap rotors, clean the hub face, torque the caliper bolts, and bed in the pads.", ["Floor jack", "Jack stands", "Socket set"])] }),
+  P("DBA", "5000 T3 replacement rotor rings, front", "Front rotors", ["vette-c7", "camaro"], 700, "Ring only: reuses your OEM hats", "Bolts to your existing OEM two-piece hats.", { needs: [N("hat", "oem-2pc", { why: "Rings only. They need the factory two-piece aluminum hats, which this car doesn't have." })], occ: ["front-rotors"], steps: [S(3, 60, "Unbolt the OEM hats from the worn rings and bolt them to the new DBA rings, torqued in a cross pattern.", ["Torque wrench", "Thread locker"]), S(2, 60, "Install the assemblies and bed in the pads.", ["Floor jack", "Jack stands"])] }),
+  P("Girodisc", "Two-piece front rotors", "Front rotors", ["vette-c7", "vette-c8", "camaro"], 1300, "Complete rotors with hats", "Lighter than OEM; rings replaceable later.", { occ: ["front-rotors"], steps: [S(2, 60, "Swap rotors, clean the hub face, torque the caliper bolts, and bed in the pads.", ["Floor jack", "Jack stands", "Socket set"])] }),
+
+  P("Pagid", "RS29 pads, front (STI Brembo)", "Pads", ["gd-wrx", "wrx", "sti"], 330, "Brembo 4-piston shape", "Track compound. KNS's guide covers the Pagid compounds.", { needs: [N("fcal", "brembo-sti", { why: "Cut for the STI Brembo 4-piston caliper. Factory WRX calipers take a different pad." })], steps: ST.pads }),
+  P("Pagid", "RS29 pads, front (GM Brembo 6-piston)", "Pads", ["vette-c6z", "vette-c7", "camaro"], 420, "6-piston shape", "", { needs: [N("fcal", "brembo6", { why: "For the GM Brembo 6-piston caliper (C6 Z06, C7 Z06, Camaro 1LE / ZL1)." })], steps: ST.pads }),
+  P("Hawk", "DTC-60 pads, front (C8 Z51)", "Pads", ["vette-c8"], 400, "Z51 caliper shape", "", { needs: [N("fcal", "z51", { why: "For the Z51 Brembo caliper only." })], steps: ST.pads }),
+  P("Hawk", "HP+ pads, front (WRX 2002–03)", "Pads", ["gd-wrx"], 110, "2002–03 shape", "2002–03 WRX pads are a different shape from 2004–05.", { needs: [N("fcal", "oem", { why: "For the factory calipers." }), N("gen", "gd02", { why: "2002–03 and 2004–05 WRX front pads are different shapes." })], steps: ST.pads }),
+  P("Hawk", "HP+ pads, front (WRX 2004–05)", "Pads", ["gd-wrx"], 110, "2004–05 shape", "", { needs: [N("fcal", "oem", { why: "For the factory calipers." }), N("gen", "gd04", { why: "2002–03 and 2004–05 WRX front pads are different shapes." })], steps: ST.pads }),
+  P("Goodridge", "Stainless brake lines, 4-line kit", "Lines & fluid", ALL_CARS_BRAKE, 130, "DOT-compliant", "Firmer pedal than rubber lines.", { steps: [S(3, 60, "Swap each line, one corner at a time, then bleed the system.", ["Line wrench", "Brake bleeder kit"])] }),
+  P("Motul", "RBF 660 racing brake fluid", "Lines & fluid", ALL_CARS_BRAKE, 50, "DOT 4", "High boiling point for track days; change it more often.", { steps: [S(2, 45, "Flush the system, starting at the corner farthest from the master cylinder.", ["Brake bleeder kit"])] }),
+  P("Hawk", "HPS 5.0 brake pads (front, factory calipers)", "Pads", ALL_CARS, 90, "Factory caliper shape", "A step up from stock for spirited street driving.", { needs: [N("fcal", "oem", { why: "Cut for the factory calipers. Upgraded calipers take a different pad shape." })], steps: ST.pads }),
   P("Power Stop", "Z36 Truck & Tow brake kit (front)", "Brakes", ALL_4X4, 400, "Pads + rotors", "Helps with heavier wheels and tires.", { steps: ST.pads }),
 
   // ---- intake ----
@@ -935,6 +979,15 @@ const SEED_PARTS = [
 ];
 
 const SEED_SOURCES = {
+  "kns-brakes-rear-caliper-conversion-bracket-v1-subaru": [{ url: "https://www.knsbrakes.com/kns-bracket", publisher: "KNS Brakes", title: "KNS Rear Caliper Conversion Brackets for Subaru", kind: "manufacturer", checked: "2026-11-25", verdict: "confirmed", quote: "Conversion Bracket Version 1 (V1) FITMENT: - GC/GD Subaru Impreza and Impreza WRX 199x-2005 - SF/SG Subaru Forester 1998-2008 - Legacy/Outback 2003-2009*", covers: ["fits", "give:rear_bracket"] }],
+  "dba-4000-t3-rear-rotors-sti-size-pair": [{ url: "https://www.knsbrakes.com/kns-bracket", publisher: "KNS Brakes", title: "KNS Rear Caliper Conversion Brackets for Subaru", kind: "manufacturer", checked: "2026-11-25", verdict: "confirmed", quote: "KNS or DBA STI rear rotors require the oversized parking brake shoe for parking brake function.", covers: ["need:pbrake"] }, { url: "https://www.knsbrakes.com/kns-bracket", publisher: "KNS Brakes", title: "KNS Rear Caliper Conversion Brackets for Subaru", kind: "manufacturer", checked: "2026-11-25", verdict: "confirmed", verdict: "partly", quote: "DBA and KNS rotors are dual-drilled for 5x100 or 5x114.", covers: ["fits"] }],
+  "kns-brakes-adaptor-rear-rotors-v1": [{ url: "https://www.knsbrakes.com/kns-bracket", publisher: "KNS Brakes", title: "KNS Rear Caliper Conversion Brackets for Subaru", kind: "manufacturer", checked: "2026-11-25", verdict: "confirmed", quote: "The DBA and KNS adaptor rotor works with your OEM parking brake setup.", covers: ["fits", "need:rear_bracket"] }],
+  "subaru-oversized-parking-brake-shoes": [{ url: "https://www.knsbrakes.com/kns-bracket", publisher: "KNS Brakes", title: "KNS Rear Caliper Conversion Brackets for Subaru", kind: "manufacturer", checked: "2026-11-25", verdict: "confirmed", quote: "KNS or DBA STI rear rotors require the oversized parking brake shoe for parking brake function.", covers: ["give:pbrake"] }],
+  "kns-brakes-front-brake-kit-c5-c6-base-corvette": [{ url: "https://www.knsbrakes.com/tech-info", publisher: "KNS Brakes", title: "Technical info and installation guides", kind: "manufacturer", checked: "2026-11-25", verdict: "partly", quote: "KNS Brake Kit for C5/C6 Base Corvettes installation", covers: ["fits", "steps"] }],
+  "dba-5000-t3-replacement-rotor-rings-front": [{ url: "https://www.knsbrakes.com/two-piece-assembly", publisher: "KNS Brakes", title: "Two-Piece Rotor Assembly Video", kind: "manufacturer", checked: "2026-11-25", verdict: "partly", quote: "Follow along as we assemble a DBA rotor ring to an OEM rotor hat. In this example we are using a C7 Z06 rotor hat", covers: ["need:hat", "steps"] }],
+  "kns-brakes-replacement-front-rotors-c6-z06": [{ url: "https://www.knsbrakes.com/kns-rotors", publisher: "KNS Brakes", title: "KNS Rotors", kind: "manufacturer", checked: "2026-11-25", verdict: "confirmed", quote: "Corvette C6 Z06 Replacement Brake Rotors: GM vs KNS", covers: ["fits"] }],
+  "hawk-hp-pads-front-wrx-2002-03": [{ url: "https://www.knsbrakes.com/tech-info", publisher: "KNS Brakes", title: "Technical info and installation guides", kind: "manufacturer", checked: "2026-11-25", verdict: "partly", quote: "2002 - 2003 WRX brake pad shapes", covers: ["need:gen"] }],
+  "hawk-hp-pads-front-wrx-2004-05": [{ url: "https://www.knsbrakes.com/tech-info", publisher: "KNS Brakes", title: "Technical info and installation guides", kind: "manufacturer", checked: "2026-11-25", verdict: "partly", quote: "2002 - 2003 WRX brake pad shapes", covers: ["need:gen"] }],
   "kns-brakes-rear-caliper-conversion-bracket-v2-subaru": [{ url: "https://www.knsbrakes.com/kns-bracket", publisher: "KNS Brakes", title: "KNS Rear Caliper Conversion Brackets for Subaru", kind: "manufacturer", quote: "Conversion Bracket Version 2 (V2) FITMENT: - Subaru Forester 2009-2013 - Subaru Legacy 2010-2013 - Subaru BRZ/FRS 2013-2021 - Subaru WRX 2015-2021", checked: "2026-11-25", verdict: "confirmed", covers: ["fits", "need:gen"] }],
 };
 const SEED_REMOVED = [];
@@ -942,7 +995,7 @@ const SEED_REMOVED = [];
 const RETAILERS = ["Tire Rack", "Summit Racing", "FCP Euro", "ECS Tuning", "AmericanMuscle", "ExtremeTerrain", "RealTruck", "4 Wheel Parts", "Turn 14 / Vivid Racing", "RockAuto", "KNS Brakes", "Manufacturer direct"];
 
 // install order: lower runs first
-const PHASE = { "Downpipe": 1, "Exhaust": 2, "Intake": 2, "Clutch": 3, "Shifter": 3, "Drivetrain": 3, "Suspension": 4, "Alignment": 4, "Brakes": 5, "Bumper": 5, "Roof rack": 6, "Lighting": 7, "Running boards": 6, "Rock sliders": 6, "Bed cover": 6, "Aero": 6, "Wheels": 8, "Tires": 8, "Tune": 9 };
+const PHASE = { "Downpipe": 1, "Exhaust": 2, "Intake": 2, "Clutch": 3, "Shifter": 3, "Drivetrain": 3, "Suspension": 4, "Alignment": 4, "Brakes": 5, "Bumper": 5, "Roof rack": 6, "Lighting": 7, "Running boards": 6, "Rock sliders": 6, "Bed cover": 6, "Aero": 6, "Wheels": 8, "Tires": 8, "Tune": 9, "Front brakes": 5, "Rear brakes": 5, "Brake brackets": 5, "Parking brake": 5, "Front rotors": 5, "Rear rotors": 5, "Pads": 5, "Lines & fluid": 5 };
 const phaseOf = p => PHASE[p.category] ?? 6;
 const SAFETY_STEP = "Park on level ground, chock the wheels and set the parking brake. Never get under a car held up only by a jack: use rated jack stands. Disconnect the battery before electrical work.";
 const FUNCTION_CHECK = {
@@ -955,10 +1008,15 @@ const TYPES = [["Car", "Cars"], ["Truck", "Trucks"], ["SUV", "SUVs & 4x4s"]];
 /* ================= Customizer slots ================= */
 const SLOTS = {
   Car: [
+    { id: "front", label: "Front calipers", cats: ["Front brakes"] },
+    { id: "rear", label: "Rear calipers", cats: ["Rear brakes"] },
+    { id: "frotors", label: "Front rotors", cats: ["Front rotors"] },
+    { id: "rrotors", label: "Rear rotors", cats: ["Rear rotors"] },
+    { id: "pads", label: "Pads", cats: ["Pads"] },
+    { id: "lines", label: "Lines & fluid", cats: ["Lines & fluid"] },
     { id: "wheels", label: "Wheels", cats: ["Wheels"] },
     { id: "tires", label: "Tires", cats: ["Tires"] },
     { id: "suspension", label: "Suspension", cats: ["Suspension"] },
-    { id: "brakes", label: "Brakes", cats: ["Brakes"] },
     { id: "intake", label: "Intake", cats: ["Intake"] },
     { id: "downpipe", label: "Downpipe", cats: ["Downpipe"] },
     { id: "exhaust", label: "Exhaust", cats: ["Exhaust"] },
@@ -1012,6 +1070,7 @@ const CAR_PROFILES = {
   wrx: { len: 590, lh: 60, rh: 52, a: .67, b: .53, c: .27, d: .15, clear: 24, fw: 108, rw: 108, scoop: true },
   fastback: { len: 620, lh: 54, rh: 46, a: .64, b: .50, c: .30, d: .08, clear: 20, fw: 118, rw: 112 },
   hatch: { len: 540, lh: 60, rh: 56, a: .69, b: .56, c: .14, d: .05, clear: 22, fw: 100, rw: 96 },
+  vette: { len: 620, lh: 46, rh: 38, a: .56, b: .44, c: .28, d: .12, clear: 16, fw: 112, rw: 118 },
   sport: { len: 560, lh: 50, rh: 44, a: .64, b: .52, c: .30, d: .12, clear: 18, fw: 108, rw: 104 },
   roadster: { len: 510, lh: 50, rh: 34, a: .60, b: .53, c: .36, d: .30, clear: 18, fw: 96, rw: 100, soft: true },
   truck: { len: 660, lh: 82, rh: 58, a: .66, b: .58, c: .40, d: .38, clear: 46, fw: 112, rw: 132, bed: true, truck: true },
@@ -1069,7 +1128,11 @@ function artFor(plat, iface, b) {
     ${well(rcx)}${well(fcx)}${flare(rcx)}${flare(fcx)}
     <g class="base slot" data-slot="tires">${tire(rcx)}${tire(fcx)}</g>
     <g class="base slot" data-slot="wheels">${rim(rcx)}${rim(fcx)}</g>
+    <g class="acc slot" data-slot="frotors"><path class="tint" fill="#9a9da2" d="${arc(fcx, rimR * .5, rimR * .88, Math.PI * 1.5, Math.PI * 1.95)}"/></g>
+    <g class="acc slot" data-slot="rrotors"><path class="tint" fill="#9a9da2" d="${arc(rcx, rimR * .5, rimR * .88, Math.PI * 1.5, Math.PI * 1.95)}"/></g>
     <g class="acc slot" data-slot="brakes">${caliper(rcx)}${caliper(fcx)}</g>
+    <g class="acc slot" data-slot="front">${caliper(fcx)}</g>
+    <g class="acc slot" data-slot="rear">${caliper(rcx)}</g>
     ${spokes(rcx)}${spokes(fcx)}
     <g class="base slot" data-slot="exhaust"><rect class="steel2 tint" x="${x0 + 22}" y="${bb - 7}" width="20" height="8" rx="3"/></g>
     <g class="acc slot" data-slot="exhaust"><rect class="tint" x="${x0 + 12}" y="${bb - 9}" width="34" height="11" rx="5" fill="#2b2c2f"/><circle class="deco" cx="${x0 + 16}" cy="${bb - 3.5}" r="3.5" fill="#0c0c0d"/>${quad && /ATAK|Track|Hi-Power/.test(quad.name) ? `<rect class="deco" x="${x0 + 12}" y="${bb - 20}" width="30" height="9" rx="4" fill="#2b2c2f"/>` : ""}</g>
@@ -1088,7 +1151,9 @@ function artFor(plat, iface, b) {
     bumper: [x1 + 2, bb - 52], lighting: [X(o.b) - 35, rt - 30], rack: [(X(o.b) + X(o.c)) / 2, rt - 30], bed: [(x0 + X(o.d)) / 2, bl - 20],
     steps: [mid, bb + 18], intake: [x1 - 46, bl - 10], exhaust: [x0 + 32, bb + 18], tune: [X(o.a) + 30, bl + 26], finish: [(X(o.a) + x1) / 2 - 20, bl + 28],
   } : {
-    wheels: [fcx, ay], tires: [fcx + tireR * .72, ay + tireR * .72], suspension: [fcx, archY - R - 16], brakes: [rcx, ay],
+    wheels: [fcx + tireR * .72, ay - tireR * .72], tires: [fcx + tireR * .72, ay + tireR * .72], suspension: [fcx, archY - R - 16],
+    front: [fcx - rimR * .62, ay - rimR * .25], frotors: [fcx + rimR * .35, ay - rimR * .6], pads: [fcx, ay + rimR * .55],
+    rear: [rcx - rimR * .62, ay - rimR * .25], rrotors: [rcx + rimR * .35, ay - rimR * .6], lines: [rcx - tireR - 10, ay + 18],
     intake: [x1 - 54, bl - 8], downpipe: [mid + 70, bb + 16], exhaust: [x0 + 32, bb + 18], tune: [X(o.a) + 34, bl + 24],
     clutch: [mid, bb + 16], shifter: [X(o.b) - 18, (rt + bl) / 2 + 6], aero: [x0 + 54, bl - 44], finish: [pillar - 50, bl + 30],
   };
