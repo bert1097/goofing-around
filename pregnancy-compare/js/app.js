@@ -55,7 +55,7 @@ function cellHtml(s, others) {
   const peers = s.loggedDays > 0 ? others.filter((o) => o.reached && o.loggedDays > 0) : [];
   const keys = sortTags([...s.tagCounts.keys()].filter(isShown));
   const denom = s.partial || 7;
-  const head = `<div class="logged">${s.loggedDays} of ${denom} days logged${s.partial ? ' (so far)' : ''}</div>`;
+  const head = `<div class="logged">${s.loggedDays} of ${denom} days logged${s.partial ? ' (partial week)' : ''}</div>`;
   if (!keys.length) return head + `<div class="empty">${s.tagCounts.size ? 'Nothing in the categories shown' : 'Nothing logged'}</div>`;
   return head + groupedChips(keys, (k) => {
     const n = s.tagCounts.get(k), counts = peers.map((o) => o.tagCounts.get(k) || 0);
@@ -79,7 +79,7 @@ function devHtml(s) {
 function colHeads(withStatus) {
   $('#colheads').style.setProperty('--n', COLS.length);
   $('#colheads').innerHTML = '<span class="wk-head">Week</span>' + COLS.map((p) => `<span>${p.label}${withStatus
-    ? `<small>${!p.hasData ? 'no data added' : p.current ? `now: week ${p.lastWeek}, day ${p.lastDay}` : 'complete'}</small>` : ''}</span>`).join('');
+    ? `<small>${!p.hasData ? 'no data added' : p.current && p.lastWeek < 39 ? `logged through week ${p.lastWeek}, day ${p.lastDay}` : 'complete'}</small>` : ''}</span>`).join('');
   $('#colheads').hidden = false;
 }
 
@@ -90,12 +90,10 @@ function renderMain() {
   let html = `<p class="legend"><span class="mk mk-only">◆</span> logged in only one pregnancy that week &nbsp; <span class="mk mk-gap">▲</span> ${GAP}+ days apart</p>`;
   for (let w = FIRST_WEEK; w <= LAST_WEEK; w++) {
     const sums = COLS.map((p) => weekSummary(p, w));
-    const cur = w === currentWeek;
-    html += `<a class="week ${cur ? 'is-current' : ''}" id="w${w}" href="#week-${w}" style="--n:${n}">
+    html += `<a class="week" id="w${w}" href="#week-${w}" style="--n:${n}">
       <div class="row">
         <div class="wk">
           <span class="wk-num"><small>Week</small>${w}</span>
-          ${cur ? '<em>now</em>' : ''}
           <span class="size">${sizeDrawing(w)}<span>Size of ${articled(SIZE_BY_WEEK[w])}</span></span>
           <span class="more">Days ›</span>
         </div>
@@ -154,9 +152,8 @@ function route() {
   const w = m && Math.min(LAST_WEEK, Math.max(FIRST_WEEK, +m[1]));
   if (w) { renderWeek(w); $('#jump').value = w; lastMainWeek = w; return; }
   renderMain();
-  const target = lastMainWeek || currentWeek;
-  $('#jump').value = target;
-  scrollToWeek(target, false);
+  $('#jump').value = lastMainWeek || FIRST_WEEK;
+  if (lastMainWeek) scrollToWeek(lastMainWeek, false); else window.scrollTo(0, 0);
 }
 
 function scrollToWeek(w, smooth = true) {
@@ -186,7 +183,7 @@ function useModel(m) {
   currentWeek = Math.min(LAST_WEEK, Math.max(FIRST_WEEK, CUR.lastWeek || FIRST_WEEK));
   const sel = $('#jump');
   sel.innerHTML = '';
-  for (let w = FIRST_WEEK; w <= LAST_WEEK; w++) sel.add(new Option(w === currentWeek ? `${w} (now)` : String(w), w));
+  for (let w = FIRST_WEEK; w <= LAST_WEEK; w++) sel.add(new Option(String(w), w));
   const own = m.kind === 'own';
   document.body.classList.toggle('is-own', own);
   $('#banner').textContent = own

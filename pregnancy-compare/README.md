@@ -10,7 +10,7 @@ Apps like Flo let you log symptoms daily, but you can't line up the same week ac
 - A smaller row underneath shows average sleep, resting heart rate and steps from the watch.
 - Tap a week for a day-by-day view of both pregnancies, with notes.
 - The week column shows the popular "size of a lemon" comparison for that week, with a little drawing. It's general reference (`js/sizes.js`), not about anyone's data.
-- Opens on the current week; "Jump to week" moves around.
+- Opens at week 4; the week picker jumps around.
 
 The page only shows what was logged. It doesn't interpret anything.
 

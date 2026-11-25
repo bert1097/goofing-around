@@ -186,3 +186,23 @@ legend small { font-weight: 400; color: var(--muted); }
 .fruit { background: var(--plate); border-radius: 50%; padding: 3px; box-sizing: border-box; }
 .fruit .ol { stroke: var(--fruit-line); }
 .week.is-current .fruit { background: var(--card); }
+
+/* "Your data" screen: inputs match the rest of the page in both themes. */
+.field input[type=file] { font-size: 14px; color: var(--muted); padding: 2px 0; }
+.field input[type=file]::file-selector-button,
+.field input[type=file]::-webkit-file-upload-button {
+  font: inherit; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--bg);
+  border: 1px solid var(--accent); border-radius: 8px; padding: 6px 12px; margin-right: 10px; cursor: pointer;
+}
+.field input[type=file]:hover::file-selector-button { background: var(--current); }
+.field input[type=date] { color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 100%; max-width: 260px; }
+fieldset { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+fieldset + fieldset { margin-top: 4px; }
+legend { background: var(--card); padding: 0 6px; margin-left: -6px; border-radius: 6px; }
+.panel { display: block; }
+.actions button { border-radius: 8px; padding: 8px 16px; }
+.actions button:not(.primary) { color: var(--accent); border-color: var(--accent); background: transparent; }
+.howto details { border-top: 1px solid var(--line); }
+.howto details:first-of-type { border-top: 0; }
+.howto summary { color: var(--accent); }
+.privacy { background: var(--current); }
