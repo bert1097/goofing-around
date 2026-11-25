@@ -6,6 +6,7 @@ Apps like Flo let you log symptoms daily, but you can't line up the same week ac
 
 - Each week shows the tags logged and how many days each was logged (`Nausea 5/7`).
 - ◆ marks a tag logged in only one pregnancy that week; ▲ marks a gap of 3+ days between the two.
+- A color key at the top doubles as a filter: tap a category to show only it, tap others to add them, tap All to reset. Each category sits on its own line inside a week.
 - A smaller row underneath shows average sleep, resting heart rate and steps from the watch.
 - Tap a week for a day-by-day view of both pregnancies, with notes.
 - Opens on the current week; "Jump to week" moves around.

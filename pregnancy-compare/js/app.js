@@ -13,7 +13,32 @@ const sortTags = (keys) => keys.sort((a, b) => {
   return CATEGORY_ORDER.indexOf(ca) - CATEGORY_ORDER.indexOf(cb) || na.localeCompare(nb);
 });
 
+const CAT_LABEL = { Symptoms: 'Symptoms', 'Digestion and stool': 'Digestion', Appetite: 'Appetite', Swelling: 'Swelling', Mood: 'Mood', Other: 'Other', 'Physical activity': 'Activity' };
+
 let model, P1, P2, currentWeek;
+
+// Category filter: which categories are shown. All on by default; remembered on this phone or computer.
+const shown = new Set(CATEGORY_ORDER);
+try { const saved = JSON.parse(localStorage.getItem('shownCategories')); if (Array.isArray(saved) && saved.length) { shown.clear(); saved.forEach((c) => shown.add(c)); } } catch {}
+const saveShown = () => { try { localStorage.setItem('shownCategories', JSON.stringify([...shown])); } catch {} };
+const allShown = () => CATEGORY_ORDER.every((c) => shown.has(c));
+const isShown = (key) => shown.has(key.split('|')[0]);
+
+// Chips grouped one category per line, so the types of data sit apart.
+function groupedChips(keys, render) {
+  const groups = [];
+  for (const k of keys) {
+    const cat = k.split('|')[0];
+    if (!groups.length || groups[groups.length - 1].cat !== cat) groups.push({ cat, keys: [] });
+    groups[groups.length - 1].keys.push(k);
+  }
+  return '<div class="groups">' + groups.map((g) => `<div class="chips" aria-label="${esc(CAT_LABEL[g.cat] || g.cat)}">${g.keys.map(render).join('')}</div>`).join('') + '</div>';
+}
+
+function renderKey() {
+  $('#key').innerHTML = `<button type="button" class="key-all" data-cat="*" aria-pressed="${allShown()}">All</button>` +
+    CATEGORY_ORDER.map((c) => `<button type="button" class="key-btn ${CAT_CLASS[c]}" data-cat="${esc(c)}" aria-pressed="${shown.has(c)}"><i></i>${CAT_LABEL[c]}</button>`).join('');
+}
 
 function chip(key, text, mark) {
   const [cat, name] = key.split('|');
@@ -26,15 +51,15 @@ function cellHtml(s, other) {
   if (!s.hasData) return '<div class="empty">No data added</div>';
   if (!s.reached) return '<div class="empty">Not reached yet</div>';
   const compare = other.reached && other.loggedDays > 0 && s.loggedDays > 0;
-  const keys = sortTags([...s.tagCounts.keys()]);
+  const keys = sortTags([...s.tagCounts.keys()].filter(isShown));
   const denom = s.partial || 7;
   const head = `<div class="logged">${s.loggedDays} of ${denom} days logged${s.partial ? ' (so far)' : ''}</div>`;
-  if (!keys.length) return head + '<div class="empty">Nothing logged</div>';
-  return head + '<div class="chips">' + keys.map((k) => {
+  if (!keys.length) return head + `<div class="empty">${s.tagCounts.size ? 'Nothing in the categories shown' : 'Nothing logged'}</div>`;
+  return head + groupedChips(keys, (k) => {
     const n = s.tagCounts.get(k), o = other.tagCounts.get(k) || 0;
     const mark = !compare ? null : o === 0 ? 'only' : Math.abs(n - o) >= GAP ? 'gap' : null;
     return chip(k, `${n}/${denom}`, mark);
-  }).join('') + '</div>';
+  });
 }
 
 function devHtml(s) {
@@ -72,8 +97,8 @@ function dayCell(preg, week, day) {
   let h = `<div class="date">${fmtDate(date)}</div>`;
   if (!e || !e.logged) h += '<div class="empty">Not logged</div>';
   else {
-    const keys = sortTags(e.tags.map((t) => `${t.category}|${t.name}`));
-    h += keys.length ? '<div class="chips">' + keys.map((k) => chip(k)).join('') + '</div>' : '';
+    const keys = sortTags(e.tags.map((t) => `${t.category}|${t.name}`).filter(isShown));
+    h += keys.length ? groupedChips(keys, (k) => chip(k)) : (e.tags.length ? '<div class="empty">Nothing in the categories shown</div>' : '');
     if (e.note) h += `<p class="note">“${esc(e.note)}”</p>`;
     const extra = [e.weightKg != null && `Weight ${e.weightKg} kg`, e.waterGlasses != null && `Water ${e.waterGlasses} glasses`].filter(Boolean);
     if (extra.length) h += `<div class="extra">${extra.join(' · ')}</div>`;
@@ -83,7 +108,7 @@ function dayCell(preg, week, day) {
   return h;
 }
 
-function renderWeek(w) {
+function renderWeek(w, keepScroll = false) {
   $('#title').textContent = `Week ${w}`;
   $('#colheads').innerHTML = `<span>${P1.label}</span><span>${P2.label}</span>`;
   const nav = `<nav class="wnav">
@@ -95,11 +120,12 @@ function renderWeek(w) {
     html += `<section class="day"><h2>Day ${d}</h2><div class="pair"><div class="cell">${dayCell(P1, w, d)}</div><div class="cell">${dayCell(P2, w, d)}</div></div></section>`;
   }
   $('#app').innerHTML = html + nav;
-  window.scrollTo(0, 0);
+  if (!keepScroll) window.scrollTo(0, 0);
 }
 
 let lastMainWeek = null;
 function route() {
+  $('#key').hidden = location.hash === '#data';
   if (location.hash === '#data') { renderDataView(model); return; }
   if (!model) return;
   const m = location.hash.match(/^#week-(\d+)$/);
@@ -116,6 +142,17 @@ function scrollToWeek(w, smooth = true) {
   if (!el) return;
   const offset = $('.top').getBoundingClientRect().bottom + 8;
   window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: smooth ? 'smooth' : 'auto' });
+}
+
+// Redraw the current view after a filter change without losing your place.
+function redraw() {
+  const m = location.hash.match(/^#week-(\d+)$/);
+  if (m) { const y = window.scrollY; renderWeek(+m[1], true); window.scrollTo(0, y); return; }
+  if (location.hash === '#data') return;
+  const top = $('.top').getBoundingClientRect().bottom;
+  const visible = [...document.querySelectorAll('.week')].find((el) => el.getBoundingClientRect().bottom > top + 10);
+  renderMain();
+  if (visible) scrollToWeek(+visible.id.slice(1), false);
 }
 
 // Swap in a model (sample or the viewer's own files) and redraw.
@@ -154,6 +191,17 @@ async function init() {
     const next = THEMES[(THEMES.indexOf($('#theme').dataset.theme) + 1) % THEMES.length];
     applyTheme(next);
     try { localStorage.setItem('theme', next); } catch {}
+  });
+  renderKey();
+  $('#key').addEventListener('click', (ev) => {
+    const b = ev.target.closest('button[data-cat]');
+    if (!b) return;
+    const c = b.dataset.cat;
+    if (c === '*') CATEGORY_ORDER.forEach((x) => shown.add(x));
+    else if (allShown()) { shown.clear(); shown.add(c); } // first tap on a full key: show just that one
+    else if (shown.has(c)) { shown.delete(c); if (!shown.size) CATEGORY_ORDER.forEach((x) => shown.add(x)); }
+    else shown.add(c);
+    saveShown(); renderKey(); redraw();
   });
   const sel = $('#jump');
   sel.addEventListener('change', () => {

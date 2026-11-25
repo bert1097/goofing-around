@@ -100,3 +100,21 @@ legend { font-weight: 650; color: var(--accent); margin-bottom: 6px; padding: 0;
 .fine { font-size: 12px !important; color: var(--muted); }
 code { font-size: 12px; background: var(--bg); padding: 1px 4px; border-radius: 4px; overflow-wrap: anywhere; }
 [hidden] { display: none !important; }
+
+/* Category key: doubles as a filter. Swatch colors are the chip colors, with a stronger dot. */
+:root { --sym-dot: #5b7fb0; --dig-dot: #5f9467; --app-dot: #b08a3e; --swe-dot: #8a6aa8; --mood-dot: #c0705e; --oth-dot: #7d8287; --act-dot: #3f9199; }
+.key { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.key button { flex: none; font-size: 12px; padding: 3px 8px; border-radius: 999px; display: inline-flex; align-items: center; gap: 5px; }
+.key button i { width: 8px; height: 8px; border-radius: 50%; background: var(--dot); }
+.key-btn.c-sym { --dot: var(--sym-dot); } .key-btn.c-dig { --dot: var(--dig-dot); } .key-btn.c-app { --dot: var(--app-dot); }
+.key-btn.c-swe { --dot: var(--swe-dot); } .key-btn.c-mood { --dot: var(--mood-dot); } .key-btn.c-oth { --dot: var(--oth-dot); } .key-btn.c-act { --dot: var(--act-dot); }
+.key-btn[aria-pressed="true"] { border-color: var(--dot); }
+.key-btn[aria-pressed="false"] { background: var(--card); color: var(--muted); }
+.key-btn[aria-pressed="false"] i { background: transparent; box-shadow: inset 0 0 0 1.5px var(--dot); }
+.key-all[aria-pressed="true"] { background: var(--accent); color: var(--card); border-color: var(--accent); font-weight: 600; }
+
+/* One line per category inside a cell, with the category's dot on the left. */
+.groups { display: grid; gap: 4px; }
+.chip { box-shadow: inset 3px 0 0 var(--dot, transparent); padding-left: 8px; }
+.chip.c-sym { --dot: var(--sym-dot); } .chip.c-dig { --dot: var(--dig-dot); } .chip.c-app { --dot: var(--app-dot); }
+.chip.c-swe { --dot: var(--swe-dot); } .chip.c-mood { --dot: var(--mood-dot); } .chip.c-oth { --dot: var(--oth-dot); } .chip.c-act { --dot: var(--act-dot); }
