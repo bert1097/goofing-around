@@ -1,0 +1,10 @@
+{
+  "league_id": "1180000000000000000",
+  "waiver_count": 5,
+  "league_channel_webhook": "https://discord.com/api/webhooks/...",
+  "recipients": [
+    { "manager": "sleeper_username_1", "discord_webhook": "https://discord.com/api/webhooks/..." },
+    { "manager": "sleeper_username_2", "slack_webhook": "https://hooks.slack.com/services/..." },
+    { "manager": "sleeper_username_3", "email": "manager3@example.com" }
+  ]
+}
