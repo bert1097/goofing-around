@@ -1,0 +1,23 @@
+name: Tuesday Brief
+on:
+  schedule:
+    - cron: "7 14 * * 2"   # Tuesdays 14:07 UTC (9:07 ET / 10:07 EDT)
+  workflow_dispatch:
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Send briefs
+        working-directory: fantasy-tuesday
+        env:
+          TUESDAY_BRIEF_CONFIG_JSON: ${{ secrets.TUESDAY_BRIEF_CONFIG_JSON }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+        run: python tuesday_brief.py --json brief.json
+      - uses: actions/upload-artifact@v4
+        with: { name: brief, path: fantasy-tuesday/brief.json }
