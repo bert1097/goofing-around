@@ -10,9 +10,10 @@ PLAYERS = {
     "r3": {"full_name": "Rb Three", "position": "RB", "team": "NYG"},
     "w1": {"full_name": "Wr One", "position": "WR", "team": "MIA"},
     "w2": {"full_name": "Wr Two", "position": "WR", "team": "DET"},
-    "fa": {"full_name": "Free Agent", "position": "RB", "team": "LAR"},
+    "fa": {"full_name": "Free Agent", "position": "RB", "team": "LAR", "search_rank": 120},
+    "fb": {"full_name": "Deep Sleeper", "position": "WR", "team": "TEN", "search_rank": 900},
 }
-PROJ = {"q1": 20, "q2": 18, "r1": 15, "r2": 14, "r3": 9, "w1": 12, "w2": 8, "fa": 13}
+PROJ = {"q1": 20, "q2": 18, "r1": 15, "r2": 14, "r3": 9, "w1": 12, "w2": 8, "fa": 13, "fb": 14}
 
 
 def fake(url):
@@ -34,6 +35,7 @@ def fake(url):
         "/league/L/matchups/13": [{"roster_id": 1, "matchup_id": 1}, {"roster_id": 2, "matchup_id": 1}],
         "/players/nfl": PLAYERS,
         "/players/nfl/trending/add?lookback_hours=72&limit=200": [{"player_id": "fa", "count": 5000}],
+        "/players/nfl/trending/drop?lookback_hours=72&limit=200": [{"player_id": "fb", "count": 300}],
     }[path]
 
 
@@ -45,7 +47,9 @@ class BriefTest(unittest.TestCase):
         self.assertGreater(ann["matchup"]["win_pct"], 50)
         self.assertEqual(ann["moves"][0]["start"]["name"], "Rb One")
         self.assertEqual(ann["moves"][0]["bench"]["name"], "Rb Two")
-        self.assertEqual(ann["waivers"][0]["name"], "Free Agent")
+        self.assertEqual([w["name"] for w in b["waivers"]], ["Free Agent", "Deep Sleeper"])
+        self.assertEqual(b["waivers"][0]["trend"], "hot")
+        self.assertEqual(b["waivers"][1]["trend"], "cooling")
         self.assertIn("Start Rb One over Rb Two", render_text(b, ann))
 
 

@@ -43,6 +43,23 @@ details{background:var(--panel);border:1px solid var(--line);border-radius:10px;
 summary{cursor:pointer;font-weight:600}
 textarea{width:100%;box-sizing:border-box;min-height:120px;font-family:var(--mono);font-size:.8rem;margin-top:10px}
 .err{color:var(--bad);font-size:.9rem}
+.wire{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;min-width:0}
+.wire-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:500 .75rem var(--mono);padding:5px 10px;border-radius:999px}
+.chip[aria-pressed="true"]{background:var(--turf);border-color:var(--turf);color:var(--panel)}
+.scroll{overflow-x:auto}
+#wire{min-width:560px}
+#wire th{font:500 .7rem var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-align:left;padding:6px 4px}
+#wire th.num{text-align:right}
+td.rank{font-family:var(--display);font-weight:800;font-size:1.4rem;width:2rem;color:var(--turf)}
+tr.top td{background:var(--turf-soft)}
+tr.top .pname{font-size:1.05rem;font-weight:600}
+.bar{display:inline-block;width:60px;height:6px;border-radius:3px;background:var(--line);vertical-align:middle;margin-right:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--turf)}
+.trend{font:500 .7rem var(--mono);text-transform:uppercase;padding:2px 6px;border-radius:4px}
+.trend.hot{background:var(--bad);color:var(--panel)}.trend.rising{background:var(--turf-soft);color:var(--turf)}.trend.cooling{border:1px solid var(--line);color:var(--muted)}
+.score{font:600 1rem var(--mono)}
 @media (max-width:520px){.board{grid-template-columns:1fr}.board .team:last-child{text-align:left}.board .mid{text-align:left}}
 </style>
 
@@ -59,19 +76,23 @@ textarea{width:100%;box-sizing:border-box;min-height:120px;font-family:var(--mon
     </div>
   </header>
 
+  <section class="wire" aria-labelledby="wireTitle">
+    <div class="wire-head">
+      <h2 id="wireTitle">Best on waivers</h2>
+      <div class="chips" id="pos" role="group" aria-label="Filter by position"></div>
+    </div>
+    <p class="meta">Same list for every manager: the best available players, ranked on this week's projection (50%), estimated rostered % across Sleeper (30%) and net adds in the last 72 hours (20%). Rostered % is estimated from Sleeper's popularity rank.</p>
+    <div class="scroll"><table id="wire"></table></div>
+  </section>
+
   <section class="board" id="board" aria-label="Matchup"></section>
 
-  <div class="cols">
+  <div>
     <section class="card">
       <h2>Lineup</h2>
       <ul class="moves" id="moves"></ul>
       <table id="lineup"></table>
       <p class="meta" id="flags"></p>
-    </section>
-    <section class="card">
-      <h2>Waiver wire</h2>
-      <table id="waivers"></table>
-      <p class="meta">Ranked by this week's projection, how hard the league is adding them, and how much they'd beat your weakest starter at that spot.</p>
     </section>
   </div>
 
@@ -96,10 +117,7 @@ const EXAMPLE={league:"Example League",season:"2026",week:13,scoring:"PPR",manag
    {slot:"DEF",name:"BAL D/ST",pos:"DEF",team:"BAL",proj:7.0,status:""}],
   moves:[{start:{name:"Rashee Rice",proj:12.6},bench:{name:"Jaylen Waddle",proj:3.1,status:"Out"},why:"Jaylen Waddle is Out"},
    {start:{name:"BAL D/ST",proj:7.0},bench:{name:"NYJ D/ST",proj:4.9},why:"+2.1 projected"}],
-  flags:[{name:"Jaylen Waddle",status:"Out"},{name:"Kyren Williams",status:"Questionable"}],
-  waivers:[{name:"Tyjae Spears",pos:"RB",team:"TEN",proj:11.8,adds:41230,upgrade:2.4},{name:"Jalen McMillan",pos:"WR",team:"TB",proj:10.9,adds:28810,upgrade:0},
-   {name:"Tucker Kraft",pos:"TE",team:"GB",proj:9.7,adds:15400,upgrade:0},{name:"Bo Nix",pos:"QB",team:"DEN",proj:18.2,adds:12020,upgrade:0},
-   {name:"Will Reichard",pos:"K",team:"MIN",proj:8.8,adds:6100,upgrade:0}]},
+  flags:[{name:"Jaylen Waddle",status:"Out"},{name:"Kyren Williams",status:"Questionable"}]},
  {manager:"tpt",team:"Tush Push Tyrants",record:"7-5",points_for:1388.2,
   matchup:{opponent:"Waiver Wire Warriors",opponent_manager:"gridiron_gus",opponent_record:"8-4",my_proj:109.9,opp_proj:118.4,win_pct:38,
    opp_threats:[{name:"Jalen Hurts",pos:"QB",proj:22.1},{name:"Ja'Marr Chase",pos:"WR",proj:19.3},{name:"Jahmyr Gibbs",pos:"RB",proj:18.9}]},
@@ -108,9 +126,16 @@ const EXAMPLE={league:"Example League",season:"2026",week:13,scoring:"PPR",manag
    {slot:"WR",name:"DK Metcalf",pos:"WR",team:"PIT",proj:12.3,status:""},{slot:"TE",name:"Dalton Kincaid",pos:"TE",team:"BUF",proj:8.4,status:""},
    {slot:"FLEX",name:"Courtland Sutton",pos:"WR",team:"DEN",proj:10.1,status:""},{slot:"K",name:"Jake Bates",pos:"K",team:"DET",proj:8.5,status:""},
    {slot:"DEF",name:"PIT D/ST",pos:"DEF",team:"PIT",proj:6.0,status:""}],
-  moves:[],flags:[],
-  waivers:[{name:"Tyjae Spears",pos:"RB",team:"TEN",proj:11.8,adds:41230,upgrade:0.8},{name:"Tucker Kraft",pos:"TE",team:"GB",proj:9.7,adds:15400,upgrade:1.3},
-   {name:"Jalen McMillan",pos:"WR",team:"TB",proj:10.9,adds:28810,upgrade:0.8}]}]};
+  moves:[],flags:[]}],
+ waivers:[
+ {name:"Tyjae Spears",pos:"RB",team:"TEN",proj:11.8,rostered:47,adds:41230,drops:1200,net:40030,trend:"hot",score:89},
+ {name:"Bo Nix",pos:"QB",team:"DEN",proj:18.2,rostered:38,adds:12020,drops:3100,net:8920,trend:"rising",score:84},
+ {name:"Jalen McMillan",pos:"WR",team:"TB",proj:10.9,rostered:33,adds:28810,drops:900,net:27910,trend:"hot",score:75},
+ {name:"Tucker Kraft",pos:"TE",team:"GB",proj:9.7,rostered:41,adds:15400,drops:2300,net:13100,trend:"rising",score:70},
+ {name:"Rhamondre Stevenson",pos:"RB",team:"NE",proj:10.2,rostered:52,adds:2100,drops:9400,net:-7300,trend:"cooling",score:66},
+ {name:"Wan'Dale Robinson",pos:"WR",team:"NYG",proj:10.4,rostered:29,adds:9800,drops:1500,net:8300,trend:"rising",score:61},
+ {name:"Will Reichard",pos:"K",team:"MIN",proj:8.8,rostered:22,adds:6100,drops:400,net:5700,trend:"rising",score:52},
+ {name:"HOU D/ST",pos:"DEF",team:"HOU",proj:7.9,rostered:30,adds:4400,drops:2600,net:1800,trend:"rising",score:47}]};
 
 let brief=EXAMPLE,isExample=true;
 const $=id=>document.getElementById(id);
@@ -126,6 +151,7 @@ function render(){
   brief.managers.forEach((m,i)=>{const o=el("option",null,`${m.team} (${m.manager})`);o.value=i;sel.append(o)});
   if(prev&&prev<brief.managers.length)sel.value=prev;
   show(brief.managers[+sel.value||0]);
+  renderWire();
 }
 
 function show(m){
@@ -148,12 +174,27 @@ function show(m){
     tr.append(el("td","slot",p.slot),nm,el("td","num",n(p.proj)));lt.append(tr)});
   const tr=el("tr");tr.append(el("td","slot","TOTAL"),el("td"),el("td","num",n(tot)));lt.append(tr);
   $("flags").textContent=m.flags.length?"Injury watch: "+m.flags.map(f=>`${f.name} (${f.status})`).join(", "):"";
+}
 
-  const wt=$("waivers");wt.replaceChildren();
-  if(!m.waivers.length)wt.append(el("tr")).append(el("td",null,"Nothing worth a claim this week."));
-  m.waivers.forEach(w=>{const tr=el("tr");const nm=el("td");nm.append(document.createTextNode(w.name));
-    const bits=[`${w.pos} · ${w.team}`];if(w.adds)bits.push(`+${w.adds.toLocaleString()} adds`);if(w.upgrade>0)bits.push(`+${n(w.upgrade)} over your ${w.pos}`);
-    nm.append(el("div","meta",bits.join(" · ")));tr.append(nm,el("td","num",n(w.proj)));wt.append(tr)});
+let posFilter="ALL";
+function renderWire(){
+  const ws=brief.waivers||[];
+  const posList=["ALL",...[...new Set(ws.map(w=>w.pos))]];
+  if(!posList.includes(posFilter))posFilter="ALL";
+  const chips=$("pos");chips.replaceChildren();
+  posList.forEach(p=>{const c=el("button","chip",p);c.type="button";c.setAttribute("aria-pressed",p===posFilter);c.onclick=()=>{posFilter=p;renderWire()};chips.append(c)});
+  const t=$("wire");t.replaceChildren();
+  const hr=el("tr");[["#",""],["Player",""],["Proj","num"],["Rostered",""],["Net adds","num"],["Trend",""],["Score","num"]].forEach(([h,c])=>hr.append(el("th",c,h)));
+  const head=el("thead");head.append(hr);t.append(head);
+  const body=el("tbody");t.append(body);
+  const rows=ws.map((w,i)=>({...w,rank:i+1})).filter(w=>posFilter==="ALL"||w.pos===posFilter);
+  if(!rows.length){const tr=el("tr");const td=el("td",null,"No one worth a claim at this spot.");td.colSpan=7;tr.append(td);body.append(tr);return}
+  rows.forEach((w,i)=>{const tr=el("tr",i===0?"top":null);
+    const nm=el("td");nm.append(el("div","pname",w.name),el("div","meta",`${w.pos} · ${w.team}`));
+    const ro=el("td");const bar=el("span","bar");const fill=el("i");fill.style.width=Math.max(0,Math.min(100,w.rostered))+"%";bar.append(fill);ro.append(bar,document.createTextNode(`~${w.rostered}%`));
+    const net=+w.net||0;const tn=el("td");tn.append(el("span","trend "+(w.trend||"cooling"),w.trend||"—"));
+    tr.append(el("td","rank",w.rank),nm,el("td","num",n(w.proj)),ro,el("td","num",(net>0?"+":"")+net.toLocaleString()),tn,el("td","num score",w.score));
+    body.append(tr)});
 }
 
 function load(text){

@@ -4,7 +4,7 @@ Every Tuesday, each manager in a Sleeper league gets a note with:
 
 - **Matchup**: opponent, records, projected scores, a rough win chance and their top threats.
 - **Lineup advice**: your best projected lineup vs. who you're starting now, plus injury flags.
-- **Waiver targets**: unrostered players ranked by projection, trending adds and how much they'd upgrade your weakest starter.
+- **Best on waivers** (the lead section, same for every manager): unrostered players ranked 50% on projection, 30% on estimated rostered % across Sleeper (from its popularity rank, since Sleeper doesn't publish roster %) and 20% on net adds over 72 hours, tagged hot, rising or cooling. Team needs are ignored.
 
 ## Setup
 1. Copy `config.example.json`, fill in your league ID (from the Sleeper league URL) and one entry per manager (Sleeper username + Discord webhook, Slack webhook or email). Managers without an entry are skipped.

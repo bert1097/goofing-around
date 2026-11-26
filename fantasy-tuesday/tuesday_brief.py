@@ -4,7 +4,7 @@
 For each manager it builds:
   * a matchup preview (opponent, records, projected totals, rough win chance)
   * lineup advice (best projected lineup vs. current starters, injury/bye flags)
-  * waiver tips (trending, unrostered players ranked by projection and need)
+  * the best players on waivers (projection, estimated rostered %, add/drop trend)
 
 and sends it to Discord, Slack and/or email. Standard library only.
 
@@ -146,6 +146,8 @@ def build_brief(client, league_id, week=None, waiver_count=5):
     rostered = {pid for r in rosters for pid in (r.get("players") or [])}
     trending = client.get("/players/nfl/trending/add?lookback_hours=72&limit=200") or []
     trend_count = {t["player_id"]: t.get("count", 0) for t in trending}
+    dropping = client.get("/players/nfl/trending/drop?lookback_hours=72&limit=200") or []
+    drop_count = {t["player_id"]: t.get("count", 0) for t in dropping}
 
     by_roster = {r["roster_id"]: r for r in rosters}
     team_of = {}
@@ -196,7 +198,6 @@ def build_brief(client, league_id, week=None, waiver_count=5):
             "lineup": [],
             "moves": [],
             "flags": [],
-            "waivers": [],
         }
         if opp:
             theirs = total(opp, "best")
@@ -230,25 +231,43 @@ def build_brief(client, league_id, week=None, waiver_count=5):
             if pl["status"] in BAD_STATUS or pl["status"] == "Questionable":
                 entry["flags"].append(pl)
 
-        # Waivers: weight by projection, trend, and how much they'd beat your weakest starter at that spot.
-        weakest = {}
-        for slot, pid in zip(slots, best):
-            for pos in FLEX_ELIGIBLE.get(slot, {slot}):
-                v = proj.get(pid, 0) if pid else 0
-                weakest[pos] = min(weakest.get(pos, 99), v)
-        scored = []
-        for pid in free:
-            pl = player_line(players, proj, pid)
-            upgrade = pl["proj"] - weakest.get(pl["pos"], 99)
-            score = pl["proj"] + 0.002 * trend_count.get(pid, 0) + max(0, upgrade)
-            if pl["proj"] <= 0 and not trend_count.get(pid):
-                continue
-            scored.append((score, {**pl, "adds": trend_count.get(pid, 0), "upgrade": round(upgrade, 1)}))
-        entry["waivers"] = [x for _, x in sorted(scored, key=lambda t: -t[0])[:waiver_count]]
         managers.append(entry)
 
     return {"league": league.get("name", "League"), "season": season, "week": week,
-            "scoring": key.replace("pts_", "").replace("_", "-").upper(), "managers": managers}
+            "scoring": key.replace("pts_", "").replace("_", "-").upper(),
+            "waivers": rank_waivers(free, players, proj, trend_count, drop_count, waiver_count),
+            "managers": managers}
+
+
+def est_rostered(player):
+    """Sleeper doesn't publish roster %. Its search_rank tracks popularity closely,
+    so map it to a rough league-wide rostered % (rank 1 ~ 100%, ~300 ~ 30%, 900+ ~ 3%)."""
+    rank = player.get("search_rank")
+    if not isinstance(rank, (int, float)) or rank <= 0 or rank > 5000:
+        return 1
+    return max(1, min(99, round(100 * math.exp(-rank / 250))))
+
+
+def rank_waivers(free, players, proj, adds, drops, count):
+    """Best available players league-wide, ignoring any one team's needs.
+    Score = 50% projection + 30% estimated rostered % + 20% net adds (each scaled 0-1)."""
+    rows = []
+    for pid in free:
+        pl = player_line(players, proj, pid)
+        net = adds.get(pid, 0) - drops.get(pid, 0)
+        if pl["proj"] <= 0 and net <= 0:
+            continue
+        rows.append({**pl, "rostered": est_rostered(players.get(pid) or {}),
+                     "adds": adds.get(pid, 0), "drops": drops.get(pid, 0), "net": net})
+    if not rows:
+        return []
+    top = lambda k: max(max(r[k] for r in rows), 1)
+    pmax, rmax, nmax = top("proj"), top("rostered"), top("net")
+    for r in rows:
+        r["score"] = round(100 * (0.5 * r["proj"] / pmax + 0.3 * r["rostered"] / rmax
+                                  + 0.2 * max(r["net"], 0) / nmax))
+        r["trend"] = "hot" if r["net"] >= 0.5 * nmax and r["net"] > 0 else "rising" if r["net"] > 0 else "cooling"
+    return sorted(rows, key=lambda r: -r["score"])[:count]
 
 
 # ---------------------------------------------------------------- rendering
@@ -269,10 +288,10 @@ def render_text(brief, m):
         L.append("• Your current starters are already your best projected lineup.")
     if m["flags"]:
         L.append("• Watch: " + ", ".join(f"{f['name']} ({f['status']})" for f in m["flags"]))
-    L += ["", "WAIVER TARGETS"]
-    for w in m["waivers"]:
-        tail = f", trending +{w['adds']}" if w["adds"] else ""
-        L.append(f"• {w['name']} {w['pos']} {w['team']}: {w['proj']} proj{tail}")
+    L += ["", "BEST ON WAIVERS"]
+    for i, w in enumerate(brief["waivers"], 1):
+        L.append(f"{i}. {w['name']} {w['pos']} {w['team']}: {w['proj']} proj, ~{w['rostered']}% rostered, "
+                 f"net {w['net']:+,} adds ({w['trend']})")
     return "\n".join(L)
 
 
@@ -308,7 +327,7 @@ def main(argv=None):
     raw = os.environ.get("TUESDAY_BRIEF_CONFIG_JSON")
     cfg = json.loads(raw) if raw else json.load(open(a.config))
 
-    brief = build_brief(Sleeper(), cfg["league_id"], a.week, cfg.get("waiver_count", 5))
+    brief = build_brief(Sleeper(), cfg["league_id"], a.week, cfg.get("waiver_count", 10))
     if a.json:
         json.dump(brief, open(a.json, "w"), indent=2)
     recipients = {r["manager"].lower(): r for r in cfg.get("recipients", [])}
