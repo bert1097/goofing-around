@@ -60,3 +60,22 @@ seconds). There's also a random late-game deficit mode.
 
 Situations and lineups are approximations from public game accounts; a few
 depth-chart spots and jersey numbers may be off.
+
+---
+
+# Leonida Log
+
+`gta6-companion/index.html` is a single-file GTA VI completion companion.
+
+- **Checklist**: all 94 story missions by chapter, 30 side missions (Strangers &
+  Freaks ones tagged), 26 robbery opportunities by gang, and 238 collectibles
+  (cards, books, WAiNK landmarks/curiosities/sculptures, meditation spots,
+  flamingos, stunts and more) with where to find each. Search, hide done, and a
+  "My list" tab for your own goals.
+- **Map**: a sketch of Leonida with every named area as a circle showing what's
+  left there. Tap an area for its checklist; drag circles to fix positions.
+- **Trophies**: all 55 trophies by tier. Mission and collectible trophies fill
+  from your checklist, with tips.
+
+Lists come from Game8's GTA 6 wiki (Nov 2026, still a work in progress there).
+Area positions are approximate. Progress saves in your browser.
