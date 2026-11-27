@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leonida Log</title>
+<style>
+:root{--bg:#120d1c;--panel:#1d1530;--line:#33284d;--ink:#f3eefc;--dim:#a99cc4;--pink:#ff4fa3;--teal:#2fd6c8;--sun:#ffb347;--water:#16324a;--land:#2b4a3a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 system-ui,sans-serif}
+header{padding:14px 16px;background:linear-gradient(90deg,#ff4fa333,#2fd6c833);border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+h1{margin:0;font-size:20px;letter-spacing:.5px}h1 span{color:var(--pink)}
+nav{margin-left:auto;display:flex;gap:6px}
+button,select,input{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+button{cursor:pointer}button.on{background:var(--pink);border-color:var(--pink);color:#fff}
+main{max-width:1100px;margin:0 auto;padding:16px}
+.hidden{display:none!important}
+.bar{height:10px;background:var(--line);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--sun))}
+.overall{margin-bottom:16px}.overall b{font-size:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.cat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+.cat h3{margin:0 0 6px;display:flex;justify-content:space-between;font-size:16px}
+.cat h3 small{color:var(--dim);font-weight:400}
+.cat ul{list-style:none;margin:8px 0;padding:0;max-height:300px;overflow:auto}
+.cat li{display:flex;gap:8px;align-items:center;padding:4px 0;border-bottom:1px dashed var(--line)}
+.cat li.done span{text-decoration:line-through;color:var(--dim)}
+.cat li span{flex:1}.cat li .x{background:none;border:0;color:var(--dim);padding:0 4px}
+.cat form{display:flex;gap:6px}.cat form input{flex:1;min-width:0}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+#mapwrap{position:relative;background:var(--water);border:1px solid var(--line);border-radius:12px;overflow:hidden;touch-action:none}
+#map{display:block;width:100%;height:auto;cursor:crosshair}
+.pin{cursor:pointer}
+#pinlist{margin-top:12px;display:grid;gap:6px}
+#pinlist div{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 10px;display:flex;gap:8px;align-items:center}
+#pinlist div span{flex:1}.dot{width:12px;height:12px;border-radius:50%;flex:none}
+.hint{color:var(--dim);font-size:13px}
+footer{color:var(--dim);font-size:12px;text-align:center;padding:20px 16px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Leonida <span>Log</span></h1>
+  <nav><button data-tab="track" class="on">Tracker</button><button data-tab="map">Map</button></nav>
+</header>
+<main>
+<section id="track">
+  <div class="overall"><b id="pct">0%</b> complete <span class="hint" id="cnt"></span><div class="bar"><i id="pbar" style="width:0"></i></div></div>
+  <div class="row">
+    <form id="newcat" class="row" style="margin:0"><input placeholder="New category" required><button>Add category</button></form>
+    <button id="export">Export</button><button id="import">Import</button><input type="file" id="file" accept=".json" class="hidden">
+    <button id="reset">Reset all</button>
+  </div>
+  <div class="grid" id="cats"></div>
+</section>
+<section id="mapsec" class="hidden">
+  <div class="row">
+    <label>Pin type <select id="ptype"></select></label>
+    <label>Show <select id="pfilter"><option value="">All</option></select></label>
+    <span class="hint">Tap the map to drop a pin. Tap a pin to mark it done or remove it.</span>
+  </div>
+  <div id="mapwrap"><svg id="mapsvg" viewBox="0 0 1000 700"></svg></div>
+  <div id="pinlist"></div>
+</section>
+</main>
+<footer>Fan-made progress log. Map is a rough sketch, not the in-game map; your data stays in this browser.</footer>
+<script>
+const KEY='leonida-log-v1';
+const SEED={cats:[
+ {name:'Story missions',items:[]},
+ {name:'Side activities',items:[]},
+ {name:'Collectibles',items:[]},
+ {name:'Properties & businesses',items:[]},
+ {name:'Vehicles',items:[]},
+ {name:'Wanted: to do later',items:[]}],pins:[]};
+const PTYPES={Mission:'#ff4fa3',Collectible:'#ffb347',Shop:'#2fd6c8',Property:'#8f7bff',Stash:'#7ee06b',Note:'#ffffff'};
+let S;
+try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!S||!S.cats)S=structuredClone(SEED);
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const $=s=>document.querySelector(s);
+const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// tabs
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
+  $('#track').classList.toggle('hidden',b.dataset.tab!=='track');
+  $('#mapsec').classList.toggle('hidden',b.dataset.tab!=='map');
+});
+
+// tracker
+function renderTrack(){
+  let tot=0,done=0;
+  $('#cats').innerHTML=S.cats.map((c,ci)=>{
+    const d=c.items.filter(i=>i.done).length;tot+=c.items.length;done+=d;
+    const p=c.items.length?Math.round(d/c.items.length*100):0;
+    return `<div class="cat"><h3>${esc(c.name)} <small>${d}/${c.items.length} <button class="x" data-delcat="${ci}" title="Delete category">✕</button></small></h3>
+    <div class="bar"><i style="width:${p}%"></i></div>
+    <ul>${c.items.map((it,ii)=>`<li class="${it.done?'done':''}"><input type="checkbox" data-c="${ci}" data-i="${ii}" ${it.done?'checked':''}><span>${esc(it.name)}</span><button class="x" data-del="${ci},${ii}">✕</button></li>`).join('')}</ul>
+    <form data-add="${ci}"><input placeholder="Add item" required><button>+</button></form></div>`}).join('');
+  const pct=tot?Math.round(done/tot*100):0;
+  $('#pct').textContent=pct+'%';$('#pbar').style.width=pct+'%';$('#cnt').textContent=`(${done} of ${tot})`;
+}
+$('#cats').addEventListener('change',e=>{const t=e.target;if(t.dataset.c==null)return;S.cats[t.dataset.c].items[t.dataset.i].done=t.checked;save();renderTrack()});
+$('#cats').addEventListener('click',e=>{const t=e.target;
+  if(t.dataset.del){const[c,i]=t.dataset.del.split(',');S.cats[c].items.splice(i,1);save();renderTrack()}
+  if(t.dataset.delcat&&confirm('Delete this category?')){S.cats.splice(t.dataset.delcat,1);save();renderTrack()}});
+$('#cats').addEventListener('submit',e=>{e.preventDefault();const f=e.target,v=f[0].value.trim();if(!v)return;S.cats[f.dataset.add].items.push({name:v,done:false});save();renderTrack();$(`form[data-add="${f.dataset.add}"] input`).focus()});
+$('#newcat').onsubmit=e=>{e.preventDefault();const v=e.target[0].value.trim();if(v){S.cats.push({name:v,items:[]});e.target.reset();save();renderTrack()}};
+$('#reset').onclick=()=>{if(confirm('Wipe all progress and pins?')){S=structuredClone(SEED);save();renderTrack();renderMap()}};
+$('#export').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));a.download='leonida-log.json';a.click()};
+$('#import').onclick=()=>$('#file').click();
+$('#file').onchange=async e=>{try{const d=JSON.parse(await e.target.files[0].text());if(d.cats){S=d;S.pins||=[];save();renderTrack();renderMap()}}catch(x){alert('Not a valid save file')}};
+
+// map
+const REGIONS=[
+ {n:'Vice City',x:720,y:420,d:'M640 330 L800 320 L830 420 L800 520 L690 530 L650 450Z',c:'#3f3a5c'},
+ {n:'Leonida Keys',x:640,y:640,d:'M520 610 q40 -15 70 0 q30 10 60 -5 q40 -10 80 5 l-5 15 q-40 -10 -75 5 q-35 10 -70 0 q-30 -10 -60 0Z',c:'#3a5a48'},
+ {n:'Grassrivers',x:560,y:470,d:'M480 360 L640 330 L650 450 L690 530 L600 580 L470 540Z',c:'#2f5a3a'},
+ {n:'Port Gellhorn',x:300,y:200,d:'M180 140 L400 120 L430 250 L330 300 L200 270Z',c:'#4a4a3a'},
+ {n:'Ambrosia',x:520,y:200,d:'M400 120 L640 110 L660 300 L480 360 L430 250Z',c:'#3a4f30'},
+ {n:'Mount Kalaga',x:620,y:60,d:'M480 30 L760 20 L780 110 L640 110 L400 120Z',c:'#45503a'}];
+const svg=$('#mapsvg');
+Object.entries(PTYPES).forEach(([k])=>{$('#ptype').add(new Option(k));$('#pfilter').add(new Option(k))});
+$('#pfilter').onchange=renderMap;
+function renderMap(){
+  const f=$('#pfilter').value;
+  let h=`<path d="M170 140 L400 110 L780 15 L800 120 L660 300 L830 420 L800 530 L600 590 L460 550 L330 300 L190 280Z" fill="var(--land)" stroke="#5c8a6e" stroke-width="2"/>`;
+  h+=REGIONS.map(r=>`<path d="${r.d}" fill="${r.c}" stroke="#ffffff22"/><text x="${r.x}" y="${r.y}" fill="#ffffffaa" font-size="18" text-anchor="middle" pointer-events="none">${r.n}</text>`).join('');
+  S.pins.forEach((p,i)=>{if(f&&p.t!==f)return;
+    h+=`<g class="pin" data-pin="${i}" opacity="${p.done?.4:1}"><circle cx="${p.x}" cy="${p.y}" r="11" fill="${PTYPES[p.t]||'#fff'}" stroke="#000" stroke-width="2"/>${p.done?`<path d="M${p.x-5} ${p.y} l4 4 l7 -8" stroke="#000" stroke-width="3" fill="none"/>`:''}</g>`});
+  svg.innerHTML=h;
+  $('#pinlist').innerHTML=S.pins.map((p,i)=>(f&&p.t!==f)?'':`<div><i class="dot" style="background:${PTYPES[p.t]}"></i><span style="${p.done?'text-decoration:line-through;opacity:.6':''}">${esc(p.label)} <span class="hint">${p.t}</span></span><button data-tog="${i}">${p.done?'Undo':'Done'}</button><button data-rm="${i}">✕</button></div>`).join('')||'<span class="hint">No pins yet.</span>';
+}
+svg.addEventListener('click',e=>{
+  const g=e.target.closest('[data-pin]');
+  if(g){const p=S.pins[g.dataset.pin];
+    const a=prompt(`${p.label} (${p.t})\nType "done" to toggle, "delete" to remove, or a new name:`,'done');
+    if(a==null)return;if(a==='done')p.done=!p.done;else if(a==='delete')S.pins.splice(g.dataset.pin,1);else if(a.trim())p.label=a.trim();
+    save();renderMap();return}
+  const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const m=pt.matrixTransform(svg.getScreenCTM().inverse());
+  const label=prompt('Pin name:');if(!label)return;
+  S.pins.push({x:Math.round(m.x),y:Math.round(m.y),t:$('#ptype').value,label:label.trim(),done:false});save();renderMap();
+});
+$('#pinlist').onclick=e=>{const t=e.target;if(t.dataset.tog){S.pins[t.dataset.tog].done^=1;S.pins[t.dataset.tog].done=!!S.pins[t.dataset.tog].done}else if(t.dataset.rm)S.pins.splice(t.dataset.rm,1);else return;save();renderMap()};
+renderTrack();renderMap();
+</script>
+</body>
+</html>

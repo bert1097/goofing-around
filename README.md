@@ -60,3 +60,21 @@ seconds). There's also a random late-game deficit mode.
 
 Situations and lineups are approximations from public game accounts; a few
 depth-chart spots and jersey numbers may be off.
+
+---
+
+# Leonida Log
+
+`gta6-companion/index.html` is a single-file GTA VI progress companion.
+
+- **Tracker**: categories (story, side activities, collectibles, properties,
+  vehicles…) where you add your own items and tick them off, with per-category
+  and overall completion bars. Add or delete categories freely.
+- **Map**: a rough sketch of Leonida's regions (Vice City, Leonida Keys,
+  Grassrivers, Port Gellhorn, Ambrosia, Mount Kalaga). Tap to drop typed pins
+  (mission, collectible, shop, property, stash, note), filter by type, and mark
+  them done.
+- Everything saves in your browser; Export/Import moves it as a JSON file.
+
+The map is a hand-drawn approximation, not the in-game map, and no checklist
+content is pre-filled.
