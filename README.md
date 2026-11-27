@@ -65,16 +65,17 @@ depth-chart spots and jersey numbers may be off.
 
 # Leonida Log
 
-`gta6-companion/index.html` is a single-file GTA VI progress companion.
+`gta6-companion/index.html` is a single-file GTA VI completion companion.
 
-- **Tracker**: categories (story, side activities, collectibles, properties,
-  vehicles…) where you add your own items and tick them off, with per-category
-  and overall completion bars. Add or delete categories freely.
-- **Map**: a rough sketch of Leonida's regions (Vice City, Leonida Keys,
-  Grassrivers, Port Gellhorn, Ambrosia, Mount Kalaga). Tap to drop typed pins
-  (mission, collectible, shop, property, stash, note), filter by type, and mark
-  them done.
-- Everything saves in your browser; Export/Import moves it as a JSON file.
+- **Checklist**: all 94 story missions by chapter, 30 side missions (Strangers &
+  Freaks ones tagged), 26 robbery opportunities by gang, and 238 collectibles
+  (cards, books, WAiNK landmarks/curiosities/sculptures, meditation spots,
+  flamingos, stunts and more) with where to find each. Search, hide done, and a
+  "My list" tab for your own goals.
+- **Map**: a sketch of Leonida with every named area as a circle showing what's
+  left there. Tap an area for its checklist; drag circles to fix positions.
+- **Trophies**: all 55 trophies by tier. Mission and collectible trophies fill
+  from your checklist, with tips.
 
-The map is a hand-drawn approximation, not the in-game map, and no checklist
-content is pre-filled.
+Lists come from Game8's GTA 6 wiki (Nov 2026, still a work in progress there).
+Area positions are approximate. Progress saves in your browser.
